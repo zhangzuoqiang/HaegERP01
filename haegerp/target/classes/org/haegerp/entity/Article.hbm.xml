@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.Article" table="article">
+		<id name="idArticle" type="int">
+			<column name="IDARTICLE" not-null="true" />
+			<generator class="assigned" />
+		</id>
+		<many-to-one name="idArticleCategory" class="org.haegerp.entity.ArticleCategory" fetch="select">
+			<column name="IDARTICLECATEGORY" not-null="true" />
+		</many-to-one>
+		<property name="ean" type="long">
+			<column name="EAN" not-null="true" precision="13"/>
+		</property>
+		<property name="name" type="string">
+			<column name="NAME" not-null="true" length="80" />
+		</property>
+		<property name="priceVat" type="float">
+			<column name="PRICEVAT" precision="2" scale="2"/>
+		</property>
+		<property name="priceGross" type="double">
+			<column name="PRICEGROSS" not-null="false" precision="9" scale="2"/>
+		</property>
+		<property name="stock" type="long">
+			<column name="STOCK" not-null="false" precision="9"/>
+		</property>
+		<property name="color" type="string">
+			<column name="COLOR" not-null="false" length="30" />
+		</property>
+		<property name="sizeH" type="double">
+			<column name="SIZEH" not-null="false" precision="7" scale="3"/>
+		</property>
+		<property name="sizeL" type="double">
+			<column name="SIZEL" not-null="false" precision="7" scale="3"/>
+		</property>
+		<property name="sizeW" type="double">
+			<column name="SIZEW" not-null="false" precision="7" scale="3"/>
+		</property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" not-null="false" length="256" />
+		</property>
+	</class>
+</hibernate-mapping>
