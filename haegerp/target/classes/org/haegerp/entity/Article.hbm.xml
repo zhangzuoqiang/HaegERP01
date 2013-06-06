@@ -6,9 +6,9 @@
 	<class name="org.haegerp.entity.Article" table="article">
 		<id name="idArticle" type="int">
 			<column name="IDARTICLE" not-null="true" />
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
-		<many-to-one name="idArticleCategory" class="org.haegerp.entity.ArticleCategory" fetch="select">
+		<many-to-one name="articleCategory" class="org.haegerp.entity.ArticleCategory" fetch="select">
 			<column name="IDARTICLECATEGORY" not-null="true" />
 		</many-to-one>
 		<property name="ean" type="long">
@@ -20,22 +20,22 @@
 		<property name="priceVat" type="float">
 			<column name="PRICEVAT" precision="2" scale="2"/>
 		</property>
-		<property name="priceGross" type="double">
+		<property name="priceGross" type="float">
 			<column name="PRICEGROSS" not-null="false" precision="9" scale="2"/>
 		</property>
-		<property name="stock" type="long">
+		<property name="stock" type="int">
 			<column name="STOCK" not-null="false" precision="9"/>
 		</property>
 		<property name="color" type="string">
 			<column name="COLOR" not-null="false" length="30" />
 		</property>
-		<property name="sizeH" type="double">
+		<property name="sizeH" type="float">
 			<column name="SIZEH" not-null="false" precision="7" scale="3"/>
 		</property>
-		<property name="sizeL" type="double">
+		<property name="sizeL" type="float">
 			<column name="SIZEL" not-null="false" precision="7" scale="3"/>
 		</property>
-		<property name="sizeW" type="double">
+		<property name="sizeW" type="float">
 			<column name="SIZEW" not-null="false" precision="7" scale="3"/>
 		</property>
 		<property name="description" type="string">

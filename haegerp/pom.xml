@@ -10,6 +10,13 @@
   <name>haegerp</name>
   <url>http://maven.apache.org</url>
 
+	<repositories>
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -22,14 +29,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-core</artifactId>
-    	<version>4.3.0.Beta3</version>
-    </dependency>
-    <dependency>
     	<groupId>com.oracle</groupId>
     	<artifactId>ojdbc6</artifactId>
     	<version>11.2.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-core</artifactId>
+    	<version>4.3.0.Beta3</version>
     </dependency>
   </dependencies>
 </project>

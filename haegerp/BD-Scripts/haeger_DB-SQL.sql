@@ -54,13 +54,13 @@ CREATE TABLE article(
 	idArticleCategory	INTEGER			NOT NULL,
 	ean					NUMBER(13)		NOT NULL,
 	name				VARCHAR2(80)	NOT NULL,
-	priceVat			NUMBER(2,2),
-	priceGross			NUMBER(9,2),
+	priceVat			NUMBER(5,2),
+	priceGross			NUMBER(12,2),
 	stock				NUMBER(9),
 	color				VARCHAR2(30),
-	sizeH				NUMBER(7,3),
-	sizeL				NUMBER(7,3),
-	sizeW				NUMBER(7,3),
+	sizeH				NUMBER(10,3),
+	sizeL				NUMBER(10,3),
+	sizeW				NUMBER(10,3),
 	description			VARCHAR2(256),
 	CONSTRAINT pk_article
 		PRIMARY KEY (idArticle),
@@ -126,8 +126,8 @@ CREATE TABLE client(
 
 CREATE TABLE salarycategory (
 	idSalaryCategory	INTEGER			NOT NULL,
-	salaryFrom			NUMBER(9,2)		NOT NULL,
-	salaryTo			NUMBER(9,2)		NOT NULL,
+	salaryFrom			NUMBER(12,2)	NOT NULL,
+	salaryTo			NUMBER(12,2)	NOT NULL,
 	description			VARCHAR2(256),
 	CONSTRAINT pk_salaryCategory
 		PRIMARY KEY (idSalaryCategory)
@@ -222,7 +222,7 @@ CREATE TABLE supplierorder (
 	idBusinessPartner	INTEGER		NOT NULL,
 	idEmployee			INTEGER		NOT NULL,
 	orderDate			DATE		NOT NULL,
-	total				NUMBER(9,2),
+	total				NUMBER(12,2),
 	sendDate			DATE,
 	billedDate			DATE,
 	description			VARCHAR2(256),
@@ -242,10 +242,10 @@ CREATE TABLE supplierorder (
 CREATE TABLE supplierorder_article (
 	idSupplierOrder		INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
-	price				NUMBER(9,2)		NOT NULL,
+	price				NUMBER(12,2)	NOT NULL,
 	quantity			INTEGER			NOT NULL,
 	discount			NUMBER(3,3)		NOT NULL,
-	articleTotal		NUMBER(9,2)		NOT NULL,
+	articleTotal		NUMBER(12,2)	NOT NULL,
 	CONSTRAINT pk_supplierorder_article
 		PRIMARY KEY (idSupplierOrder, idArticle),
 	CONSTRAINT fk_supplierorder_article
@@ -273,7 +273,7 @@ CREATE TABLE clientoffer (
 	idBusinessPartner	INTEGER		NOT NULL,
 	idEmployee			INTEGER		NOT NULL,
 	offerDate			DATE		NOT NULL,
-	total				NUMBER(9,2),
+	total				NUMBER(12,2),
 	sendDate			DATE,
 	billedDate			DATE,
 	description			VARCHAR2(256),
@@ -293,11 +293,11 @@ CREATE TABLE clientoffer (
 CREATE TABLE clientoffer_article (
 	idClientOffer		INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
-	priceVat			NUMBER(2,2)		NOT NULL,
-	priceGross			NUMBER(9,2)		NOT NULL,
+	priceVat			NUMBER(5,2)		NOT NULL,
+	priceGross			NUMBER(12,2)	NOT NULL,
 	quantity			INTEGER			NOT NULL,
-	discount			NUMBER(3,3)		NOT NULL,
-	articleTotal		NUMBER(9,2)		NOT NULL,
+	discount			NUMBER(6,3)		NOT NULL,
+	articleTotal		NUMBER(12,2)	NOT NULL,
 	CONSTRAINT pk_clientoffer_article
 		PRIMARY KEY (idClientOffer, idArticle),
 	CONSTRAINT fk_clientoffer_article
