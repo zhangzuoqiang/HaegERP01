@@ -13,5 +13,9 @@
 		<property name="show_sql">true</property>
 		<mapping resource="org/haegerp/entity/Article.hbm.xml"></mapping>
 		<mapping resource="org/haegerp/entity/ArticleCategory.hbm.xml"></mapping>
+		<mapping resource="org/haegerp/entity/BusinessPartner.hbm.xml"></mapping>
+		<mapping resource="org/haegerp/entity/Supplier.hbm.xml"></mapping>
+		<mapping resource="org/haegerp/entity/Client.hbm.xml"></mapping>
+		<mapping resource="org/haegerp/entity/ClientCategory.hbm.xml"></mapping>
 	</session-factory>
 </hibernate-configuration>

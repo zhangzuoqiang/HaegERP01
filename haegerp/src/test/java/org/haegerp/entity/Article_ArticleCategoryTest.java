@@ -64,9 +64,11 @@ public class Article_ArticleCategoryTest extends TestCase {
     //Artikelkategorie Felder
     //Erstellung
     private static String INSERT_AC_NAME = "Essen";
+    private static String INSERT_AC_DESCRIPTION = "Alle sind gut";
     
     //Änderung
     private static String UPDATE_AC_NAME = "Getränke";
+    private static String UPDATE_AC_DESCRIPTION = "Alle sind nicht so gut";
     
     //Abfragen
     //Artikelkategorie
@@ -81,11 +83,12 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test1InsertArticleCategory()
     {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
         
         ArticleCategory articleCategory = new ArticleCategory();
         articleCategory.setName(INSERT_AC_NAME);
+        articleCategory.setDescription(INSERT_AC_DESCRIPTION);
         
+        session.beginTransaction();
         session.save(articleCategory);
         session.getTransaction().commit();
         
@@ -97,7 +100,8 @@ public class Article_ArticleCategoryTest extends TestCase {
         
         articleCategory = (ArticleCategory) query.uniqueResult();
         
-        assertTrue(articleCategory.getName() == INSERT_AC_NAME);
+        assertEquals(articleCategory.getName(), INSERT_AC_NAME);
+        assertEquals(articleCategory.getDescription(), INSERT_AC_DESCRIPTION);
     }
     
     /**
@@ -114,10 +118,10 @@ public class Article_ArticleCategoryTest extends TestCase {
         
         articleCategory = (ArticleCategory) query.uniqueResult();
     	
-        session.beginTransaction();
-        
         articleCategory.setName(UPDATE_AC_NAME);
+        articleCategory.setDescription(UPDATE_AC_DESCRIPTION);
         
+        session.beginTransaction();
         session.merge(articleCategory);
         session.getTransaction().commit();
         
@@ -127,7 +131,8 @@ public class Article_ArticleCategoryTest extends TestCase {
         
         articleCategory = (ArticleCategory) query.uniqueResult();
         
-        assertTrue(articleCategory.getName() == UPDATE_AC_NAME);
+        assertEquals(articleCategory.getName(), UPDATE_AC_NAME);
+        assertEquals(articleCategory.getDescription(), UPDATE_AC_DESCRIPTION);
     }
     
     /**
@@ -143,8 +148,6 @@ public class Article_ArticleCategoryTest extends TestCase {
         
         ArticleCategory articleCategory = (ArticleCategory) query.uniqueResult();
     	
-        session.beginTransaction();
-        
         Article article = new Article();
         
         //Die Felder werden gefüllt
@@ -160,6 +163,7 @@ public class Article_ArticleCategoryTest extends TestCase {
         article.setSizeW(INSERT_A_SIZEW);
         article.setStock(INSERT_A_STOCK);
         
+        session.beginTransaction();
         session.save(article);
         session.getTransaction().commit();
         
@@ -197,8 +201,6 @@ public class Article_ArticleCategoryTest extends TestCase {
         
         Article article = (Article) query.uniqueResult();
     	
-        session.beginTransaction();
-        
         //Die Felder werden geändert
         article.setColor(UPDATE_A_COLOR);
         article.setDescription(UPDATE_A_DESCRIPTION);
@@ -211,6 +213,7 @@ public class Article_ArticleCategoryTest extends TestCase {
         article.setSizeW(UPDATE_A_SIZEW);
         article.setStock(UPDATE_A_STOCK);
         
+        session.beginTransaction();
         session.save(article);
         session.getTransaction().commit();
         

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.BusinessPartner" table="BUSINESSPARTNER">
+		<id name="idBusinessPartner" type="int">
+			<column name="IDBUSINESSPARTNER" not-null="true" />
+			<generator class="increment" />
+		</id>
+		<property name="name" type="string">
+			<column name="NAME" not-null="true" length="100" />
+		</property>
+		<property name="taxId" type="long">
+			<column name="TAXID" not-null="true" precision="15"/>
+		</property>
+		<property name="address" type="string">
+			<column name="ADDRESS" not-null="true" length="100"/>
+		</property>
+		<property name="zipCode" type="string">
+			<column name="ZIPCODE" not-null="true" length="12"/>
+		</property>
+		<property name="city" type="string">
+			<column name="CITY" not-null="true" length="50"/>
+		</property>
+		<property name="region" type="string">
+			<column name="REGION" not-null="false" length="50"/>
+		</property>
+		<property name="country" type="string">
+			<column name="COUNTRY" not-null="true" length="50"/>
+		</property>
+		<property name="phoneNumber" type="string">
+			<column name="PHONENUMBER" not-null="false" length="20"/>
+		</property>
+		<property name="mobileNumber" type="string">
+			<column name="MOBILENUMBER" not-null="false" length="20"/>
+		</property>
+		<property name="faxNumber" type="string">
+			<column name="FAXNUMBER" not-null="false" length="20"/>
+		</property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" not-null="false" length="256" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -11,7 +11,10 @@
 		<property name="name" type="string">
 			<column name="NAME" length="50" not-null="true" />
 		</property>
-		<set name="article" inverse="true">
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="256" not-null="false" />
+		</property>
+		<set name="articles" inverse="true">
 			<key>
 				<column name="idArticleCategory" not-null="true"></column>
 			</key>
