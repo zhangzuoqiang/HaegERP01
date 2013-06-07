@@ -14,6 +14,7 @@ public class BusinessPartner implements Serializable {
 	private String city;
 	private String region;
 	private String country;
+	private String email;
 	private String phoneNumber;
 	private String mobileNumber;
 	private String faxNumber;
@@ -37,6 +38,7 @@ public class BusinessPartner implements Serializable {
 	 * @param city Geschäftspartners Stadt (Erforderlich)
 	 * @param region Geschäftspartners Bundesland
 	 * @param country Geschäftspartners Land (Erforderlich)
+	 * @param email Geschäftspartners Email (Erforderlich)
 	 * @param phoneNumber Geschäftspartners Telefonnummer
 	 * @param mobileNumber Geschäftspartners Handynummer
 	 * @param faxNumber Geschäftspartners Faxnummer
@@ -182,6 +184,22 @@ public class BusinessPartner implements Serializable {
 
 	/**
 	 * 
+	 * @return email - Geschäftspartners Email (Erforderlich)
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * 
+	 * @param email Geschäftspartners Email (Erforderlich)
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * 
 	 * @return phoneNumber - Geschäftspartners Telefonnummer
 	 */
 	public String getPhoneNumber() {
@@ -246,5 +264,27 @@ public class BusinessPartner implements Serializable {
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idBusinessPartner;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BusinessPartner other = (BusinessPartner) obj;
+		if (idBusinessPartner != other.idBusinessPartner)
+			return false;
+		return true;
 	}
 }

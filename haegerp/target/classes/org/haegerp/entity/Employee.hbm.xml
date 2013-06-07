@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.Employee" table="EMPLOYEE">
+		<id name="idEmployee" type="int">
+			<column name="IDEMPLOYEE" not-null="true" />
+			<generator class="increment" />
+		</id>
+		<many-to-one name="salaryCategory" class="org.haegerp.entity.SalaryCategory" fetch="select">
+			<column name="IDSALARYCATEGORY" not-null="true" />
+		</many-to-one>
+		<many-to-one name="division" class="org.haegerp.entity.Division" fetch="select">
+			<column name="IDDIVISION" not-null="true" />
+		</many-to-one>
+		<many-to-one name="userGroup" class="org.haegerp.entity.UserGroup" fetch="select">
+			<column name="IDUSERGROUP" not-null="true" />
+		</many-to-one>
+		<one-to-one name="employeeUser" class="org.haegerp.entity.EmployeeUser" cascade="save-update" />
+		
+		<property name="idCard" type="long">
+			<column name="IDCARD" not-null="true" precision="13"/>
+		</property>
+		<property name="name" type="string">
+			<column name="NAME" not-null="true" length="100"/>
+		</property>
+		<property name="address" type="string">
+			<column name="ADDRESS" not-null="true" length="100"/>
+		</property>
+		<property name="zipCode" type="string">
+			<column name="ZIPCODE" not-null="true" length="15"/>
+		</property>
+		<property name="city" type="string">
+			<column name="CITY" not-null="true" length="30"/>
+		</property>
+		<property name="region" type="string">
+			<column name="REGION" not-null="false" length="30"/>
+		</property>
+		<property name="country" type="string">
+			<column name="COUNTRY" not-null="true" length="30"/>
+		</property>
+		<property name="email" type="string">
+			<column name="EMAIL" not-null="false" length="50"/>
+		</property>
+		<property name="phoneNumber" type="string">
+			<column name="PHONENUMBER" not-null="false" length="20"/>
+		</property>
+		<property name="mobileNumber" type="string">
+			<column name="MOBILENUMBER" not-null="true" length="20"/>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.Division" table="DIVISION">
+		<id name="idDivision" type="int">
+			<column name="IDDIVISION" not-null="true" />
+			<generator class="increment" />
+		</id>
+		<property name="name" type="string">
+			<column name="NAME" length="50" not-null="true" />
+		</property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="256" not-null="false" />
+		</property>
+		<set name="employees" inverse="true">
+			<key>
+				<column name="division" not-null="true"></column>
+			</key>
+			<one-to-many class="org.haegerp.entity.Employee"/>
+		</set>
+	</class>
+</hibernate-mapping>

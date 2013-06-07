@@ -11,11 +11,17 @@
 		<property name="hibernate.connection.password">haegerOracleDatabaseERP</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
 		<property name="show_sql">true</property>
-		<mapping resource="org/haegerp/entity/Article.hbm.xml"></mapping>
-		<mapping resource="org/haegerp/entity/ArticleCategory.hbm.xml"></mapping>
-		<mapping resource="org/haegerp/entity/BusinessPartner.hbm.xml"></mapping>
-		<mapping resource="org/haegerp/entity/Supplier.hbm.xml"></mapping>
-		<mapping resource="org/haegerp/entity/Client.hbm.xml"></mapping>
-		<mapping resource="org/haegerp/entity/ClientCategory.hbm.xml"></mapping>
+		<mapping resource="org/haegerp/entity/Article.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ArticleCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/BusinessPartner.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Supplier.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Client.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ClientCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Permission.hbm.xml" />
+		<mapping resource="org/haegerp/entity/UserGroup.hbm.xml" />
+		<mapping resource="org/haegerp/entity/SalaryCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Division.hbm.xml" />
+		<mapping resource="org/haegerp/entity/EmployeeUser.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Employee.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

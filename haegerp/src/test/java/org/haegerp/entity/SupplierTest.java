@@ -45,6 +45,7 @@ public class SupplierTest extends TestCase {
     private static String INSERT_CITY = "Bonn";
     private static String INSERT_REGION = "Nordrhein-Westfallen";
     private static String INSERT_COUNTRY = "Germany";
+    private static String INSERT_EMAIL = "billing@food4all.de";
     private static String INSERT_PHONENUMBER = "+492281234567";
     private static String INSERT_MOBILENUMBER = "+4917612345678";
     private static String INSERT_FAXNUMBER = "492281234568";
@@ -58,6 +59,7 @@ public class SupplierTest extends TestCase {
     private static String UPDATE_CITY = "Lisbon";
     private static String UPDATE_REGION = "Nordrhein-Westfallen";
     private static String UPDATE_COUNTRY = "Portugal";
+    private static String UPDATE_EMAIL = "order@food4all.de";
     private static String UPDATE_PHONENUMBER = "+351211234567";
     private static String UPDATE_MOBILENUMBER = "+351911234567";
     private static String UPDATE_FAXNUMBER = "+351211234568";
@@ -80,6 +82,7 @@ public class SupplierTest extends TestCase {
     	supplier.setCity(INSERT_CITY);
     	supplier.setRegion(INSERT_REGION);
     	supplier.setCountry(INSERT_COUNTRY);
+    	supplier.setEmail(INSERT_EMAIL);
     	supplier.setPhoneNumber(INSERT_PHONENUMBER);
     	supplier.setMobileNumber(INSERT_MOBILENUMBER);
     	supplier.setFaxNumber(INSERT_FAXNUMBER);
@@ -104,6 +107,7 @@ public class SupplierTest extends TestCase {
         assertEquals(supplier.getCity(), INSERT_CITY);
         assertEquals(supplier.getRegion(), INSERT_REGION);
         assertEquals(supplier.getCountry(), INSERT_COUNTRY);
+        assertEquals(supplier.getEmail(), INSERT_EMAIL);
         assertEquals(supplier.getPhoneNumber(), INSERT_PHONENUMBER);
         assertEquals(supplier.getMobileNumber(), INSERT_MOBILENUMBER);
         assertEquals(supplier.getFaxNumber(), INSERT_FAXNUMBER);
@@ -128,6 +132,7 @@ public class SupplierTest extends TestCase {
     	supplier.setCity(UPDATE_CITY);
     	supplier.setRegion(UPDATE_REGION);
     	supplier.setCountry(UPDATE_COUNTRY);
+    	supplier.setEmail(UPDATE_EMAIL);
     	supplier.setPhoneNumber(UPDATE_PHONENUMBER);
     	supplier.setMobileNumber(UPDATE_MOBILENUMBER);
     	supplier.setFaxNumber(UPDATE_FAXNUMBER);
@@ -151,6 +156,7 @@ public class SupplierTest extends TestCase {
         assertEquals(supplier.getCity(), UPDATE_CITY);
         assertEquals(supplier.getRegion(), UPDATE_REGION);
         assertEquals(supplier.getCountry(), UPDATE_COUNTRY);
+        assertEquals(supplier.getEmail(), UPDATE_EMAIL);
         assertEquals(supplier.getPhoneNumber(), UPDATE_PHONENUMBER);
         assertEquals(supplier.getMobileNumber(), UPDATE_MOBILENUMBER);
         assertEquals(supplier.getFaxNumber(), UPDATE_FAXNUMBER);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.SalaryCategory" table="SALARYCATEGORY">
+		<id name="idSalaryCategory" type="int">
+			<column name="IDSALARYCATEGORY" not-null="true" />
+			<generator class="increment" />
+		</id>
+		<property name="salaryFrom" type="float">
+			<column name="SALARYFROM" precision="9" scale="2" not-null="true" />
+		</property>
+		<property name="salaryTo" type="float">
+			<column name="SALARYTO" precision="9" scale="2" not-null="true" />
+		</property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="256" not-null="false" />
+		</property>
+		<set name="employees" inverse="true">
+			<key>
+				<column name="salaryCategory" not-null="true"></column>
+			</key>
+			<one-to-many class="org.haegerp.entity.Employee"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -82,6 +82,7 @@ CREATE TABLE businesspartner(
 	city				VARCHAR2(50)	NOT NULL,
 	region				VARCHAR2(50),
 	country				VARCHAR2(50)	NOT NULL,
+	email				VARCHAR2(50)	NOT NULL,
 	phoneNumber			VARCHAR2(20),
 	mobileNumber		VARCHAR2(20),
 	faxNumber			VARCHAR2(20),

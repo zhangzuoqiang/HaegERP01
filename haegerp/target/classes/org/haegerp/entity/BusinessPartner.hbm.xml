@@ -29,6 +29,9 @@
 		<property name="country" type="string">
 			<column name="COUNTRY" not-null="true" length="50"/>
 		</property>
+		<property name="email" type="string">
+			<column name="EMAIL" not-null="true" length="50"></column>
+		</property>
 		<property name="phoneNumber" type="string">
 			<column name="PHONENUMBER" not-null="false" length="20"/>
 		</property>

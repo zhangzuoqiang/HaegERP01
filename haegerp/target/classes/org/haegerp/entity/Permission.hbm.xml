@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.Permission" table="PERMISSION">
+		<id name="idPermission" type="int">
+			<column name="IDPERMISSION" not-null="true" />
+			<generator class="increment" />
+		</id>
+		<property name="moduleName" type="string">
+			<column name="MODULENAME" length="50" not-null="true" />
+		</property>
+		<set name="userGroups" inverse="true">
+			<key>
+				<column name="permissions" not-null="true"></column>
+			</key>
+			<many-to-many class="org.haegerp.entity.UserGroup">
+				<column name="IDPERMISSION" not-null="true"></column>
+			</many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
