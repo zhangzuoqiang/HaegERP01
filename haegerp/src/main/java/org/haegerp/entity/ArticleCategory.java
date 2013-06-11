@@ -8,9 +8,16 @@ public class ArticleCategory implements Serializable{
 
 	private static final long serialVersionUID = 4064612947215250133L;
 	
+	//Primary Key (Erforderlich - Automatisch)
 	private int idArticleCategory;
+	
+	//Name von der Artikelkategorie (Erforderlich)
 	private String name;
+	
+	//Artikelkategorie Beschreibung
 	private String description;
+	
+	//(One-To-Many) Artikel, dass angeschlossen werden mit der Artikelkategorie
 	private Set<Article> articles = new HashSet<Article>(0);
 	
 	/**
@@ -19,26 +26,19 @@ public class ArticleCategory implements Serializable{
 	 */
 	public ArticleCategory() {
 	}
-	
+
 	/**
 	 * 
-	 * @param idArticleCategory Primary Key (Erforderlich - Automatisch)
-	 * @param name Name von der Artikelkategorie (Erforderlich)
-	 * @param description Artikelkategorie Beschreibung
-	 * @param articles Artikel, dass angeschlossen werden mit der Artikelkategorie
+	 * @return idArticleCategory - Primary Key (Erforderlich - Automatisch)
 	 */
-	public ArticleCategory(int idArticleCategory, String name,
-			String description, Set<Article> articles) {
-		this.idArticleCategory = idArticleCategory;
-		this.name = name;
-		this.description = description;
-		this.articles = articles;
-	}
-
 	public int getIdArticleCategory() {
 		return idArticleCategory;
 	}
 
+	/**
+	 * 
+	 * @param idArticleCategory Primary Key (Erforderlich - Automatisch)
+	 */
 	public void setIdArticleCategory(int idArticleCategory) {
 		this.idArticleCategory = idArticleCategory;
 	}

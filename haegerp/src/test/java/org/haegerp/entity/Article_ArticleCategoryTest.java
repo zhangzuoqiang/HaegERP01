@@ -1,7 +1,6 @@
 package org.haegerp.entity;
 
 import org.haegerp.util.HibernateUtil;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
@@ -82,26 +81,29 @@ public class Article_ArticleCategoryTest extends TestCase {
      */
     public void test1InsertArticleCategory()
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+	        ArticleCategory articleCategory = new ArticleCategory();
+	        articleCategory.setName(INSERT_AC_NAME);
+	        articleCategory.setDescription(INSERT_AC_DESCRIPTION);
+	        
+	        HibernateUtil.insert(articleCategory, session);
+	        
+	        //Die erstellt Artikelkategorie wird geprüft
+	        QUERY_AC_BY_ID = QUERY_AC_BY_ID + articleCategory.getIdArticleCategory();
+	        
+	        
+	        articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	        
+	        assertEquals(articleCategory.getName(), INSERT_AC_NAME);
+	        assertEquals(articleCategory.getDescription(), INSERT_AC_DESCRIPTION);
         
-        ArticleCategory articleCategory = new ArticleCategory();
-        articleCategory.setName(INSERT_AC_NAME);
-        articleCategory.setDescription(INSERT_AC_DESCRIPTION);
-        
-        session.beginTransaction();
-        session.save(articleCategory);
-        session.getTransaction().commit();
-        
-        //Die erstellt Artikelkategorie wird geprüft
-        session.beginTransaction();
-        QUERY_AC_BY_ID = QUERY_AC_BY_ID + articleCategory.getIdArticleCategory();
-        Query query = session.createQuery(QUERY_AC_BY_ID);
-        session.getTransaction().commit();
-        
-        articleCategory = (ArticleCategory) query.uniqueResult();
-        
-        assertEquals(articleCategory.getName(), INSERT_AC_NAME);
-        assertEquals(articleCategory.getDescription(), INSERT_AC_DESCRIPTION);
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session.isOpen())
+				session.close();
+		}
     }
     
     /**
@@ -110,29 +112,25 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test2UpdateArticleCategory()
     {
     	Session session = HibernateUtil.getSessionFactory().openSession();
-    	session.beginTransaction();
-        Query query = session.createQuery(QUERY_AC_BY_ID);
-        session.getTransaction().commit();
-        
-        ArticleCategory articleCategory = new ArticleCategory();
-        
-        articleCategory = (ArticleCategory) query.uniqueResult();
+    	try {
+    		ArticleCategory articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
     	
-        articleCategory.setName(UPDATE_AC_NAME);
-        articleCategory.setDescription(UPDATE_AC_DESCRIPTION);
+	        articleCategory.setName(UPDATE_AC_NAME);
+	        articleCategory.setDescription(UPDATE_AC_DESCRIPTION);
+	        
+	        HibernateUtil.update(articleCategory, session);
         
-        session.beginTransaction();
-        session.merge(articleCategory);
-        session.getTransaction().commit();
+	        articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	        
+	        assertEquals(articleCategory.getName(), UPDATE_AC_NAME);
+	        assertEquals(articleCategory.getDescription(), UPDATE_AC_DESCRIPTION);
         
-        session.beginTransaction();
-        query = session.createQuery(QUERY_AC_BY_ID);
-        session.getTransaction().commit();
-        
-        articleCategory = (ArticleCategory) query.uniqueResult();
-        
-        assertEquals(articleCategory.getName(), UPDATE_AC_NAME);
-        assertEquals(articleCategory.getDescription(), UPDATE_AC_DESCRIPTION);
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session.isOpen())
+				session.close();
+		}
     }
     
     /**
@@ -140,99 +138,93 @@ public class Article_ArticleCategoryTest extends TestCase {
      */
     public void test3InsertArticle(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
-    	
-    	//Die Artikelkategorie wird geholt
-    	session.beginTransaction();
-        Query query = session.createQuery(QUERY_AC_BY_ID);
-        session.getTransaction().commit();
+    	try {
+	    	//Die Artikelkategorie wird geholt
+	        ArticleCategory articleCategory = (ArticleCategory)HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	    	
+	        Article article = new Article();
         
-        ArticleCategory articleCategory = (ArticleCategory) query.uniqueResult();
-    	
-        Article article = new Article();
+	        //Die Felder werden gefüllt
+	        article.setArticleCategory(articleCategory);
+	        article.setColor(INSERT_A_COLOR);
+	        article.setDescription(INSERT_A_DESCRIPTION);
+	        article.setEan(INSERT_A_EAN);
+	        article.setName(INSERT_A_NAME);
+	        article.setPriceGross(INSERT_A_PRICEGROSS);
+	        article.setPriceVat(INSERT_A_PRICEVAT);
+	        article.setSizeH(INSERT_A_SIZEH);
+	        article.setSizeL(INSERT_A_SIZEL);
+	        article.setSizeW(INSERT_A_SIZEW);
+	        article.setStock(INSERT_A_STOCK);
+	        
+	        HibernateUtil.insert(article, session);
+	        
+	        //Der erstellter Artikel wird geprüft
+	        QUERY_A_BY_ID = QUERY_A_BY_ID + article.getIdArticle();
+	        
+	        article = (Article)HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	        
+	        assertEquals(article.getColor(), INSERT_A_COLOR);
+	        assertEquals(article.getDescription(), INSERT_A_DESCRIPTION);
+	        assertEquals(article.getEan(), INSERT_A_EAN);
+	        assertEquals(article.getName(), INSERT_A_NAME);
+	        assertEquals(article.getPriceGross(), INSERT_A_PRICEGROSS);
+	        assertEquals(article.getPriceVat(), INSERT_A_PRICEVAT);
+	        assertEquals(article.getSizeH(), INSERT_A_SIZEH);
+	        assertEquals(article.getSizeL(), INSERT_A_SIZEL);
+	        assertEquals(article.getSizeW(), INSERT_A_SIZEW);
+	        assertEquals(article.getArticleCategory(), articleCategory);
         
-        //Die Felder werden gefüllt
-        article.setArticleCategory(articleCategory);
-        article.setColor(INSERT_A_COLOR);
-        article.setDescription(INSERT_A_DESCRIPTION);
-        article.setEan(INSERT_A_EAN);
-        article.setName(INSERT_A_NAME);
-        article.setPriceGross(INSERT_A_PRICEGROSS);
-        article.setPriceVat(INSERT_A_PRICEVAT);
-        article.setSizeH(INSERT_A_SIZEH);
-        article.setSizeL(INSERT_A_SIZEL);
-        article.setSizeW(INSERT_A_SIZEW);
-        article.setStock(INSERT_A_STOCK);
-        
-        session.beginTransaction();
-        session.save(article);
-        session.getTransaction().commit();
-        
-        //Der erstellter Artikel wird geprüft
-        session.beginTransaction();
-        QUERY_A_BY_ID = QUERY_A_BY_ID + article.getIdArticle();
-        query = session.createQuery(QUERY_A_BY_ID);
-        session.getTransaction().commit();
-        
-        article = (Article) query.uniqueResult();
-        
-        assertEquals(article.getColor(), INSERT_A_COLOR);
-        assertEquals(article.getDescription(), INSERT_A_DESCRIPTION);
-        assertEquals(article.getEan(), INSERT_A_EAN);
-        assertEquals(article.getName(), INSERT_A_NAME);
-        assertEquals(article.getPriceGross(), INSERT_A_PRICEGROSS);
-        assertEquals(article.getPriceVat(), INSERT_A_PRICEVAT);
-        assertEquals(article.getSizeH(), INSERT_A_SIZEH);
-        assertEquals(article.getSizeL(), INSERT_A_SIZEL);
-        assertEquals(article.getSizeW(), INSERT_A_SIZEW);
-        assertEquals(article.getArticleCategory(), articleCategory);
-        
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session.isOpen())
+				session.close();
+		}
     }
-    
+
     /**
      * Der letzter Artikel wird geändert
      */
     public void test4UpdateArticle(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
     	
-    	//Die Artikelkategorie wird geholt
-    	session.beginTransaction();
-        Query query = session.createQuery(QUERY_A_BY_ID);
-        session.getTransaction().commit();
-        
-        Article article = (Article) query.uniqueResult();
-    	
-        //Die Felder werden geändert
-        article.setColor(UPDATE_A_COLOR);
-        article.setDescription(UPDATE_A_DESCRIPTION);
-        article.setEan(UPDATE_A_EAN);
-        article.setName(UPDATE_A_NAME);
-        article.setPriceGross(UPDATE_A_PRICEGROSS);
-        article.setPriceVat(UPDATE_A_PRICEVAT);
-        article.setSizeH(UPDATE_A_SIZEH);
-        article.setSizeL(UPDATE_A_SIZEL);
-        article.setSizeW(UPDATE_A_SIZEW);
-        article.setStock(UPDATE_A_STOCK);
-        
-        session.beginTransaction();
-        session.save(article);
-        session.getTransaction().commit();
-        
-        //Der geänderter Artikel wird geprüft
-        session.beginTransaction();
-        query = session.createQuery(QUERY_A_BY_ID);
-        session.getTransaction().commit();
-        
-        article = (Article) query.uniqueResult();
-        
-        assertEquals(article.getColor(), UPDATE_A_COLOR);
-        assertEquals(article.getDescription(), UPDATE_A_DESCRIPTION);
-        assertEquals(article.getEan(), UPDATE_A_EAN);
-        assertEquals(article.getName(), UPDATE_A_NAME);
-        assertEquals(article.getPriceGross(), UPDATE_A_PRICEGROSS);
-        assertEquals(article.getPriceVat(), UPDATE_A_PRICEVAT);
-        assertEquals(article.getSizeH(), UPDATE_A_SIZEH);
-        assertEquals(article.getSizeL(), UPDATE_A_SIZEL);
-        assertEquals(article.getSizeW(), UPDATE_A_SIZEW);
+    	try {
+	    	//Die Artikelkategorie wird geholt
+	        Article article = (Article) HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	    	
+	        //Die Felder werden geändert
+	        article.setColor(UPDATE_A_COLOR);
+	        article.setDescription(UPDATE_A_DESCRIPTION);
+	        article.setEan(UPDATE_A_EAN);
+	        article.setName(UPDATE_A_NAME);
+	        article.setPriceGross(UPDATE_A_PRICEGROSS);
+	        article.setPriceVat(UPDATE_A_PRICEVAT);
+	        article.setSizeH(UPDATE_A_SIZEH);
+	        article.setSizeL(UPDATE_A_SIZEL);
+	        article.setSizeW(UPDATE_A_SIZEW);
+	        article.setStock(UPDATE_A_STOCK);
+	        
+	        HibernateUtil.insert(article, session);
+	        
+	        //Der geänderter Artikel wird geprüft
+	        article = (Article) HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	        
+	        assertEquals(article.getColor(), UPDATE_A_COLOR);
+	        assertEquals(article.getDescription(), UPDATE_A_DESCRIPTION);
+	        assertEquals(article.getEan(), UPDATE_A_EAN);
+	        assertEquals(article.getName(), UPDATE_A_NAME);
+	        assertEquals(article.getPriceGross(), UPDATE_A_PRICEGROSS);
+	        assertEquals(article.getPriceVat(), UPDATE_A_PRICEVAT);
+	        assertEquals(article.getSizeH(), UPDATE_A_SIZEH);
+	        assertEquals(article.getSizeL(), UPDATE_A_SIZEL);
+	        assertEquals(article.getSizeW(), UPDATE_A_SIZEW);
+    	} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session.isOpen())
+				session.close();
+		}
     }
     
     /**
@@ -240,23 +232,21 @@ public class Article_ArticleCategoryTest extends TestCase {
      */
     public void test5DeleteArticle(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
-    	session.beginTransaction();
-        Query query = session.createQuery(QUERY_A_BY_ID);
-        session.getTransaction().commit();
-        
-        Article article = (Article) query.uniqueResult();
-    	
-        session.beginTransaction();
-        session.delete(article);
-        session.getTransaction().commit();
-        
-        //Suchen noch einmal
-        session.beginTransaction();
-        query = session.createQuery(QUERY_A_BY_ID);
-        session.getTransaction().commit();
-        
-        //keine Aufzeichnung gefunden
-        assertTrue(query.list().isEmpty());
+    	try {
+	        Article article = (Article) HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	    	
+	        HibernateUtil.delete(article, session);
+	        
+	        //Suchen noch einmal und keine Aufzeichnung gefunden
+	        session.update(article);
+	        assertTrue(HibernateUtil.selectList(QUERY_A_BY_ID, session).isEmpty());
+	        System.out.println(((Article)HibernateUtil.selectList(QUERY_A_BY_ID, session).get(0)).getDescription());
+    	} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session.isOpen())
+				session.close();
+		}
     }
     
     /**
@@ -265,22 +255,18 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test6DeleteArticleCategory()
     {
     	Session session = HibernateUtil.getSessionFactory().openSession();
-    	session.beginTransaction();
-        Query query = session.createQuery(QUERY_AC_BY_ID);
-        session.getTransaction().commit();
-        
-        ArticleCategory articleCategory = (ArticleCategory) query.uniqueResult();
-    	
-        session.beginTransaction();
-        session.delete(articleCategory);
-        session.getTransaction().commit();
-        
-        //Suchen noch einmal
-        session.beginTransaction();
-        query = session.createQuery(QUERY_AC_BY_ID);
-        session.getTransaction().commit();
-        
-        //keine Aufzeichnung gefunden
-        assertTrue(query.list().isEmpty());
+    	try {
+	        ArticleCategory articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	    	
+	        HibernateUtil.delete(articleCategory, session);
+	        
+	        //Suchen noch einmal und keine Aufzeichnung gefunden
+	        assertTrue(HibernateUtil.selectList(QUERY_AC_BY_ID, session).isEmpty());
+	    } catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session.isOpen())
+				session.close();
+		}
     }
 }

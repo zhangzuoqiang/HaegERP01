@@ -8,9 +8,16 @@ public class ClientCategory implements Serializable {
 
 	private static final long serialVersionUID = -4809347561860652303L;
 
+	//Primary Key (Erforderlich - Automatisch)
 	private int idClientCategory;
+	
+	//Name von der Artikelkategorie (Erforderlich)
 	private String name;
+	
+	//Kundenkategorie Beschreibung
 	private String description;
+	
+	//(One-To-Many) Kunden, dass angeschlossen werden mit der Kundenkategorie
 	private Set<Client> clients = new HashSet<Client>(0);
 	
 	/**
@@ -22,24 +29,16 @@ public class ClientCategory implements Serializable {
 	
 	/**
 	 * 
-	 * @param idClientCategory Primary Key (Erforderlich - Automatisch)
-	 * @param name Name von der Artikelkategorie (Erforderlich)
-	 * @param description Kundenkategorie Beschreibung
-	 * @param clients Kunden, dass angeschlossen werden mit der Kundenkategorie
+	 * @return idClientCategory - Primary Key (Erforderlich - Automatisch)
 	 */
-	public ClientCategory(int idClientCategory, String name,
-			String description, Set<Client> clients) {
-		super();
-		this.idClientCategory = idClientCategory;
-		this.name = name;
-		this.description = description;
-		this.clients = clients;
-	}
-	
 	public int getIdClientCategory() {
 		return idClientCategory;
 	}
 
+	/**
+	 * 
+	 * @param idClientCategory Primary Key (Erforderlich - Automatisch)
+	 */
 	public void setIdClientCategory(int idClientCategory) {
 		this.idClientCategory = idClientCategory;
 	}

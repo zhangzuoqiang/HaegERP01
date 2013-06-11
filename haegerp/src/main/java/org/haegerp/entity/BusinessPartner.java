@@ -6,18 +6,43 @@ public class BusinessPartner implements Serializable {
 
 	private static final long serialVersionUID = 1526098575049425791L;
 
+	//Primary Key (Erforderlich - Automatisch)
 	private int idBusinessPartner;
+	
+	//Geschäftspartners Name (Erforderlich)
 	private String name;
+	
+	//Geschäftspartners Steuernummer (Erforderlich)
 	private long taxId;
+	
+	//Geschäftspartners Adresse (Erforderlich)
 	private String address;
+	
+	//Geschäftspartners Postleitzahl (Erforderlich)
 	private String zipCode;
+	
+	//Geschäftspartners Stadt (Erforderlich)
 	private String city;
+	
+	//Geschäftspartners Bundesland
 	private String region;
+	
+	//Geschäftspartners Land (Erforderlich)
 	private String country;
+	
+	//Geschäftspartners Email (Erforderlich)
 	private String email;
+	
+	//Geschäftspartners Telefonnummer
 	private String phoneNumber;
+	
+	//Geschäftspartners Handynummer
 	private String mobileNumber;
+	
+	//Geschäftspartners Faxnummer
 	private String faxNumber;
+	
+	//Geschäftspartners Beschreibung
 	private String description;
 	
 	/**
@@ -28,44 +53,17 @@ public class BusinessPartner implements Serializable {
 	}
 	
 	/**
-	 * Konstruktor, dass benutzt wird vom Hibernate
 	 * 
-	 * @param idBusinessPartner Primary Key (Erforderlich - Automatisch)
-	 * @param name Geschäftspartners Name (Erforderlich)
-	 * @param taxId Geschäftspartners Steuernummer (Erforderlich)
-	 * @param address Geschäftspartners Adresse (Erforderlich)
-	 * @param zipCode Geschäftspartners Postleitzahl (Erforderlich)
-	 * @param city Geschäftspartners Stadt (Erforderlich)
-	 * @param region Geschäftspartners Bundesland
-	 * @param country Geschäftspartners Land (Erforderlich)
-	 * @param email Geschäftspartners Email (Erforderlich)
-	 * @param phoneNumber Geschäftspartners Telefonnummer
-	 * @param mobileNumber Geschäftspartners Handynummer
-	 * @param faxNumber Geschäftspartners Faxnummer
-	 * @param description Geschäftspartners Beschreibung
+	 * @return idBusinessPartners - Primary Key (Erforderlich - Automatisch)
 	 */
-	public BusinessPartner(int idBusinessPartner, String name, long taxId,
-			String address, String zipCode, String city, String region,
-			String country, String phoneNumber, String mobileNumber,
-			String faxNumber, String description) {
-		this.idBusinessPartner = idBusinessPartner;
-		this.name = name;
-		this.taxId = taxId;
-		this.address = address;
-		this.zipCode = zipCode;
-		this.city = city;
-		this.region = region;
-		this.country = country;
-		this.phoneNumber = phoneNumber;
-		this.mobileNumber = mobileNumber;
-		this.faxNumber = faxNumber;
-		this.description = description;
-	}
-
 	public int getIdBusinessPartner() {
 		return idBusinessPartner;
 	}
 
+	/**
+	 * 
+	 * @param idBusinessPartner Primary Key (Erforderlich - Automatisch)
+	 */
 	public void setIdBusinessPartner(int idBusinessPartner) {
 		this.idBusinessPartner = idBusinessPartner;
 	}

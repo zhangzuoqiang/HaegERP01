@@ -8,10 +8,19 @@ public class UserGroup implements Serializable {
 
 	private static final long serialVersionUID = -2312054737177420461L;
 
+	//Primary Key (Erforderlich - Automatisch)
 	private int idUserGroup;
+	
+	//Name der Benutzergruppe
 	private String name;
+	
+	//Benutzergruppe Beschreibung
 	private String description;
+	
+	//(One-To-Many) Mitarbeiter, dass hier gehört
 	private Set<Employee> employees = new HashSet<Employee>(0);
+	
+	//(Many-To-Many) Erlaubnisse, dass angeschlossen werden mit der Benutzergruppe
 	private Set<Permission> permissions = new HashSet<Permission>(0);
 	
 	/**
@@ -21,22 +30,6 @@ public class UserGroup implements Serializable {
 	public UserGroup() {
 	}
 	
-	/**
-	 * 
-	 * @param idUserGroup Primary Key (Erforderlich - Automatisch)
-	 * @param name Name der Benutzergruppe
-	 * @param description Benutzergruppe Beschreibung
-	 * @param employees Mitarbeiter, dass hier gehört
-	 * @param permissions Erlaubnisse, dass angeschlossen werden mit der Benutzergruppe
-	 */
-	public UserGroup(int idUserGroup, String name, String description,
-			Set<Permission> permissions) {
-		this.idUserGroup = idUserGroup;
-		this.name = name;
-		this.description = description;
-		this.permissions = permissions;
-	}
-
 	/**
 	 * 
 	 * @return idUserGroup - Primary Key (Erforderlich - Automatisch)

@@ -8,9 +8,16 @@ public class Division implements Serializable {
 
 	private static final long serialVersionUID = 423295763797533848L;
 
+	//Primary Key (Erforderlich - Automatisch)
 	private int idDivision;
+	
+	//Name des Divisions
 	private String name;
+	
+	//Division Beschreibung
 	private String description;
+	
+	//(One-To-Many) Mitarbeiter, dass hier gehört
 	private Set<Employee> employees = new HashSet<Employee>(0);
 	
 	/**
@@ -22,10 +29,10 @@ public class Division implements Serializable {
 
 	/**
 	 * 
-	 * @param idDivision Primary Key (Erforderlich - Automatisch)
-	 * @param name Name des Divisions
-	 * @param description Division Beschreibung
-	 * @param employees Mitarbeiter, dass hier gehört
+	 * @param idDivision 
+	 * @param name 
+	 * @param description 
+	 * @param employees 
 	 */
 	public Division(int idDivision, String name, String description,
 			Set<Employee> employees) {

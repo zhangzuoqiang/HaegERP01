@@ -2,21 +2,49 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Wolf
+ *
+ */
 public class Article implements Serializable{
 
 	private static final long serialVersionUID = 5903001912808144518L;
 	
+	//Primary Key (Erforderlich - Automatisch)
 	private int idArticle;
+	
+	//(Many-To-One) Kategorie, dass Artikel gehört (Erforderlich)
 	private ArticleCategory articleCategory;
+	
+	//Artikels EAN (Erforderlich)
 	private long ean;
+	
+	//Artikels Name (Erforderlich)
 	private String name;
+	
+	//Artikels MwSt Preis
 	private float priceVat;
+	
+	//Artikels Bruttopreis
 	private float priceGross;
+	
+	//Artikels Lager
 	private int stock;
+	
+	//Artikels Farbe
 	private String color;
+	
+	//Artikels Höhegröße
 	private float sizeH;
+	
+	//Artikels Längegröße
 	private float sizeL;
+	
+	//Artikels Breitegröße
 	private float sizeW;
+	
+	//Artikels Beschreibung
 	private String description;
 	
 	/**
@@ -26,40 +54,6 @@ public class Article implements Serializable{
 	public Article() {
 	}
 	
-	/**
-	 * Konstruktor, dass benutzt wird vom Hibernate
-	 * 
-	 * @param idArticle Primary Key (Erforderlich - Automatisch)
-	 * @param articleCategory Kategorie, dass Artikel gehört (Erforderlich)
-	 * @param ean Artikels EAN (Erforderlich)
-	 * @param name Artikels Name (Erforderlich)
-	 * @param priceVat Artikels MwSt Preis
-	 * @param priceGross Artikels Nettopreis
-	 * @param stock Artikels Lager
-	 * @param color Artikels Farbe
-	 * @param sizeH Artikels Höhegröße
-	 * @param sizeL Artikels Längegröße
-	 * @param sizeW Artikels Breitegröße
-	 * @param description Artikels Beschreibung
-	 */
-	public Article(int idArticle, ArticleCategory articleCategory, long ean,
-			String name, float priceVat, float priceGross, int stock,
-			String color, float sizeH, float sizeL, float sizeW,
-			String description) {
-		this.idArticle = idArticle;
-		this.articleCategory = articleCategory;
-		this.ean = ean;
-		this.name = name;
-		this.priceVat = priceVat;
-		this.priceGross = priceGross;
-		this.stock = stock;
-		this.color = color;
-		this.sizeH = sizeH;
-		this.sizeL = sizeL;
-		this.sizeW = sizeW;
-		this.description = description;
-	}
-
 	public int getIdArticle() {
 		return idArticle;
 	}

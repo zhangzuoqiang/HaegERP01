@@ -6,9 +6,13 @@ public class EmployeeUser implements Serializable {
 	
 	private static final long serialVersionUID = -7802167683974129599L;
 	
+	//Primary Key (Erforderlich - Automatisch)
 	private int idEmployee;
+	//Benutzername vom Mitarbeiter (Erforderlich)
 	private String username;
+	//Kennwort vom Mitarbeiter (Erforderlich)
 	private String password;
+	//(One-To-One) Mitarbeiter, dass angeschlossen wird mit der Benutzerangabe
 	private Employee employee;
 	
 	/**
@@ -16,21 +20,6 @@ public class EmployeeUser implements Serializable {
 	 * Ideal für eine neue Benutzerangabe
 	 */
 	public EmployeeUser() {
-	}
-
-	/**
-	 * 
-	 * @param idEmployee Primary Key (Erforderlich - Automatisch)
-	 * @param username Benutzername vom Mitarbeiter (Erforderlich)
-	 * @param password Kennwort vom Mitarbeiter (Erforderlich)
-	 * @param employee Mitarbeiter, dass angeschlossen wird mit der Benutzerangabe
-	 */
-	public EmployeeUser(int idEmployee, String username, String password,
-			Employee employee) {
-		this.idEmployee = idEmployee;
-		this.username = username;
-		this.password = password;
-		this.employee = employee;
 	}
 
 	/**

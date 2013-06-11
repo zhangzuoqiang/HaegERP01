@@ -1,7 +1,6 @@
 package org.haegerp.entity;
 
 import org.haegerp.util.HibernateUtil;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
@@ -73,45 +72,45 @@ public class SupplierTest extends TestCase {
      */
     public void test1InsertSupplier(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
-        
-    	Supplier supplier = new Supplier();
-    	supplier.setName(INSERT_NAME);
-    	supplier.setTaxId(INSERT_TAXID);
-    	supplier.setAddress(INSERT_ADDRESS);
-    	supplier.setZipCode(INSERT_ZIPCODE);
-    	supplier.setCity(INSERT_CITY);
-    	supplier.setRegion(INSERT_REGION);
-    	supplier.setCountry(INSERT_COUNTRY);
-    	supplier.setEmail(INSERT_EMAIL);
-    	supplier.setPhoneNumber(INSERT_PHONENUMBER);
-    	supplier.setMobileNumber(INSERT_MOBILENUMBER);
-    	supplier.setFaxNumber(INSERT_FAXNUMBER);
-    	supplier.setDescription(INSERT_DESCRIPTION);
-    	
-    	session.beginTransaction();
-    	session.save(supplier);
-        session.getTransaction().commit();
-        
-        //Die erstellt Artikelkategorie wird geprüft
-        session.beginTransaction();
-        QUERY_BY_ID = QUERY_BY_ID + supplier.getIdBusinessPartner();
-        Query query = session.createQuery(QUERY_BY_ID);
-        session.getTransaction().commit();
-        
-        supplier = (Supplier) query.uniqueResult();
-        
-        assertEquals(supplier.getName(), INSERT_NAME);
-        assertEquals(supplier.getTaxId(), INSERT_TAXID);
-        assertEquals(supplier.getAddress(), INSERT_ADDRESS);
-        assertEquals(supplier.getZipCode(), INSERT_ZIPCODE);
-        assertEquals(supplier.getCity(), INSERT_CITY);
-        assertEquals(supplier.getRegion(), INSERT_REGION);
-        assertEquals(supplier.getCountry(), INSERT_COUNTRY);
-        assertEquals(supplier.getEmail(), INSERT_EMAIL);
-        assertEquals(supplier.getPhoneNumber(), INSERT_PHONENUMBER);
-        assertEquals(supplier.getMobileNumber(), INSERT_MOBILENUMBER);
-        assertEquals(supplier.getFaxNumber(), INSERT_FAXNUMBER);
-        assertEquals(supplier.getDescription(), INSERT_DESCRIPTION);
+        try {
+	    	Supplier supplier = new Supplier();
+	    	supplier.setName(INSERT_NAME);
+	    	supplier.setTaxId(INSERT_TAXID);
+	    	supplier.setAddress(INSERT_ADDRESS);
+	    	supplier.setZipCode(INSERT_ZIPCODE);
+	    	supplier.setCity(INSERT_CITY);
+	    	supplier.setRegion(INSERT_REGION);
+	    	supplier.setCountry(INSERT_COUNTRY);
+	    	supplier.setEmail(INSERT_EMAIL);
+	    	supplier.setPhoneNumber(INSERT_PHONENUMBER);
+	    	supplier.setMobileNumber(INSERT_MOBILENUMBER);
+	    	supplier.setFaxNumber(INSERT_FAXNUMBER);
+	    	supplier.setDescription(INSERT_DESCRIPTION);
+	    	
+	    	HibernateUtil.insert(supplier, session);
+	        
+	        //Die erstellt Artikelkategorie wird geprüft
+	    	QUERY_BY_ID = QUERY_BY_ID + supplier.getIdBusinessPartner();
+	        supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	        
+	        assertEquals(supplier.getName(), INSERT_NAME);
+	        assertEquals(supplier.getTaxId(), INSERT_TAXID);
+	        assertEquals(supplier.getAddress(), INSERT_ADDRESS);
+	        assertEquals(supplier.getZipCode(), INSERT_ZIPCODE);
+	        assertEquals(supplier.getCity(), INSERT_CITY);
+	        assertEquals(supplier.getRegion(), INSERT_REGION);
+	        assertEquals(supplier.getCountry(), INSERT_COUNTRY);
+	        assertEquals(supplier.getEmail(), INSERT_EMAIL);
+	        assertEquals(supplier.getPhoneNumber(), INSERT_PHONENUMBER);
+	        assertEquals(supplier.getMobileNumber(), INSERT_MOBILENUMBER);
+	        assertEquals(supplier.getFaxNumber(), INSERT_FAXNUMBER);
+	        assertEquals(supplier.getDescription(), INSERT_DESCRIPTION);
+	    } catch (Exception ex) {
+	    	ex.printStackTrace();
+	    } finally {
+	    	if (session.isOpen())
+	    		session.close();
+	    }
     }
     
     /**
@@ -119,48 +118,45 @@ public class SupplierTest extends TestCase {
      */
     public void test2UpdateSupplier(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery(QUERY_BY_ID);
-        session.getTransaction().commit();
-        
-        Supplier supplier = (Supplier) query.uniqueResult();
-        
-    	supplier.setName(UPDATE_NAME);
-    	supplier.setTaxId(UPDATE_TAXID);
-    	supplier.setAddress(UPDATE_ADDRESS);
-    	supplier.setZipCode(UPDATE_ZIPCODE);
-    	supplier.setCity(UPDATE_CITY);
-    	supplier.setRegion(UPDATE_REGION);
-    	supplier.setCountry(UPDATE_COUNTRY);
-    	supplier.setEmail(UPDATE_EMAIL);
-    	supplier.setPhoneNumber(UPDATE_PHONENUMBER);
-    	supplier.setMobileNumber(UPDATE_MOBILENUMBER);
-    	supplier.setFaxNumber(UPDATE_FAXNUMBER);
-    	supplier.setDescription(UPDATE_DESCRIPTION);
-    	
-    	session.beginTransaction();
-    	session.update(supplier);
-        session.getTransaction().commit();
-        
-        //Die erstellt Artikelkategorie wird geprüft
-        session.beginTransaction();
-        query = session.createQuery(QUERY_BY_ID);
-        session.getTransaction().commit();
-        
-        supplier = (Supplier) query.uniqueResult();
-        
-        assertEquals(supplier.getName(), UPDATE_NAME);
-        assertEquals(supplier.getTaxId(), UPDATE_TAXID);
-        assertEquals(supplier.getAddress(), UPDATE_ADDRESS);
-        assertEquals(supplier.getZipCode(), UPDATE_ZIPCODE);
-        assertEquals(supplier.getCity(), UPDATE_CITY);
-        assertEquals(supplier.getRegion(), UPDATE_REGION);
-        assertEquals(supplier.getCountry(), UPDATE_COUNTRY);
-        assertEquals(supplier.getEmail(), UPDATE_EMAIL);
-        assertEquals(supplier.getPhoneNumber(), UPDATE_PHONENUMBER);
-        assertEquals(supplier.getMobileNumber(), UPDATE_MOBILENUMBER);
-        assertEquals(supplier.getFaxNumber(), UPDATE_FAXNUMBER);
-        assertEquals(supplier.getDescription(), UPDATE_DESCRIPTION);
+    	try {
+	        Supplier supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	        
+	    	supplier.setName(UPDATE_NAME);
+	    	supplier.setTaxId(UPDATE_TAXID);
+	    	supplier.setAddress(UPDATE_ADDRESS);
+	    	supplier.setZipCode(UPDATE_ZIPCODE);
+	    	supplier.setCity(UPDATE_CITY);
+	    	supplier.setRegion(UPDATE_REGION);
+	    	supplier.setCountry(UPDATE_COUNTRY);
+	    	supplier.setEmail(UPDATE_EMAIL);
+	    	supplier.setPhoneNumber(UPDATE_PHONENUMBER);
+	    	supplier.setMobileNumber(UPDATE_MOBILENUMBER);
+	    	supplier.setFaxNumber(UPDATE_FAXNUMBER);
+	    	supplier.setDescription(UPDATE_DESCRIPTION);
+	    	
+	    	HibernateUtil.update(supplier, session);
+	        
+	        //Die erstellt Artikelkategorie wird geprüft
+	        supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	        
+	        assertEquals(supplier.getName(), UPDATE_NAME);
+	        assertEquals(supplier.getTaxId(), UPDATE_TAXID);
+	        assertEquals(supplier.getAddress(), UPDATE_ADDRESS);
+	        assertEquals(supplier.getZipCode(), UPDATE_ZIPCODE);
+	        assertEquals(supplier.getCity(), UPDATE_CITY);
+	        assertEquals(supplier.getRegion(), UPDATE_REGION);
+	        assertEquals(supplier.getCountry(), UPDATE_COUNTRY);
+	        assertEquals(supplier.getEmail(), UPDATE_EMAIL);
+	        assertEquals(supplier.getPhoneNumber(), UPDATE_PHONENUMBER);
+	        assertEquals(supplier.getMobileNumber(), UPDATE_MOBILENUMBER);
+	        assertEquals(supplier.getFaxNumber(), UPDATE_FAXNUMBER);
+	        assertEquals(supplier.getDescription(), UPDATE_DESCRIPTION);
+    	} catch (Exception ex) {
+	    	ex.printStackTrace();
+	    } finally {
+	    	if (session.isOpen())
+	    		session.close();
+	    }
     }
     
     /**
@@ -169,22 +165,18 @@ public class SupplierTest extends TestCase {
     public void test3DeleteSupplier()
     {
     	Session session = HibernateUtil.getSessionFactory().openSession();
-    	session.beginTransaction();
-        Query query = session.createQuery(QUERY_BY_ID);
-        session.getTransaction().commit();
-        
-        Supplier supplier = (Supplier) query.uniqueResult();
-    	
-        session.beginTransaction();
-        session.delete(supplier);
-        session.getTransaction().commit();
-        
-        //Suchen noch einmal
-        session.beginTransaction();
-        query = session.createQuery(QUERY_BY_ID);
-        session.getTransaction().commit();
-        
-        //keine Aufzeichnung gefunden
-        assertTrue(query.list().isEmpty());
+    	try {
+	        Supplier supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	    	
+	        HibernateUtil.delete(supplier, session);
+	        
+	        //Suchen noch einmal und keine Aufzeichnung gefunden
+	        assertTrue(HibernateUtil.selectList(QUERY_BY_ID, session).isEmpty());
+    	} catch (Exception ex) {
+	    	ex.printStackTrace();
+	    } finally {
+	    	if (session.isOpen())
+	    		session.close();
+	    }
     }
 }

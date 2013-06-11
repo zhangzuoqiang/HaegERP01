@@ -8,10 +8,19 @@ public class SalaryCategory implements Serializable {
 
 	private static final long serialVersionUID = 5718511347777083718L;
 	
+	//Primary Key (Erforderlich - Automatisch)
 	private int idSalaryCategory;
+
+	//Gehalt Minimum
 	private float salaryFrom;
+	
+	//Gehalt Maximal
 	private float salaryTo;
+	
+	//Gehaltkategorie Beschreibung
 	private String description;
+	
+	//Mitarbeiter, dass hier gehört
 	private Set<Employee> employees = new HashSet<Employee>(0);
 	
 	/**
@@ -21,24 +30,6 @@ public class SalaryCategory implements Serializable {
 	public SalaryCategory() {
 	}
 	
-	/**
-	 * 
-	 * 
-	 * @param idSalaryCategory Primary Key (Erforderlich - Automatisch)
-	 * @param salaryFrom Gehalt Minimum
-	 * @param salaryTo Gehalt Maximal
-	 * @param employees Mitarbeiter, dass hier gehört
-	 * @param description Gehaltkategorie Beschreibung
-	 */
-	public SalaryCategory(int idSalaryCategory, float salaryFrom,
-			float salaryTo, Set<Employee> employees, String description) {
-		this.idSalaryCategory = idSalaryCategory;
-		this.salaryFrom = salaryFrom;
-		this.salaryTo = salaryTo;
-		this.setEmployees(employees);
-		this.description = description;
-	}
-
 	/**
 	 * 
 	 * @return idSalaryCategory - Primary Key (Erforderlich - Automatisch)

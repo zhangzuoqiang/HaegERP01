@@ -6,20 +6,35 @@ public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 925767297886028673L;
 
+	//Primary Key (Erforderlich - Automatisch)
 	private int idEmployee;
+	//(Many-To-One) Gehaltkategorie, dass Mitarbeiter gehört (Erforderlich)
 	private SalaryCategory salaryCategory;
+	//(Many-To-One) Division, dass Mitarbeiter gehört (Erforderlich)
 	private Division division;
+	//(Many-To-One) Benutzergruppe, dass Mitarbeiter gehört (Erforderlich)
 	private UserGroup userGroup;
+	//(One-To-One) Benutzers Angaben (Erforderlich)
 	private EmployeeUser employeeUser;
+	//Ausweisnummer vom Mitarbeiter (Erforderlich)
 	private long idCard;
+	//Name vom Mitarbeiter (Erforderlich)
 	private String name;
+	//Adresse vom Mitarbeiter (Erforderlich)
 	private String address;
+	//Postleitzahl von der Adresse des Mitarbeiter (Erforderlich)
 	private String zipCode;
+	//Stadt von der Adresse des Mitarbeiter (Erforderlich)
 	private String city;
+	//Bundesland von der Adresse des Mitarbeiter
 	private String region;
+	//Land vom Mitarbeiter (Erforderlich)
 	private String country;
+	//Email vom Mitarbeiter (Erforderlich)
 	private String email;
+	//Telefonnummer vom Mitarbeiter
 	private String phoneNumber;
+	//Handynummer vom Mitarbeiter
 	private String mobileNumber;
 	
 	/**
@@ -27,46 +42,6 @@ public class Employee implements Serializable {
 	 * Ideal für einen neuen Mitarbeiter
 	 */
 	public Employee() {
-	}
-
-	/**
-	 * 
-	 * @param idEmployee Primary Key (Erforderlich - Automatisch)
-	 * @param salaryCategory Gehaltkategorie, dass Mitarbeiter gehört (Erforderlich)
-	 * @param division Division, dass Mitarbeiter gehört (Erforderlich)
-	 * @param userGroup Benutzergruppe, dass Mitarbeiter gehört (Erforderlich)
-	 * @param employeeUser Benutzers Angaben (Erforderlich)
-	 * @param idCard Ausweisnummer vom Mitarbeiter (Erforderlich)
-	 * @param name Name vom Mitarbeiter (Erforderlich)
-	 * @param address Adresse vom Mitarbeiter (Erforderlich)
-	 * @param zipCode Postleitzahl von der Adresse des Mitarbeiter (Erforderlich)
-	 * @param city Stadt von der Adresse des Mitarbeiter (Erforderlich)
-	 * @param region Bundesland von der Adresse des Mitarbeiter
-	 * @param country Land vom Mitarbeiter (Erforderlich)
-	 * @param email Email vom Mitarbeiter (Erforderlich)
-	 * @param phoneNumber Telefonnummer vom Mitarbeiter
-	 * @param mobileNumber Handynummer vom Mitarbeiter
-	 */
-	public Employee(int idEmployee, SalaryCategory salaryCategory,
-			Division division, UserGroup userGroup, EmployeeUser employeeUser,
-			long idCard, String name, String address, String zipCode, String city,
-			String region, String country, String email, String phoneNumber,
-			String mobileNumber) {
-		this.idEmployee = idEmployee;
-		this.salaryCategory = salaryCategory;
-		this.division = division;
-		this.userGroup = userGroup;
-		this.employeeUser = employeeUser;
-		this.idCard = idCard;
-		this.name = name;
-		this.address = address;
-		this.zipCode = zipCode;
-		this.city = city;
-		this.region = region;
-		this.country = country;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.mobileNumber = mobileNumber;
 	}
 
 	/**

@@ -8,27 +8,20 @@ public class Permission implements Serializable {
 
 	private static final long serialVersionUID = 5008365204082645635L;
 	
+	//Primary Key (Erforderlich)
 	private int idPermission;
+	
+	//Name der Erlaubnis (Erforderlich)
 	private String moduleName;
+	
+	//(Many-To-Many) BenutzerGruppen, dass angeschlossen werden mit der Erlaubnis
 	private Set<UserGroup> userGroups = new HashSet<UserGroup>(0);
 	
 	/**
-	 * 
+	 * Konstruktor mit keinen Parametern
+	 * Ideal für eine neue Erlaubnis
 	 */
 	public Permission() {
-	}
-
-	/**
-	 * 
-	 * @param idPermission idPermission Primary Key (Erforderlich)
-	 * @param moduleName moduleName Name der Erlaubnis (Erforderlich)
-	 * @param userGroups BenutzerGruppen, dass angeschlossen werden mit der Erlaubnis
-	 */
-	public Permission(int idPermission, String moduleName,
-			Set<UserGroup> userGroups) {
-		this.idPermission = idPermission;
-		this.moduleName = moduleName;
-		this.userGroups = userGroups;
 	}
 
 	/**
