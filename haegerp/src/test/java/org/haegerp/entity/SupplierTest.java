@@ -1,5 +1,8 @@
 package org.haegerp.entity;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import org.haegerp.util.HibernateUtil;
 import org.hibernate.Session;
 import org.junit.FixMethodOrder;
@@ -35,34 +38,7 @@ public class SupplierTest extends TestCase {
         return new TestSuite( SupplierTest.class );
     }
     
-    //Lieferant Felder
-    //Erstellung
-    private static String INSERT_NAME = "Food Supplier Inc.";
-    private static long INSERT_TAXID = Long.parseLong("123456789012345");
-    private static String INSERT_ADDRESS = "Maximillian Str. 304";
-    private static String INSERT_ZIPCODE = "53333";
-    private static String INSERT_CITY = "Bonn";
-    private static String INSERT_REGION = "Nordrhein-Westfallen";
-    private static String INSERT_COUNTRY = "Germany";
-    private static String INSERT_EMAIL = "billing@food4all.de";
-    private static String INSERT_PHONENUMBER = "+492281234567";
-    private static String INSERT_MOBILENUMBER = "+4917612345678";
-    private static String INSERT_FAXNUMBER = "492281234568";
-    private static String INSERT_DESCRIPTION = "Best Supplier for Food";
-    
-    //Änderung
-    private static String UPDATE_NAME = "Crazy Vegetables Inc.";
-    private static long UPDATE_TAXID = Long.parseLong("543210987654321");
-    private static String UPDATE_ADDRESS = "Konigswinter Str. 9";
-    private static String UPDATE_ZIPCODE = "53392";
-    private static String UPDATE_CITY = "Lisbon";
-    private static String UPDATE_REGION = "Nordrhein-Westfallen";
-    private static String UPDATE_COUNTRY = "Portugal";
-    private static String UPDATE_EMAIL = "order@food4all.de";
-    private static String UPDATE_PHONENUMBER = "+351211234567";
-    private static String UPDATE_MOBILENUMBER = "+351911234567";
-    private static String UPDATE_FAXNUMBER = "+351211234568";
-    private static String UPDATE_DESCRIPTION = "Cheap Food Supplier";
+    Properties properties = new Properties();
     
     //Abfragen
     private static String QUERY_BY_ID = "FROM Supplier WHERE idBusinessPartner = ";
@@ -73,19 +49,20 @@ public class SupplierTest extends TestCase {
     public void test1InsertSupplier(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
         try {
+        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	Supplier supplier = new Supplier();
-	    	supplier.setName(INSERT_NAME);
-	    	supplier.setTaxId(INSERT_TAXID);
-	    	supplier.setAddress(INSERT_ADDRESS);
-	    	supplier.setZipCode(INSERT_ZIPCODE);
-	    	supplier.setCity(INSERT_CITY);
-	    	supplier.setRegion(INSERT_REGION);
-	    	supplier.setCountry(INSERT_COUNTRY);
-	    	supplier.setEmail(INSERT_EMAIL);
-	    	supplier.setPhoneNumber(INSERT_PHONENUMBER);
-	    	supplier.setMobileNumber(INSERT_MOBILENUMBER);
-	    	supplier.setFaxNumber(INSERT_FAXNUMBER);
-	    	supplier.setDescription(INSERT_DESCRIPTION);
+	    	supplier.setName(properties.getProperty("INSERT_NAME"));
+	    	supplier.setTaxId(Long.parseLong(properties.getProperty("INSERT_TAXID")));
+	    	supplier.setAddress(properties.getProperty("INSERT_ADDRESS"));
+	    	supplier.setZipCode(properties.getProperty("INSERT_ZIPCODE"));
+	    	supplier.setCity(properties.getProperty("INSERT_CITY"));
+	    	supplier.setRegion(properties.getProperty("INSERT_REGION"));
+	    	supplier.setCountry(properties.getProperty("INSERT_COUNTRY"));
+	    	supplier.setEmail(properties.getProperty("INSERT_EMAIL"));
+	    	supplier.setPhoneNumber(properties.getProperty("INSERT_PHONENUMBER"));
+	    	supplier.setMobileNumber(properties.getProperty("INSERT_MOBILENUMBER"));
+	    	supplier.setFaxNumber(properties.getProperty("INSERT_FAXNUMBER"));
+	    	supplier.setDescription(properties.getProperty("INSERT_DESCRIPTION"));
 	    	
 	    	HibernateUtil.insert(supplier, session);
 	        
@@ -93,20 +70,21 @@ public class SupplierTest extends TestCase {
 	    	QUERY_BY_ID = QUERY_BY_ID + supplier.getIdBusinessPartner();
 	        supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
 	        
-	        assertEquals(supplier.getName(), INSERT_NAME);
-	        assertEquals(supplier.getTaxId(), INSERT_TAXID);
-	        assertEquals(supplier.getAddress(), INSERT_ADDRESS);
-	        assertEquals(supplier.getZipCode(), INSERT_ZIPCODE);
-	        assertEquals(supplier.getCity(), INSERT_CITY);
-	        assertEquals(supplier.getRegion(), INSERT_REGION);
-	        assertEquals(supplier.getCountry(), INSERT_COUNTRY);
-	        assertEquals(supplier.getEmail(), INSERT_EMAIL);
-	        assertEquals(supplier.getPhoneNumber(), INSERT_PHONENUMBER);
-	        assertEquals(supplier.getMobileNumber(), INSERT_MOBILENUMBER);
-	        assertEquals(supplier.getFaxNumber(), INSERT_FAXNUMBER);
-	        assertEquals(supplier.getDescription(), INSERT_DESCRIPTION);
+	        assertEquals(supplier.getName(), properties.getProperty("INSERT_NAME"));
+	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("INSERT_TAXID")));
+	        assertEquals(supplier.getAddress(), properties.getProperty("INSERT_ADDRESS"));
+	        assertEquals(supplier.getZipCode(), properties.getProperty("INSERT_ZIPCODE"));
+	        assertEquals(supplier.getCity(), properties.getProperty("INSERT_CITY"));
+	        assertEquals(supplier.getRegion(), properties.getProperty("INSERT_REGION"));
+	        assertEquals(supplier.getCountry(), properties.getProperty("INSERT_COUNTRY"));
+	        assertEquals(supplier.getEmail(), properties.getProperty("INSERT_EMAIL"));
+	        assertEquals(supplier.getPhoneNumber(), properties.getProperty("INSERT_PHONENUMBER"));
+	        assertEquals(supplier.getMobileNumber(), properties.getProperty("INSERT_MOBILENUMBER"));
+	        assertEquals(supplier.getFaxNumber(), properties.getProperty("INSERT_FAXNUMBER"));
+	        assertEquals(supplier.getDescription(), properties.getProperty("INSERT_DESCRIPTION"));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();
@@ -119,40 +97,42 @@ public class SupplierTest extends TestCase {
     public void test2UpdateSupplier(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
+    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        Supplier supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
 	        
-	    	supplier.setName(UPDATE_NAME);
-	    	supplier.setTaxId(UPDATE_TAXID);
-	    	supplier.setAddress(UPDATE_ADDRESS);
-	    	supplier.setZipCode(UPDATE_ZIPCODE);
-	    	supplier.setCity(UPDATE_CITY);
-	    	supplier.setRegion(UPDATE_REGION);
-	    	supplier.setCountry(UPDATE_COUNTRY);
-	    	supplier.setEmail(UPDATE_EMAIL);
-	    	supplier.setPhoneNumber(UPDATE_PHONENUMBER);
-	    	supplier.setMobileNumber(UPDATE_MOBILENUMBER);
-	    	supplier.setFaxNumber(UPDATE_FAXNUMBER);
-	    	supplier.setDescription(UPDATE_DESCRIPTION);
+	    	supplier.setName(properties.getProperty("UPDATE_NAME"));
+	    	supplier.setTaxId(Long.parseLong(properties.getProperty("UPDATE_TAXID")));
+	    	supplier.setAddress(properties.getProperty("UPDATE_ADDRESS"));
+	    	supplier.setZipCode(properties.getProperty("UPDATE_ZIPCODE"));
+	    	supplier.setCity(properties.getProperty("UPDATE_CITY"));
+	    	supplier.setRegion(properties.getProperty("UPDATE_REGION"));
+	    	supplier.setCountry(properties.getProperty("UPDATE_COUNTRY"));
+	    	supplier.setEmail(properties.getProperty("UPDATE_EMAIL"));
+	    	supplier.setPhoneNumber(properties.getProperty("UPDATE_PHONENUMBER"));
+	    	supplier.setMobileNumber(properties.getProperty("UPDATE_MOBILENUMBER"));
+	    	supplier.setFaxNumber(properties.getProperty("UPDATE_FAXNUMBER"));
+	    	supplier.setDescription(properties.getProperty("UPDATE_DESCRIPTION"));
 	    	
 	    	HibernateUtil.update(supplier, session);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
 	        
-	        assertEquals(supplier.getName(), UPDATE_NAME);
-	        assertEquals(supplier.getTaxId(), UPDATE_TAXID);
-	        assertEquals(supplier.getAddress(), UPDATE_ADDRESS);
-	        assertEquals(supplier.getZipCode(), UPDATE_ZIPCODE);
-	        assertEquals(supplier.getCity(), UPDATE_CITY);
-	        assertEquals(supplier.getRegion(), UPDATE_REGION);
-	        assertEquals(supplier.getCountry(), UPDATE_COUNTRY);
-	        assertEquals(supplier.getEmail(), UPDATE_EMAIL);
-	        assertEquals(supplier.getPhoneNumber(), UPDATE_PHONENUMBER);
-	        assertEquals(supplier.getMobileNumber(), UPDATE_MOBILENUMBER);
-	        assertEquals(supplier.getFaxNumber(), UPDATE_FAXNUMBER);
-	        assertEquals(supplier.getDescription(), UPDATE_DESCRIPTION);
+	        assertEquals(supplier.getName(), properties.getProperty("UPDATE_NAME"));
+	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("UPDATE_TAXID")));
+	        assertEquals(supplier.getAddress(), properties.getProperty("UPDATE_ADDRESS"));
+	        assertEquals(supplier.getZipCode(), properties.getProperty("UPDATE_ZIPCODE"));
+	        assertEquals(supplier.getCity(), properties.getProperty("UPDATE_CITY"));
+	        assertEquals(supplier.getRegion(), properties.getProperty("UPDATE_REGION"));
+	        assertEquals(supplier.getCountry(), properties.getProperty("UPDATE_COUNTRY"));
+	        assertEquals(supplier.getEmail(), properties.getProperty("UPDATE_EMAIL"));
+	        assertEquals(supplier.getPhoneNumber(), properties.getProperty("UPDATE_PHONENUMBER"));
+	        assertEquals(supplier.getMobileNumber(), properties.getProperty("UPDATE_MOBILENUMBER"));
+	        assertEquals(supplier.getFaxNumber(), properties.getProperty("UPDATE_FAXNUMBER"));
+	        assertEquals(supplier.getDescription(), properties.getProperty("UPDATE_DESCRIPTION"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();
@@ -174,6 +154,7 @@ public class SupplierTest extends TestCase {
 	        assertTrue(HibernateUtil.selectList(QUERY_BY_ID, session).isEmpty());
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();

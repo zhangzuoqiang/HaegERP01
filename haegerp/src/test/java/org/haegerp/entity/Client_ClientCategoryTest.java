@@ -1,5 +1,8 @@
 package org.haegerp.entity;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import org.haegerp.util.HibernateUtil;
 import org.hibernate.Session;
 import org.junit.FixMethodOrder;
@@ -35,43 +38,7 @@ public class Client_ClientCategoryTest extends TestCase {
         return new TestSuite( Client_ClientCategoryTest.class );
     }
     
-    //Kunde Felder
-    //Erstellung
-    private static String INSERT_C_NAME = "T-Systems";
-    private static long INSERT_C_TAXID = Long.parseLong("123456789012345");
-    private static String INSERT_C_ADDRESS = "Maximillian Str. 588";
-    private static String INSERT_C_ZIPCODE = "53847";
-    private static String INSERT_C_CITY = "Bonn";
-    private static String INSERT_C_REGION = "Nordrhein-Westfallen";
-    private static String INSERT_C_COUNTRY = "Germany";
-    private static String INSERT_C_EMAIL = "payments@T-Systems.de";
-    private static String INSERT_C_PHONENUMBER = "+492281231231";
-    private static String INSERT_C_MOBILENUMBER = "+4917612312312";
-    private static String INSERT_C_FAXNUMBER = "492281231232";
-    private static String INSERT_C_DESCRIPTION = "Best Client";
-    
-    //Änderung
-    private static String UPDATE_C_NAME = "Deutsche Telekom";
-    private static long UPDATE_C_TAXID = Long.parseLong("543210987654321");
-    private static String UPDATE_C_ADDRESS = "Konigswinter Str. 347";
-    private static String UPDATE_C_ZIPCODE = "54812";
-    private static String UPDATE_C_CITY = "Lisbon";
-    private static String UPDATE_C_REGION = "Nordrhein-Westfallen";
-    private static String UPDATE_C_COUNTRY = "Portugal";
-    private static String UPDATE_C_EMAIL = "orders@T-Systems.de";
-    private static String UPDATE_C_PHONENUMBER = "+351211234567";
-    private static String UPDATE_C_MOBILENUMBER = "+351911234567";
-    private static String UPDATE_C_FAXNUMBER = "+351211234568";
-    private static String UPDATE_C_DESCRIPTION = "One of the best clients we have.";
-    
-    //Kundenkategorie Felder
-    //Erstellung
-    private static String INSERT_CC_NAME = "Snacks";
-    private static String INSERT_CC_DESCRIPTION = "Twix, Snickers, Milka...";
-    
-    //Änderung
-    private static String UPDATE_CC_NAME = "Meals";
-    private static String UPDATE_CC_DESCRIPTION = "Real Food";
+    Properties properties = new Properties();
     
     //Abfragen
     //Kundenkategorie
@@ -88,9 +55,10 @@ public class Client_ClientCategoryTest extends TestCase {
         Session session = HibernateUtil.getSessionFactory().openSession();
         
         try {
+        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        ClientCategory clientCategory = new ClientCategory();
-	        clientCategory.setName(INSERT_CC_NAME);
-	        clientCategory.setDescription(INSERT_CC_DESCRIPTION);
+	        clientCategory.setName(properties.getProperty("INSERT_CC_NAME"));
+	        clientCategory.setDescription(properties.getProperty("INSERT_CC_DESCRIPTION"));
 	        
 	        HibernateUtil.insert(clientCategory, session);
 	        
@@ -99,10 +67,11 @@ public class Client_ClientCategoryTest extends TestCase {
 	        
 	        clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
 	        
-	        assertEquals(clientCategory.getName(), INSERT_CC_NAME);
-	        assertEquals(clientCategory.getDescription(), INSERT_CC_DESCRIPTION);
+	        assertEquals(clientCategory.getName(), properties.getProperty("INSERT_CC_NAME"));
+	        assertEquals(clientCategory.getDescription(), properties.getProperty("INSERT_CC_DESCRIPTION"));
         } catch (Exception ex) {
         	ex.printStackTrace();
+	    	fail(ex.getMessage());
         } finally {
         	if (session.isOpen())
         		session.close();
@@ -116,19 +85,21 @@ public class Client_ClientCategoryTest extends TestCase {
     {
     	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-    		ClientCategory clientCategory = (ClientCategory) HibernateUtil.selectList(QUERY_CC_BY_ID, session);
+    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
+    		ClientCategory clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
 	    	
-	        clientCategory.setName(UPDATE_CC_NAME);
-	        clientCategory.setDescription(UPDATE_CC_DESCRIPTION);
+	        clientCategory.setName(properties.getProperty("UPDATE_CC_NAME"));
+	        clientCategory.setDescription(properties.getProperty("UPDATE_CC_DESCRIPTION"));
 	        
 	        HibernateUtil.update(clientCategory, session);
 	        
 	        clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
 	        
-	        assertEquals(clientCategory.getName(), UPDATE_CC_NAME);
-	        assertEquals(clientCategory.getDescription(), UPDATE_CC_DESCRIPTION);
+	        assertEquals(clientCategory.getName(), properties.getProperty("UPDATE_CC_NAME"));
+	        assertEquals(clientCategory.getDescription(), properties.getProperty("UPDATE_CC_DESCRIPTION"));
     	} catch (Exception ex) {
         	ex.printStackTrace();
+	    	fail(ex.getMessage());
         } finally {
         	if (session.isOpen())
         		session.close();
@@ -141,6 +112,7 @@ public class Client_ClientCategoryTest extends TestCase {
     public void test3InsertClient(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
+    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        ClientCategory clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
 	    	
@@ -148,18 +120,18 @@ public class Client_ClientCategoryTest extends TestCase {
 	        
 	        //Die Felder werden gefüllt
 	        client.setClientCategory(clientCategory);
-	        client.setAddress(INSERT_C_ADDRESS);
-	        client.setCity(INSERT_C_CITY);
-	        client.setCountry(INSERT_C_COUNTRY);
-	        client.setDescription(INSERT_C_DESCRIPTION);
-	        client.setEmail(INSERT_C_EMAIL);
-	        client.setFaxNumber(INSERT_C_FAXNUMBER);
-	        client.setMobileNumber(INSERT_C_MOBILENUMBER);
-	        client.setName(INSERT_C_NAME);
-	        client.setPhoneNumber(INSERT_C_PHONENUMBER);
-	        client.setRegion(INSERT_C_REGION);
-	        client.setTaxId(INSERT_C_TAXID);
-	        client.setZipCode(INSERT_C_ZIPCODE);
+	        client.setAddress(properties.getProperty("INSERT_C_ADDRESS"));
+	        client.setCity(properties.getProperty("INSERT_C_CITY"));
+	        client.setCountry(properties.getProperty("INSERT_C_COUNTRY"));
+	        client.setDescription(properties.getProperty("INSERT_C_DESCRIPTION"));
+	        client.setEmail(properties.getProperty("INSERT_C_EMAIL"));
+	        client.setFaxNumber(properties.getProperty("INSERT_C_FAXNUMBER"));
+	        client.setMobileNumber(properties.getProperty("INSERT_C_MOBILENUMBER"));
+	        client.setName(properties.getProperty("INSERT_C_NAME"));
+	        client.setPhoneNumber(properties.getProperty("INSERT_C_PHONENUMBER"));
+	        client.setRegion(properties.getProperty("INSERT_C_REGION"));
+	        client.setTaxId(Long.parseLong(properties.getProperty("INSERT_C_TAXID")));
+	        client.setZipCode(properties.getProperty("INSERT_C_ZIPCODE"));
 	        
 	        HibernateUtil.insert(client, session);
 	        
@@ -168,21 +140,22 @@ public class Client_ClientCategoryTest extends TestCase {
 
 	        client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
 	        
-	        assertEquals(client.getAddress(), INSERT_C_ADDRESS);
-	        assertEquals(client.getCity(), INSERT_C_CITY);
-	        assertEquals(client.getCountry(), INSERT_C_COUNTRY);
-	        assertEquals(client.getDescription(), INSERT_C_DESCRIPTION);
-	        assertEquals(client.getEmail(), INSERT_C_EMAIL);
-	        assertEquals(client.getFaxNumber(), INSERT_C_FAXNUMBER);
-	        assertEquals(client.getMobileNumber(), INSERT_C_MOBILENUMBER);
-	        assertEquals(client.getName(), INSERT_C_NAME);
-	        assertEquals(client.getPhoneNumber(), INSERT_C_PHONENUMBER);
-	        assertEquals(client.getRegion(), INSERT_C_REGION);
-	        assertEquals(client.getTaxId(), INSERT_C_TAXID);
-	        assertEquals(client.getZipCode(), INSERT_C_ZIPCODE);
+	        assertEquals(client.getAddress(), properties.getProperty("INSERT_C_ADDRESS"));
+	        assertEquals(client.getCity(), properties.getProperty("INSERT_C_CITY"));
+	        assertEquals(client.getCountry(), properties.getProperty("INSERT_C_COUNTRY"));
+	        assertEquals(client.getDescription(), properties.getProperty("INSERT_C_DESCRIPTION"));
+	        assertEquals(client.getEmail(), properties.getProperty("INSERT_C_EMAIL"));
+	        assertEquals(client.getFaxNumber(), properties.getProperty("INSERT_C_FAXNUMBER"));
+	        assertEquals(client.getMobileNumber(), properties.getProperty("INSERT_C_MOBILENUMBER"));
+	        assertEquals(client.getName(), properties.getProperty("INSERT_C_NAME"));
+	        assertEquals(client.getPhoneNumber(), properties.getProperty("INSERT_C_PHONENUMBER"));
+	        assertEquals(client.getRegion(), properties.getProperty("INSERT_C_REGION"));
+	        assertEquals(client.getTaxId(), Long.parseLong(properties.getProperty("INSERT_C_TAXID")));
+	        assertEquals(client.getZipCode(), properties.getProperty("INSERT_C_ZIPCODE"));
 	        assertEquals(client.getClientCategory(), clientCategory);
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();
@@ -195,42 +168,44 @@ public class Client_ClientCategoryTest extends TestCase {
     public void test4UpdateClient(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
+    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        Client client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
 	    	
 	        //Die Felder werden geändert
-	        client.setAddress(UPDATE_C_ADDRESS);
-	        client.setCity(UPDATE_C_CITY);
-	        client.setCountry(UPDATE_C_COUNTRY);
-	        client.setDescription(UPDATE_C_DESCRIPTION);
-	        client.setEmail(UPDATE_C_EMAIL);
-	        client.setFaxNumber(UPDATE_C_FAXNUMBER);
-	        client.setMobileNumber(UPDATE_C_MOBILENUMBER);
-	        client.setName(UPDATE_C_NAME);
-	        client.setPhoneNumber(UPDATE_C_PHONENUMBER);
-	        client.setRegion(UPDATE_C_REGION);
-	        client.setTaxId(UPDATE_C_TAXID);
-	        client.setZipCode(UPDATE_C_ZIPCODE);
+	        client.setAddress(properties.getProperty("UPDATE_C_ADDRESS"));
+	        client.setCity(properties.getProperty("UPDATE_C_CITY"));
+	        client.setCountry(properties.getProperty("UPDATE_C_COUNTRY"));
+	        client.setDescription(properties.getProperty("UPDATE_C_DESCRIPTION"));
+	        client.setEmail(properties.getProperty("UPDATE_C_EMAIL"));
+	        client.setFaxNumber(properties.getProperty("UPDATE_C_FAXNUMBER"));
+	        client.setMobileNumber(properties.getProperty("UPDATE_C_MOBILENUMBER"));
+	        client.setName(properties.getProperty("UPDATE_C_NAME"));
+	        client.setPhoneNumber(properties.getProperty("UPDATE_C_PHONENUMBER"));
+	        client.setRegion(properties.getProperty("UPDATE_C_REGION"));
+	        client.setTaxId(Long.parseLong(properties.getProperty("UPDATE_C_TAXID")));
+	        client.setZipCode(properties.getProperty("UPDATE_C_ZIPCODE"));
 	        
 	        HibernateUtil.update(client, session);
 	        
 	        //Der geänderter Artikel wird geprüft
 	        client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
 	        
-	        assertEquals(client.getAddress(), UPDATE_C_ADDRESS);
-	        assertEquals(client.getCity(), UPDATE_C_CITY);
-	        assertEquals(client.getCountry(), UPDATE_C_COUNTRY);
-	        assertEquals(client.getDescription(), UPDATE_C_DESCRIPTION);
-	        assertEquals(client.getEmail(), UPDATE_C_EMAIL);
-	        assertEquals(client.getFaxNumber(), UPDATE_C_FAXNUMBER);
-	        assertEquals(client.getMobileNumber(), UPDATE_C_MOBILENUMBER);
-	        assertEquals(client.getName(), UPDATE_C_NAME);
-	        assertEquals(client.getPhoneNumber(), UPDATE_C_PHONENUMBER);
-	        assertEquals(client.getRegion(), UPDATE_C_REGION);
-	        assertEquals(client.getTaxId(), UPDATE_C_TAXID);
-	        assertEquals(client.getZipCode(), UPDATE_C_ZIPCODE);
+	        assertEquals(client.getAddress(), properties.getProperty("UPDATE_C_ADDRESS"));
+	        assertEquals(client.getCity(), properties.getProperty("UPDATE_C_CITY"));
+	        assertEquals(client.getCountry(), properties.getProperty("UPDATE_C_COUNTRY"));
+	        assertEquals(client.getDescription(), properties.getProperty("UPDATE_C_DESCRIPTION"));
+	        assertEquals(client.getEmail(), properties.getProperty("UPDATE_C_EMAIL"));
+	        assertEquals(client.getFaxNumber(), properties.getProperty("UPDATE_C_FAXNUMBER"));
+	        assertEquals(client.getMobileNumber(), properties.getProperty("UPDATE_C_MOBILENUMBER"));
+	        assertEquals(client.getName(), properties.getProperty("UPDATE_C_NAME"));
+	        assertEquals(client.getPhoneNumber(), properties.getProperty("UPDATE_C_PHONENUMBER"));
+	        assertEquals(client.getRegion(), properties.getProperty("UPDATE_C_REGION"));
+	        assertEquals(client.getTaxId(), Long.parseLong(properties.getProperty("UPDATE_C_TAXID")));
+	        assertEquals(client.getZipCode(), properties.getProperty("UPDATE_C_ZIPCODE"));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();
@@ -251,6 +226,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        assertTrue(HibernateUtil.selectList(QUERY_C_BY_ID, session).isEmpty());
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();
@@ -272,6 +248,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        assertTrue(HibernateUtil.selectList(QUERY_CC_BY_ID, session).isEmpty());
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
+	    	fail(ex.getMessage());
 	    } finally {
 	    	if (session.isOpen())
 	    		session.close();
