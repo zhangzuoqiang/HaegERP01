@@ -351,7 +351,7 @@ VALUES (6, 'Company Administration');
 
 ALTER TABLE permission READ ONLY;
 
-
+COMMIT;
 
 INSERT INTO employeeuser
 VALUE(1, "admin", "21232f297a57a5a743894a0e4a801fc3") /* Password = MD5SUM = "admin" */

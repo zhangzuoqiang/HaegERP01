@@ -17,7 +17,7 @@
 		<many-to-one name="userGroup" class="org.haegerp.entity.UserGroup" fetch="select">
 			<column name="IDUSERGROUP" not-null="true" />
 		</many-to-one>
-		<one-to-one name="employeeUser" class="org.haegerp.entity.EmployeeUser" />
+		<one-to-one name="employeeUser" class="org.haegerp.entity.EmployeeUser"/>
 		
 		<property name="idCard" type="long">
 			<column name="IDCARD" not-null="true" precision="13"/>

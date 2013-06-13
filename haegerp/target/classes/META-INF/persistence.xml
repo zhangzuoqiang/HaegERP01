@@ -1,0 +1,22 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	
+	<persistence-unit name="haegerp-persistence" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+		<mapping resource="org/haegerp/entity/Article.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ArticleCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/BusinessPartner.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Supplier.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Client.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ClientCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Permission.hbm.xml" />
+		<mapping resource="org/haegerp/entity/UserGroup.hbm.xml" />
+		<mapping resource="org/haegerp/entity/SalaryCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Division.hbm.xml" />
+		<mapping resource="org/haegerp/entity/EmployeeUser.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Employee.hbm.xml" />
+	</persistence-unit>
+</persistence>

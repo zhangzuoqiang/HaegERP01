@@ -3,118 +3,105 @@ package org.haegerp.entity;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.haegerp.util.HibernateUtil;
-import org.hibernate.Session;
+import org.haegerp.entity.repository.ClientCategoryRepository;
+import org.haegerp.entity.repository.ClientRepository;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /**
  * Dieses Test Suite wird Kunden und Kundenkategorie testen
  * 
  * @author Wolf
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="classpath:META-INF/spring-data.xml")
+@Transactional
+@TransactionConfiguration(defaultRollback=false)
 public class Client_ClientCategoryTest extends TestCase {
-	/**
-     * Ein Testfall wird erstellt
-     *
-     * @param testName name vom Testfall
-     */
-    public Client_ClientCategoryTest( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return Die Testfälle für testen
-     */
-    public static Test suite()
-    {	
-        return new TestSuite( Client_ClientCategoryTest.class );
-    }
     
-    Properties properties = new Properties();
+    private Properties properties = new Properties();
     
-    //Abfragen
-    //Kundenkategorie
-    private static String QUERY_CC_BY_ID = "from ClientCategory where idClientCategory = ";
+    @Autowired
+    private ClientCategoryRepository clientCategoryRepo;
     
-    //Kunde
-    private static String QUERY_C_BY_ID = "from Client where idBusinessPartner = ";
+    @Autowired
+    private ClientRepository clientRepository;
+    
+    private static int CLIENT_CATEGORY_ID;
+    private static int CLIENT_ID;
     
     /**
      * Eine Kundenkategorie wird in die Datenbank erstellt
      */
+    @Test
     public void test1InsertClientCategory()
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        ClientCategory clientCategory = new ClientCategory();
 	        clientCategory.setName(properties.getProperty("INSERT_CC_NAME"));
 	        clientCategory.setDescription(properties.getProperty("INSERT_CC_DESCRIPTION"));
 	        
-	        HibernateUtil.insert(clientCategory, session);
+	        clientCategory = clientCategoryRepo.save(clientCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
-	        QUERY_CC_BY_ID = QUERY_CC_BY_ID + clientCategory.getIdClientCategory();
+	        CLIENT_CATEGORY_ID = clientCategory.getIdClientCategory();
 	        
-	        clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
+	        clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	        
 	        assertEquals(clientCategory.getName(), properties.getProperty("INSERT_CC_NAME"));
 	        assertEquals(clientCategory.getDescription(), properties.getProperty("INSERT_CC_DESCRIPTION"));
         } catch (Exception ex) {
         	ex.printStackTrace();
 	    	fail(ex.getMessage());
-        } finally {
-        	if (session.isOpen())
-        		session.close();
         }
     }
     
     /**
      * Die letzte Kundenkategorie wird geändert
      */
+    @Test
     public void test2UpdateClientCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-    		ClientCategory clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
+    		ClientCategory clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	    	
 	        clientCategory.setName(properties.getProperty("UPDATE_CC_NAME"));
 	        clientCategory.setDescription(properties.getProperty("UPDATE_CC_DESCRIPTION"));
 	        
-	        HibernateUtil.update(clientCategory, session);
+	        clientCategoryRepo.save(clientCategory);
 	        
-	        clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
+	        clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	        
 	        assertEquals(clientCategory.getName(), properties.getProperty("UPDATE_CC_NAME"));
 	        assertEquals(clientCategory.getDescription(), properties.getProperty("UPDATE_CC_DESCRIPTION"));
     	} catch (Exception ex) {
         	ex.printStackTrace();
 	    	fail(ex.getMessage());
-        } finally {
-        	if (session.isOpen())
-        		session.close();
         }
     }
     
     /**
      * Ein Kunden wird erstellt
      */
+    @Test
     public void test3InsertClient(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
-	        ClientCategory clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
+	        ClientCategory clientCategory = (ClientCategory) clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	    	
 	        Client client = new Client();
 	        
@@ -133,12 +120,12 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setTaxId(Long.parseLong(properties.getProperty("INSERT_C_TAXID")));
 	        client.setZipCode(properties.getProperty("INSERT_C_ZIPCODE"));
 	        
-	        HibernateUtil.insert(client, session);
+	        client = clientRepository.save(client);
 	        
 	        //Der erstellter Artikel wird geprüft
-	        QUERY_C_BY_ID = QUERY_C_BY_ID + client.getIdBusinessPartner();
+	        CLIENT_ID = client.getIdBusinessPartner();
 
-	        client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
+	        client = clientRepository.findOne(CLIENT_ID);
 	        
 	        assertEquals(client.getAddress(), properties.getProperty("INSERT_C_ADDRESS"));
 	        assertEquals(client.getCity(), properties.getProperty("INSERT_C_CITY"));
@@ -156,21 +143,18 @@ public class Client_ClientCategoryTest extends TestCase {
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Der letzter Kunde wird geändert
      */
+    @Test
     public void test4UpdateClient(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
-	        Client client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
+	        Client client = clientRepository.findOne(CLIENT_ID);
 	    	
 	        //Die Felder werden geändert
 	        client.setAddress(properties.getProperty("UPDATE_C_ADDRESS"));
@@ -186,10 +170,10 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setTaxId(Long.parseLong(properties.getProperty("UPDATE_C_TAXID")));
 	        client.setZipCode(properties.getProperty("UPDATE_C_ZIPCODE"));
 	        
-	        HibernateUtil.update(client, session);
+	        client = clientRepository.save(client);
 	        
 	        //Der geänderter Artikel wird geprüft
-	        client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
+	        client = clientRepository.findOne(CLIENT_ID);
 	        
 	        assertEquals(client.getAddress(), properties.getProperty("UPDATE_C_ADDRESS"));
 	        assertEquals(client.getCity(), properties.getProperty("UPDATE_C_CITY"));
@@ -206,52 +190,43 @@ public class Client_ClientCategoryTest extends TestCase {
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Der letzter Artikel wird gelöscht
      */
+    @Test
     public void test5DeleteClient(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        Client client = (Client) HibernateUtil.selectObject(QUERY_C_BY_ID, session);
+	        Client client = clientRepository.findOne(CLIENT_ID);
 	    	
-	        HibernateUtil.delete(client, session);
+	        clientRepository.delete(client);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_C_BY_ID, session).isEmpty());
+	        assertTrue(!clientRepository.exists(CLIENT_ID));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
-	    }
+	    } 
     }
     
     /**
      * Die Kundenkategorie wird gelöscht
      */
+    @Test
     public void test6DeleteArticleCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        ClientCategory clientCategory = (ClientCategory) HibernateUtil.selectObject(QUERY_CC_BY_ID, session);
+	        ClientCategory clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	    	
-	        HibernateUtil.delete(clientCategory, session);
+	        clientCategoryRepo.delete(clientCategory);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_CC_BY_ID, session).isEmpty());
+	        assertTrue(!clientCategoryRepo.exists(CLIENT_CATEGORY_ID));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
 }

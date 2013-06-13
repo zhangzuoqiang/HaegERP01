@@ -14,7 +14,7 @@
 		<property name="description" type="string">
 			<column name="DESCRIPTION" length="256" not-null="false" />
 		</property>
-		<set name="articles" inverse="true">
+		<set name="articles" inverse="true" fetch="select">
 			<key>
 				<column name="idArticleCategory" not-null="true"></column>
 			</key>

@@ -2,70 +2,71 @@ package org.haegerp.entity;
 
 import java.io.FileInputStream;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import org.haegerp.util.HibernateUtil;
-import org.hibernate.Session;
+import org.haegerp.entity.repository.DivisionRepository;
+import org.haegerp.entity.repository.EmployeeRepository;
+import org.haegerp.entity.repository.EmployeeUserRepository;
+import org.haegerp.entity.repository.PermissionRepository;
+import org.haegerp.entity.repository.SalaryCategoryRepository;
+import org.haegerp.entity.repository.UserGroupRepository;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 /**
  * Dieses Test Suite wird Mitarbeiter, Gehaltkategorie, Division und Benutzergruppe testen
  * 
  * @author Wolf
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="classpath:META-INF/spring-data.xml")
+@Transactional
+@TransactionConfiguration(defaultRollback=false)
 public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
-	/**
-     * Ein Testfall wird erstellt
-     *
-     * @param testName name vom Testfall
-     */
-    public Employee_SalaryCategory_Division_UserGroupTest( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return Die Testfälle für testen
-     */
-    public static Test suite()
-    {	
-        return new TestSuite( Employee_SalaryCategory_Division_UserGroupTest.class );
-    }
-    
+	
     Properties properties = new Properties();
     
-    //Abfragen
-    //Mitarbeiter
-    private static String QUERY_E_BY_ID = "from Employee where idEmployee = ";
-    private static String QUERY_EU_BY_ID = "from EmployeeUser where idEmployee = ";
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private EmployeeUserRepository employeeUserRepository;
+    @Autowired
+    private SalaryCategoryRepository salaryCategoryRepository;
+    @Autowired
+    private DivisionRepository divisionRepository;
+    @Autowired
+    private UserGroupRepository userGroupRepository;
+    @Autowired
+    private PermissionRepository permissionRepository;
     
-    //Gehaltkategorie
-    private static String QUERY_SC_BY_ID = "from SalaryCategory where idSalaryCategory = ";
+    private static int EMPLOYEE_ID;
     
-    //Division
-    private static String QUERY_D_BY_ID = "from Division where idDivision = ";
+    private static int SALARY_CATEGORY_ID;
     
-    //User-Group
-    private static String QUERY_UG_BY_ID = "from UserGroup where idUserGroup = ";
+    private static int DIVISION_ID;
     
-    //Permission
-    private static String QUERY_UG_PI_BY_ID = "from Permission where ";
-    private static String QUERY_UG_PU_BY_ID = "from Permission where ";
+    private static int USER_GROUP_ID;
     
     /**
      * Eine Gehaltkategorie wird in die Datenbank erstellt
      */
+    @Test
     public void test01InsertSalaryCategory()
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        //Die Felder werden gefüllt
@@ -74,11 +75,11 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        salaryCategory.setSalaryFrom(Float.parseFloat(properties.getProperty("INSERT_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(properties.getProperty("INSERT_SC_SALARYTO")));
 	        
-	        HibernateUtil.insert(salaryCategory, session);
+	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	        
 	        //Die erstellt Gehaltkategorie wird geprüft
-	        QUERY_SC_BY_ID = QUERY_SC_BY_ID + salaryCategory.getIdSalaryCategory();
-	        salaryCategory = (SalaryCategory) HibernateUtil.selectObject(QUERY_SC_BY_ID, session);
+	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
+	        salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	        
 	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(properties.getProperty("INSERT_SC_SALARYFROM")));
 	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(properties.getProperty("INSERT_SC_SALARYTO")));
@@ -86,31 +87,28 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Die letzte Gehaltkategorie wird geändert
      */
+    @Test
     public void test02UpdateSalaryCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-	        SalaryCategory salaryCategory = (SalaryCategory) HibernateUtil.selectObject(QUERY_SC_BY_ID, session);
+	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	
 	        //Die Felder werden gefüllt
 	        salaryCategory.setDescription(properties.getProperty("UPDATE_SC_DESCRIPTION"));
 	        salaryCategory.setSalaryFrom(Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYTO")));
 	        
-	        HibernateUtil.update(salaryCategory, session);
+	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	
 	        //Die geändert Gehaltkategorie wird geprüft
-	        salaryCategory = (SalaryCategory) HibernateUtil.selectObject(QUERY_SC_BY_ID, session);
+	        salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	        
 	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYFROM")));
 	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYTO")));
@@ -118,19 +116,15 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Eine Division wird in die Datenbank erstellt
      */
+    @Test
     public void test03InsertDivision()
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        //Die Felder werden gefüllt
@@ -138,61 +132,54 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        division.setDescription(properties.getProperty("INSERT_D_DESCRIPTION"));
 	        division.setName(properties.getProperty("INSERT_D_NAME"));
 	        
-	        HibernateUtil.insert(division, session);
+	        division = divisionRepository.save(division);
 	        
 	        //Die erstellt Division wird geprüft
-	        QUERY_D_BY_ID = QUERY_D_BY_ID + division.getIdDivision();
+	        DIVISION_ID = division.getIdDivision();
 	        
-	        division = (Division) HibernateUtil.selectObject(QUERY_D_BY_ID, session);
+	        division = divisionRepository.findOne(DIVISION_ID);
 	        
 	        assertEquals(division.getDescription(), properties.getProperty("INSERT_D_DESCRIPTION"));
 	        assertEquals(division.getName(), properties.getProperty("INSERT_D_NAME"));
         } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Die letzte Gehaltkategorie wird geändert
      */
+    @Test
     public void test04UpdateSalaryCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-	        Division division = (Division) HibernateUtil.selectObject(QUERY_D_BY_ID, session);
+	        Division division = divisionRepository.findOne(DIVISION_ID);
 	
 	        //Die Felder werden gefüllt
 	        division.setDescription(properties.getProperty("UPDATE_D_DESCRIPTION"));
 	        division.setName(properties.getProperty("UPDATE_D_NAME"));
 	        
-	        HibernateUtil.update(division, session);
+	        division = divisionRepository.save(division);
 	        
 	        //Die geändert Division wird geprüft
-	        division = (Division) HibernateUtil.selectObject(QUERY_D_BY_ID, session);
+	        division = divisionRepository.findOne(DIVISION_ID);
 	        
 	        assertEquals(division.getDescription(), properties.getProperty("UPDATE_D_DESCRIPTION"));
 	        assertEquals(division.getName(), properties.getProperty("UPDATE_D_NAME"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Eine Benutzergruppe wird in die Datenbank erstellt
      */
+    @Test
     public void test05InsertUserGroup()
     {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        //Die Felder werden gefüllt
@@ -200,98 +187,91 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        userGroup.setDescription(properties.getProperty("INSERT_UG_DESCRIPTION"));
 	        userGroup.setName(properties.getProperty("INSERT_UG_NAME"));
 	        
-	        QUERY_UG_PI_BY_ID = QUERY_UG_PI_BY_ID +
-	        		"idPermission = " + properties.getProperty("INSERT_UG_PERMISSION1") +
-	        		" OR idPermission = " + properties.getProperty("INSERT_UG_PERMISSION2") +
-	        		" OR idPermission = " + properties.getProperty("INSERT_UG_PERMISSION3");
+
+	        //Hinzufügen erlaubnise
+	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        List<?> list = HibernateUtil.selectList(QUERY_UG_PI_BY_ID, session);
-	        for (int i = 0; i < list.size(); i++) {
-				Permission permission = (Permission) list.get(i);
-				userGroup.getPermissions().add(permission);
+	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("INSERT_UG_PERMISSION1"))));
+	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("INSERT_UG_PERMISSION2"))));
+	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("INSERT_UG_PERMISSION3"))));
+	        
+	        for (int i = 0; i < permissionList.size(); i++) {
+				userGroup.getPermissions().add(permissionList.get(i));
 			}
 	        
-	        HibernateUtil.insert(userGroup, session);
+	        userGroup = userGroupRepository.save(userGroup);
 	        
 	        //Die erstellt Benutzergruppe wird geprüft
-	        QUERY_UG_BY_ID = QUERY_UG_BY_ID + userGroup.getIdUserGroup();
+	        USER_GROUP_ID = userGroup.getIdUserGroup();
 	        
-	        userGroup = (UserGroup) HibernateUtil.selectObject(QUERY_UG_BY_ID, session);
+	        userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	        
-	        assertTrue(userGroup.getPermissions().containsAll(HibernateUtil.selectList(QUERY_UG_PI_BY_ID, session)));
+	        assertTrue(userGroup.getPermissions().containsAll(permissionList));
 	        
 	        assertEquals(userGroup.getDescription(), properties.getProperty("INSERT_UG_DESCRIPTION"));
 	        assertEquals(userGroup.getName(), properties.getProperty("INSERT_UG_NAME"));
         } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Die letzte Benutzergruppe wird geändert
      */
+    @Test
     public void test06UpdateUserGroup()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-	        UserGroup userGroup = (UserGroup) HibernateUtil.selectObject(QUERY_UG_BY_ID, session);
+	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	    	
 	        //Die Felder werden gefüllt
 	        userGroup.setDescription(properties.getProperty("UPDATE_UG_DESCRIPTION"));
 	        userGroup.setName(properties.getProperty("UPDATE_UG_NAME"));
 	        userGroup.setPermissions(new HashSet<Permission>(0));
 	        
-	        QUERY_UG_PU_BY_ID = QUERY_UG_PU_BY_ID +
-	        		"idPermission = " + properties.getProperty("UPDATE_UG_PERMISSION1") +
-	        		" OR idPermission = " + properties.getProperty("UPDATE_UG_PERMISSION2") +
-	        		" OR idPermission = " + properties.getProperty("UPDATE_UG_PERMISSION3");
-
-	        List<?> list = HibernateUtil.selectList(QUERY_UG_PU_BY_ID, session);
+	        //Hinzufügen erlaubnise
+	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        for (int i = 0; i < list.size(); i++) {
-				Permission permission = (Permission) list.get(i);
-				userGroup.getPermissions().add(permission);
+	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("UPDATE_UG_PERMISSION1"))));
+	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("UPDATE_UG_PERMISSION2"))));
+	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("UPDATE_UG_PERMISSION3"))));
+	        
+	        for (int i = 0; i < permissionList.size(); i++) {
+				userGroup.getPermissions().add(permissionList.get(i));
 			}
 	        
-	        HibernateUtil.update(userGroup, session);
+	        userGroup = userGroupRepository.save(userGroup);
 	        
 	        //Die geändert Benutzergruppe wird geprüft
-	        userGroup = (UserGroup) HibernateUtil.selectObject(QUERY_UG_BY_ID, session);
+	        userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	        
-	        assertTrue(userGroup.getPermissions().containsAll(HibernateUtil.selectList(QUERY_UG_PU_BY_ID, session)));
+	        assertTrue(userGroup.getPermissions().containsAll(permissionList));
 	        
 	        assertEquals(userGroup.getDescription(), properties.getProperty("UPDATE_UG_DESCRIPTION"));
 	        assertEquals(userGroup.getName(), properties.getProperty("UPDATE_UG_NAME"));
         } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Ein Mitarbeiter wird erstellt
      */
+    @Test
     public void test07InsertEmployee(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
-    	
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Gehaltkategorie wird geholt
-	        SalaryCategory salaryCategory = (SalaryCategory) HibernateUtil.selectObject(QUERY_SC_BY_ID, session);
+	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	    	
 	        //Die Division wird geholt
-	        Division division = (Division) HibernateUtil.selectObject(QUERY_D_BY_ID, session);
+	        Division division = divisionRepository.findOne(DIVISION_ID);
 	        
 	        //Die Benutzergruppe wird geholt
-	        UserGroup userGroup = (UserGroup) HibernateUtil.selectObject(QUERY_UG_BY_ID, session);
+	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	        
 	        Employee employee = new Employee();
 	        
@@ -310,24 +290,21 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setUserGroup(userGroup);
 	        employee.setZipCode(properties.getProperty("INSERT_E_ZIPCODE"));
 	        
-	        HibernateUtil.insert(employee, session);
+	        employee = employeeRepository.save(employee);
 	        
 	        //Benutzername und Kenntwort werden gefüllt
 	        EmployeeUser employeeUser = new EmployeeUser();
-	        employeeUser.setEmployee(employee);
 	        employeeUser.setPassword(properties.getProperty("INSERT_E_PASSWORD"));
 	        employeeUser.setUsername(properties.getProperty("INSERT_E_USERNAME"));
 	        
-	        HibernateUtil.insert(employeeUser, session);
+	        employeeUser = employeeUserRepository.save(employeeUser);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
-	        QUERY_E_BY_ID = QUERY_E_BY_ID + employee.getIdEmployee();
+	        EMPLOYEE_ID = employee.getIdEmployee();
 	        
-	        employee = (Employee) HibernateUtil.selectObject(QUERY_E_BY_ID, session);
+	        employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
-	        QUERY_EU_BY_ID = QUERY_EU_BY_ID + employeeUser.getIdEmployee();
-	        
-	        employeeUser = (EmployeeUser) HibernateUtil.selectObject(QUERY_EU_BY_ID, session);
+	        employeeUser = employeeUserRepository.findOne(EMPLOYEE_ID);
 	        
 	        assertEquals(employee.getAddress(), properties.getProperty("INSERT_E_ADDRESS"));
 	        assertEquals(employee.getCity(), properties.getProperty("INSERT_E_CITY"));
@@ -347,20 +324,17 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Der letzter Mitarbeiter wird geändert
      */
+    @Test
     public void test08UpdateEmployee(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-	        Employee employee = (Employee) HibernateUtil.selectObject(QUERY_E_BY_ID, session);
+	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
 	        //Die Felder werden gefüllt
 	        employee.setAddress(properties.getProperty("UPDATE_E_ADDRESS"));
@@ -374,19 +348,19 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setRegion(properties.getProperty("UPDATE_E_REGION"));
 	        employee.setZipCode(properties.getProperty("UPDATE_E_ZIPCODE"));
 	        
-	        HibernateUtil.update(employee, session);
+	        employee = employeeRepository.save(employee);
 	        
 	        //Benutzername und Kenntwort werden geändert
 	        EmployeeUser employeeUser = employee.getEmployeeUser();
 	        employeeUser.setPassword(properties.getProperty("UPDATE_E_PASSWORD"));
 	        employeeUser.setUsername(properties.getProperty("UPDATE_E_USERNAME"));
 	        
-	        HibernateUtil.update(employeeUser, session);
+	        employeeUser = employeeUserRepository.save(employeeUser);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
-	        employee = (Employee) HibernateUtil.selectObject(QUERY_E_BY_ID, session);
+	        employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
-	        employeeUser = (EmployeeUser) HibernateUtil.selectObject(QUERY_EU_BY_ID, session);
+	        employeeUser = employeeUserRepository.findOne(EMPLOYEE_ID);
 	        
 	        assertEquals(employee.getAddress(), properties.getProperty("UPDATE_E_ADDRESS"));
 	        assertEquals(employee.getCity(), properties.getProperty("UPDATE_E_CITY"));
@@ -403,101 +377,87 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Der letzter Mitarbeiter wird gelöscht
      */
+    @Test
     public void test09DeleteEmployee(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
 	    	
-	        Employee employee = (Employee) HibernateUtil.selectObject(QUERY_E_BY_ID, session);
+	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
 	    	
-	        EmployeeUser employeeUser = (EmployeeUser) HibernateUtil.selectObject(QUERY_EU_BY_ID, session);
+	        EmployeeUser employeeUser = employeeUserRepository.findOne(EMPLOYEE_ID);;
 	        
-	        HibernateUtil.delete(employeeUser, session);
-	        HibernateUtil.delete(employee, session);
+	        employeeUserRepository.delete(employeeUser);
+	        employeeRepository.delete(employee);
+	        
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_E_BY_ID, session).isEmpty());
+	        assertTrue(!employeeRepository.exists(EMPLOYEE_ID));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Die Gehaltkategorie wird gelöscht
      */
+    @Test
     public void test10DeleteSalaryCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
 	        
-	        SalaryCategory salaryCategory = (SalaryCategory) HibernateUtil.selectObject(QUERY_SC_BY_ID, session);
+	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	    	
-	        HibernateUtil.delete(salaryCategory, session);
+	        salaryCategoryRepository.delete(salaryCategory);
 
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_SC_BY_ID, session).isEmpty());
+	        assertTrue(!salaryCategoryRepository.exists(SALARY_CATEGORY_ID));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Die Division wird gelöscht
      */
+    @Test
     public void test11DeleteDivision()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        Division division = (Division) HibernateUtil.selectObject(QUERY_D_BY_ID, session);
+	        Division division = divisionRepository.findOne(DIVISION_ID);
 	    	
-	        HibernateUtil.delete(division, session);
+	        divisionRepository.delete(division);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_D_BY_ID, session).isEmpty());
+	        assertTrue(!divisionRepository.exists(DIVISION_ID));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Die Benutzergruppe wird gelöscht
      */
+    @Test
     public void test12DeleteUserGroup()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        UserGroup userGroup = (UserGroup) HibernateUtil.selectObject(QUERY_UG_BY_ID, session);
+	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	    	
-	        HibernateUtil.delete(userGroup, session);
+	        userGroupRepository.delete(userGroup);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_UG_BY_ID, session).isEmpty());
+	        assertTrue(!userGroupRepository.exists(USER_GROUP_ID));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
 }

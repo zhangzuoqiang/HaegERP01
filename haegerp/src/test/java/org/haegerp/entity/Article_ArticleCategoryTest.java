@@ -3,69 +3,63 @@ package org.haegerp.entity;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.haegerp.util.HibernateUtil;
-import org.hibernate.Session;
+import org.haegerp.entity.repository.ArticleCategoryRepository;
+import org.haegerp.entity.repository.ArticleRepository;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /**
  * Dieses Test Suite wird Artikel und Artikelkategorie testen
  * 
  * @author Wolf
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="classpath:META-INF/spring-data.xml")
+@Transactional
+@TransactionConfiguration(defaultRollback=false)
 public class Article_ArticleCategoryTest extends TestCase {
-	/**
-     * Ein Testfall wird erstellt
-     *
-     * @param testName name vom Testfall
-     */
-    public Article_ArticleCategoryTest( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return Die Testfälle für testen
-     */
-    public static Test suite()
-    {	
-        return new TestSuite( Article_ArticleCategoryTest.class );
-    }
+	
+    private Properties properties = new Properties();
     
-    Properties properties = new Properties();
+    private static int ARTICLE_ID;
+    private static int ARTICLE_CATEGORY_ID;
     
-    //Abfragen
-    //Artikelkategorie
-    private static String QUERY_AC_BY_ID = "from ArticleCategory where idArticleCategory = ";
+    @Autowired
+    private ArticleRepository articleRepo;
     
-    //Artikel
-    private static String QUERY_A_BY_ID = "from Article where idArticle = ";
+    @Autowired
+    private ArticleCategoryRepository articleCategoryRepo;
     
     /**
      * Eine Artikelkategorie wird in die Datenbank erstellt
      */
+    @Test
     public void test1InsertArticleCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        ArticleCategory articleCategory = new ArticleCategory();
 	        articleCategory.setName(properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION"));
 	        
-	        HibernateUtil.insert(articleCategory, session);
+	        articleCategory = articleCategoryRepo.save(articleCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
-	        QUERY_AC_BY_ID = QUERY_AC_BY_ID + articleCategory.getIdArticleCategory();
+	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
 	        
 	        
-	        articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	        
 	        assertEquals(articleCategory.getName(), properties.getProperty("INSERT_AC_NAME"));
 	        assertEquals(articleCategory.getDescription(), properties.getProperty("INSERT_AC_DESCRIPTION"));
@@ -73,28 +67,25 @@ public class Article_ArticleCategoryTest extends TestCase {
 	    } catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
-		} finally {
-			if (session.isOpen())
-				session.close();
 		}
     }
     
     /**
      * Die letzte Artikelkategorie wird geändert
      */
+    @Test
     public void test2UpdateArticleCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-    		ArticleCategory articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+    		ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
     	
 	        articleCategory.setName(properties.getProperty("UPDATE_AC_NAME"));
 	        articleCategory.setDescription(properties.getProperty("UPDATE_AC_DESCRIPTION"));
 	        
-	        HibernateUtil.update(articleCategory, session);
+	        articleCategoryRepo.save(articleCategory);
         
-	        articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	        
 	        assertEquals(articleCategory.getName(), properties.getProperty("UPDATE_AC_NAME"));
 	        assertEquals(articleCategory.getDescription(), properties.getProperty("UPDATE_AC_DESCRIPTION"));
@@ -102,21 +93,18 @@ public class Article_ArticleCategoryTest extends TestCase {
 	    } catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
-		} finally {
-			if (session.isOpen())
-				session.close();
 		}
     }
     
     /**
      * Ein Artikel wird erstellt
      */
+    @Test
     public void test3InsertArticle(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
-	        ArticleCategory articleCategory = (ArticleCategory)HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	    	
 	        Article article = new Article();
         
@@ -133,12 +121,12 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Integer.parseInt(properties.getProperty("INSERT_A_STOCK")));
 	        
-	        HibernateUtil.insert(article, session);
+	        article = articleRepo.save(article);
 	        
 	        //Der erstellter Artikel wird geprüft
-	        QUERY_A_BY_ID = QUERY_A_BY_ID + article.getIdArticle();
+	        ARTICLE_ID = article.getIdArticle();
 	        
-	        article = (Article)HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	        article = articleRepo.findOne(ARTICLE_ID);
 	        
 	        assertEquals(article.getColor(), properties.getProperty("INSERT_A_COLOR"));
 	        assertEquals(article.getDescription(), properties.getProperty("INSERT_A_DESCRIPTION"));
@@ -155,22 +143,19 @@ public class Article_ArticleCategoryTest extends TestCase {
 	    } catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
-		} finally {
-			if (session.isOpen())
-				session.close();
 		}
     }
 
     /**
      * Der letzter Artikel wird geändert
      */
+    @Test
     public void test4UpdateArticle(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
-	        Article article = (Article) HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	        Article article = articleRepo.findOne(ARTICLE_ID);
 	    	
 	        //Die Felder werden geändert
 	        article.setColor(properties.getProperty("UPDATE_A_COLOR"));
@@ -184,10 +169,10 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Integer.parseInt(properties.getProperty("UPDATE_A_STOCK")));
 	        
-	        HibernateUtil.insert(article, session);
+	        articleRepo.save(article);
 	        
 	        //Der geänderter Artikel wird geprüft
-	        article = (Article) HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	        article = articleRepo.findOne(ARTICLE_ID);
 	        
 	        assertEquals(article.getColor(), properties.getProperty("UPDATE_A_COLOR"));
 	        assertEquals(article.getDescription(), properties.getProperty("UPDATE_A_DESCRIPTION"));
@@ -202,52 +187,43 @@ public class Article_ArticleCategoryTest extends TestCase {
     	} catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
-		} finally {
-			if (session.isOpen())
-				session.close();
 		}
     }
     
     /**
      * Der letzter Artikel wird gelöscht
      */
+    @Test
     public void test5DeleteArticle(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        Article article = (Article) HibernateUtil.selectObject(QUERY_A_BY_ID, session);
+	        Article article = articleRepo.findOne(ARTICLE_ID);
 	    	
-	        HibernateUtil.delete(article, session);
+	        articleRepo.delete(article);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_A_BY_ID, session).isEmpty());
+	        assertTrue(!articleRepo.exists(ARTICLE_ID));
     	} catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
-		} finally {
-			if (session.isOpen())
-				session.close();
 		}
     }
     
     /**
      * Die Artikelkategorie wird gelöscht
      */
+    @Test
     public void test6DeleteArticleCategory()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        ArticleCategory articleCategory = (ArticleCategory) HibernateUtil.selectObject(QUERY_AC_BY_ID, session);
+	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	    	
-	        HibernateUtil.delete(articleCategory, session);
+	        articleCategoryRepo.delete(articleCategory);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_AC_BY_ID, session).isEmpty());
+	        assertTrue(!articleCategoryRepo.exists(ARTICLE_CATEGORY_ID));
 	    } catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
-		} finally {
-			if (session.isOpen())
-				session.close();
 		}
     }
 }

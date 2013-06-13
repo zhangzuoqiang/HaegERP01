@@ -6,9 +6,7 @@
 	<class name="org.haegerp.entity.EmployeeUser" table="EMPLOYEEUSER">
 		<id name="idEmployee" type="int">
 			<column name="IDEMPLOYEE" not-null="true" />
-			<generator class="foreign">
-				<param name="property">employee</param>
-			</generator>
+			<generator class="increment" />
 		</id>
 		<property name="username" type="string">
 			<column name="USERNAME" length="50" not-null="true" />
@@ -16,6 +14,6 @@
 		<property name="password" type="string">
 			<column name="PASSWORD" length="32" not-null="true" />
 		</property>
-		<one-to-one name="employee" class="org.haegerp.entity.Employee" constrained="true"/>
+		<one-to-one name="employee" class="org.haegerp.entity.Employee"/>
 	</class>
 </hibernate-mapping>

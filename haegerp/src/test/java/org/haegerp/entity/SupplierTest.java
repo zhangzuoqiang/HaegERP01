@@ -3,51 +3,46 @@ package org.haegerp.entity;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.haegerp.util.HibernateUtil;
-import org.hibernate.Session;
+import org.haegerp.entity.repository.SupplierRepository;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 /**
  * Dieses Test Suite wird Lieferantgeschäftspartner testen
  * 
  * @author Wolf
  *
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="classpath:META-INF/spring-data.xml")
+@Transactional
+@TransactionConfiguration(defaultRollback=false)
 public class SupplierTest extends TestCase {
-	/**
-     * Ein Testfall wird erstellt
-     *
-     * @param testName name vom Testfall
-     */
-    public SupplierTest( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return Die Testfälle für testen
-     */
-    public static Test suite()
-    {	
-        return new TestSuite( SupplierTest.class );
-    }
+	
+    private Properties properties = new Properties();
     
-    Properties properties = new Properties();
+    private static int SUPPLIER_ID;
     
-    //Abfragen
-    private static String QUERY_BY_ID = "FROM Supplier WHERE idBusinessPartner = ";
+    //Repositories
+    @Autowired
+    private SupplierRepository supplierRepo;
     
     /**
      * Ein Lieferant wird in die Datenbank erstellt
      */
+    @Test
     public void test1InsertSupplier(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	Supplier supplier = new Supplier();
@@ -64,11 +59,11 @@ public class SupplierTest extends TestCase {
 	    	supplier.setFaxNumber(properties.getProperty("INSERT_FAXNUMBER"));
 	    	supplier.setDescription(properties.getProperty("INSERT_DESCRIPTION"));
 	    	
-	    	HibernateUtil.insert(supplier, session);
-	        
+	    	supplier = supplierRepo.save(supplier);
+	    	
 	        //Die erstellt Artikelkategorie wird geprüft
-	    	QUERY_BY_ID = QUERY_BY_ID + supplier.getIdBusinessPartner();
-	        supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
+	        supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
 	        assertEquals(supplier.getName(), properties.getProperty("INSERT_NAME"));
 	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("INSERT_TAXID")));
@@ -85,20 +80,17 @@ public class SupplierTest extends TestCase {
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Der letzter Lieferant wird in die Datenbank ändert
      */
+    @Test
     public void test2UpdateSupplier(){
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-	        Supplier supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
 	    	supplier.setName(properties.getProperty("UPDATE_NAME"));
 	    	supplier.setTaxId(Long.parseLong(properties.getProperty("UPDATE_TAXID")));
@@ -113,10 +105,10 @@ public class SupplierTest extends TestCase {
 	    	supplier.setFaxNumber(properties.getProperty("UPDATE_FAXNUMBER"));
 	    	supplier.setDescription(properties.getProperty("UPDATE_DESCRIPTION"));
 	    	
-	    	HibernateUtil.update(supplier, session);
+	    	supplierRepo.save(supplier);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
-	        supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	        supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
 	        assertEquals(supplier.getName(), properties.getProperty("UPDATE_NAME"));
 	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("UPDATE_TAXID")));
@@ -133,31 +125,25 @@ public class SupplierTest extends TestCase {
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
     
     /**
      * Der Liferant wird von der Datenbank gelöscht
      */
+    @Test
     public void test3DeleteSupplier()
     {
-    	Session session = HibernateUtil.getSessionFactory().openSession();
     	try {
-	        Supplier supplier = (Supplier) HibernateUtil.selectObject(QUERY_BY_ID, session);
+	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
 	    	
-	        HibernateUtil.delete(supplier, session);
+	        supplierRepo.delete(supplier.getIdBusinessPartner());
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(HibernateUtil.selectList(QUERY_BY_ID, session).isEmpty());
+	        assertNull(supplierRepo.findOne(SUPPLIER_ID));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
-	    } finally {
-	    	if (session.isOpen())
-	    		session.close();
 	    }
     }
 }
