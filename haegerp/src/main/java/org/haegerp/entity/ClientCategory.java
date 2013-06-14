@@ -9,7 +9,7 @@ public class ClientCategory implements Serializable {
 	private static final long serialVersionUID = -4809347561860652303L;
 
 	//Primary Key (Erforderlich - Automatisch)
-	private int idClientCategory;
+	private long idClientCategory;
 	
 	//Name von der Artikelkategorie (Erforderlich)
 	private String name;
@@ -31,7 +31,7 @@ public class ClientCategory implements Serializable {
 	 * 
 	 * @return idClientCategory - Primary Key (Erforderlich - Automatisch)
 	 */
-	public int getIdClientCategory() {
+	public long getIdClientCategory() {
 		return idClientCategory;
 	}
 
@@ -39,7 +39,7 @@ public class ClientCategory implements Serializable {
 	 * 
 	 * @param idClientCategory Primary Key (Erforderlich - Automatisch)
 	 */
-	public void setIdClientCategory(int idClientCategory) {
+	public void setIdClientCategory(long idClientCategory) {
 		this.idClientCategory = idClientCategory;
 	}
 
@@ -99,7 +99,7 @@ public class ClientCategory implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idClientCategory;
+		result = prime * result + (int) (idClientCategory ^ (idClientCategory >>> 32));
 		return result;
 	}
 

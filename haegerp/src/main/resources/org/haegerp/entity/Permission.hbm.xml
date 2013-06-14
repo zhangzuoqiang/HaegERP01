@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.Permission" table="PERMISSION">
-		<id name="idPermission" type="int">
+		<id name="idPermission" type="long">
 			<column name="IDPERMISSION" not-null="true" />
 			<generator class="increment" />
 		</id>

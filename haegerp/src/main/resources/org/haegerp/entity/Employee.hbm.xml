@@ -4,50 +4,58 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.Employee" table="EMPLOYEE">
-		<id name="idEmployee" type="int">
+		<id name="idEmployee" type="long">
 			<column name="IDEMPLOYEE" not-null="true" />
 			<generator class="increment" />
 		</id>
+		
 		<many-to-one name="salaryCategory" class="org.haegerp.entity.SalaryCategory" fetch="select">
 			<column name="IDSALARYCATEGORY" not-null="true" />
 		</many-to-one>
+		
 		<many-to-one name="division" class="org.haegerp.entity.Division" fetch="select">
 			<column name="IDDIVISION" not-null="true" />
 		</many-to-one>
+		
 		<many-to-one name="userGroup" class="org.haegerp.entity.UserGroup" fetch="select">
 			<column name="IDUSERGROUP" not-null="true" />
 		</many-to-one>
-		<one-to-one name="employeeUser" class="org.haegerp.entity.EmployeeUser"/>
 		
 		<property name="idCard" type="long">
-			<column name="IDCARD" not-null="true" precision="13"/>
+			<column name="IDCARD" precision="13" not-null="true"/>
 		</property>
 		<property name="name" type="string">
-			<column name="NAME" not-null="true" length="100"/>
+			<column name="NAME" length="100" not-null="true"/>
 		</property>
 		<property name="address" type="string">
-			<column name="ADDRESS" not-null="true" length="100"/>
+			<column name="ADDRESS" length="100" not-null="true"/>
 		</property>
 		<property name="zipCode" type="string">
-			<column name="ZIPCODE" not-null="true" length="15"/>
+			<column name="ZIPCODE" length="15" not-null="true"/>
 		</property>
 		<property name="city" type="string">
-			<column name="CITY" not-null="true" length="30"/>
+			<column name="CITY" length="30" not-null="true"/>
 		</property>
 		<property name="region" type="string">
-			<column name="REGION" not-null="false" length="30"/>
+			<column name="REGION" length="30"/>
 		</property>
 		<property name="country" type="string">
-			<column name="COUNTRY" not-null="true" length="30"/>
+			<column name="COUNTRY" length="30" not-null="true"/>
 		</property>
 		<property name="email" type="string">
-			<column name="EMAIL" not-null="false" length="50"/>
+			<column name="EMAIL" length="50"/>
 		</property>
 		<property name="phoneNumber" type="string">
-			<column name="PHONENUMBER" not-null="false" length="20"/>
+			<column name="PHONENUMBER" length="20"/>
 		</property>
 		<property name="mobileNumber" type="string">
-			<column name="MOBILENUMBER" not-null="true" length="20"/>
+			<column name="MOBILENUMBER" length="20"/>
+		</property>
+		<property name="username" type="string" >
+			<column name="USERNAME" length="50" not-null="true" />
+		</property>
+		<property name="password" type="string">
+			<column name="PASSWORD" length="32" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

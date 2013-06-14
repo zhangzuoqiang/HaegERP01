@@ -9,7 +9,7 @@ public class ArticleCategory implements Serializable{
 	private static final long serialVersionUID = 4064612947215250133L;
 	
 	//Primary Key (Erforderlich - Automatisch)
-	private int idArticleCategory;
+	private long idArticleCategory;
 	
 	//Name von der Artikelkategorie (Erforderlich)
 	private String name;
@@ -31,7 +31,7 @@ public class ArticleCategory implements Serializable{
 	 * 
 	 * @return idArticleCategory - Primary Key (Erforderlich - Automatisch)
 	 */
-	public int getIdArticleCategory() {
+	public long getIdArticleCategory() {
 		return idArticleCategory;
 	}
 
@@ -39,7 +39,7 @@ public class ArticleCategory implements Serializable{
 	 * 
 	 * @param idArticleCategory Primary Key (Erforderlich - Automatisch)
 	 */
-	public void setIdArticleCategory(int idArticleCategory) {
+	public void setIdArticleCategory(long idArticleCategory) {
 		this.idArticleCategory = idArticleCategory;
 	}
 
@@ -99,7 +99,7 @@ public class ArticleCategory implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idArticleCategory;
+		result = prime * result + (int) (idArticleCategory ^ (idArticleCategory >>> 32));
 		return result;
 	}
 

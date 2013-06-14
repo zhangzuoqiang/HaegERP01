@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
+public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
 	@Modifying
 	@Transactional

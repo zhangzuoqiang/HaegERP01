@@ -38,8 +38,8 @@ public class Client_ClientCategoryTest extends TestCase {
     @Autowired
     private ClientRepository clientRepository;
     
-    private static int CLIENT_CATEGORY_ID;
-    private static int CLIENT_ID;
+    private static long CLIENT_CATEGORY_ID;
+    private static long CLIENT_ID;
     
     /**
      * Eine Kundenkategorie wird in die Datenbank erstellt

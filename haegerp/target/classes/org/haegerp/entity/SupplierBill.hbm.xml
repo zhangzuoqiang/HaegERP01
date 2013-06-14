@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.SupplierBill" table="SUPPLIERBILL">
+		<id name="idSupplierBill" type="long">
+			<column name="IDSUPPLIERBILL" not-null="true" />
+			<generator class="increment" />
+		</id>
+		
+		<one-to-one name="supplierOrder" class="org.haegerp.entity.SupplierOrder" fetch="select" />
+		
+		<property name="receivedDate" type="date">
+			<column name="RECEIVEDDATE" not-null="true"/>
+		</property>
+		
+		<property name="paidDate" type="date">
+			<column name="PAIDDATE" not-null="false"/>
+		</property>
+	</class>
+</hibernate-mapping>

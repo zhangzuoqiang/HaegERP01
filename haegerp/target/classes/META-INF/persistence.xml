@@ -16,7 +16,9 @@
 		<mapping resource="org/haegerp/entity/UserGroup.hbm.xml" />
 		<mapping resource="org/haegerp/entity/SalaryCategory.hbm.xml" />
 		<mapping resource="org/haegerp/entity/Division.hbm.xml" />
-		<mapping resource="org/haegerp/entity/EmployeeUser.hbm.xml" />
 		<mapping resource="org/haegerp/entity/Employee.hbm.xml" />
+		<mapping resource="org/haegerp/entity/SupplierBill.hbm.xml" />
+		<mapping resource="org/haegerp/entity/SupplierOrder.hbm.xml" />
+		<mapping resource="org/haegerp/entity/SupplierOrderDetail.hbm.xml" />
 	</persistence-unit>
 </persistence>

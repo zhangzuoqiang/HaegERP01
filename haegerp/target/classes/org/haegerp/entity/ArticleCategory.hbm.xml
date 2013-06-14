@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.ArticleCategory" table="ARTICLECATEGORY">
-		<id name="idArticleCategory" type="int">
+		<id name="idArticleCategory" type="long">
 			<column name="IDARTICLECATEGORY" not-null="true" />
 			<generator class="increment" />
 		</id>

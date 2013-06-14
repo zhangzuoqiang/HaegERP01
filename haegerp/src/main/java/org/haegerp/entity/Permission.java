@@ -9,7 +9,7 @@ public class Permission implements Serializable {
 	private static final long serialVersionUID = 5008365204082645635L;
 	
 	//Primary Key (Erforderlich)
-	private int idPermission;
+	private long idPermission;
 	
 	//Name der Erlaubnis (Erforderlich)
 	private String moduleName;
@@ -28,7 +28,7 @@ public class Permission implements Serializable {
 	 * 
 	 * @return idPermission - Primary Key (Erforderlich)
 	 */
-	public int getIdPermission() {
+	public long getIdPermission() {
 		return idPermission;
 	}
 
@@ -36,7 +36,7 @@ public class Permission implements Serializable {
 	 * 
 	 * @param idPermission Primary Key (Erforderlich)
 	 */
-	public void setIdPermission(int idPermission) {
+	public void setIdPermission(long idPermission) {
 		this.idPermission = idPermission;
 	}
 
@@ -75,4 +75,27 @@ public class Permission implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (idPermission ^ (idPermission >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Permission other = (Permission) obj;
+		if (idPermission != other.idPermission)
+			return false;
+		return true;
+	}
+	
 }

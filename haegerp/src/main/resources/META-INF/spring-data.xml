@@ -39,13 +39,7 @@ xsi:schemaLocation="
 		p:maxStatements="50"
 		p:minPoolSize="10" />
  
-	<!-- Declare a JPA entityManagerFactory 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="jpaDataSource" />
-		<property name="persistenceUnitName" value="haegerp-persistence" />
-	</bean>
-	-->
-	 <!-- Declare a JPA entityManagerFactory -->
+	<!-- Declare a JPA entityManagerFactory -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 	p:persistenceXmlLocation="./META-INF/persistence.xml"
 	p:persistenceUnitName="haegerp-persistence"

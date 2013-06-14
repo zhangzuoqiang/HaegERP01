@@ -9,7 +9,7 @@ public class SalaryCategory implements Serializable {
 	private static final long serialVersionUID = 5718511347777083718L;
 	
 	//Primary Key (Erforderlich - Automatisch)
-	private int idSalaryCategory;
+	private long idSalaryCategory;
 
 	//Gehalt Minimum
 	private float salaryFrom;
@@ -34,7 +34,7 @@ public class SalaryCategory implements Serializable {
 	 * 
 	 * @return idSalaryCategory - Primary Key (Erforderlich - Automatisch)
 	 */
-	public int getIdSalaryCategory() {
+	public long getIdSalaryCategory() {
 		return idSalaryCategory;
 	}
 
@@ -42,7 +42,7 @@ public class SalaryCategory implements Serializable {
 	 * 
 	 * @param idSalaryCategory Primary Key (Erforderlich - Automatisch)
 	 */
-	public void setIdSalaryCategory(int idSalaryCategory) {
+	public void setIdSalaryCategory(long idSalaryCategory) {
 		this.idSalaryCategory = idSalaryCategory;
 	}
 
@@ -118,7 +118,7 @@ public class SalaryCategory implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idSalaryCategory;
+		result = prime * result + (int) (idSalaryCategory ^ (idSalaryCategory >>> 32));
 		return result;
 	}
 

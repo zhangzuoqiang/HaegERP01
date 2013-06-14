@@ -23,7 +23,6 @@ DROP TABLE clientbill;
 DROP TABLE supplierorder_article;
 DROP TABLE supplierorder;
 DROP TABLE supplierbill;
-DROP TABLE employeeuser;
 DROP TABLE usergroup_permission;
 DROP TABLE permission;
 DROP TABLE employee;
@@ -52,15 +51,15 @@ CREATE TABLE articlecategory(
 CREATE TABLE article(
 	idArticle			INTEGER			NOT NULL,
 	idArticleCategory	INTEGER			NOT NULL,
-	ean					NUMBER(13)		NOT NULL,
+	ean					INTEGER			NOT NULL,
 	name				VARCHAR2(80)	NOT NULL,
 	priceVat			NUMBER(5,2),
-	priceGross			NUMBER(12,2),
-	stock				NUMBER(9),
+	priceGross			NUMBER(20,2),
+	stock				INTEGER,
 	color				VARCHAR2(30),
-	sizeH				NUMBER(10,3),
-	sizeL				NUMBER(10,3),
-	sizeW				NUMBER(10,3),
+	sizeH				NUMBER(20,3),
+	sizeL				NUMBER(20,3),
+	sizeW				NUMBER(20,3),
 	description			VARCHAR2(256),
 	CONSTRAINT pk_article
 		PRIMARY KEY (idArticle),
@@ -76,7 +75,7 @@ CREATE TABLE article(
 CREATE TABLE businesspartner(
 	idBusinessPartner	INTEGER			NOT NULL,
 	name				VARCHAR2(100)	NOT NULL,
-	taxId				NUMBER(15)		NOT NULL,
+	taxId				INTEGER			NOT NULL,
 	address				VARCHAR2(100)	NOT NULL,
 	zipCode				VARCHAR2(12)	NOT NULL,
 	city				VARCHAR2(50)	NOT NULL,
@@ -103,7 +102,7 @@ CREATE TABLE supplier(
 CREATE TABLE clientcategory(
 	idClientCategory	INTEGER			NOT NULL,
 	name				VARCHAR2(50)	NOT NULL,
-	description			VARCHAR(256),
+	description			VARCHAR2(256),
 	CONSTRAINT idClientCategory
 		PRIMARY KEY (idClientCategory)
 );
@@ -127,8 +126,8 @@ CREATE TABLE client(
 
 CREATE TABLE salarycategory (
 	idSalaryCategory	INTEGER			NOT NULL,
-	salaryFrom			NUMBER(12,2)	NOT NULL,
-	salaryTo			NUMBER(12,2)	NOT NULL,
+	salaryFrom			NUMBER(20,2)	NOT NULL,
+	salaryTo			NUMBER(20,2)	NOT NULL,
 	description			VARCHAR2(256),
 	CONSTRAINT pk_salaryCategory
 		PRIMARY KEY (idSalaryCategory)
@@ -155,14 +154,16 @@ CREATE TABLE employee (
 	idSalaryCategory	INTEGER			NOT NULL,
 	idDivision			INTEGER			NOT NULL,
 	idUserGroup			INTEGER			NOT NULL,
-	idCard				NUMBER(15)		NOT NULL,
+	username			VARCHAR2(50)	NOT NULL,
+	password			VARCHAR2(32)	NOT NULL,
+	idCard				INTEGER			NOT NULL,
 	name				VARCHAR2(100)	NOT NULL,
 	address				VARCHAR2(100)	NOT NULL,
-	zipCode				VARCHAR(15)		NOT NULL,
-	city				VARCHAR(30)		NOT NULL,
-	region				VARCHAR(30),
-	country				VARCHAR(30)		NOT NULL,
-	email				VARCHAR(50),
+	zipCode				VARCHAR2(15)	NOT NULL,
+	city				VARCHAR2(30)	NOT NULL,
+	region				VARCHAR2(30),
+	country				VARCHAR2(30)	NOT NULL,
+	email				VARCHAR2(50),
 	phoneNumber			VARCHAR2(20),
 	mobileNumber		VARCHAR2(20),
 	CONSTRAINT pk_employee
@@ -198,20 +199,13 @@ CREATE TABLE usergroup_permission (
 		REFERENCES permission (idPermission)
 );
 
-CREATE TABLE employeeuser (
-	idEmployee		INTEGER			NOT NULL,
-	username		VARCHAR2(50)	NOT NULL,
-	password		VARCHAR2(32)	NOT NULL,
-	CONSTRAINT pk_employeeuser
-		PRIMARY KEY (idEmployee)
-);
-
 /* ******************************************/
 /* *			Supplier Orders				*/
 /* ******************************************/
 
 CREATE TABLE supplierbill (
 	idSupplierBill		INTEGER		NOT NULL,
+	receivedDate		DATE		NOT NULL,
 	paidDate			DATE,
 	CONSTRAINT pk_supplierbill
 		PRIMARY KEY (idSupplierBill)
@@ -223,9 +217,8 @@ CREATE TABLE supplierorder (
 	idBusinessPartner	INTEGER		NOT NULL,
 	idEmployee			INTEGER		NOT NULL,
 	orderDate			DATE		NOT NULL,
-	total				NUMBER(12,2),
+	total				NUMBER(20,2),
 	sendDate			DATE,
-	billedDate			DATE,
 	description			VARCHAR2(256),
 	CONSTRAINT pk_supplierorder
 		PRIMARY KEY (idSupplierOrder),
@@ -243,10 +236,11 @@ CREATE TABLE supplierorder (
 CREATE TABLE supplierorder_article (
 	idSupplierOrder		INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
-	price				NUMBER(12,2)	NOT NULL,
+	price				NUMBER(20,2)	NOT NULL,
+	priceVat			NUMBER(5,2)		NOT NULL,
 	quantity			INTEGER			NOT NULL,
-	discount			NUMBER(3,3)		NOT NULL,
-	articleTotal		NUMBER(12,2)	NOT NULL,
+	discount			NUMBER(6,3)		NOT NULL,
+	articleTotal		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_supplierorder_article
 		PRIMARY KEY (idSupplierOrder, idArticle),
 	CONSTRAINT fk_supplierorder_article
@@ -274,7 +268,7 @@ CREATE TABLE clientoffer (
 	idBusinessPartner	INTEGER		NOT NULL,
 	idEmployee			INTEGER		NOT NULL,
 	offerDate			DATE		NOT NULL,
-	total				NUMBER(12,2),
+	total				NUMBER(20,2),
 	sendDate			DATE,
 	billedDate			DATE,
 	description			VARCHAR2(256),
@@ -295,10 +289,10 @@ CREATE TABLE clientoffer_article (
 	idClientOffer		INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
 	priceVat			NUMBER(5,2)		NOT NULL,
-	priceGross			NUMBER(12,2)	NOT NULL,
+	priceGross			NUMBER(20,2)	NOT NULL,
 	quantity			INTEGER			NOT NULL,
 	discount			NUMBER(6,3)		NOT NULL,
-	articleTotal		NUMBER(12,2)	NOT NULL,
+	articleTotal		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_clientoffer_article
 		PRIMARY KEY (idClientOffer, idArticle),
 	CONSTRAINT fk_clientoffer_article
@@ -319,13 +313,6 @@ CREATE TABLE outstanding (
 		FOREIGN KEY (idClientBill)
 		REFERENCES clientbill (idClientBill)
 );
-
-/* ******************************************/
-/* *			Checking Script				*/
-/* ******************************************/
-
-SELECT table_name, tablespace_name, read_only
-FROM USER_TABLES;
 
 /* ******************************************/
 /* *			Data Insertion				*/
@@ -351,11 +338,38 @@ VALUES (6, 'Company Administration');
 
 ALTER TABLE permission READ ONLY;
 
+/* ******************************************/
+/* *			Checking Script				*/
+/* ******************************************/
+
+SELECT table_name, tablespace_name, read_only
+FROM USER_TABLES;
+
+COMMIT;
+
+/* ******************************************/
+/* *			Cleanning Script			*/
+/* ******************************************/
+
+DELETE FROM outstanding;
+DELETE FROM clientoffer_article;
+DELETE FROM clientoffer;
+DELETE FROM clientbill;
+DELETE FROM supplierorder_article;
+DELETE FROM supplierorder;
+DELETE FROM supplierbill;
+DELETE FROM usergroup_permission;
+DELETE FROM employee;
+DELETE FROM usergroup;
+DELETE FROM division;
+DELETE FROM salarycategory;
+DELETE FROM client;
+DELETE FROM clientcategory;
+DELETE FROM supplier;
+DELETE FROM businesspartner;
+DELETE FROM article;
+DELETE FROM articlecategory;
 COMMIT;
 
 INSERT INTO employeeuser
 VALUE(1, "admin", "21232f297a57a5a743894a0e4a801fc3") /* Password = MD5SUM = "admin" */
-
-
-
-

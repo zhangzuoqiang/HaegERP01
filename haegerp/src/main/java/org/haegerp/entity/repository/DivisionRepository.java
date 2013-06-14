@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface DivisionRepository extends JpaRepository<Division, Integer> {
+public interface DivisionRepository extends JpaRepository<Division, Long> {
 
 	@Modifying
 	@Transactional

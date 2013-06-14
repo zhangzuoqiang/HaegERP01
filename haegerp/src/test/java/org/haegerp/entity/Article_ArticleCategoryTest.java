@@ -32,8 +32,8 @@ public class Article_ArticleCategoryTest extends TestCase {
 	
     private Properties properties = new Properties();
     
-    private static int ARTICLE_ID;
-    private static int ARTICLE_CATEGORY_ID;
+    private static long ARTICLE_ID;
+    private static long ARTICLE_CATEGORY_ID;
     
     @Autowired
     private ArticleRepository articleRepo;

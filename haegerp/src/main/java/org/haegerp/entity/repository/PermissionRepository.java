@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface PermissionRepository extends JpaRepository<Permission, Integer> {
+public interface PermissionRepository extends JpaRepository<Permission, Long> {
 
 	@Modifying
 	@Transactional

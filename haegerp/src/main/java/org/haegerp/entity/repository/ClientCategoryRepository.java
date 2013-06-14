@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface ClientCategoryRepository extends JpaRepository<ClientCategory, Integer> {
+public interface ClientCategoryRepository extends JpaRepository<ClientCategory, Long> {
 
 	@Modifying
 	@Transactional

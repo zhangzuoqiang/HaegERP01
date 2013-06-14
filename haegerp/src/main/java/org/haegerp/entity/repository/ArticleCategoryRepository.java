@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface ArticleCategoryRepository extends JpaRepository<ArticleCategory, Integer> {
+public interface ArticleCategoryRepository extends JpaRepository<ArticleCategory, Long> {
 	
 	@Modifying
 	@Transactional

@@ -4,15 +4,15 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.SalaryCategory" table="SALARYCATEGORY">
-		<id name="idSalaryCategory" type="int">
+		<id name="idSalaryCategory" type="long">
 			<column name="IDSALARYCATEGORY" not-null="true" />
 			<generator class="increment" />
 		</id>
 		<property name="salaryFrom" type="float">
-			<column name="SALARYFROM" precision="9" scale="2" not-null="true" />
+			<column name="SALARYFROM" precision="17" scale="2" not-null="true" />
 		</property>
 		<property name="salaryTo" type="float">
-			<column name="SALARYTO" precision="9" scale="2" not-null="true" />
+			<column name="SALARYTO" precision="17" scale="2" not-null="true" />
 		</property>
 		<property name="description" type="string">
 			<column name="DESCRIPTION" length="256" not-null="false" />

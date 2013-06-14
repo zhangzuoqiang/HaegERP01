@@ -9,7 +9,7 @@ public class Division implements Serializable {
 	private static final long serialVersionUID = 423295763797533848L;
 
 	//Primary Key (Erforderlich - Automatisch)
-	private int idDivision;
+	private long idDivision;
 	
 	//Name des Divisions
 	private String name;
@@ -46,7 +46,7 @@ public class Division implements Serializable {
 	 * 
 	 * @return idDivision - Primary Key (Erforderlich - Automatisch)
 	 */
-	public int getIdDivision() {
+	public long getIdDivision() {
 		return idDivision;
 	}
 
@@ -54,7 +54,7 @@ public class Division implements Serializable {
 	 * 
 	 * @param idDivision Primary Key (Erforderlich - Automatisch)
 	 */
-	public void setIdDivision(int idDivision) {
+	public void setIdDivision(long idDivision) {
 		this.idDivision = idDivision;
 	}
 
@@ -114,7 +114,7 @@ public class Division implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idDivision;
+		result = prime * result + (int) (idDivision ^ (idDivision >>> 32));
 		return result;
 	}
 

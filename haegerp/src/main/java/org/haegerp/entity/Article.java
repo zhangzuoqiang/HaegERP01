@@ -1,6 +1,8 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -12,7 +14,7 @@ public class Article implements Serializable{
 	private static final long serialVersionUID = 5903001912808144518L;
 	
 	//Primary Key (Erforderlich - Automatisch)
-	private int idArticle;
+	private long idArticle;
 	
 	//(Many-To-One) Kategorie, dass Artikel gehört (Erforderlich)
 	private ArticleCategory articleCategory;
@@ -30,7 +32,7 @@ public class Article implements Serializable{
 	private float priceGross;
 	
 	//Artikels Lager
-	private int stock;
+	private long stock;
 	
 	//Artikels Farbe
 	private String color;
@@ -47,6 +49,9 @@ public class Article implements Serializable{
 	//Artikels Beschreibung
 	private String description;
 	
+	//Welche Bestellung gehört den Artikel
+	private Set<SupplierOrderDetail> supplierOrderDetail = new HashSet<SupplierOrderDetail>(0);
+	
 	/**
 	 * Konstruktor mit keinen Parametern
 	 * Ideal für einen neuen Artikel
@@ -54,11 +59,11 @@ public class Article implements Serializable{
 	public Article() {
 	}
 	
-	public int getIdArticle() {
+	public long getIdArticle() {
 		return idArticle;
 	}
 	
-	public void setIdArticle(int idArticle) {
+	public void setIdArticle(long idArticle) {
 		this.idArticle = idArticle;
 	}
 	
@@ -146,7 +151,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return stock - Artikels Lager
 	 */
-	public int getStock() {
+	public long getStock() {
 		return stock;
 	}
 	
@@ -154,7 +159,7 @@ public class Article implements Serializable{
 	 * 
 	 * @param stock Artikels Lager (Nicht Erforderlich)
 	 */
-	public void setStock(int stock) {
+	public void setStock(long stock) {
 		this.stock = stock;
 	}
 	
@@ -236,6 +241,22 @@ public class Article implements Serializable{
 		this.description = description;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Set<SupplierOrderDetail> getSupplierOrderDetail() {
+		return supplierOrderDetail;
+	}
+
+	/**
+	 * 
+	 * @param supplierOrderDetail
+	 */
+	public void setSupplierOrderDetail(Set<SupplierOrderDetail> supplierOrderDetail) {
+		this.supplierOrderDetail = supplierOrderDetail;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -244,7 +265,7 @@ public class Article implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idArticle;
+		result = prime * result + (int) (idArticle ^ (idArticle >>> 32));
 		return result;
 	}
 

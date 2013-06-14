@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.Division" table="DIVISION">
-		<id name="idDivision" type="int">
+		<id name="idDivision" type="long">
 			<column name="IDDIVISION" not-null="true" />
 			<generator class="increment" />
 		</id>

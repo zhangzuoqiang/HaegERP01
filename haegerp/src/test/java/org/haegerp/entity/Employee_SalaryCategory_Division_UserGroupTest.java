@@ -8,7 +8,6 @@ import java.util.Properties;
 
 import org.haegerp.entity.repository.DivisionRepository;
 import org.haegerp.entity.repository.EmployeeRepository;
-import org.haegerp.entity.repository.EmployeeUserRepository;
 import org.haegerp.entity.repository.PermissionRepository;
 import org.haegerp.entity.repository.SalaryCategoryRepository;
 import org.haegerp.entity.repository.UserGroupRepository;
@@ -43,8 +42,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
-    private EmployeeUserRepository employeeUserRepository;
-    @Autowired
     private SalaryCategoryRepository salaryCategoryRepository;
     @Autowired
     private DivisionRepository divisionRepository;
@@ -53,13 +50,13 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     @Autowired
     private PermissionRepository permissionRepository;
     
-    private static int EMPLOYEE_ID;
+    private static long EMPLOYEE_ID;
     
-    private static int SALARY_CATEGORY_ID;
+    private static long SALARY_CATEGORY_ID;
     
-    private static int DIVISION_ID;
+    private static long DIVISION_ID;
     
-    private static int USER_GROUP_ID;
+    private static long USER_GROUP_ID;
     
     /**
      * Eine Gehaltkategorie wird in die Datenbank erstellt
@@ -191,9 +188,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        //Hinzufügen erlaubnise
 	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("INSERT_UG_PERMISSION1"))));
-	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("INSERT_UG_PERMISSION2"))));
-	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("INSERT_UG_PERMISSION3"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION1"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION2"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION3"))));
 	        
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
@@ -234,9 +231,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        //Hinzufügen erlaubnise
 	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("UPDATE_UG_PERMISSION1"))));
-	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("UPDATE_UG_PERMISSION2"))));
-	        permissionList.add(permissionRepository.findOne(Integer.parseInt(properties.getProperty("UPDATE_UG_PERMISSION3"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("UPDATE_UG_PERMISSION1"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("UPDATE_UG_PERMISSION2"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("UPDATE_UG_PERMISSION3"))));
 	        
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
@@ -290,21 +287,18 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setUserGroup(userGroup);
 	        employee.setZipCode(properties.getProperty("INSERT_E_ZIPCODE"));
 	        
+	      //Benutzername und Kenntwort werden erstellt
+	        employee.setPassword(properties.getProperty("INSERT_E_PASSWORD"));
+	        employee.setUsername(properties.getProperty("INSERT_E_USERNAME"));
+	        
 	        employee = employeeRepository.save(employee);
-	        
-	        //Benutzername und Kenntwort werden gefüllt
-	        EmployeeUser employeeUser = new EmployeeUser();
-	        employeeUser.setPassword(properties.getProperty("INSERT_E_PASSWORD"));
-	        employeeUser.setUsername(properties.getProperty("INSERT_E_USERNAME"));
-	        
-	        employeeUser = employeeUserRepository.save(employeeUser);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
 	        EMPLOYEE_ID = employee.getIdEmployee();
 	        
 	        employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
-	        employeeUser = employeeUserRepository.findOne(EMPLOYEE_ID);
+	        
 	        
 	        assertEquals(employee.getAddress(), properties.getProperty("INSERT_E_ADDRESS"));
 	        assertEquals(employee.getCity(), properties.getProperty("INSERT_E_CITY"));
@@ -319,8 +313,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        assertEquals(employee.getSalaryCategory(), salaryCategory);
 	        assertEquals(employee.getUserGroup(), userGroup);
 	        assertEquals(employee.getZipCode(), properties.getProperty("INSERT_E_ZIPCODE"));
-	        assertEquals(employeeUser.getPassword(), properties.getProperty("INSERT_E_PASSWORD"));
-	        assertEquals(employeeUser.getUsername(), properties.getProperty("INSERT_E_USERNAME"));
+	        assertEquals(employee.getPassword(), properties.getProperty("INSERT_E_PASSWORD"));
+	        assertEquals(employee.getUsername(), properties.getProperty("INSERT_E_USERNAME"));
+	        
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -348,19 +343,14 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setRegion(properties.getProperty("UPDATE_E_REGION"));
 	        employee.setZipCode(properties.getProperty("UPDATE_E_ZIPCODE"));
 	        
-	        employee = employeeRepository.save(employee);
-	        
 	        //Benutzername und Kenntwort werden geändert
-	        EmployeeUser employeeUser = employee.getEmployeeUser();
-	        employeeUser.setPassword(properties.getProperty("UPDATE_E_PASSWORD"));
-	        employeeUser.setUsername(properties.getProperty("UPDATE_E_USERNAME"));
+	        employee.setPassword(properties.getProperty("UPDATE_E_PASSWORD"));
+	        employee.setUsername(properties.getProperty("UPDATE_E_USERNAME"));
 	        
-	        employeeUser = employeeUserRepository.save(employeeUser);
+	        employee = employeeRepository.save(employee);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
 	        employee = employeeRepository.findOne(EMPLOYEE_ID);
-	        
-	        employeeUser = employeeUserRepository.findOne(EMPLOYEE_ID);
 	        
 	        assertEquals(employee.getAddress(), properties.getProperty("UPDATE_E_ADDRESS"));
 	        assertEquals(employee.getCity(), properties.getProperty("UPDATE_E_CITY"));
@@ -372,8 +362,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        assertEquals(employee.getPhoneNumber(), properties.getProperty("UPDATE_E_PHONENUMBER"));
 	        assertEquals(employee.getRegion(), properties.getProperty("UPDATE_E_REGION"));
 	        assertEquals(employee.getZipCode(), properties.getProperty("UPDATE_E_ZIPCODE"));
-	        assertEquals(employeeUser.getPassword(), properties.getProperty("UPDATE_E_PASSWORD"));
-	        assertEquals(employeeUser.getUsername(), properties.getProperty("UPDATE_E_USERNAME"));
+	        assertEquals(employee.getPassword(), properties.getProperty("UPDATE_E_PASSWORD"));
+	        assertEquals(employee.getUsername(), properties.getProperty("UPDATE_E_USERNAME"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -389,9 +379,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	    	
 	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
 	    	
-	        EmployeeUser employeeUser = employeeUserRepository.findOne(EMPLOYEE_ID);;
-	        
-	        employeeUserRepository.delete(employeeUser);
 	        employeeRepository.delete(employee);
 	        
 	        

@@ -7,7 +7,7 @@ public class BusinessPartner implements Serializable {
 	private static final long serialVersionUID = 1526098575049425791L;
 
 	//Primary Key (Erforderlich - Automatisch)
-	private int idBusinessPartner;
+	private long idBusinessPartner;
 	
 	//Geschäftspartners Name (Erforderlich)
 	private String name;
@@ -56,7 +56,7 @@ public class BusinessPartner implements Serializable {
 	 * 
 	 * @return idBusinessPartners - Primary Key (Erforderlich - Automatisch)
 	 */
-	public int getIdBusinessPartner() {
+	public long getIdBusinessPartner() {
 		return idBusinessPartner;
 	}
 
@@ -64,7 +64,7 @@ public class BusinessPartner implements Serializable {
 	 * 
 	 * @param idBusinessPartner Primary Key (Erforderlich - Automatisch)
 	 */
-	public void setIdBusinessPartner(int idBusinessPartner) {
+	public void setIdBusinessPartner(long idBusinessPartner) {
 		this.idBusinessPartner = idBusinessPartner;
 	}
 
@@ -268,7 +268,7 @@ public class BusinessPartner implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idBusinessPartner;
+		result = prime * result + (int) (idBusinessPartner ^ (idBusinessPartner >>> 32));
 		return result;
 	}
 

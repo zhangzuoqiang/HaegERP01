@@ -32,7 +32,7 @@ public class SupplierTest extends TestCase {
 	
     private Properties properties = new Properties();
     
-    private static int SUPPLIER_ID;
+    private static long SUPPLIER_ID;
     
     //Repositories
     @Autowired
@@ -46,18 +46,18 @@ public class SupplierTest extends TestCase {
         try {
         	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	Supplier supplier = new Supplier();
-	    	supplier.setName(properties.getProperty("INSERT_NAME"));
-	    	supplier.setTaxId(Long.parseLong(properties.getProperty("INSERT_TAXID")));
-	    	supplier.setAddress(properties.getProperty("INSERT_ADDRESS"));
-	    	supplier.setZipCode(properties.getProperty("INSERT_ZIPCODE"));
-	    	supplier.setCity(properties.getProperty("INSERT_CITY"));
-	    	supplier.setRegion(properties.getProperty("INSERT_REGION"));
-	    	supplier.setCountry(properties.getProperty("INSERT_COUNTRY"));
-	    	supplier.setEmail(properties.getProperty("INSERT_EMAIL"));
-	    	supplier.setPhoneNumber(properties.getProperty("INSERT_PHONENUMBER"));
-	    	supplier.setMobileNumber(properties.getProperty("INSERT_MOBILENUMBER"));
-	    	supplier.setFaxNumber(properties.getProperty("INSERT_FAXNUMBER"));
-	    	supplier.setDescription(properties.getProperty("INSERT_DESCRIPTION"));
+	    	supplier.setName(properties.getProperty("INSERT_S_NAME"));
+	    	supplier.setTaxId(Long.parseLong(properties.getProperty("INSERT_S_TAXID")));
+	    	supplier.setAddress(properties.getProperty("INSERT_S_ADDRESS"));
+	    	supplier.setZipCode(properties.getProperty("INSERT_S_ZIPCODE"));
+	    	supplier.setCity(properties.getProperty("INSERT_S_CITY"));
+	    	supplier.setRegion(properties.getProperty("INSERT_S_REGION"));
+	    	supplier.setCountry(properties.getProperty("INSERT_S_COUNTRY"));
+	    	supplier.setEmail(properties.getProperty("INSERT_S_EMAIL"));
+	    	supplier.setPhoneNumber(properties.getProperty("INSERT_S_PHONENUMBER"));
+	    	supplier.setMobileNumber(properties.getProperty("INSERT_S_MOBILENUMBER"));
+	    	supplier.setFaxNumber(properties.getProperty("INSERT_S_FAXNUMBER"));
+	    	supplier.setDescription(properties.getProperty("INSERT_S_DESCRIPTION"));
 	    	
 	    	supplier = supplierRepo.save(supplier);
 	    	
@@ -65,18 +65,18 @@ public class SupplierTest extends TestCase {
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
 	        supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
-	        assertEquals(supplier.getName(), properties.getProperty("INSERT_NAME"));
-	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("INSERT_TAXID")));
-	        assertEquals(supplier.getAddress(), properties.getProperty("INSERT_ADDRESS"));
-	        assertEquals(supplier.getZipCode(), properties.getProperty("INSERT_ZIPCODE"));
-	        assertEquals(supplier.getCity(), properties.getProperty("INSERT_CITY"));
-	        assertEquals(supplier.getRegion(), properties.getProperty("INSERT_REGION"));
-	        assertEquals(supplier.getCountry(), properties.getProperty("INSERT_COUNTRY"));
-	        assertEquals(supplier.getEmail(), properties.getProperty("INSERT_EMAIL"));
-	        assertEquals(supplier.getPhoneNumber(), properties.getProperty("INSERT_PHONENUMBER"));
-	        assertEquals(supplier.getMobileNumber(), properties.getProperty("INSERT_MOBILENUMBER"));
-	        assertEquals(supplier.getFaxNumber(), properties.getProperty("INSERT_FAXNUMBER"));
-	        assertEquals(supplier.getDescription(), properties.getProperty("INSERT_DESCRIPTION"));
+	        assertEquals(supplier.getName(), properties.getProperty("INSERT_S_NAME"));
+	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("INSERT_S_TAXID")));
+	        assertEquals(supplier.getAddress(), properties.getProperty("INSERT_S_ADDRESS"));
+	        assertEquals(supplier.getZipCode(), properties.getProperty("INSERT_S_ZIPCODE"));
+	        assertEquals(supplier.getCity(), properties.getProperty("INSERT_S_CITY"));
+	        assertEquals(supplier.getRegion(), properties.getProperty("INSERT_S_REGION"));
+	        assertEquals(supplier.getCountry(), properties.getProperty("INSERT_S_COUNTRY"));
+	        assertEquals(supplier.getEmail(), properties.getProperty("INSERT_S_EMAIL"));
+	        assertEquals(supplier.getPhoneNumber(), properties.getProperty("INSERT_S_PHONENUMBER"));
+	        assertEquals(supplier.getMobileNumber(), properties.getProperty("INSERT_S_MOBILENUMBER"));
+	        assertEquals(supplier.getFaxNumber(), properties.getProperty("INSERT_S_FAXNUMBER"));
+	        assertEquals(supplier.getDescription(), properties.getProperty("INSERT_S_DESCRIPTION"));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -92,36 +92,36 @@ public class SupplierTest extends TestCase {
     		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
-	    	supplier.setName(properties.getProperty("UPDATE_NAME"));
-	    	supplier.setTaxId(Long.parseLong(properties.getProperty("UPDATE_TAXID")));
-	    	supplier.setAddress(properties.getProperty("UPDATE_ADDRESS"));
-	    	supplier.setZipCode(properties.getProperty("UPDATE_ZIPCODE"));
-	    	supplier.setCity(properties.getProperty("UPDATE_CITY"));
-	    	supplier.setRegion(properties.getProperty("UPDATE_REGION"));
-	    	supplier.setCountry(properties.getProperty("UPDATE_COUNTRY"));
-	    	supplier.setEmail(properties.getProperty("UPDATE_EMAIL"));
-	    	supplier.setPhoneNumber(properties.getProperty("UPDATE_PHONENUMBER"));
-	    	supplier.setMobileNumber(properties.getProperty("UPDATE_MOBILENUMBER"));
-	    	supplier.setFaxNumber(properties.getProperty("UPDATE_FAXNUMBER"));
-	    	supplier.setDescription(properties.getProperty("UPDATE_DESCRIPTION"));
+	    	supplier.setName(properties.getProperty("UPDATE_S_NAME"));
+	    	supplier.setTaxId(Long.parseLong(properties.getProperty("UPDATE_S_TAXID")));
+	    	supplier.setAddress(properties.getProperty("UPDATE_S_ADDRESS"));
+	    	supplier.setZipCode(properties.getProperty("UPDATE_S_ZIPCODE"));
+	    	supplier.setCity(properties.getProperty("UPDATE_S_CITY"));
+	    	supplier.setRegion(properties.getProperty("UPDATE_S_REGION"));
+	    	supplier.setCountry(properties.getProperty("UPDATE_S_COUNTRY"));
+	    	supplier.setEmail(properties.getProperty("UPDATE_S_EMAIL"));
+	    	supplier.setPhoneNumber(properties.getProperty("UPDATE_S_PHONENUMBER"));
+	    	supplier.setMobileNumber(properties.getProperty("UPDATE_S_MOBILENUMBER"));
+	    	supplier.setFaxNumber(properties.getProperty("UPDATE_S_FAXNUMBER"));
+	    	supplier.setDescription(properties.getProperty("UPDATE_S_DESCRIPTION"));
 	    	
 	    	supplierRepo.save(supplier);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
-	        assertEquals(supplier.getName(), properties.getProperty("UPDATE_NAME"));
-	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("UPDATE_TAXID")));
-	        assertEquals(supplier.getAddress(), properties.getProperty("UPDATE_ADDRESS"));
-	        assertEquals(supplier.getZipCode(), properties.getProperty("UPDATE_ZIPCODE"));
-	        assertEquals(supplier.getCity(), properties.getProperty("UPDATE_CITY"));
-	        assertEquals(supplier.getRegion(), properties.getProperty("UPDATE_REGION"));
-	        assertEquals(supplier.getCountry(), properties.getProperty("UPDATE_COUNTRY"));
-	        assertEquals(supplier.getEmail(), properties.getProperty("UPDATE_EMAIL"));
-	        assertEquals(supplier.getPhoneNumber(), properties.getProperty("UPDATE_PHONENUMBER"));
-	        assertEquals(supplier.getMobileNumber(), properties.getProperty("UPDATE_MOBILENUMBER"));
-	        assertEquals(supplier.getFaxNumber(), properties.getProperty("UPDATE_FAXNUMBER"));
-	        assertEquals(supplier.getDescription(), properties.getProperty("UPDATE_DESCRIPTION"));
+	        assertEquals(supplier.getName(), properties.getProperty("UPDATE_S_NAME"));
+	        assertEquals(supplier.getTaxId(), Long.parseLong(properties.getProperty("UPDATE_S_TAXID")));
+	        assertEquals(supplier.getAddress(), properties.getProperty("UPDATE_S_ADDRESS"));
+	        assertEquals(supplier.getZipCode(), properties.getProperty("UPDATE_S_ZIPCODE"));
+	        assertEquals(supplier.getCity(), properties.getProperty("UPDATE_S_CITY"));
+	        assertEquals(supplier.getRegion(), properties.getProperty("UPDATE_S_REGION"));
+	        assertEquals(supplier.getCountry(), properties.getProperty("UPDATE_S_COUNTRY"));
+	        assertEquals(supplier.getEmail(), properties.getProperty("UPDATE_S_EMAIL"));
+	        assertEquals(supplier.getPhoneNumber(), properties.getProperty("UPDATE_S_PHONENUMBER"));
+	        assertEquals(supplier.getMobileNumber(), properties.getProperty("UPDATE_S_MOBILENUMBER"));
+	        assertEquals(supplier.getFaxNumber(), properties.getProperty("UPDATE_S_FAXNUMBER"));
+	        assertEquals(supplier.getDescription(), properties.getProperty("UPDATE_S_DESCRIPTION"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());

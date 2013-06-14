@@ -7,15 +7,13 @@ public class Employee implements Serializable {
 	private static final long serialVersionUID = 925767297886028673L;
 
 	//Primary Key (Erforderlich - Automatisch)
-	private int idEmployee;
+	private long idEmployee;
 	//(Many-To-One) Gehaltkategorie, dass Mitarbeiter gehört (Erforderlich)
 	private SalaryCategory salaryCategory;
 	//(Many-To-One) Division, dass Mitarbeiter gehört (Erforderlich)
 	private Division division;
 	//(Many-To-One) Benutzergruppe, dass Mitarbeiter gehört (Erforderlich)
 	private UserGroup userGroup;
-	//(One-To-One) Benutzers Angaben (Erforderlich)
-	private EmployeeUser employeeUser;
 	//Ausweisnummer vom Mitarbeiter (Erforderlich)
 	private long idCard;
 	//Name vom Mitarbeiter (Erforderlich)
@@ -36,6 +34,10 @@ public class Employee implements Serializable {
 	private String phoneNumber;
 	//Handynummer vom Mitarbeiter
 	private String mobileNumber;
+	//Benutzername (Erforderlich)
+	private String username;
+	//Kenntwort (Erforderlich)
+	private String password;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -48,7 +50,7 @@ public class Employee implements Serializable {
 	 * 
 	 * @return idEmployee - Primary Key (Erforderlich - Automatisch)
 	 */
-	public int getIdEmployee() {
+	public long getIdEmployee() {
 		return idEmployee;
 	}
 
@@ -56,7 +58,7 @@ public class Employee implements Serializable {
 	 * 
 	 * @param idEmployee Primary Key (Erforderlich - Automatisch)
 	 */
-	public void setIdEmployee(int idEmployee) {
+	public void setIdEmployee(long idEmployee) {
 		this.idEmployee = idEmployee;
 	}
 
@@ -106,22 +108,6 @@ public class Employee implements Serializable {
 	 */
 	public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
-	}
-
-	/**
-	 * 
-	 * @return employeeUser - Benutzers Angaben (Erforderlich)
-	 */
-	public EmployeeUser getEmployeeUser() {
-		return employeeUser;
-	}
-
-	/**
-	 * 
-	 * @param employeeUser Benutzers Angaben (Erforderlich)
-	 */
-	public void setEmployeeUser(EmployeeUser employeeUser) {
-		this.employeeUser = employeeUser;
 	}
 
 	/**
@@ -284,6 +270,22 @@ public class Employee implements Serializable {
 		this.mobileNumber = mobileNumber;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -292,7 +294,7 @@ public class Employee implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idEmployee;
+		result = prime * result + (int) (idEmployee ^ (idEmployee >>> 32));
 		return result;
 	}
 

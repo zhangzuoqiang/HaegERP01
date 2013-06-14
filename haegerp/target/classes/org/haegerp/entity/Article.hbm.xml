@@ -4,15 +4,22 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.Article" table="article">
-		<id name="idArticle" type="int">
+		<id name="idArticle" type="long">
 			<column name="IDARTICLE" not-null="true" />
 			<generator class="increment" />
 		</id>
 		<many-to-one name="articleCategory" class="org.haegerp.entity.ArticleCategory"  fetch="select">
 			<column name="IDARTICLECATEGORY" not-null="true" />
 		</many-to-one>
+		<set name="supplierOrderDetail" inverse="true" fetch="select">
+			<key>
+				<column name="IDARTICLE" not-null="true"></column>
+			</key>
+			<one-to-many class="org.haegerp.entity.SupplierOrderDetail"/>
+		</set>
+		
 		<property name="ean" type="long">
-			<column name="EAN" not-null="true" precision="13"/>
+			<column name="EAN" not-null="true" />
 		</property>
 		<property name="name" type="string">
 			<column name="NAME" not-null="true" length="80" />
@@ -21,22 +28,22 @@
 			<column name="PRICEVAT" precision="2" scale="2"/>
 		</property>
 		<property name="priceGross" type="float">
-			<column name="PRICEGROSS" not-null="false" precision="9" scale="2"/>
+			<column name="PRICEGROSS" not-null="false" precision="17" scale="2"/>
 		</property>
-		<property name="stock" type="int">
-			<column name="STOCK" not-null="false" precision="9"/>
+		<property name="stock" type="long">
+			<column name="STOCK" not-null="false"/>
 		</property>
 		<property name="color" type="string">
 			<column name="COLOR" not-null="false" length="30" />
 		</property>
 		<property name="sizeH" type="float">
-			<column name="SIZEH" not-null="false" precision="7" scale="3"/>
+			<column name="SIZEH" not-null="false" precision="16" scale="3"/>
 		</property>
 		<property name="sizeL" type="float">
-			<column name="SIZEL" not-null="false" precision="7" scale="3"/>
+			<column name="SIZEL" not-null="false" precision="16" scale="3"/>
 		</property>
 		<property name="sizeW" type="float">
-			<column name="SIZEW" not-null="false" precision="7" scale="3"/>
+			<column name="SIZEW" not-null="false" precision="16" scale="3"/>
 		</property>
 		<property name="description" type="string">
 			<column name="DESCRIPTION" not-null="false" length="256" />
