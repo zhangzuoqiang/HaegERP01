@@ -230,4 +230,85 @@ public class Article_ArticleCategoryTest extends TestCase {
 	    	fail(e.getMessage());
 		}
     }
+    
+    /**
+     * Fehlerprovokation ArticleCategory
+     * Andreas Monschau 15.06.2013
+     */
+    @Test
+    public void test7InsertArticleCategoryGrenzwert()
+    {
+		try {
+			properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
+	        ArticleCategory articleCategory = new ArticleCategory();
+	        articleCategory.setName(properties.getProperty("INSERT_AC_NAME_F"));
+	        articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION_F"));
+	        
+	        articleCategory = articleCategoryRepo.save(articleCategory);
+	        
+	        //Die erstellt Artikelkategorie wird geprüft
+	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
+	        
+	        
+	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	        
+	        assertEquals(articleCategory.getName(), properties.getProperty("INSERT_AC_NAME_F"));
+	        assertEquals(articleCategory.getDescription(), properties.getProperty("INSERT_AC_DESCRIPTION_F"));
+        
+	    } catch (Exception e) {
+			e.printStackTrace();
+	    	fail(e.getMessage());
+		}
+    }
+    
+    /**
+     * Fehlerprovokation Article
+     * Andreas Monschau 15.06.2013
+     */
+    @Test
+    public void test8InsertArticle(){
+    	try {
+    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
+	    	//Die Artikelkategorie wird geholt
+	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	    	
+	        Article article = new Article();
+        
+	        //Die Felder werden gefüllt
+	        article.setArticleCategory(articleCategory);
+	        article.setColor(properties.getProperty("INSERT_A_COLOR_F"));
+	        article.setDescription(properties.getProperty("INSERT_A_DESCRIPTION_F"));
+	        article.setEan(Long.parseLong(properties.getProperty("INSERT_A_EAN_f")));
+	        article.setName(properties.getProperty("INSERT_A_NAME_F"));
+	        article.setPriceGross(Float.parseFloat(properties.getProperty("INSERT_A_PRICEGROSS_F")));
+	        article.setPriceVat(Float.parseFloat(properties.getProperty("INSERT_A_PRICEVAT_F")));
+	        article.setSizeH(Float.parseFloat(properties.getProperty("INSERT_A_SIZEH_F")));
+	        article.setSizeL(Float.parseFloat(properties.getProperty("INSERT_A_SIZEL_F")));
+	        article.setSizeW(Float.parseFloat(properties.getProperty("INSERT_A_SIZEW_F")));
+	        article.setStock(Integer.parseInt(properties.getProperty("INSERT_A_STOCK_F")));
+	        
+	        article = articleRepo.save(article);
+	        
+	        //Der erstellter Artikel wird geprüft
+	        ARTICLE_ID = article.getIdArticle();
+	        
+	        article = articleRepo.findOne(ARTICLE_ID);
+	        
+	        assertEquals(article.getColor(), properties.getProperty("INSERT_A_COLOR_F"));
+	        assertEquals(article.getDescription(), properties.getProperty("INSERT_A_DESCRIPTION_F"));
+	        assertEquals(article.getEan(), Long.parseLong(properties.getProperty("INSERT_A_EAN_F")));
+	        assertEquals(article.getName(), properties.getProperty("INSERT_A_NAME_F"));
+	        assertEquals(article.getPriceGross(), Float.parseFloat(properties.getProperty("INSERT_A_PRICEGROSS_F")));
+	        assertEquals(article.getPriceVat(), Float.parseFloat(properties.getProperty("INSERT_A_PRICEVAT_F")));
+	        assertEquals(article.getSizeH(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEH_F")));
+	        assertEquals(article.getSizeL(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEL_F")));
+	        assertEquals(article.getSizeW(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEW_F")));
+	        assertEquals(article.getStock(), Integer.parseInt(properties.getProperty("INSERT_A_STOCK_F")));
+	        assertEquals(article.getArticleCategory(), articleCategory);
+        
+	    } catch (Exception e) {
+			e.printStackTrace();
+	    	fail(e.getMessage());
+		}
+    }
 }

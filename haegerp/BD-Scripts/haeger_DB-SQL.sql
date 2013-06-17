@@ -6,11 +6,11 @@ Password: <The one you specified in the installation>
 
 */
 
-CREATE USER haegerp_admin
-IDENTIFIED BY haegerOracleDatabaseERP;
+--CREATE USER haegerp_admin
+--IDENTIFIED BY haegerOracleDatabaseERP;
 
 GRANT CONNECT, RESOURCE
-TO haegerp_admin;
+TO krazyivan;
 
 /* ******************************************/
 /* *			Dropping Script				*/
@@ -372,4 +372,4 @@ DELETE FROM articlecategory;
 COMMIT;
 
 INSERT INTO employeeuser
-VALUE(1, "admin", "21232f297a57a5a743894a0e4a801fc3") /* Password = MD5SUM = "admin" */
+VALUE(1, "admin", "21232f297a57a5a743894a0e4a801fc3"); /* Password = MD5SUM = "admin" */
