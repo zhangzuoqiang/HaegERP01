@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Die Division gruppiert die Mitarbeiter.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class Division implements Serializable {
 
 	private static final long serialVersionUID = 423295763797533848L;
@@ -69,8 +77,11 @@ public class Division implements Serializable {
 	/**
 	 * 
 	 * @param name Name des Division
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 50)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 
@@ -85,8 +96,11 @@ public class Division implements Serializable {
 	/**
 	 * 
 	 * @param description Division Beschreibung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 	

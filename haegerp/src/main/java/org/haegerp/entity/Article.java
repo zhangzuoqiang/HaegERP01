@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
 /**
+ * Ein Artikel ist der Grund vom System.<br/>
+ * Man kann ihn in einer Lieferantbestellung kaufen oder in einer Kundenbestellung verkaufen.<br/>
+ * Ein Artikel muss zu einer Artikelkategorie gehören.<br/>
  * 
  * @author Wolf
  *
@@ -94,8 +99,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param ean Artikels EAN (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setEan(long ean) {
+	public void setEan(long ean) throws LengthOverflowException {
+		if (ean > Long.MAX_VALUE || ean < 0L)
+			throw new LengthOverflowException("EAN");
 		this.ean = ean;
 	}
 	
@@ -110,8 +118,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param name Artikels Name (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 80)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 	
@@ -126,8 +137,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param priceVat Artikels MwSt Preis (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setPriceVat(float priceVat) {
+	public void setPriceVat(float priceVat) throws LengthOverflowException {
+		if (priceVat > 99.99F || priceVat < 0.0F)
+			throw new LengthOverflowException("PriceVat");
 		this.priceVat = priceVat;
 	}
 	
@@ -142,8 +156,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param priceGross Artikels Nettopreis (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setPriceGross(float priceGross) {
+	public void setPriceGross(float priceGross) throws LengthOverflowException {
+		if (priceGross > 99999999999999999.99F)
+			throw new LengthOverflowException("PriceGross");
 		this.priceGross = priceGross;
 	}
 	
@@ -160,6 +177,7 @@ public class Article implements Serializable{
 	 * @param stock Artikels Lager (Nicht Erforderlich)
 	 */
 	public void setStock(long stock) {
+		if (stock > Long.MAX_VALUE || stock < Long.MIN_VALUE)
 		this.stock = stock;
 	}
 	
@@ -173,8 +191,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param color Artikels Farbe (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setColor(String color) {
+	public void setColor(String color) throws LengthOverflowException {
+		if (color.length() > 30)
+			throw new LengthOverflowException("Color");
 		this.color = color;
 	}
 	
@@ -189,8 +210,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param sizeH Artikels Höhegröße (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setSizeH(float sizeH) {
+	public void setSizeH(float sizeH) throws LengthOverflowException {
+		if (sizeH > 99999999999999999.99F)
+			throw new LengthOverflowException("SizeH");
 		this.sizeH = sizeH;
 	}
 	
@@ -205,8 +229,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param sizeL Artikels Längegröße (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setSizeL(float sizeL) {
+	public void setSizeL(float sizeL) throws LengthOverflowException {
+		if (sizeL > 99999999999999999.99F)
+			throw new LengthOverflowException("SizeL");
 		this.sizeL = sizeL;
 	}
 	
@@ -220,8 +247,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param sizeW Artikels Breitegröße (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setSizeW(float sizeW) {
+	public void setSizeW(float sizeW) throws LengthOverflowException {
+		if (sizeW > 99999999999999999.99F)
+			throw new LengthOverflowException("sizeW");
 		this.sizeW = sizeW;
 	}
 	
@@ -236,8 +266,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param description Artikels Beschreibung (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("description");
 		this.description = description;
 	}
 	

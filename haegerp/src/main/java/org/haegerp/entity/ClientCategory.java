@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Die Kundenkategorie gruppiert die Kunden.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class ClientCategory implements Serializable {
 
 	private static final long serialVersionUID = -4809347561860652303L;
@@ -54,8 +62,11 @@ public class ClientCategory implements Serializable {
 	/**
 	 * 
 	 * @param name Kundenkategorie Name (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 50)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 
@@ -70,8 +81,11 @@ public class ClientCategory implements Serializable {
 	/**
 	 * 
 	 * @param description Kundenkategorie Beschreibung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 

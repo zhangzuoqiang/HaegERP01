@@ -5,6 +5,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Wann Artikel gebraucht werden, dann muss man erste eine Bestellung erstellen<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class SupplierOrder implements Serializable {
 
 	private static final long serialVersionUID = 5595958379021721485L;
@@ -121,8 +129,11 @@ public class SupplierOrder implements Serializable {
 	/**
 	 * 
 	 * @param total Summe der Bestellung
+	 * @throws LengthOverflowException 
 	 */
-	public void setTotal(float total) {
+	public void setTotal(float total) throws LengthOverflowException {
+		if (total > 99999999999999999.99F || total < 0.0F)
+			throw new LengthOverflowException("Total");
 		this.total = total;
 	}
 

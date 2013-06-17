@@ -2,6 +2,15 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Der Geschäftspartner ist eine Abstract Klasse.<br/>
+ * Er muss erbt werden.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public abstract class BusinessPartner implements Serializable {
 
 	private static final long serialVersionUID = 1526098575049425791L;
@@ -79,8 +88,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param name Geschäftspartners Name (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 100)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 
@@ -95,8 +107,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param taxId Geschäftspartners Steuernummer (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setTaxId(long taxId) {
+	public void setTaxId(long taxId) throws LengthOverflowException {
+		if (taxId > Long.MAX_VALUE || taxId < 0)
+			throw new LengthOverflowException("TaxId");
 		this.taxId = taxId;
 	}
 
@@ -111,8 +126,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param address Geschäftspartners Adresse (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setAddress(String address) {
+	public void setAddress(String address) throws LengthOverflowException {
+		if (address.length() > 100)
+			throw new LengthOverflowException("TaxId");
 		this.address = address;
 	}
 
@@ -127,8 +145,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param zipCode Geschäftspartners Postleitzahl (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setZipCode(String zipCode) {
+	public void setZipCode(String zipCode) throws LengthOverflowException {
+		if (zipCode.length() > 12)
+			throw new LengthOverflowException("TaxId");
 		this.zipCode = zipCode;
 	}
 
@@ -143,8 +164,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param city Geschäftspartners Stadt (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setCity(String city) {
+	public void setCity(String city) throws LengthOverflowException {
+		if (city.length() > 50)
+			throw new LengthOverflowException("City");
 		this.city = city;
 	}
 
@@ -159,8 +183,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param region Geschäftspartners Bundesland
+	 * @throws LengthOverflowException 
 	 */
-	public void setRegion(String region) {
+	public void setRegion(String region) throws LengthOverflowException {
+		if (region.length() > 50)
+			throw new LengthOverflowException("Region");
 		this.region = region;
 	}
 
@@ -175,8 +202,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param country Geschäftspartners Land (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setCountry(String country) {
+	public void setCountry(String country) throws LengthOverflowException {
+		if (country.length() > 50)
+			throw new LengthOverflowException("Country");
 		this.country = country;
 	}
 
@@ -191,8 +221,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param email Geschäftspartners Email (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setEmail(String email) {
+	public void setEmail(String email) throws LengthOverflowException {
+		if (email.length() > 50)
+			throw new LengthOverflowException("E-Mail");
 		this.email = email;
 	}
 
@@ -207,8 +240,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param phoneNumber Geschäftspartners Telefonnummer
+	 * @throws LengthOverflowException 
 	 */
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) throws LengthOverflowException {
+		if (phoneNumber.length() > 20)
+			throw new LengthOverflowException("PhoneNumber");
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -223,8 +259,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param mobileNumber Geschäftspartners Handynummer
+	 * @throws LengthOverflowException 
 	 */
-	public void setMobileNumber(String mobileNumber) {
+	public void setMobileNumber(String mobileNumber) throws LengthOverflowException {
+		if (mobileNumber.length() > 20)
+			throw new LengthOverflowException("MobileNumber");
 		this.mobileNumber = mobileNumber;
 	}
 
@@ -239,8 +278,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param faxNumber Geschäftspartners Faxnummer
+	 * @throws LengthOverflowException 
 	 */
-	public void setFaxNumber(String faxNumber) {
+	public void setFaxNumber(String faxNumber) throws LengthOverflowException {
+		if (faxNumber.length() > 20)
+			throw new LengthOverflowException("FaxNumber");
 		this.faxNumber = faxNumber;
 	}
 
@@ -255,8 +297,11 @@ public abstract class BusinessPartner implements Serializable {
 	/**
 	 * 
 	 * @param description Geschäftspartners Beschreibung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 	

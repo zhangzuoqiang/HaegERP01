@@ -2,6 +2,14 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Die Mitarbeiter sind die Benutzer von dem System, sie ertellen neue Kunden, Bestellungen, usw.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 925767297886028673L;
@@ -121,8 +129,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param idCard Ausweisnummer vom Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setIdCard(long idCard) {
+	public void setIdCard(long idCard) throws LengthOverflowException {
+		if (idCard > Long.MAX_VALUE || idCard < 0L)
+			throw new LengthOverflowException("IdCard");
 		this.idCard = idCard;
 	}
 
@@ -137,8 +148,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param name Name vom Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 100)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 
@@ -153,8 +167,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param address Adresse vom Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setAddress(String address) {
+	public void setAddress(String address) throws LengthOverflowException {
+		if (address.length() > 100)
+			throw new LengthOverflowException("Address");
 		this.address = address;
 	}
 
@@ -169,8 +186,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param zipCode Postleitzahl von der Adresse des Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setZipCode(String zipCode) {
+	public void setZipCode(String zipCode) throws LengthOverflowException {
+		if (zipCode.length() > 15)
+			throw new LengthOverflowException("ZipCode");
 		this.zipCode = zipCode;
 	}
 
@@ -185,8 +205,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param city Stadt von der Adresse des Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setCity(String city) {
+	public void setCity(String city) throws LengthOverflowException {
+		if (city.length() > 30)
+			throw new LengthOverflowException("City");
 		this.city = city;
 	}
 
@@ -201,8 +224,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param region Bundesland von der Adresse des Mitarbeiter
+	 * @throws LengthOverflowException 
 	 */
-	public void setRegion(String region) {
+	public void setRegion(String region) throws LengthOverflowException {
+		if (region.length() > 30)
+			throw new LengthOverflowException("Region");
 		this.region = region;
 	}
 
@@ -217,8 +243,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param country Land vom Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setCountry(String country) {
+	public void setCountry(String country) throws LengthOverflowException {
+		if (country.length() > 30)
+			throw new LengthOverflowException("Country");
 		this.country = country;
 	}
 
@@ -233,8 +262,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param email Email vom Mitarbeiter (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setEmail(String email) {
+	public void setEmail(String email) throws LengthOverflowException {
+		if (email.length() > 50)
+			throw new LengthOverflowException("E-Mail");
 		this.email = email;
 	}
 
@@ -249,8 +281,11 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param phoneNumber Telefonnummer vom Mitarbeiter
+	 * @throws LengthOverflowException 
 	 */
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) throws LengthOverflowException {
+		if (phoneNumber.length() > 20)
+			throw new LengthOverflowException("PhoneNumber");
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -265,24 +300,49 @@ public class Employee implements Serializable {
 	/**
 	 * 
 	 * @param mobileNumber Handynummer vom Mitarbeiter
+	 * @throws LengthOverflowException 
 	 */
-	public void setMobileNumber(String mobileNumber) {
+	public void setMobileNumber(String mobileNumber) throws LengthOverflowException {
+		if (mobileNumber.length() > 20)
+			throw new LengthOverflowException("MobileNumber");
 		this.mobileNumber = mobileNumber;
 	}
 
+	/**
+	 * 
+	 * @return username - Benutzername (Erforderlich)
+	 */
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	/**
+	 * 
+	 * @param username Benutzername (Erforderlich)
+	 * @throws LengthOverflowException
+	 */
+	public void setUsername(String username) throws LengthOverflowException {
+		if (username.length() > 50)
+			throw new LengthOverflowException("Username");
 		this.username = username;
 	}
 
+	/**
+	 * 
+	 * @return password - Kenntwort (Erforderlich)
+	 */
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	/**
+	 * 
+	 * @param password Kenntwort (Erforderlich)
+	 * @throws LengthOverflowException 
+	 */
+	public void setPassword(String password) throws LengthOverflowException {
+		if (password.length() > 32)
+			throw new LengthOverflowException("Password");
 		this.password = password;
 	}
 

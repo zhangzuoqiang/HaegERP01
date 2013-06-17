@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Die Gehaltgruppen, dass Mitarbeiter gehören.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class SalaryCategory implements Serializable {
 
 	private static final long serialVersionUID = 5718511347777083718L;
@@ -57,8 +65,11 @@ public class SalaryCategory implements Serializable {
 	/**
 	 * 
 	 * @param salaryFrom Gehalt Minimum
+	 * @throws LengthOverflowException 
 	 */
-	public void setSalaryFrom(float salaryFrom) {
+	public void setSalaryFrom(float salaryFrom) throws LengthOverflowException {
+		if (salaryFrom > 99999999999999999.99F || salaryFrom < 0.0F)
+			throw new LengthOverflowException("SalaryTo");
 		this.salaryFrom = salaryFrom;
 	}
 
@@ -73,8 +84,11 @@ public class SalaryCategory implements Serializable {
 	/**
 	 * 
 	 * @param salaryTo Gehalt Maximal
+	 * @throws LengthOverflowException 
 	 */
-	public void setSalaryTo(float salaryTo) {
+	public void setSalaryTo(float salaryTo) throws LengthOverflowException {
+		if (salaryTo > 99999999999999999.99F || salaryTo < 0.0F)
+			throw new LengthOverflowException("SalaryTo");
 		this.salaryTo = salaryTo;
 	}
 
@@ -105,8 +119,11 @@ public class SalaryCategory implements Serializable {
 	/**
 	 * 
 	 * @param description Gehaltkategorie Beschreibung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 

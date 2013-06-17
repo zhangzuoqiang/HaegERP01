@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Der Erlaubnis, dass Benuztergruppen haben können.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class Permission implements Serializable {
 
 	private static final long serialVersionUID = 5008365204082645635L;
@@ -51,8 +59,11 @@ public class Permission implements Serializable {
 	/**
 	 * 
 	 * @param moduleName Name der Erlaubnis (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setModuleName(String moduleName) {
+	public void setModuleName(String moduleName) throws LengthOverflowException {
+		if (moduleName.length() > 50)
+			throw new LengthOverflowException("ModuleName");
 		this.moduleName = moduleName;
 	}
 

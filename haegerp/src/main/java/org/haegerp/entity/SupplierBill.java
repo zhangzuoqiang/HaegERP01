@@ -3,6 +3,12 @@ package org.haegerp.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Wann der Lieferant die Rechnung schickt, erstellt man eine neue Liferantrechnung<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class SupplierBill implements Serializable {
 
 	private static final long serialVersionUID = -582360377641367019L;

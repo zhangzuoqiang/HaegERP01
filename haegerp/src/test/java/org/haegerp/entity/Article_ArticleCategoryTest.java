@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.haegerp.entity.repository.ArticleCategoryRepository;
 import org.haegerp.entity.repository.ArticleRepository;
+import org.haegerp.exception.LengthOverflowException;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -234,51 +235,45 @@ public class Article_ArticleCategoryTest extends TestCase {
     /**
      * Fehlerprovokation ArticleCategory
      * Andreas Monschau 15.06.2013
+     * @throws Exception 
      */
-    @Test
-    public void test7InsertArticleCategoryGrenzwert()
+    @Test(expected=LengthOverflowException.class)
+    public void test7InsertArticleCategoryGrenzwert() throws Exception
     {
-		try {
-			properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-	        ArticleCategory articleCategory = new ArticleCategory();
-	        articleCategory.setName(properties.getProperty("INSERT_AC_NAME_F"));
-	        articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION_F"));
-	        
-	        articleCategory = articleCategoryRepo.save(articleCategory);
-	        
-	        //Die erstellt Artikelkategorie wird geprüft
-	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
-	        
-	        
-	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
-	        
-	        assertEquals(articleCategory.getName(), properties.getProperty("INSERT_AC_NAME_F"));
-	        assertEquals(articleCategory.getDescription(), properties.getProperty("INSERT_AC_DESCRIPTION_F"));
+        ArticleCategory articleCategory = new ArticleCategory();
+        articleCategory.setName(properties.getProperty("INSERT_AC_NAME_F"));
+        articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION_F"));
         
-	    } catch (Exception e) {
-			e.printStackTrace();
-	    	fail(e.getMessage());
-		}
+        articleCategory = articleCategoryRepo.save(articleCategory);
+
+        //Die erstellt Artikelkategorie wird geprüft
+        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
+        
+        
+        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+        
+        assertEquals(articleCategory.getName(), properties.getProperty("INSERT_AC_NAME"));
+        assertEquals(articleCategory.getDescription(), properties.getProperty("INSERT_AC_DESCRIPTION"));
     }
     
     /**
      * Fehlerprovokation Article
      * Andreas Monschau 15.06.2013
+     * @throws Exception 
      */
-    @Test
-    public void test8InsertArticle(){
+    @Test(expected=NumberFormatException.class)
+    public void test8InsertArticle() throws Exception{
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	    	
 	        Article article = new Article();
-        
+	    
 	        //Die Felder werden gefüllt
 	        article.setArticleCategory(articleCategory);
 	        article.setColor(properties.getProperty("INSERT_A_COLOR_F"));
 	        article.setDescription(properties.getProperty("INSERT_A_DESCRIPTION_F"));
-	        article.setEan(Long.parseLong(properties.getProperty("INSERT_A_EAN_f")));
+	        article.setEan(Long.parseLong(properties.getProperty("INSERT_A_EAN_F")));
 	        article.setName(properties.getProperty("INSERT_A_NAME_F"));
 	        article.setPriceGross(Float.parseFloat(properties.getProperty("INSERT_A_PRICEGROSS_F")));
 	        article.setPriceVat(Float.parseFloat(properties.getProperty("INSERT_A_PRICEVAT_F")));
@@ -305,10 +300,8 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        assertEquals(article.getSizeW(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEW_F")));
 	        assertEquals(article.getStock(), Integer.parseInt(properties.getProperty("INSERT_A_STOCK_F")));
 	        assertEquals(article.getArticleCategory(), articleCategory);
-        
-	    } catch (Exception e) {
-			e.printStackTrace();
-	    	fail(e.getMessage());
-		}
+    	} catch (Exception ex) {
+    		throw ex;
+    	}
     }
 }

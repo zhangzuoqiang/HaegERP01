@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Die Artikelkategorie gruppiert die Artikel.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class ArticleCategory implements Serializable{
 
 	private static final long serialVersionUID = 4064612947215250133L;
@@ -54,8 +62,11 @@ public class ArticleCategory implements Serializable{
 	/**
 	 * 
 	 * @param name Artikelkategorie Name (Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 50)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 
@@ -70,8 +81,11 @@ public class ArticleCategory implements Serializable{
 	/**
 	 * 
 	 * @param description Artikelkategorie Beschreibung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 50)
+			throw new LengthOverflowException("description");
 		this.description = description;
 	}
 

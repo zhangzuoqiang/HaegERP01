@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Hier kann man nur die Benutzergruppe von der Mitarbeiter ändern.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class UserGroup implements Serializable {
 
 	private static final long serialVersionUID = -2312054737177420461L;
@@ -57,8 +65,11 @@ public class UserGroup implements Serializable {
 	/**
 	 * 
 	 * @param name Name der Benutzergruppe
+	 * @throws LengthOverflowException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws LengthOverflowException {
+		if (name.length() > 50)
+			throw new LengthOverflowException("Name");
 		this.name = name;
 	}
 
@@ -73,8 +84,11 @@ public class UserGroup implements Serializable {
 	/**
 	 * 
 	 * @param description Benutzergruppe Beschreibung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 

@@ -2,6 +2,12 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * 
+ * @author Wolf
+ *
+ */
 public class IdSupplierOrderDetail implements Serializable {
 
 	private static final long serialVersionUID = -1680361542051086443L;

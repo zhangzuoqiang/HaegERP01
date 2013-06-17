@@ -2,6 +2,14 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+/**
+ * Der Kunde ist ein Geschäftspartner und muss "Extend" ihn.<br/>
+ * Er muss zu einer Kundenkategorie gehören.<br/>
+ * Mit ihm kann man neue Kundenbestellungen.<br/>
+ * 
+ * @author Wolf
+ *
+ */
 public class Client extends BusinessPartner implements Serializable {
 
 	private static final long serialVersionUID = -2499902175023899805L;
