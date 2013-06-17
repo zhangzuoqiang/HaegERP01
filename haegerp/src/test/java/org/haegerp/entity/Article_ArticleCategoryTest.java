@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.haegerp.entity.repository.ArticleCategoryRepository;
 import org.haegerp.entity.repository.ArticleRepository;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class Article_ArticleCategoryTest extends TestCase {
 	
-    private Properties properties = new Properties();
+    private static Properties properties = new Properties();
     
     private static long ARTICLE_ID;
     private static long ARTICLE_CATEGORY_ID;
@@ -41,6 +42,13 @@ public class Article_ArticleCategoryTest extends TestCase {
     @Autowired
     private ArticleCategoryRepository articleCategoryRepo;
     
+    @Override
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
+    	properties.load(new FileInputStream("./config.properties"));
+    }
+    
     /**
      * Eine Artikelkategorie wird in die Datenbank erstellt
      */
@@ -48,7 +56,6 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test1InsertArticleCategory()
     {
 		try {
-			properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        ArticleCategory articleCategory = new ArticleCategory();
 	        articleCategory.setName(properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION"));
@@ -77,7 +84,6 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test2UpdateArticleCategory()
     {
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
     		ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
     	
 	        articleCategory.setName(properties.getProperty("UPDATE_AC_NAME"));
@@ -102,7 +108,6 @@ public class Article_ArticleCategoryTest extends TestCase {
     @Test
     public void test3InsertArticle(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	    	
@@ -153,7 +158,6 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test4UpdateArticle(){
     	
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        Article article = articleRepo.findOne(ARTICLE_ID);
 	    	

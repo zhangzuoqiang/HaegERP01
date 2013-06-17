@@ -11,6 +11,7 @@ import org.haegerp.entity.repository.EmployeeRepository;
 import org.haegerp.entity.repository.PermissionRepository;
 import org.haegerp.entity.repository.SalaryCategoryRepository;
 import org.haegerp.entity.repository.UserGroupRepository;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,7 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	
-    Properties properties = new Properties();
+    private static Properties properties = new Properties();
     
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -58,6 +59,13 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     
     private static long USER_GROUP_ID;
     
+    @Override
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
+    	properties.load(new FileInputStream("./config.properties"));
+    }
+    
     /**
      * Eine Gehaltkategorie wird in die Datenbank erstellt
      */
@@ -65,7 +73,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     public void test01InsertSalaryCategory()
     {
         try {
-        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        //Die Felder werden gefüllt
 	        SalaryCategory salaryCategory = new SalaryCategory();
 	        salaryCategory.setDescription(properties.getProperty("INSERT_SC_DESCRIPTION"));
@@ -94,7 +101,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     public void test02UpdateSalaryCategory()
     {
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	
 	        //Die Felder werden gefüllt
@@ -123,7 +129,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     public void test03InsertDivision()
     {
         try {
-        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        //Die Felder werden gefüllt
 	        Division division = new Division();
 	        division.setDescription(properties.getProperty("INSERT_D_DESCRIPTION"));
@@ -151,7 +156,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     public void test04UpdateSalaryCategory()
     {
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        Division division = divisionRepository.findOne(DIVISION_ID);
 	
 	        //Die Felder werden gefüllt
@@ -178,7 +182,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     public void test05InsertUserGroup()
     {
         try {
-        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        //Die Felder werden gefüllt
 	        UserGroup userGroup = new UserGroup();
 	        userGroup.setDescription(properties.getProperty("INSERT_UG_DESCRIPTION"));
@@ -220,7 +223,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     public void test06UpdateUserGroup()
     {
         try {
-        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	    	
 	        //Die Felder werden gefüllt
@@ -260,7 +262,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     @Test
     public void test07InsertEmployee(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Gehaltkategorie wird geholt
 	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	    	
@@ -328,7 +329,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     @Test
     public void test08UpdateEmployee(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
 	        //Die Felder werden gefüllt

@@ -2,7 +2,7 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
-public class BusinessPartner implements Serializable {
+public abstract class BusinessPartner implements Serializable {
 
 	private static final long serialVersionUID = 1526098575049425791L;
 

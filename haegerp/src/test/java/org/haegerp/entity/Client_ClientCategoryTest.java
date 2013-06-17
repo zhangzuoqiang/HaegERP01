@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.haegerp.entity.repository.ClientCategoryRepository;
 import org.haegerp.entity.repository.ClientRepository;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class Client_ClientCategoryTest extends TestCase {
     
-    private Properties properties = new Properties();
+    private static Properties properties = new Properties();
     
     @Autowired
     private ClientCategoryRepository clientCategoryRepo;
@@ -41,6 +42,13 @@ public class Client_ClientCategoryTest extends TestCase {
     private static long CLIENT_CATEGORY_ID;
     private static long CLIENT_ID;
     
+    @Override
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
+    	properties.load(new FileInputStream("./config.properties"));
+    }
+    
     /**
      * Eine Kundenkategorie wird in die Datenbank erstellt
      */
@@ -48,7 +56,6 @@ public class Client_ClientCategoryTest extends TestCase {
     public void test1InsertClientCategory()
     {
         try {
-        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        ClientCategory clientCategory = new ClientCategory();
 	        clientCategory.setName(properties.getProperty("INSERT_CC_NAME"));
 	        clientCategory.setDescription(properties.getProperty("INSERT_CC_DESCRIPTION"));
@@ -75,7 +82,6 @@ public class Client_ClientCategoryTest extends TestCase {
     public void test2UpdateClientCategory()
     {
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
     		ClientCategory clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	    	
 	        clientCategory.setName(properties.getProperty("UPDATE_CC_NAME"));
@@ -99,7 +105,6 @@ public class Client_ClientCategoryTest extends TestCase {
     @Test
     public void test3InsertClient(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        ClientCategory clientCategory = (ClientCategory) clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	    	
@@ -152,7 +157,6 @@ public class Client_ClientCategoryTest extends TestCase {
     @Test
     public void test4UpdateClient(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	//Die Artikelkategorie wird geholt
 	        Client client = clientRepository.findOne(CLIENT_ID);
 	    	

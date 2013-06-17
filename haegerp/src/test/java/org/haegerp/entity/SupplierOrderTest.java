@@ -43,7 +43,7 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class SupplierOrderTest extends TestCase {
 	
-    private Properties properties = new Properties();
+    private static Properties properties = new Properties();
     
     private static long ARTICLE1_ID;
     private static long ARTICLE2_ID;
@@ -82,7 +82,7 @@ public class SupplierOrderTest extends TestCase {
     @Override
     @Before
     public void setUp() throws Exception {
-    	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
+    	properties.load(new FileInputStream("./config.properties"));
     	
     	//Die Artikel werden erstellt
     	//Kategorie
@@ -242,8 +242,6 @@ public class SupplierOrderTest extends TestCase {
     @Test
     public void test1InsertSupplierOrder(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
-    		
     		Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
     		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
     		
