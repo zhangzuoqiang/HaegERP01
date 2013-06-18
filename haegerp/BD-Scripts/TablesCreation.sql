@@ -15,8 +15,9 @@ CREATE TABLE article(
 	idArticleCategory	INTEGER			NOT NULL,
 	ean					INTEGER			NOT NULL,
 	name				VARCHAR2(80)	NOT NULL,
-	priceVat			NUMBER(5,2),
-	priceGross			NUMBER(20,2),
+	priceVat			NUMBER(5,2)		NOT NULL,
+	priceGross			NUMBER(20,2)	NOT NULL,
+	priceSupplier		NUMBER(20,2)	NOT NULL,
 	stock				INTEGER,
 	color				VARCHAR2(30),
 	sizeH				NUMBER(20,3),
@@ -26,6 +27,22 @@ CREATE TABLE article(
 	CONSTRAINT pk_article
 		PRIMARY KEY (idArticle),
 	CONSTRAINT fk_article_articleCategory
+		FOREIGN KEY (idArticleCategory)
+		REFERENCES articlecategory (idArticleCategory)
+);
+
+CREATE TABLE articlehistory(
+	idArticleHistory	INTEGER			NOT NULL,
+	idArticle			INTEGER			NOT NULL,
+	idArticleCategory	INTEGER			NOT NULL,
+	ean					INTEGER			NOT NULL,
+	name				VARCHAR2(80)	NOT NULL,
+	priceVat			NUMBER(5,2)		NOT NULL,
+	priceGross			NUMBER(20,2)	NOT NULL,
+	priceSupplier		NUMBER(20,2)	NOT NULL,
+	CONSTRAINT pk_articleHistory
+		PRIMARY KEY (idArticle, idArticleHistory),
+	CONSTRAINT fk_articleH_articleCategory
 		FOREIGN KEY (idArticleCategory)
 		REFERENCES articlecategory (idArticleCategory)
 );
@@ -198,19 +215,18 @@ CREATE TABLE supplierorder (
 CREATE TABLE supplierorder_article (
 	idSupplierOrder		INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
-	price				NUMBER(20,2)	NOT NULL,
-	priceVat			NUMBER(5,2)		NOT NULL,
+	idArticleHistory	INTEGER			NOT NULL,
 	quantity			INTEGER			NOT NULL,
-	discount			NUMBER(6,3)		NOT NULL,
-	articleTotal		NUMBER(20,2)	NOT NULL,
+	discount			NUMBER(5,3)		NOT NULL,
+	totalArticle		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_supplierorder_article
-		PRIMARY KEY (idSupplierOrder, idArticle),
+		PRIMARY KEY (idSupplierOrder, idArticle, idArticleHistory),
 	CONSTRAINT fk_supplierorder_article
 		FOREIGN KEY (idSupplierOrder)
 		REFERENCES supplierorder (idSupplierOrder),
 	CONSTRAINT fk_articles_supplierorder
-		FOREIGN KEY (idArticle)
-		REFERENCES article (idArticle)
+		FOREIGN KEY (idArticle, idArticleHistory)
+		REFERENCES articlehistory (idArticle, idArticleHistory)
 );
 
 /* ******************************************/
@@ -250,19 +266,18 @@ CREATE TABLE clientoffer (
 CREATE TABLE clientoffer_article (
 	idClientOffer		INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
-	priceVat			NUMBER(5,2)		NOT NULL,
-	priceGross			NUMBER(20,2)	NOT NULL,
+	idArticleHistory	INTEGER			NOT NULL,
 	quantity			INTEGER			NOT NULL,
-	discount			NUMBER(6,3)		NOT NULL,
-	articleTotal		NUMBER(20,2)	NOT NULL,
+	discount			NUMBER(5,3)		NOT NULL,
+	totalArticle		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_clientoffer_article
-		PRIMARY KEY (idClientOffer, idArticle),
+		PRIMARY KEY (idClientOffer, idArticle, idArticleHistory),
 	CONSTRAINT fk_clientoffer_article
 		FOREIGN KEY (idClientOffer)
 		REFERENCES clientoffer (idClientOffer),
 	CONSTRAINT fk_article_clientoffer
-		FOREIGN KEY (idArticle)
-		REFERENCES article (idArticle)
+		FOREIGN KEY (idArticle, idArticleHistory)
+		REFERENCES articleHistory (idArticle, idArticleHistory)
 );
 
 CREATE TABLE outstanding (

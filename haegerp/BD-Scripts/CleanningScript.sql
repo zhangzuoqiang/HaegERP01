@@ -18,5 +18,6 @@ DELETE FROM client;
 DELETE FROM clientcategory;
 DELETE FROM supplier;
 DELETE FROM businesspartner;
+DELETE FROM articleHistory;
 DELETE FROM article;
 DELETE FROM articlecategory;

@@ -4,25 +4,22 @@
 
 <hibernate-mapping>
 	<class name="org.haegerp.entity.SupplierOrderDetail" table="SUPPLIERORDER_ARTICLE">
-		<composite-id name="IdSupplierOrderDetail">
+		<composite-id name="supplierOrderDetailPK">
 			<key-many-to-one name="supplierOrder" column="IDSUPPLIERORDER" class="org.haegerp.entity.SupplierOrder" />
-			<key-many-to-one name="article" column="IDARTICLE" class="org.haegerp.entity.Article" />
+			<key-many-to-one name="articleHistory" class="org.haegerp.entity.ArticleHistory">
+				<column name="IDARTICLE" />
+				<column name="IDARTICLEHISTORY" />
+			</key-many-to-one>
 		</composite-id>
 		
-		<property name="price" type="float">
-			<column name="PRICE" not-null="true" precision="17" scale="2"/>
-		</property>
 		<property name="quantity" type="long">
 			<column name="QUANTITY" not-null="true" />
 		</property>
-		<property name="priceVat" type="float">
-			<column name="PRICEVAT" precision="2" scale="2"/>
-		</property>
 		<property name="discount" type="float">
-			<column name="DISCOUNT" not-null="false" precision="3" scale="3"/>
+			<column name="DISCOUNT" not-null="true" precision="3" scale="3"/>
 		</property>
-		<property name="articleTotal" type="float">
-			<column name="ARTICLETOTAL" not-null="false" precision="17" scale="2"/>
+		<property name="totalArticle" type="float">
+			<column name="TOTALARTICLE" not-null="true" precision="17" scale="2"/>
 		</property>
 	</class>
 </hibernate-mapping>

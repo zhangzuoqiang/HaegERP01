@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.haegerp.entity.repository.ArticleCategoryRepository;
+import org.haegerp.entity.repository.ArticleHistoryRepository;
 import org.haegerp.entity.repository.ArticleRepository;
 import org.haegerp.entity.repository.DivisionRepository;
 import org.haegerp.entity.repository.EmployeeRepository;
@@ -63,6 +64,8 @@ public class SupplierOrderTest extends TestCase {
     @Autowired
     private ArticleCategoryRepository articleCategoryRepo;
     @Autowired
+    private ArticleHistoryRepository articleHistoryRepository;
+    @Autowired
     private SupplierRepository supplierRepo;
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -94,13 +97,45 @@ public class SupplierOrderTest extends TestCase {
         ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
         
         //Artikel eins
+        //Erstellung
         Article article = new Article();
         article.setArticleCategory(articleCategory);
+        article.setArticleCategory(articleCategory);
+        article.setColor(properties.getProperty("UPDATE_A_COLOR"));
+        article.setDescription(properties.getProperty("UPDATE_A_DESCRIPTION"));
+        article.setEan(Long.parseLong(properties.getProperty("UPDATE_A_EAN")));
+        article.setName(properties.getProperty("UPDATE_A_NAME"));
+        article.setPriceGross(Float.parseFloat(properties.getProperty("UPDATE_A_PRICEGROSS")));
+        article.setPriceSupplier(Float.parseFloat(properties.getProperty("UPDATE_A_PRICESUPPLIER")));
+        article.setPriceVat(Float.parseFloat(properties.getProperty("UPDATE_A_PRICEVAT")));
+        article.setSizeH(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEH")));
+        article.setSizeL(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEL")));
+        article.setSizeW(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEW")));
+        article.setStock(Integer.parseInt(properties.getProperty("UPDATE_A_STOCK")));
+        
+        article = articleRepo.save(article);
+        ARTICLE1_ID = article.getIdArticle();
+        
+        //Die Artikelversion wird kontrolliert
+        ArticleHistory articleHistory = new ArticleHistory();
+        articleHistory.setArticleCategory(articleCategory);
+        articleHistory.setArticleHistoryPK(new ArticleHistoryPK(1, article));
+        articleHistory.setEan(article.getEan());
+        articleHistory.setName(article.getName());
+        articleHistory.setPriceGross(article.getPriceGross());
+        articleHistory.setPriceSupplier(article.getPriceSupplier());
+        articleHistory.setPriceVat(article.getPriceVat());
+        
+        articleHistory = articleHistoryRepository.save(articleHistory);
+        
+        //Artikel Eins wird geändert
+        article = articleRepo.findOne(ARTICLE1_ID);
         article.setColor(properties.getProperty("INSERT_A_COLOR"));
         article.setDescription(properties.getProperty("INSERT_A_DESCRIPTION"));
         article.setEan(Long.parseLong(properties.getProperty("INSERT_A_EAN")));
         article.setName(properties.getProperty("INSERT_A_NAME"));
         article.setPriceGross(Float.parseFloat(properties.getProperty("INSERT_A_PRICEGROSS")));
+        article.setPriceSupplier(Float.parseFloat(properties.getProperty("INSERT_A_PRICESUPPLIER")));
         article.setPriceVat(Float.parseFloat(properties.getProperty("INSERT_A_PRICEVAT")));
         article.setSizeH(Float.parseFloat(properties.getProperty("INSERT_A_SIZEH")));
         article.setSizeL(Float.parseFloat(properties.getProperty("INSERT_A_SIZEL")));
@@ -108,7 +143,20 @@ public class SupplierOrderTest extends TestCase {
         article.setStock(Integer.parseInt(properties.getProperty("INSERT_A_STOCK")));
         
         article = articleRepo.save(article);
-        ARTICLE1_ID = article.getIdArticle();
+        
+        //Die Artikelversion wird kontrolliert
+        long articleHistoryNewID = articleHistoryRepository.findByIdArticle(ARTICLE1_ID) + 1L;
+        
+        articleHistory = new ArticleHistory();
+        articleHistory.setArticleCategory(articleCategory);
+        articleHistory.setArticleHistoryPK(new ArticleHistoryPK(articleHistoryNewID, article));
+        articleHistory.setEan(article.getEan());
+        articleHistory.setName(article.getName());
+        articleHistory.setPriceGross(article.getPriceGross());
+        articleHistory.setPriceSupplier(article.getPriceSupplier());
+        articleHistory.setPriceVat(article.getPriceVat());
+        
+        articleHistory = articleHistoryRepository.save(articleHistory);
         
         //Artikel zwei
         article = new Article();
@@ -118,6 +166,7 @@ public class SupplierOrderTest extends TestCase {
         article.setEan(Long.parseLong(properties.getProperty("UPDATE_A_EAN")));
         article.setName(properties.getProperty("UPDATE_A_NAME"));
         article.setPriceGross(Float.parseFloat(properties.getProperty("UPDATE_A_PRICEGROSS")));
+        article.setPriceSupplier(Float.parseFloat(properties.getProperty("UPDATE_A_PRICESUPPLIER")));
         article.setPriceVat(Float.parseFloat(properties.getProperty("UPDATE_A_PRICEVAT")));
         article.setSizeH(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEH")));
         article.setSizeL(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEL")));
@@ -126,6 +175,18 @@ public class SupplierOrderTest extends TestCase {
         
         article = articleRepo.save(article);
         ARTICLE2_ID = article.getIdArticle();
+        
+        //Die Artikelversion wird kontrolliert
+        articleHistory = new ArticleHistory();
+        articleHistory.setArticleCategory(articleCategory);
+        articleHistory.setArticleHistoryPK(new ArticleHistoryPK(1, article));
+        articleHistory.setEan(article.getEan());
+        articleHistory.setName(article.getName());
+        articleHistory.setPriceGross(article.getPriceGross());
+        articleHistory.setPriceSupplier(article.getPriceSupplier());
+        articleHistory.setPriceVat(article.getPriceVat());
+        
+        articleHistory = articleHistoryRepository.save(articleHistory);
         
         //Der Lieferant wird erstellt
         Supplier supplier = new Supplier();
@@ -263,38 +324,36 @@ public class SupplierOrderTest extends TestCase {
     		assertEquals(supplierOrder.getDescription(), properties.getProperty("INSERT_SO_DESCRIPTION"));
 	        assertEquals(supplierOrder.getEmployee(), employee);
 	        assertEquals(supplierOrder.getSupplier(), supplier);
-	        assertEquals(supplierOrder.getTotal(), Float.parseFloat("0.0"));
+	        assertEquals(supplierOrder.getTotal(), 0.0F);
     		
     		//Hinzufügen den ersten Artikel
     		Article article = articleRepo.findOne(ARTICLE1_ID);
+    		ArticleHistory articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(ARTICLE1_ID), article));
+    		
     		SupplierOrderDetail supplierOrderDetail = new SupplierOrderDetail();
-    		supplierOrderDetail.setIdSupplierOrderDetail(new IdSupplierOrderDetail());
-    		supplierOrderDetail.getIdSupplierOrderDetail().setArticle(article);
-    		supplierOrderDetail.getIdSupplierOrderDetail().setSupplierOrder(supplierOrder);
+    		supplierOrderDetail.setSupplierOrderDetailPK(new SupplierOrderDetailPK(supplierOrder, articleHistory));
+    		
     		supplierOrderDetail.setDiscount(Float.parseFloat(properties.getProperty("INSERT_SOD_A1_DISCOUNT")));
     		supplierOrderDetail.setQuantity(Long.parseLong(properties.getProperty("INSERT_SOD_A1_QUANTITY")));
-    		supplierOrderDetail.setPrice(Float.parseFloat(properties.getProperty("INSERT_SOD_A1_PRICE")));
-    		supplierOrderDetail.setPriceVat(Float.parseFloat(properties.getProperty("INSERT_SOD_A1_PRICEVAT")));
     		
     		supplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
     		
-    		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getArticleTotal());
+    		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getTotalArticle());
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
     		
     		//Hinzufügen den zweiten Artikel
     		article = articleRepo.findOne(ARTICLE2_ID);
+    		articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(ARTICLE2_ID), article));
+    		
     		supplierOrderDetail = new SupplierOrderDetail();
-    		supplierOrderDetail.setIdSupplierOrderDetail(new IdSupplierOrderDetail());
-    		supplierOrderDetail.getIdSupplierOrderDetail().setArticle(article);
-    		supplierOrderDetail.getIdSupplierOrderDetail().setSupplierOrder(supplierOrder);
+    		supplierOrderDetail.setSupplierOrderDetailPK(new SupplierOrderDetailPK(supplierOrder, articleHistory));
+    		
     		supplierOrderDetail.setDiscount(Float.parseFloat(properties.getProperty("INSERT_SOD_A2_DISCOUNT")));
     		supplierOrderDetail.setQuantity(Long.parseLong(properties.getProperty("INSERT_SOD_A2_QUANTITY")));
-    		supplierOrderDetail.setPrice(Float.parseFloat(properties.getProperty("INSERT_SOD_A2_PRICE")));
-    		supplierOrderDetail.setPriceVat(Float.parseFloat(properties.getProperty("INSERT_SOD_A2_PRICEVAT")));
     		
     		supplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
     		
-    		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getArticleTotal());
+    		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getTotalArticle());
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
     		
     		supplierOrder = supplierOrderRepository.save(supplierOrder);
@@ -305,32 +364,23 @@ public class SupplierOrderTest extends TestCase {
     		float articleTotal;
     		float discount;
     		long quantity;
-    		float price;
-    		float priceVat;
     		
     		for (SupplierOrderDetail orderArticle : supplierOrder.getSupplierOrderDetail()) {
-				if (orderArticle.getIdSupplierOrderDetail().getArticle().getIdArticle() == ARTICLE1_ID){
+				if (orderArticle.getSupplierOrderDetailPK().getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle() == ARTICLE1_ID){
 		    		discount = Float.parseFloat(properties.getProperty("INSERT_SOD_A1_DISCOUNT"));
 		    		quantity = Long.parseLong(properties.getProperty("INSERT_SOD_A1_QUANTITY"));
-		    		price = Float.parseFloat(properties.getProperty("INSERT_SOD_A1_PRICE"));
-		    		priceVat = Float.parseFloat(properties.getProperty("INSERT_SOD_A1_PRICEVAT"));
 				} else {
 					discount = Float.parseFloat(properties.getProperty("INSERT_SOD_A2_DISCOUNT"));
 		    		quantity = Long.parseLong(properties.getProperty("INSERT_SOD_A2_QUANTITY"));
-		    		price = Float.parseFloat(properties.getProperty("INSERT_SOD_A2_PRICE"));
-		    		priceVat = Float.parseFloat(properties.getProperty("INSERT_SOD_A2_PRICEVAT"));
 				}
 				
-				articleTotal = orderArticle.getPrice() 
-	    				* ((orderArticle.getPriceVat() / 100) + 1) 
-	    				* orderArticle.getQuantity()
-	    				* (orderArticle.getDiscount() / 100);
-				
-				assertEquals(orderArticle.getArticleTotal(), articleTotal);
+				articleTotal = orderArticle.getSupplierOrderDetailPK().getArticleHistory().getPriceSupplier()
+						* orderArticle.getQuantity()
+						* (1 - (orderArticle.getDiscount() / 100));
+
+				assertEquals(orderArticle.getTotalArticle(), articleTotal);
 				assertEquals(orderArticle.getDiscount(), discount);
 	    		assertEquals(orderArticle.getQuantity(), quantity);
-	    		assertEquals(orderArticle.getPrice(), price);
-	    		assertEquals(orderArticle.getPriceVat(), priceVat);
 			}
     		
 		} catch (Exception ex) {

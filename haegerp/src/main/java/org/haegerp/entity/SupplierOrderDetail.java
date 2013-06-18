@@ -2,22 +2,27 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+import org.haegerp.exception.LengthOverflowException;
+
+/**
+ * Eine Bestellung kann viele Artikel haben.<br/>
+ * Diese Klasse repräsentiert jede Linie von einer Bestellung
+ * 
+ * @author Wolf
+ *
+ */
 public class SupplierOrderDetail implements Serializable {
 
 	private static final long serialVersionUID = -203112193435018380L;
 	
 	//Primary Key (Erforderlich)
-	private IdSupplierOrderDetail idSupplierOrderDetail;
-	//Stückpreis
-	private float price;
+	private SupplierOrderDetailPK supplierOrderDetailPK;
 	//Quantität
 	private long quantity;
-	//Artikels MwSt Preis
-	private float priceVat;
 	//Prozent Rabatt
 	private float discount;
 	//Artikel Summe
-	private float articleTotal;
+	private float totalArticle;
 	
 	public SupplierOrderDetail() {
 	}
@@ -26,33 +31,16 @@ public class SupplierOrderDetail implements Serializable {
 	 * 
 	 * @return idSupplierOrderDetail - Primary Key (Erforderlich)
 	 */
-	public IdSupplierOrderDetail getIdSupplierOrderDetail() {
-		return idSupplierOrderDetail;
+	public SupplierOrderDetailPK getSupplierOrderDetailPK() {
+		return supplierOrderDetailPK;
 	}
 
 	/**
 	 * 
 	 * @param idSupplierOrderDetail Primary Key (Erforderlich)
 	 */
-	public void setIdSupplierOrderDetail(IdSupplierOrderDetail idSupplierOrderDetail) {
-		this.idSupplierOrderDetail = idSupplierOrderDetail;
-	}
-
-	/**
-	 * 
-	 * @return price - Holen den Preis
-	 */
-	public float getPrice() {
-		return price;
-	}
-
-	/**
-	 * 
-	 * @param price Stellen den Preis
-	 */
-	public void setPrice(float price) {
-		this.price = price;
-		updateArticleTotal();
+	public void setSupplierOrderDetailPK(SupplierOrderDetailPK supplierOrderDetailPK) {
+		this.supplierOrderDetailPK = supplierOrderDetailPK;
 	}
 
 	/**
@@ -66,27 +54,13 @@ public class SupplierOrderDetail implements Serializable {
 	/**
 	 * 
 	 * @param quantity Stellen die Quantität
+	 * @throws LengthOverflowException 
 	 */
-	public void setQuantity(long quantity) {
+	public void setQuantity(long quantity) throws LengthOverflowException {
+		if (quantity > Long.MAX_VALUE || quantity < 1L)
+			throw new LengthOverflowException("Quantity");
 		this.quantity = quantity;
-		updateArticleTotal();
-	}
-
-	/**
-	 * 
-	 * @return Holen den Artikels MwSt Preis
-	 */
-	public float getPriceVat() {
-		return priceVat;
-	}
-
-	/**
-	 * 
-	 * @param priceVat Stellen Artikels MwSt Preis
-	 */
-	public void setPriceVat(float priceVat) {
-		this.priceVat = priceVat;
-		updateArticleTotal();
+		ArticleTotalCalculation();
 	}
 
 	/**
@@ -100,35 +74,41 @@ public class SupplierOrderDetail implements Serializable {
 	/**
 	 * 
 	 * @param discount Stellen den Rabatt
+	 * @throws LengthOverflowException 
 	 */
-	public void setDiscount(float discount) {
+	public void setDiscount(float discount) throws LengthOverflowException {
+		if (discount >= 100F || discount < 0.0F)
+			throw new LengthOverflowException("Discount");
 		this.discount = discount;
-		updateArticleTotal();
+		ArticleTotalCalculation();
 	}
 
 	/**
 	 * 
 	 * @return Holen die Summe
 	 */
-	public float getArticleTotal() {
-		return articleTotal;
+	public float getTotalArticle() {
+		return totalArticle;
 	}
 
 	/**
 	 * 
 	 * @param articleTotal Stellen die Summe
+	 * @throws LengthOverflowException 
 	 */
-	public void setArticleTotal(float articleTotal) {
-		this.articleTotal = articleTotal;
+	public void setTotalArticle(float totalArticle) throws LengthOverflowException {
+		if (totalArticle >= Float.MAX_VALUE || totalArticle < 0.0F)
+			throw new LengthOverflowException("TotalArticle");
+		this.totalArticle = totalArticle;
 	}
 	
 	/**
-	 * Die Summe wird aktualisiert
+	 * Die Summe wird ausgerechnt
 	 */
-	public void updateArticleTotal(){
-		float percentVat = (this.priceVat/100) + 1;
-		float percentDiscount = this.discount/100;
-		this.articleTotal = this.price * percentVat * this.quantity * percentDiscount;
+	public void ArticleTotalCalculation(){
+		this.totalArticle = (float) (Math.floor((this.quantity 
+				* (1 - (this.discount/100)) 
+				* supplierOrderDetailPK.getArticleHistory().getPriceSupplier())*100)/100);
 	}
 
 	public static long getSerialversionuid() {
@@ -143,7 +123,7 @@ public class SupplierOrderDetail implements Serializable {
 		int result = 1;
 		result = prime
 				* result
-				+ ((idSupplierOrderDetail == null) ? 0 : idSupplierOrderDetail
+				+ ((supplierOrderDetailPK == null) ? 0 : supplierOrderDetailPK
 						.hashCode());
 		return result;
 	}
@@ -157,10 +137,10 @@ public class SupplierOrderDetail implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		SupplierOrderDetail other = (SupplierOrderDetail) obj;
-		if (idSupplierOrderDetail == null) {
-			if (other.idSupplierOrderDetail != null)
+		if (supplierOrderDetailPK == null) {
+			if (other.supplierOrderDetailPK != null)
 				return false;
-		} else if (!idSupplierOrderDetail.equals(other.idSupplierOrderDetail))
+		} else if (!supplierOrderDetailPK.equals(other.supplierOrderDetailPK))
 			return false;
 		return true;
 	}

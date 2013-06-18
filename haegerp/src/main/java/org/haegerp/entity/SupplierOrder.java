@@ -164,8 +164,11 @@ public class SupplierOrder implements Serializable {
 	/**
 	 * 
 	 * @param description Beschreibung der Bestellung
+	 * @throws LengthOverflowException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws LengthOverflowException {
+		if (description.length() > 256)
+			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 	

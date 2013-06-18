@@ -19,5 +19,6 @@ DROP TABLE client;
 DROP TABLE clientcategory;
 DROP TABLE supplier;
 DROP TABLE businesspartner;
+DROP TABLE articleHistory;
 DROP TABLE article;
 DROP TABLE articlecategory;

@@ -30,6 +30,9 @@
 		<property name="priceGross" type="float">
 			<column name="PRICEGROSS" not-null="false" precision="17" scale="2"/>
 		</property>
+		<property name="priceSupplier" type="float">
+			<column name="PRICESUPPLIER" not-null="false" precision="17" scale="2"/>
+		</property>
 		<property name="stock" type="long">
 			<column name="STOCK" not-null="false"/>
 		</property>

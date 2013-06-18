@@ -36,6 +36,9 @@ public class Article implements Serializable{
 	//Artikels Bruttopreis
 	private float priceGross;
 	
+	//Artikels Liferantpreis
+	private float priceSupplier;
+	
 	//Artikels Lager
 	private long stock;
 	
@@ -64,10 +67,18 @@ public class Article implements Serializable{
 	public Article() {
 	}
 	
+	/**
+	 * 
+	 * @return idArticle - Primary Key (Erforderlich - Automatisch)
+	 */
 	public long getIdArticle() {
 		return idArticle;
 	}
 	
+	/**
+	 * 
+	 * @param idArticle Primary Key (Erforderlich - Automatisch)
+	 */
 	public void setIdArticle(long idArticle) {
 		this.idArticle = idArticle;
 	}
@@ -163,7 +174,26 @@ public class Article implements Serializable{
 			throw new LengthOverflowException("PriceGross");
 		this.priceGross = priceGross;
 	}
-	
+
+	/**
+	 * 
+	 * @return priceSupplier - Artikels Liferantpreis
+	 */
+	public float getPriceSupplier() {
+		return priceSupplier;
+	}
+
+	/**
+	 * 
+	 * @param priceSupplier Artikels Liferantpreis
+	 * @throws LengthOverflowException 
+	 */
+	public void setPriceSupplier(float priceSupplier) throws LengthOverflowException {
+		if (priceGross > 99999999999999999.99F)
+			throw new LengthOverflowException("PriceGross");
+		this.priceSupplier = priceSupplier;
+	}
+
 	/**
 	 * 
 	 * @return stock - Artikels Lager
@@ -175,9 +205,11 @@ public class Article implements Serializable{
 	/**
 	 * 
 	 * @param stock Artikels Lager (Nicht Erforderlich)
+	 * @throws LengthOverflowException 
 	 */
-	public void setStock(long stock) {
+	public void setStock(long stock) throws LengthOverflowException {
 		if (stock > Long.MAX_VALUE || stock < Long.MIN_VALUE)
+			throw new LengthOverflowException("Stock");
 		this.stock = stock;
 	}
 	

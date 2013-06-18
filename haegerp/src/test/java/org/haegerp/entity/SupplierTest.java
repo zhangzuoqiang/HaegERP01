@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import org.haegerp.entity.repository.SupplierRepository;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class SupplierTest extends TestCase {
 	
-    private Properties properties = new Properties();
+    private static Properties properties = new Properties();
     
     private static long SUPPLIER_ID;
     
@@ -38,13 +39,19 @@ public class SupplierTest extends TestCase {
     @Autowired
     private SupplierRepository supplierRepo;
     
+    @Override
+    @Before
+    public void setUp() throws Exception {
+    	super.setUp();
+    	properties.load(new FileInputStream("./config.properties"));
+    }
+    
     /**
      * Ein Lieferant wird in die Datenbank erstellt
      */
     @Test
     public void test1InsertSupplier(){
         try {
-        	properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	    	Supplier supplier = new Supplier();
 	    	supplier.setName(properties.getProperty("INSERT_S_NAME"));
 	    	supplier.setTaxId(Long.parseLong(properties.getProperty("INSERT_S_TAXID")));
@@ -89,7 +96,6 @@ public class SupplierTest extends TestCase {
     @Test
     public void test2UpdateSupplier(){
     	try {
-    		properties.load(new FileInputStream("./src/test/java/org/haegerp/entity/config.properties"));
 	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
 	        
 	    	supplier.setName(properties.getProperty("UPDATE_S_NAME"));

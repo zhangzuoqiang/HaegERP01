@@ -37,21 +37,6 @@ public class Division implements Serializable {
 
 	/**
 	 * 
-	 * @param idDivision 
-	 * @param name 
-	 * @param description 
-	 * @param employees 
-	 */
-	public Division(int idDivision, String name, String description,
-			Set<Employee> employees) {
-		this.idDivision = idDivision;
-		this.name = name;
-		this.description = description;
-		this.employees = employees;
-	}
-
-	/**
-	 * 
 	 * @return idDivision - Primary Key (Erforderlich - Automatisch)
 	 */
 	public long getIdDivision() {
