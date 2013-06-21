@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.ClientBill" table="CLIENTBILL">
+		<id name="idClientBill" type="long">
+			<column name="IDCLIENTBILL" not-null="true" />
+			<generator class="increment" />
+		</id>
+		
+		<one-to-one name="clientOffer" class="org.haegerp.entity.ClientOffer" property-ref="clientBill" />
+		
+		<one-to-one name="outstanding" class="org.haegerp.entity.Outstanding" property-ref="clientBill" />
+		
+		<property name="billedDate" type="timestamp">
+			<column name="BILLEDDATE" not-null="true" sql-type="timestamp"/>
+		</property>
+		
+		<property name="paidDate" type="timestamp">
+			<column name="PAIDDATE" not-null="false" sql-type="timestamp"/>
+		</property>
+	</class>
+</hibernate-mapping>

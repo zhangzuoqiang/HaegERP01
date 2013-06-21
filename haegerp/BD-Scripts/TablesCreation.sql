@@ -248,7 +248,6 @@ CREATE TABLE clientoffer (
 	offerDate			DATE		NOT NULL,
 	total				NUMBER(20,2),
 	sendDate			DATE,
-	billedDate			DATE,
 	description			VARCHAR2(256),
 	CONSTRAINT pk_clientoffer
 		PRIMARY KEY (idClientOffer),
@@ -281,12 +280,30 @@ CREATE TABLE clientoffer_article (
 );
 
 CREATE TABLE outstanding (
+	idOutstanding		INTEGER		NOT NULL,
 	idClientBill		INTEGER		NOT NULL,
 	expireDate			DATE		NOT NULL,
-	dateEmail			DATE,
+	emailDate			DATE,
 	CONSTRAINT pk_outstanding
-		PRIMARY KEY (idClientBill),
+		PRIMARY KEY (idOutstanding),
 	CONSTRAINT fk_outstanding_clientbill
 		FOREIGN KEY (idClientBill)
 		REFERENCES clientbill (idClientBill)
+);
+
+/* ******************************************/
+/* *				Logging					*/
+/* ******************************************/
+
+CREATE TABLE log (
+	idLog			INTEGER			NOT NULL,
+	entity			VARCHAR2(100)	NOT NULL,
+	operation		VARCHAR2(20)	NOT NULL,
+	idEmployee		INTEGER			NOT NULL,
+	operationDate	DATE			NOT NULL,
+	CONSTRAINT pk_logs
+		PRIMARY KEY (idLog),
+	CONSTRAINT fk_log_employee
+		FOREIGN KEY (idEmployee)
+		REFERENCES employee (idEmployee)
 );

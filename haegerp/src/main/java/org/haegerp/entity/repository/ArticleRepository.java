@@ -1,15 +1,10 @@
 package org.haegerp.entity.repository;
 
 import org.haegerp.entity.Article;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface ArticleRepository extends JpaRepository<Article, Long> {
+public interface ArticleRepository extends MyRepository<Article, Long>, ArticleRepositoryCustom {
 	
-	@Modifying
-	@Transactional
-	public <S extends Article> S save(S entity);
 }

@@ -14,7 +14,7 @@ public class SupplierBill implements Serializable {
 	private static final long serialVersionUID = -582360377641367019L;
 	//Primary Key (Erforderlich)
 	private long idSupplierBill;
-	//Bestallung der Rechnung
+	//Die Bestellung, dass die Rechnung gehört
 	private SupplierOrder supplierOrder;
 	//Datum, dass die Rechnung erhalt wird (Erforderlich)
 	private Date receivedDate;
@@ -42,7 +42,7 @@ public class SupplierBill implements Serializable {
 
 	/**
 	 * 
-	 * @return supplierOrder - Bestallung der Rechnung
+	 * @return supplierOrder - Die Bestellung, dass die Rechnung gehört
 	 */
 	public SupplierOrder getSupplierOrder() {
 		return supplierOrder;
@@ -50,7 +50,7 @@ public class SupplierBill implements Serializable {
 
 	/**
 	 * 
-	 * @param supplierOrder Bestallung der Rechnung
+	 * @param supplierOrder Die Bestellung, dass die Rechnung gehört
 	 */
 	public void setSupplierOrder(SupplierOrder supplierOrder) {
 		this.supplierOrder = supplierOrder;

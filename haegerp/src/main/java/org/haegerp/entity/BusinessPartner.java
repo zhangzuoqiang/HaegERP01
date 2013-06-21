@@ -186,7 +186,7 @@ public abstract class BusinessPartner implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setRegion(String region) throws LengthOverflowException {
-		if (region.length() > 50)
+		if (region != null && region.length() > 50)
 			throw new LengthOverflowException("Region");
 		this.region = region;
 	}
@@ -243,7 +243,7 @@ public abstract class BusinessPartner implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setPhoneNumber(String phoneNumber) throws LengthOverflowException {
-		if (phoneNumber.length() > 20)
+		if (phoneNumber != null && phoneNumber.length() > 20)
 			throw new LengthOverflowException("PhoneNumber");
 		this.phoneNumber = phoneNumber;
 	}
@@ -262,7 +262,7 @@ public abstract class BusinessPartner implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setMobileNumber(String mobileNumber) throws LengthOverflowException {
-		if (mobileNumber.length() > 20)
+		if (mobileNumber != null && mobileNumber.length() > 20)
 			throw new LengthOverflowException("MobileNumber");
 		this.mobileNumber = mobileNumber;
 	}
@@ -281,7 +281,7 @@ public abstract class BusinessPartner implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setFaxNumber(String faxNumber) throws LengthOverflowException {
-		if (faxNumber.length() > 20)
+		if (faxNumber != null && faxNumber.length() > 20)
 			throw new LengthOverflowException("FaxNumber");
 		this.faxNumber = faxNumber;
 	}
@@ -300,7 +300,7 @@ public abstract class BusinessPartner implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setDescription(String description) throws LengthOverflowException {
-		if (description.length() > 256)
+		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("Description");
 		this.description = description;
 	}

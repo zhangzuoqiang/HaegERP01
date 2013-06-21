@@ -6,7 +6,9 @@ import java.util.Properties;
 import org.haegerp.entity.repository.ArticleCategoryRepository;
 import org.haegerp.entity.repository.ArticleHistoryRepository;
 import org.haegerp.entity.repository.ArticleRepository;
+import org.haegerp.entity.repository.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
+import org.haegerp.session.Session;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -37,6 +39,7 @@ public class Article_ArticleCategoryTest extends TestCase {
     
     private static long ARTICLE_ID;
     private static long ARTICLE_CATEGORY_ID;
+    private static boolean CHECK_SETUP = true;
     
     @Autowired
     private ArticleRepository articleRepo;
@@ -47,11 +50,19 @@ public class Article_ArticleCategoryTest extends TestCase {
     @Autowired
     private ArticleCategoryRepository articleCategoryRepo;
     
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    
     @Override
     @Before
     public void setUp() throws Exception {
     	super.setUp();
-    	properties.load(new FileInputStream("./config.properties"));
+    	if (CHECK_SETUP)
+    	{
+    		CHECK_SETUP = false;
+	    	properties.load(new FileInputStream("./config.properties"));
+	    	Session.setEmployee(employeeRepository.findOne(1L));
+    	}
     }
     
     /**
@@ -65,7 +76,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        articleCategory.setName(properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION"));
 	        
-	        articleCategory = articleCategoryRepo.save(articleCategory);
+	        articleCategory = articleCategoryRepo.performNew(articleCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
@@ -94,8 +105,8 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        articleCategory.setName(properties.getProperty("UPDATE_AC_NAME"));
 	        articleCategory.setDescription(properties.getProperty("UPDATE_AC_DESCRIPTION"));
 	        
-	        articleCategoryRepo.save(articleCategory);
-        
+	        articleCategory = articleCategoryRepo.performEdit(articleCategory);
+	        
 	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	        
 	        assertEquals(articleCategory.getName(), properties.getProperty("UPDATE_AC_NAME"));
@@ -132,22 +143,13 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(properties.getProperty("INSERT_A_STOCK")));
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepo.performNew(article);
+	        
+	        //Die Artikelversion wird kontrolliert
+	        articleRepo.createArticleHistory(article);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();
-	        
-	        //Die Artikelversion wird kontrolliert
-	        ArticleHistory articleHistory = new ArticleHistory();
-	        articleHistory.setArticleCategory(articleCategory);
-	        articleHistory.setArticleHistoryPK(new ArticleHistoryPK(1, article));
-	        articleHistory.setEan(article.getEan());
-	        articleHistory.setName(article.getName());
-	        articleHistory.setPriceGross(article.getPriceGross());
-	        articleHistory.setPriceSupplier(article.getPriceSupplier());
-	        articleHistory.setPriceVat(article.getPriceVat());
-	        
-	        articleHistory = articleHistoryRepository.save(articleHistory);
 	        
 	        article = articleRepo.findOne(ARTICLE_ID);
 	        
@@ -193,21 +195,10 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(properties.getProperty("UPDATE_A_STOCK")));
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepo.performEdit(article);
 	        
 	        //Die Artikelversion wird kontrolliert
-	        long articleHistoryNewID = articleHistoryRepository.findByIdArticle(article.getIdArticle()) + 1L;
-	        
-	        ArticleHistory articleHistory = new ArticleHistory();
-	        articleHistory.setArticleCategory(article.getArticleCategory());
-	        articleHistory.setArticleHistoryPK(new ArticleHistoryPK(articleHistoryNewID, article));
-	        articleHistory.setEan(article.getEan());
-	        articleHistory.setName(article.getName());
-	        articleHistory.setPriceGross(article.getPriceGross());
-	        articleHistory.setPriceSupplier(article.getPriceSupplier());
-	        articleHistory.setPriceVat(article.getPriceVat());
-	        
-	        articleHistory = articleHistoryRepository.save(articleHistory);
+	        articleRepo.createArticleHistory(article);
 	        
 	        //Der geänderter Artikel wird geprüft
 	        article = articleRepo.findOne(ARTICLE_ID);
@@ -270,17 +261,17 @@ public class Article_ArticleCategoryTest extends TestCase {
     
     /**
      * Fehlerprovokation ArticleCategory
-     * Andreas Monschau 15.06.2013
+     * @author Andreas Monschau 15.06.2013
      * @throws Exception 
      */
     @Test(expected=LengthOverflowException.class)
-    public void test7InsertArticleCategoryGrenzwert() throws Exception
+    public void test7InsertArticleCategoryError() throws Exception
     {
         ArticleCategory articleCategory = new ArticleCategory();
         articleCategory.setName(properties.getProperty("INSERT_AC_NAME_F"));
         articleCategory.setDescription(properties.getProperty("INSERT_AC_DESCRIPTION_F"));
         
-        articleCategory = articleCategoryRepo.save(articleCategory);
+        articleCategory = articleCategoryRepo.performNew(articleCategory);
 
         //Die erstellt Artikelkategorie wird geprüft
         ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
@@ -294,11 +285,11 @@ public class Article_ArticleCategoryTest extends TestCase {
     
     /**
      * Fehlerprovokation Article
-     * Andreas Monschau 15.06.2013
+     * @author Andreas Monschau 15.06.2013
      * @throws Exception 
      */
     @Test(expected=NumberFormatException.class)
-    public void test8InsertArticle() throws Exception{
+    public void test8InsertArticleError() throws Exception{
     	try {
 	    	//Die Artikelkategorie wird geholt
 	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
@@ -318,23 +309,23 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(properties.getProperty("INSERT_A_SIZEW_F")));
 	        article.setStock(Integer.parseInt(properties.getProperty("INSERT_A_STOCK_F")));
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepo.performNew(article);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();
 	        
 	        article = articleRepo.findOne(ARTICLE_ID);
 	        
-	        assertEquals(article.getColor(), properties.getProperty("INSERT_A_COLOR_F"));
-	        assertEquals(article.getDescription(), properties.getProperty("INSERT_A_DESCRIPTION_F"));
-	        assertEquals(article.getEan(), Long.parseLong(properties.getProperty("INSERT_A_EAN_F")));
-	        assertEquals(article.getName(), properties.getProperty("INSERT_A_NAME_F"));
-	        assertEquals(article.getPriceGross(), Float.parseFloat(properties.getProperty("INSERT_A_PRICEGROSS_F")));
-	        assertEquals(article.getPriceVat(), Float.parseFloat(properties.getProperty("INSERT_A_PRICEVAT_F")));
-	        assertEquals(article.getSizeH(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEH_F")));
-	        assertEquals(article.getSizeL(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEL_F")));
-	        assertEquals(article.getSizeW(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEW_F")));
-	        assertEquals(article.getStock(), Integer.parseInt(properties.getProperty("INSERT_A_STOCK_F")));
+	        assertEquals(article.getColor(), properties.getProperty("INSERT_A_COLOR"));
+	        assertEquals(article.getDescription(), properties.getProperty("INSERT_A_DESCRIPTION"));
+	        assertEquals(article.getEan(), Long.parseLong(properties.getProperty("INSERT_A_EAN")));
+	        assertEquals(article.getName(), properties.getProperty("INSERT_A_NAME"));
+	        assertEquals(article.getPriceGross(), Float.parseFloat(properties.getProperty("INSERT_A_PRICEGROSS")));
+	        assertEquals(article.getPriceVat(), Float.parseFloat(properties.getProperty("INSERT_A_PRICEVAT")));
+	        assertEquals(article.getSizeH(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEH")));
+	        assertEquals(article.getSizeL(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEL")));
+	        assertEquals(article.getSizeW(), Float.parseFloat(properties.getProperty("INSERT_A_SIZEW")));
+	        assertEquals(article.getStock(), Integer.parseInt(properties.getProperty("INSERT_A_STOCK")));
 	        assertEquals(article.getArticleCategory(), articleCategory);
     	} catch (Exception ex) {
     		throw ex;

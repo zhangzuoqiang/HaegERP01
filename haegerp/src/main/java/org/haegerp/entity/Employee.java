@@ -227,7 +227,7 @@ public class Employee implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setRegion(String region) throws LengthOverflowException {
-		if (region.length() > 30)
+		if (region != null && region.length() > 30)
 			throw new LengthOverflowException("Region");
 		this.region = region;
 	}
@@ -265,7 +265,7 @@ public class Employee implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setEmail(String email) throws LengthOverflowException {
-		if (email.length() > 50)
+		if (email != null && email.length() > 50)
 			throw new LengthOverflowException("E-Mail");
 		this.email = email;
 	}
@@ -284,7 +284,7 @@ public class Employee implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setPhoneNumber(String phoneNumber) throws LengthOverflowException {
-		if (phoneNumber.length() > 20)
+		if (phoneNumber != null && phoneNumber.length() > 20)
 			throw new LengthOverflowException("PhoneNumber");
 		this.phoneNumber = phoneNumber;
 	}
@@ -303,7 +303,7 @@ public class Employee implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setMobileNumber(String mobileNumber) throws LengthOverflowException {
-		if (mobileNumber.length() > 20)
+		if (mobileNumber != null && mobileNumber.length() > 20)
 			throw new LengthOverflowException("MobileNumber");
 		this.mobileNumber = mobileNumber;
 	}

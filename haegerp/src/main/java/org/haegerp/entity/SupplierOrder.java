@@ -30,10 +30,9 @@ public class SupplierOrder implements Serializable {
 	private float total;
 	//Datum, dass der Mitarbeiter die Bestellung zu dem Lieferant schickt
 	private Date sendDate;
-	
 	//Beschreibung der Bestellung
 	private String description;
-	//Details der Bestellung
+	//Details / Artikel der Bestellung
 	private Set<SupplierOrderDetail> supplierOrderDetail = new HashSet<SupplierOrderDetail>(0);
 	
 	public SupplierOrder() {
@@ -167,14 +166,14 @@ public class SupplierOrder implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setDescription(String description) throws LengthOverflowException {
-		if (description.length() > 256)
+		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("Description");
 		this.description = description;
 	}
 	
 	/**
 	 * 
-	 * @return
+	 * @return supplierOrderDetail - Details / Artikel der Bestellung
 	 */
 	public Set<SupplierOrderDetail> getSupplierOrderDetail() {
 		return supplierOrderDetail;
@@ -182,7 +181,7 @@ public class SupplierOrder implements Serializable {
 
 	/**
 	 * 
-	 * @param supplierOrderDetail
+	 * @param supplierOrderDetail Details / Artikel der Bestellung
 	 */
 	public void setSupplierOrderDetail(Set<SupplierOrderDetail> supplierOrderDetail) {
 		this.supplierOrderDetail = supplierOrderDetail;

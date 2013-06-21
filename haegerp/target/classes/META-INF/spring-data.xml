@@ -24,7 +24,7 @@ xsi:schemaLocation="
 	<tx:annotation-driven transaction-manager="transactionManager"/>
  	
 	<!-- Activate Spring Data JPA repository support -->
-	<jpa:repositories base-package="org.haegerp.entity.repository" />
+	<jpa:repositories base-package="org.haegerp.entity.repository" repository-impl-postfix="Impl" factory-class="org.haegerp.entity.repository.MyRepositoryFactoryBean" />
 	
 	<!-- Declare a datasource that has pooling capabilities-->	
 	<bean id="jpaDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"

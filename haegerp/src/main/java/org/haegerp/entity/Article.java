@@ -30,13 +30,13 @@ public class Article implements Serializable{
 	//Artikels Name (Erforderlich)
 	private String name;
 	
-	//Artikels MwSt Preis
+	//Artikels MwSt Preis (Erforderlich)
 	private float priceVat;
 	
-	//Artikels Bruttopreis
+	//Artikels Bruttopreis (Erforderlich)
 	private float priceGross;
 	
-	//Artikels Liferantpreis
+	//Artikels Liferantpreis (Erforderlich)
 	private float priceSupplier;
 	
 	//Artikels Lager
@@ -147,7 +147,7 @@ public class Article implements Serializable{
 	
 	/**
 	 * 
-	 * @param priceVat Artikels MwSt Preis (Nicht Erforderlich)
+	 * @param priceVat Artikels MwSt Preis (Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
 	public void setPriceVat(float priceVat) throws LengthOverflowException {
@@ -166,7 +166,7 @@ public class Article implements Serializable{
 	
 	/**
 	 * 
-	 * @param priceGross Artikels Nettopreis (Nicht Erforderlich)
+	 * @param priceGross Artikels Nettopreis (Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
 	public void setPriceGross(float priceGross) throws LengthOverflowException {
@@ -185,12 +185,12 @@ public class Article implements Serializable{
 
 	/**
 	 * 
-	 * @param priceSupplier Artikels Liferantpreis
+	 * @param priceSupplier Artikels Liferantpreis (Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
 	public void setPriceSupplier(float priceSupplier) throws LengthOverflowException {
-		if (priceGross > 99999999999999999.99F)
-			throw new LengthOverflowException("PriceGross");
+		if (priceSupplier > 99999999999999999.99F)
+			throw new LengthOverflowException("PriceSupplier");
 		this.priceSupplier = priceSupplier;
 	}
 
@@ -226,7 +226,7 @@ public class Article implements Serializable{
 	 * @throws LengthOverflowException 
 	 */
 	public void setColor(String color) throws LengthOverflowException {
-		if (color.length() > 30)
+		if (color != null && color.length() > 30)
 			throw new LengthOverflowException("Color");
 		this.color = color;
 	}
@@ -301,7 +301,7 @@ public class Article implements Serializable{
 	 * @throws LengthOverflowException 
 	 */
 	public void setDescription(String description) throws LengthOverflowException {
-		if (description.length() > 256)
+		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("description");
 		this.description = description;
 	}

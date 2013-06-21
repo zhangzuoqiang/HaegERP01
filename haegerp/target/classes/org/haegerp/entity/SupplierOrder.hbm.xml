@@ -8,7 +8,10 @@
 			<column name="IDSUPPLIERORDER" not-null="true" />
 			<generator class="increment" />
 		</id>
-		<one-to-one name="supplierBill" class="org.haegerp.entity.SupplierBill"  fetch="select" />
+		
+		<many-to-one name="supplierBill" class="org.haegerp.entity.SupplierBill"  fetch="select">
+			<column name="IDSUPPLIERBILL" not-null="false" />
+		</many-to-one>
 		
 		<many-to-one name="supplier" class="org.haegerp.entity.Supplier"  fetch="select">
 			<column name="IDBUSINESSPARTNER" not-null="true" />
@@ -25,14 +28,14 @@
 			<one-to-many class="org.haegerp.entity.SupplierOrderDetail"/>
 		</set>
 		
-		<property name="orderDate" type="date">
-			<column name="ORDERDATE" not-null="true"/>
+		<property name="orderDate" type="timestamp">
+			<column name="ORDERDATE" not-null="true" sql-type="timestamp"/>
 		</property>
 		<property name="total" type="float">
 			<column name="TOTAL" not-null="true" precision="17" scale="2" />
 		</property>
-		<property name="sendDate" type="date">
-			<column name="SENDDATE" not-null="false"/>
+		<property name="sendDate" type="timestamp">
+			<column name="SENDDATE" not-null="false" sql-type="timestamp"/>
 		</property>
 		<property name="description" type="string">
 			<column name="DESCRIPTION" not-null="false" length="256" />

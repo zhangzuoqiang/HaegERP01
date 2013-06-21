@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.haegerp.entity.Log" table="LOG">
+		<id name="idLog" type="long">
+			<column name="IDLOG" not-null="true" />
+			<generator class="increment" />
+		</id>
+		<property name="entity" type="string">
+			<column name="ENTITY" length="100" not-null="true" />
+		</property>
+		<property name="operation" type="string">
+			<column name="OPERATION" length="20" not-null="true" />
+		</property>
+		<property name="operationDate" type="timestamp">
+			<column name="OPERATIONDATE" not-null="true" sql-type="timestamp" />
+		</property>
+		<many-to-one name="employee" class="org.haegerp.entity.Employee" fetch="select">
+			<column name="IDEMPLOYEE" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

@@ -19,7 +19,7 @@ public class Division implements Serializable {
 	//Primary Key (Erforderlich - Automatisch)
 	private long idDivision;
 	
-	//Name des Divisions
+	//Name des Divisions (Erforderlich)
 	private String name;
 	
 	//Division Beschreibung
@@ -84,7 +84,7 @@ public class Division implements Serializable {
 	 * @throws LengthOverflowException 
 	 */
 	public void setDescription(String description) throws LengthOverflowException {
-		if (description.length() > 256)
+		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("Description");
 		this.description = description;
 	}

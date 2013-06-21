@@ -6,7 +6,7 @@ import org.haegerp.exception.LengthOverflowException;
 
 /**
  * Eine Bestellung kann viele Artikel haben.<br/>
- * Diese Klasse repräsentiert jede Linie von einer Bestellung
+ * Diese Klasse repräsentiert jede Linie von einer Bestellung.
  * 
  * @author Wolf
  *

@@ -11,6 +11,7 @@ DROP TABLE supplierorder;
 DROP TABLE supplierbill;
 DROP TABLE usergroup_permission;
 DROP TABLE permission;
+DROP TABLE log;
 DROP TABLE employee;
 DROP TABLE usergroup;
 DROP TABLE division;

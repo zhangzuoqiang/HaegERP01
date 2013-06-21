@@ -20,5 +20,9 @@
 		<mapping resource="org/haegerp/entity/SupplierBill.hbm.xml" />
 		<mapping resource="org/haegerp/entity/SupplierOrder.hbm.xml" />
 		<mapping resource="org/haegerp/entity/SupplierOrderDetail.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ClientBill.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ClientOffer.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ClientOfferDetail.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Outstanding.hbm.xml" />
 	</persistence-unit>
 </persistence>

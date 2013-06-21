@@ -9,14 +9,14 @@
 			<generator class="increment" />
 		</id>
 		
-		<one-to-one name="supplierOrder" class="org.haegerp.entity.SupplierOrder" fetch="select" />
+		<one-to-one name="supplierOrder" class="org.haegerp.entity.SupplierOrder" property-ref="supplierBill" />
 		
-		<property name="receivedDate" type="date">
-			<column name="RECEIVEDDATE" not-null="true"/>
+		<property name="receivedDate" type="timestamp">
+			<column name="RECEIVEDDATE" not-null="true" sql-type="timestamp"/>
 		</property>
 		
-		<property name="paidDate" type="date">
-			<column name="PAIDDATE" not-null="false"/>
+		<property name="paidDate" type="timestamp">
+			<column name="PAIDDATE" not-null="false" sql-type="timestamp"/>
 		</property>
 	</class>
 </hibernate-mapping>

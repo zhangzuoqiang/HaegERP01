@@ -25,11 +25,11 @@ public class ArticleHistory implements Serializable {
 	private long ean;
 	//Artikels Name (Erforderlich)
 	private String name;
-	//Artikels MwSt Preis
+	//Artikels MwSt Preis (Erforderlich)
 	private float priceVat;
-	//Artikels Bruttopreis
+	//Artikels Bruttopreis (Erforderlich)
 	private float priceGross;
-	//Artikels Liferantpreis
+	//Artikels Liferantpreis (Erforderlich)
 	private float priceSupplier;
 	//Bestellungen, dass diese Version gehört
 	private Set<SupplierOrderDetail> supplierOrderDetails = new HashSet<SupplierOrderDetail>(0);

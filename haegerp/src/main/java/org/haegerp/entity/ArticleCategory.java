@@ -84,7 +84,7 @@ public class ArticleCategory implements Serializable{
 	 * @throws LengthOverflowException 
 	 */
 	public void setDescription(String description) throws LengthOverflowException {
-		if (description.length() > 256)
+		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("description");
 		this.description = description;
 	}
