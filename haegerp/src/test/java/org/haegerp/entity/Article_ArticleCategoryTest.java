@@ -301,7 +301,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("INSERT_A_SIZEH_F")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("INSERT_A_SIZEL_F")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("INSERT_A_SIZEW_F")));
-	        article.setStock(Integer.parseInt(Config.getProperty("INSERT_A_STOCK_F")));
+	        article.setStock(Long.parseLong(Config.getProperty("INSERT_A_STOCK_F")));
 	        
 	        article = articleRepo.performNew(article);
 	        

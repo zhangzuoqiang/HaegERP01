@@ -124,7 +124,7 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEH")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEW")));
-	        article.setStock(Integer.parseInt(Config.getProperty("UPDATE_A_STOCK")));
+	        article.setStock(Long.parseLong(Config.getProperty("UPDATE_A_STOCK")));
 	        
 	        article = articleRepo.performNew(article);
 	        ARTICLE1_ID = article.getIdArticle();
@@ -144,7 +144,7 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("INSERT_A_SIZEH")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("INSERT_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("INSERT_A_SIZEW")));
-	        article.setStock(Integer.parseInt(Config.getProperty("INSERT_A_STOCK")));
+	        article.setStock(Long.parseLong(Config.getProperty("INSERT_A_STOCK")));
 	        
 	        article = articleRepo.performEdit(article);
 	        
@@ -164,7 +164,7 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEH")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEW")));
-	        article.setStock(Integer.parseInt(Config.getProperty("UPDATE_A_STOCK")));
+	        article.setStock(Long.parseLong(Config.getProperty("UPDATE_A_STOCK")));
 	        
 	        article = articleRepo.performNew(article);
 	        ARTICLE2_ID = article.getIdArticle();
@@ -333,8 +333,8 @@ public class SupplierOrderTest extends TestCase {
     		
     		supplierOrderDetail = supplierOrderDetailRepository.performNew(supplierOrderDetail);
     		
-    		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getTotalArticle());
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
+    		supplierOrder.calculateTotal();
     		
     		//Hinzufügen den zweiten Artikel
     		article = articleRepo.findOne(ARTICLE2_ID);
@@ -348,8 +348,8 @@ public class SupplierOrderTest extends TestCase {
     		
     		supplierOrderDetail = supplierOrderDetailRepository.performNew(supplierOrderDetail);
     		
-    		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getTotalArticle());
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
+    		supplierOrder.calculateTotal();
     		
     		//Die Artikel wird geprüft
     		supplierOrder = supplierOrderRepository.findOne(SUPPLIERORDER_ID);
@@ -420,8 +420,8 @@ public class SupplierOrderTest extends TestCase {
 		    		orderArticle.setQuantity(Long.parseLong(Config.getProperty("UPDATE_SOD_A2_QUANTITY")));
 				}
 				supplierOrderDetailRepository.performEdit(orderArticle);
-				supplierOrder.setTotal(supplierOrder.getTotal() + orderArticle.getTotalArticle());
     		}
+    		supplierOrder.calculateTotal();
     		
     		//Die Artikel wird geprüft
     		supplierOrder = supplierOrderRepository.findOne(SUPPLIERORDER_ID);

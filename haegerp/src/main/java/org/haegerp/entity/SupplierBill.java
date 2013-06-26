@@ -14,7 +14,7 @@ public class SupplierBill implements Serializable {
 	private static final long serialVersionUID = -582360377641367019L;
 	//Primary Key (Erforderlich)
 	private long idSupplierBill;
-	//Die Bestellung, dass die Rechnung gehört
+	//Die Bestellung, dass die Rechnung gehört (Erforderlich)
 	private SupplierOrder supplierOrder;
 	//Datum, dass die Rechnung erhalt wird (Erforderlich)
 	private Date receivedDate;

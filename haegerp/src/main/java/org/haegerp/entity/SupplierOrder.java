@@ -26,7 +26,7 @@ public class SupplierOrder implements Serializable {
 	private Employee employee;
 	//Datum, dass die Bestellung erstellt wird (Erforderlich)
 	private Date orderDate;
-	//Summe der Bestellung
+	//Summe der Bestellung 
 	private float total;
 	//Datum, dass der Mitarbeiter die Bestellung zu dem Lieferant schickt
 	private Date sendDate;
@@ -185,6 +185,16 @@ public class SupplierOrder implements Serializable {
 	 */
 	public void setSupplierOrderDetail(Set<SupplierOrderDetail> supplierOrderDetail) {
 		this.supplierOrderDetail = supplierOrderDetail;
+	}
+	
+	/**
+	 * Summe der Bestellung
+	 */
+	public void calculateTotal() {
+		this.total = 0;
+		for (SupplierOrderDetail supplierOrderDetail : this.supplierOrderDetail) {
+			this.total = this.total + supplierOrderDetail.getTotalArticle();
+		}
 	}
 
 	public static long getSerialversionuid() {

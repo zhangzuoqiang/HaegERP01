@@ -2,6 +2,7 @@
 /* *			Dropping Script				*/
 /* ******************************************/
 
+DROP TABLE company;
 DROP TABLE outstanding;
 DROP TABLE clientoffer_article;
 DROP TABLE clientoffer;

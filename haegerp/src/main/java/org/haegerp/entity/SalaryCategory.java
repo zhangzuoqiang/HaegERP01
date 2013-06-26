@@ -19,10 +19,10 @@ public class SalaryCategory implements Serializable {
 	//Primary Key (Erforderlich - Automatisch)
 	private long idSalaryCategory;
 
-	//Gehalt Minimum
+	//Gehalt Minimum (Erforderlich)
 	private float salaryFrom;
 	
-	//Gehalt Maximal
+	//Gehalt Maximal (Erforderlich)
 	private float salaryTo;
 	
 	//Gehaltkategorie Beschreibung

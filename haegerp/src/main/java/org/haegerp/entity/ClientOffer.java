@@ -135,10 +135,14 @@ public class ClientOffer implements Serializable {
 	 * @param total Summe der Bestellung
 	 * @throws LengthOverflowException 
 	 */
-	public void setTotal(float total) throws LengthOverflowException {
-		if (total > Float.MAX_VALUE)
-			throw new LengthOverflowException("Total");
-		this.total = total;
+	public void setTotal(Float total) throws LengthOverflowException {
+		if (total != null) {
+			if (total > Float.MAX_VALUE)
+				throw new LengthOverflowException("Total");
+			this.total = total;
+		} else {
+			this.total = 0;
+		}
 	}
 
 	/**
@@ -191,6 +195,16 @@ public class ClientOffer implements Serializable {
 	public void setClientOfferDetail(Set<ClientOfferDetail> clientOfferDetail) {
 		this.clientOfferDetail = clientOfferDetail;
 	}
+	
+	/**
+	 * Summe des Angebot
+	 */
+	public void calculateTotal() {
+		this.total = 0;
+		for (ClientOfferDetail clientOfferDetail : this.clientOfferDetail) {
+			this.total = this.total + clientOfferDetail.getTotalArticle();
+		}
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -218,6 +232,4 @@ public class ClientOffer implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 }

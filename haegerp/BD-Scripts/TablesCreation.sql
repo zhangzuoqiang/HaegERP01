@@ -291,6 +291,27 @@ CREATE TABLE outstanding (
 );
 
 /* ******************************************/
+/* *				Company					*/
+/* ******************************************/
+
+CREATE TABLE company (
+	idCompany		INTEGER			NOT NULL,
+	name			VARCHAR2(50),
+	taxID			INTEGER,
+	owner			VARCHAR2(100),
+	sector			VARCHAR2(100),
+	address			VARCHAR2(100),
+	zipCode			VARCHAR2(15),
+	city			VARCHAR2(30),
+	region			VARCHAR2(50),
+	country			VARCHAR2(30),
+	phoneNumber		VARCHAR2(20),
+	faxNumber		VARCHAR2(20),
+	CONSTRAINT pk_company
+		PRIMARY KEY (idCompany)
+);
+
+/* ******************************************/
 /* *				Logging					*/
 /* ******************************************/
 

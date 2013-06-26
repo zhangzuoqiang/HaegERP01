@@ -72,3 +72,23 @@ INSERT INTO EMPLOYEE
 (IDSALARYCATEGORY, IDDIVISION, IDUSERGROUP, IDCARD, NAME, ADDRESS, ZIPCODE, CITY, COUNTRY, USERNAME, PASSWORD, IDEMPLOYEE)
 VALUES
 (1, 1, 1, 123456789, 'Ze Mario', 'Konigswinter Str. 200', '53299', 'Bonn', 'Deutschland', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1);
+
+/* ******************************************/
+/* *				Company					*/
+/* ******************************************/
+
+INSERT INTO company(idCompany)
+VALUES(1);
+
+/* ******************************************/
+/* *			Outstanding					*/
+/* ******************************************/
+
+INSERT INTO ArticleCategory (IDARTICLECATEGORY, NAME)
+VALUES (0, 'Outstanding');
+
+INSERT INTO Article (IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
+VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 17, 20, 0);
+
+INSERT INTO ArticleHistory (IDARTICLEHISTORY, IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
+VALUES (1, 0, 0, 0000000000000, 'Outstanding Surcharge', 17, 20, 0);

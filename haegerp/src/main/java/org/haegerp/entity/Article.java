@@ -207,10 +207,15 @@ public class Article implements Serializable{
 	 * @param stock Artikels Lager (Nicht Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
-	public void setStock(long stock) throws LengthOverflowException {
-		if (stock > Long.MAX_VALUE || stock < Long.MIN_VALUE)
-			throw new LengthOverflowException("Stock");
-		this.stock = stock;
+	public void setStock(Long stock) throws LengthOverflowException {
+		if (stock != null)
+		{
+			if (stock > Long.MAX_VALUE || stock < Long.MIN_VALUE)
+				throw new LengthOverflowException("Stock");
+			this.stock = stock;
+		} else {
+			this.stock = 0;
+		}
 	}
 	
 	/**
@@ -244,10 +249,16 @@ public class Article implements Serializable{
 	 * @param sizeH Artikels Höhegröße (Nicht Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
-	public void setSizeH(float sizeH) throws LengthOverflowException {
-		if (sizeH > 99999999999999999.99F)
-			throw new LengthOverflowException("SizeH");
-		this.sizeH = sizeH;
+	public void setSizeH(Float sizeH) throws LengthOverflowException {
+		if (sizeH != null)
+		{
+			if (sizeH > 99999999999999999.99F)
+				throw new LengthOverflowException("SizeH");
+			this.sizeH = sizeH;
+		}
+		else {
+			this.sizeH = 0;
+		}
 	}
 	
 	/**
@@ -263,10 +274,16 @@ public class Article implements Serializable{
 	 * @param sizeL Artikels Längegröße (Nicht Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
-	public void setSizeL(float sizeL) throws LengthOverflowException {
-		if (sizeL > 99999999999999999.99F)
-			throw new LengthOverflowException("SizeL");
-		this.sizeL = sizeL;
+	public void setSizeL(Float sizeL) throws LengthOverflowException {
+		if (sizeL != null)
+		{
+			if (sizeL > 99999999999999999.99F)
+				throw new LengthOverflowException("SizeL");
+			this.sizeL = sizeL;
+		}
+		else {
+			this.sizeL = 0;
+		}
 	}
 	
 	/**
@@ -281,10 +298,16 @@ public class Article implements Serializable{
 	 * @param sizeW Artikels Breitegröße (Nicht Erforderlich)
 	 * @throws LengthOverflowException 
 	 */
-	public void setSizeW(float sizeW) throws LengthOverflowException {
-		if (sizeW > 99999999999999999.99F)
-			throw new LengthOverflowException("sizeW");
-		this.sizeW = sizeW;
+	public void setSizeW(Float sizeW) throws LengthOverflowException {
+		if (sizeW != null)
+		{
+			if (sizeW > 99999999999999999.99F)
+				throw new LengthOverflowException("SizeW");
+			this.sizeW = sizeW;
+		}
+		else {
+			this.sizeW = 0;
+		}
 	}
 	
 	/**

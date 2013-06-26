@@ -2,6 +2,7 @@
 /* *			Dropping Script				*/
 /* ******************************************/
 
+DROP TABLE company;
 DROP TABLE outstanding;
 DROP TABLE clientoffer_article;
 DROP TABLE clientoffer;
@@ -316,6 +317,27 @@ CREATE TABLE outstanding (
 );
 
 /* ******************************************/
+/* *				Company					*/
+/* ******************************************/
+
+CREATE TABLE company (
+	idCompany		INTEGER			NOT NULL,
+	name			VARCHAR2(50),
+	taxID			INTEGER,
+	owner			VARCHAR2(100),
+	sector			VARCHAR2(100),
+	address			VARCHAR2(100),
+	zipCode			VARCHAR2(15),
+	city			VARCHAR2(30),
+	region			VARCHAR2(50),
+	country			VARCHAR2(30),
+	phoneNumber		VARCHAR2(20),
+	faxNumber		VARCHAR2(20),
+	CONSTRAINT pk_company
+		PRIMARY KEY (idCompany)
+);
+
+/* ******************************************/
 /* *				Logging					*/
 /* ******************************************/
 
@@ -406,4 +428,17 @@ INSERT INTO EMPLOYEE
 (IDSALARYCATEGORY, IDDIVISION, IDUSERGROUP, IDCARD, NAME, ADDRESS, ZIPCODE, CITY, COUNTRY, USERNAME, PASSWORD, IDEMPLOYEE)
 VALUES
 (1, 1, 1, 123456789, 'Ze Mario', 'Konigswinter Str. 200', '53299', 'Bonn', 'Deutschland', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1);
+
+INSERT INTO company(idCompany)
+VALUES(1);
+
+INSERT INTO ArticleCategory (IDARTICLECATEGORY, NAME)
+VALUES (0, 'Outstanding');
+
+INSERT INTO Article (IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
+VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 17, 20, 0);
+
+INSERT INTO ArticleHistory (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
+VALUES (1, 0, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 17, 20, 0);
+
 COMMIT;

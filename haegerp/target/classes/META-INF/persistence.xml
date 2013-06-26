@@ -24,5 +24,6 @@
 		<mapping resource="org/haegerp/entity/ClientOffer.hbm.xml" />
 		<mapping resource="org/haegerp/entity/ClientOfferDetail.hbm.xml" />
 		<mapping resource="org/haegerp/entity/Outstanding.hbm.xml" />
+		<mapping resource="org/haegerp/entity/Company.hbm.xml" />
 	</persistence-unit>
 </persistence>

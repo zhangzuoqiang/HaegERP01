@@ -114,7 +114,7 @@ public class ClientOrderTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEH")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEW")));
-	        article.setStock(Integer.parseInt(Config.getProperty("UPDATE_A_STOCK")));
+	        article.setStock(Long.parseLong(Config.getProperty("UPDATE_A_STOCK")));
 	        
 	        article = articleRepository.performNew(article);
 	        ARTICLE1_ID = article.getIdArticle();
@@ -134,7 +134,7 @@ public class ClientOrderTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("INSERT_A_SIZEH")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("INSERT_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("INSERT_A_SIZEW")));
-	        article.setStock(Integer.parseInt(Config.getProperty("INSERT_A_STOCK")));
+	        article.setStock(Long.parseLong(Config.getProperty("INSERT_A_STOCK")));
 	        
 	        article = articleRepository.performEdit(article);
 	        
@@ -154,7 +154,7 @@ public class ClientOrderTest extends TestCase {
 	        article.setSizeH(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEH")));
 	        article.setSizeL(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Config.getProperty("UPDATE_A_SIZEW")));
-	        article.setStock(Integer.parseInt(Config.getProperty("UPDATE_A_STOCK")));
+	        article.setStock(Long.parseLong(Config.getProperty("UPDATE_A_STOCK")));
 	        
 	        article = articleRepository.performNew(article);
 	        ARTICLE2_ID = article.getIdArticle();
@@ -241,7 +241,7 @@ public class ClientOrderTest extends TestCase {
     		clientOffer.setOfferDate(new Date());
     		clientOffer.setEmployee(Session.getEmployee());
     		clientOffer.setClient(client);
-    		clientOffer.setTotal(0);
+    		clientOffer.setTotal(0.0F);
     		
     		clientOffer = clientOfferRepository.performNew(clientOffer);
     		
@@ -267,7 +267,6 @@ public class ClientOrderTest extends TestCase {
     		
     		clientOfferDetail = clientOfferDetailRepository.performNew(clientOfferDetail);
     		
-    		clientOffer.setTotal(clientOffer.getTotal() + clientOfferDetail.getTotalArticle());
     		clientOffer.getClientOfferDetail().add(clientOfferDetail);
     		
     		//Hinzufügen den zweiten Artikel
@@ -282,8 +281,8 @@ public class ClientOrderTest extends TestCase {
     		
     		clientOfferDetail = clientOfferDetailRepository.performNew(clientOfferDetail);
     		
-    		clientOffer.setTotal(clientOffer.getTotal() + clientOfferDetail.getTotalArticle());
     		clientOffer.getClientOfferDetail().add(clientOfferDetail);
+    		clientOffer.calculateTotal();
     		
     		//Die Artikel wird geprüft
     		clientOffer = clientOfferRepository.findOne(CLIENT_OFFER_ID);
@@ -301,9 +300,11 @@ public class ClientOrderTest extends TestCase {
 		    		quantity = Long.parseLong(Config.getProperty("INSERT_COD_A2_QUANTITY"));
 				}
 				
-				articleTotal = orderArticle.getClientOfferDetailPK().getArticleHistory().getPriceSupplier()
+				articleTotal = (float) Math.floor(
+						orderArticle.getClientOfferDetailPK().getArticleHistory().getPriceGross()
+						* (1 + (orderArticle.getClientOfferDetailPK().getArticleHistory().getPriceVat() / 100))
 						* orderArticle.getQuantity()
-						* (1 - (orderArticle.getDiscount() / 100));
+						* (1 - (orderArticle.getDiscount() / 100))*100)/100;
 
 				assertEquals(orderArticle.getTotalArticle(), articleTotal);
 				assertEquals(orderArticle.getDiscount(), discount);
@@ -343,7 +344,6 @@ public class ClientOrderTest extends TestCase {
 	        assertEquals(clientOffer.getClient(), client);
     		
     		//Änderung die Artikel
-	        clientOffer.setTotal(0.0F);
     		for (ClientOfferDetail orderArticle : clientOffer.getClientOfferDetail()) {
 				if (orderArticle.getClientOfferDetailPK().getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle() == ARTICLE1_ID){
 		    		orderArticle.setDiscount(Float.parseFloat(Config.getProperty("UPDATE_COD_A1_DISCOUNT")));
@@ -353,8 +353,8 @@ public class ClientOrderTest extends TestCase {
 		    		orderArticle.setQuantity(Long.parseLong(Config.getProperty("UPDATE_COD_A2_QUANTITY")));
 				}
 				clientOfferDetailRepository.performEdit(orderArticle);
-				clientOffer.setTotal(clientOffer.getTotal() + orderArticle.getTotalArticle());
     		}
+    		clientOffer.calculateTotal();
     		
     		//Die Artikel wird geprüft
     		clientOffer = clientOfferRepository.findOne(CLIENT_OFFER_ID);
@@ -372,9 +372,11 @@ public class ClientOrderTest extends TestCase {
 		    		quantity = Long.parseLong(Config.getProperty("UPDATE_COD_A2_QUANTITY"));
 				}
 				
-				articleTotal = orderArticle.getClientOfferDetailPK().getArticleHistory().getPriceSupplier()
+				articleTotal = (float) Math.floor( 
+						orderArticle.getClientOfferDetailPK().getArticleHistory().getPriceGross()
 						* orderArticle.getQuantity()
-						* (1 - (orderArticle.getDiscount() / 100));
+						* (1 + (orderArticle.getClientOfferDetailPK().getArticleHistory().getPriceVat() / 100))
+						* (1 - (orderArticle.getDiscount() / 100))*100)/100;
 
 				assertEquals(orderArticle.getTotalArticle(), articleTotal);
 				assertEquals(orderArticle.getDiscount(), discount);
@@ -405,7 +407,7 @@ public class ClientOrderTest extends TestCase {
     		clientOffer.setClientBill(clientBill);
     		clientOffer = clientOfferRepository.performEdit(clientOffer);
     		
-    		//Das Angebot für den Kunde wird geprüft
+    		//Die Rechnung für das Angebot wird geprüft
     		CLIENT_BILL_ID = clientBill.getIdClientBill();
     		
     		clientBill = clientBillRepository.findOne(CLIENT_BILL_ID);
@@ -443,7 +445,7 @@ public class ClientOrderTest extends TestCase {
     		
     		clientBill = clientBillRepository.performEdit(clientBill);
     		
-    		//Das Angebot für den Kunde wird geprüft
+    		//Die OutstandungRechnung für den Kunde wird geprüft
     		CLIENT_OUTSTANDING_ID = outstanding.getIdOutstanding();
     		
     		outstanding = outstandingRepository.findOne(CLIENT_OUTSTANDING_ID);
@@ -478,13 +480,33 @@ public class ClientOrderTest extends TestCase {
 			outstanding.setExpireDate(dateFormat.parse(Config.getProperty("UPDATE_OC_EXPIREDATE")));
 			outstanding.setEmailDate(dateFormat.parse(Config.getProperty("UPDATE_OC_SENDDATE")));
 			
+			//Der Aufpreis wird ergestellt
+			ArticleHistory articleHistory = articleHistoryRepository.findOne(
+					new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(0L), articleRepository.findOne(0L))
+					);
+			
+			ClientOfferDetailPK clientOfferDetailPK = new ClientOfferDetailPK(outstanding.getClientBill().getClientOffer(), articleHistory);
+			ClientOfferDetail clientOfferDetail = new ClientOfferDetail();
+			clientOfferDetail.setClientOfferDetailPK(clientOfferDetailPK);
+			clientOfferDetail.setDiscount(0);
+			clientOfferDetail.setQuantity(1);
+			
+			clientOfferDetailRepository.performNew(clientOfferDetail);
+			outstanding.getClientBill().getClientOffer().getClientOfferDetail().add(clientOfferDetail);
+			outstanding.getClientBill().getClientOffer().calculateTotal();
+			
+			clientOfferRepository.performEdit(outstanding.getClientBill().getClientOffer());
+			
 			outstanding = outstandingRepository.performEdit(outstanding);
 			
+			//Die OutstandungRechnung für den Kunde wird geprüft
 			outstanding = outstandingRepository.findOne(CLIENT_OUTSTANDING_ID);
 			
 			assertEquals(outstanding.getExpireDate(), dateFormat.parse(Config.getProperty("UPDATE_OC_EXPIREDATE")));
 	        assertEquals(outstanding.getEmailDate(), dateFormat.parse(Config.getProperty("UPDATE_OC_SENDDATE")));
 			
+	        assertTrue(outstanding.getClientBill().getClientOffer().getClientOfferDetail().contains(clientOfferDetail));
+
 	        clientBill = clientBillRepository.findOne(CLIENT_BILL_ID);
 	        
 	        assertEquals(clientBill.getOutstanding().getIdOutstanding(), outstanding.getIdOutstanding());
@@ -515,6 +537,7 @@ public class ClientOrderTest extends TestCase {
     		
     		clientBill = clientBillRepository.performEdit(clientBill);
     		
+    		//Die OutstandungRechnung für den Kunde wird geprüft
     		clientBill = clientBillRepository.findOne(CLIENT_BILL_ID);
     		
     		assertEquals(clientBill.getBilledDate(), dateFormat.parse(Config.getProperty("UPDATE_CB_BILLEDDATE")));
@@ -609,7 +632,7 @@ public class ClientOrderTest extends TestCase {
     		clientOffer.setOfferDate(new Date());
     		clientOffer.setEmployee(Session.getEmployee());
     		clientOffer.setClient(client);
-    		clientOffer.setTotal(0);
+    		clientOffer.setTotal(0.0F);
     		
     		clientOffer = clientOfferRepository.performNew(clientOffer);
     		

@@ -109,9 +109,12 @@ public class ClientOfferDetail implements Serializable {
 	 * Die Summe wird ausgerechnt
 	 */
 	public void ArticleTotalCalculation(){
-		this.totalArticle = (float) (Math.floor((this.quantity 
+		this.totalArticle = (float) (Math.floor((
+				this.quantity 
 				* (1 - (this.discount/100)) 
-				* clientOfferDetailPK.getArticleHistory().getPriceSupplier())*100)/100);
+				* clientOfferDetailPK.getArticleHistory().getPriceGross()
+				* (1 + (clientOfferDetailPK.getArticleHistory().getPriceVat()/100))
+				) * 100)/100);
 	}
 
 	public static long getSerialversionuid() {
