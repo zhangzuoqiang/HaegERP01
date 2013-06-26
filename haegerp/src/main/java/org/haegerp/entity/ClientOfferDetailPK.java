@@ -23,6 +23,18 @@ public class ClientOfferDetailPK implements Serializable {
 	 */
 	public ClientOfferDetailPK() {
 	}
+	
+	/**
+	 * 
+	 * @param clientOffer Bestellung, dass die Linie gehört
+	 * @param articleHistory Artikel Version
+	 */
+	public ClientOfferDetailPK(ClientOffer clientOffer, ArticleHistory articleHistory) {
+		this.clientOffer = clientOffer;
+		this.articleHistory = articleHistory;
+	}
+
+
 
 	/**
 	 * 

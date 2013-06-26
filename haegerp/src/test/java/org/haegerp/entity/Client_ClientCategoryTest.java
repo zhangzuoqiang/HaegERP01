@@ -1,11 +1,8 @@
 package org.haegerp.entity;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-
-import org.haegerp.entity.repository.ClientCategoryRepository;
-import org.haegerp.entity.repository.ClientRepository;
-import org.haegerp.entity.repository.EmployeeRepository;
+import org.haegerp.entity.repository.client.ClientCategoryRepository;
+import org.haegerp.entity.repository.client.ClientRepository;
+import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
 import org.haegerp.session.Session;
 import org.junit.Before;
@@ -34,8 +31,6 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class Client_ClientCategoryTest extends TestCase {
     
-    private static Properties properties = new Properties();
-    
     @Autowired
     private ClientCategoryRepository clientCategoryRepo;
     
@@ -56,7 +51,6 @@ public class Client_ClientCategoryTest extends TestCase {
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	properties.load(new FileInputStream("./config.properties"));
 	    	Session.setEmployee(employeeRepository.findOne(1L));
     	}
     }
@@ -69,8 +63,8 @@ public class Client_ClientCategoryTest extends TestCase {
     {
         try {
 	        ClientCategory clientCategory = new ClientCategory();
-	        clientCategory.setName(properties.getProperty("INSERT_CC_NAME"));
-	        clientCategory.setDescription(properties.getProperty("INSERT_CC_DESCRIPTION"));
+	        clientCategory.setName(Config.getProperty("INSERT_CC_NAME"));
+	        clientCategory.setDescription(Config.getProperty("INSERT_CC_DESCRIPTION"));
 	        
 	        clientCategory = clientCategoryRepo.performNew(clientCategory);
 	        
@@ -79,8 +73,8 @@ public class Client_ClientCategoryTest extends TestCase {
 	        
 	        clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	        
-	        assertEquals(clientCategory.getName(), properties.getProperty("INSERT_CC_NAME"));
-	        assertEquals(clientCategory.getDescription(), properties.getProperty("INSERT_CC_DESCRIPTION"));
+	        assertEquals(clientCategory.getName(), Config.getProperty("INSERT_CC_NAME"));
+	        assertEquals(clientCategory.getDescription(), Config.getProperty("INSERT_CC_DESCRIPTION"));
         } catch (Exception ex) {
         	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -96,15 +90,15 @@ public class Client_ClientCategoryTest extends TestCase {
     	try {
     		ClientCategory clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	    	
-	        clientCategory.setName(properties.getProperty("UPDATE_CC_NAME"));
-	        clientCategory.setDescription(properties.getProperty("UPDATE_CC_DESCRIPTION"));
+	        clientCategory.setName(Config.getProperty("UPDATE_CC_NAME"));
+	        clientCategory.setDescription(Config.getProperty("UPDATE_CC_DESCRIPTION"));
 	        
 	        clientCategoryRepo.performEdit(clientCategory);
 	        
 	        clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	        
-	        assertEquals(clientCategory.getName(), properties.getProperty("UPDATE_CC_NAME"));
-	        assertEquals(clientCategory.getDescription(), properties.getProperty("UPDATE_CC_DESCRIPTION"));
+	        assertEquals(clientCategory.getName(), Config.getProperty("UPDATE_CC_NAME"));
+	        assertEquals(clientCategory.getDescription(), Config.getProperty("UPDATE_CC_DESCRIPTION"));
     	} catch (Exception ex) {
         	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -124,18 +118,18 @@ public class Client_ClientCategoryTest extends TestCase {
 	        
 	        //Die Felder werden gefüllt
 	        client.setClientCategory(clientCategory);
-	        client.setAddress(properties.getProperty("INSERT_C_ADDRESS"));
-	        client.setCity(properties.getProperty("INSERT_C_CITY"));
-	        client.setCountry(properties.getProperty("INSERT_C_COUNTRY"));
-	        client.setDescription(properties.getProperty("INSERT_C_DESCRIPTION"));
-	        client.setEmail(properties.getProperty("INSERT_C_EMAIL"));
-	        client.setFaxNumber(properties.getProperty("INSERT_C_FAXNUMBER"));
-	        client.setMobileNumber(properties.getProperty("INSERT_C_MOBILENUMBER"));
-	        client.setName(properties.getProperty("INSERT_C_NAME"));
-	        client.setPhoneNumber(properties.getProperty("INSERT_C_PHONENUMBER"));
-	        client.setRegion(properties.getProperty("INSERT_C_REGION"));
-	        client.setTaxId(Long.parseLong(properties.getProperty("INSERT_C_TAXID")));
-	        client.setZipCode(properties.getProperty("INSERT_C_ZIPCODE"));
+	        client.setAddress(Config.getProperty("INSERT_C_ADDRESS"));
+	        client.setCity(Config.getProperty("INSERT_C_CITY"));
+	        client.setCountry(Config.getProperty("INSERT_C_COUNTRY"));
+	        client.setDescription(Config.getProperty("INSERT_C_DESCRIPTION"));
+	        client.setEmail(Config.getProperty("INSERT_C_EMAIL"));
+	        client.setFaxNumber(Config.getProperty("INSERT_C_FAXNUMBER"));
+	        client.setMobileNumber(Config.getProperty("INSERT_C_MOBILENUMBER"));
+	        client.setName(Config.getProperty("INSERT_C_NAME"));
+	        client.setPhoneNumber(Config.getProperty("INSERT_C_PHONENUMBER"));
+	        client.setRegion(Config.getProperty("INSERT_C_REGION"));
+	        client.setTaxId(Long.parseLong(Config.getProperty("INSERT_C_TAXID")));
+	        client.setZipCode(Config.getProperty("INSERT_C_ZIPCODE"));
 	        
 	        client = clientRepository.performNew(client);
 	        
@@ -144,18 +138,18 @@ public class Client_ClientCategoryTest extends TestCase {
 
 	        client = clientRepository.findOne(CLIENT_ID);
 	        
-	        assertEquals(client.getAddress(), properties.getProperty("INSERT_C_ADDRESS"));
-	        assertEquals(client.getCity(), properties.getProperty("INSERT_C_CITY"));
-	        assertEquals(client.getCountry(), properties.getProperty("INSERT_C_COUNTRY"));
-	        assertEquals(client.getDescription(), properties.getProperty("INSERT_C_DESCRIPTION"));
-	        assertEquals(client.getEmail(), properties.getProperty("INSERT_C_EMAIL"));
-	        assertEquals(client.getFaxNumber(), properties.getProperty("INSERT_C_FAXNUMBER"));
-	        assertEquals(client.getMobileNumber(), properties.getProperty("INSERT_C_MOBILENUMBER"));
-	        assertEquals(client.getName(), properties.getProperty("INSERT_C_NAME"));
-	        assertEquals(client.getPhoneNumber(), properties.getProperty("INSERT_C_PHONENUMBER"));
-	        assertEquals(client.getRegion(), properties.getProperty("INSERT_C_REGION"));
-	        assertEquals(client.getTaxId(), Long.parseLong(properties.getProperty("INSERT_C_TAXID")));
-	        assertEquals(client.getZipCode(), properties.getProperty("INSERT_C_ZIPCODE"));
+	        assertEquals(client.getAddress(), Config.getProperty("INSERT_C_ADDRESS"));
+	        assertEquals(client.getCity(), Config.getProperty("INSERT_C_CITY"));
+	        assertEquals(client.getCountry(), Config.getProperty("INSERT_C_COUNTRY"));
+	        assertEquals(client.getDescription(), Config.getProperty("INSERT_C_DESCRIPTION"));
+	        assertEquals(client.getEmail(), Config.getProperty("INSERT_C_EMAIL"));
+	        assertEquals(client.getFaxNumber(), Config.getProperty("INSERT_C_FAXNUMBER"));
+	        assertEquals(client.getMobileNumber(), Config.getProperty("INSERT_C_MOBILENUMBER"));
+	        assertEquals(client.getName(), Config.getProperty("INSERT_C_NAME"));
+	        assertEquals(client.getPhoneNumber(), Config.getProperty("INSERT_C_PHONENUMBER"));
+	        assertEquals(client.getRegion(), Config.getProperty("INSERT_C_REGION"));
+	        assertEquals(client.getTaxId(), Long.parseLong(Config.getProperty("INSERT_C_TAXID")));
+	        assertEquals(client.getZipCode(), Config.getProperty("INSERT_C_ZIPCODE"));
 	        assertEquals(client.getClientCategory(), clientCategory);
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
@@ -173,36 +167,36 @@ public class Client_ClientCategoryTest extends TestCase {
 	        Client client = clientRepository.findOne(CLIENT_ID);
 	    	
 	        //Die Felder werden geändert
-	        client.setAddress(properties.getProperty("UPDATE_C_ADDRESS"));
-	        client.setCity(properties.getProperty("UPDATE_C_CITY"));
-	        client.setCountry(properties.getProperty("UPDATE_C_COUNTRY"));
-	        client.setDescription(properties.getProperty("UPDATE_C_DESCRIPTION"));
-	        client.setEmail(properties.getProperty("UPDATE_C_EMAIL"));
-	        client.setFaxNumber(properties.getProperty("UPDATE_C_FAXNUMBER"));
-	        client.setMobileNumber(properties.getProperty("UPDATE_C_MOBILENUMBER"));
-	        client.setName(properties.getProperty("UPDATE_C_NAME"));
-	        client.setPhoneNumber(properties.getProperty("UPDATE_C_PHONENUMBER"));
-	        client.setRegion(properties.getProperty("UPDATE_C_REGION"));
-	        client.setTaxId(Long.parseLong(properties.getProperty("UPDATE_C_TAXID")));
-	        client.setZipCode(properties.getProperty("UPDATE_C_ZIPCODE"));
+	        client.setAddress(Config.getProperty("UPDATE_C_ADDRESS"));
+	        client.setCity(Config.getProperty("UPDATE_C_CITY"));
+	        client.setCountry(Config.getProperty("UPDATE_C_COUNTRY"));
+	        client.setDescription(Config.getProperty("UPDATE_C_DESCRIPTION"));
+	        client.setEmail(Config.getProperty("UPDATE_C_EMAIL"));
+	        client.setFaxNumber(Config.getProperty("UPDATE_C_FAXNUMBER"));
+	        client.setMobileNumber(Config.getProperty("UPDATE_C_MOBILENUMBER"));
+	        client.setName(Config.getProperty("UPDATE_C_NAME"));
+	        client.setPhoneNumber(Config.getProperty("UPDATE_C_PHONENUMBER"));
+	        client.setRegion(Config.getProperty("UPDATE_C_REGION"));
+	        client.setTaxId(Long.parseLong(Config.getProperty("UPDATE_C_TAXID")));
+	        client.setZipCode(Config.getProperty("UPDATE_C_ZIPCODE"));
 	        
 	        client = clientRepository.performEdit(client);
 	        
 	        //Der geänderter Artikel wird geprüft
 	        client = clientRepository.findOne(CLIENT_ID);
 	        
-	        assertEquals(client.getAddress(), properties.getProperty("UPDATE_C_ADDRESS"));
-	        assertEquals(client.getCity(), properties.getProperty("UPDATE_C_CITY"));
-	        assertEquals(client.getCountry(), properties.getProperty("UPDATE_C_COUNTRY"));
-	        assertEquals(client.getDescription(), properties.getProperty("UPDATE_C_DESCRIPTION"));
-	        assertEquals(client.getEmail(), properties.getProperty("UPDATE_C_EMAIL"));
-	        assertEquals(client.getFaxNumber(), properties.getProperty("UPDATE_C_FAXNUMBER"));
-	        assertEquals(client.getMobileNumber(), properties.getProperty("UPDATE_C_MOBILENUMBER"));
-	        assertEquals(client.getName(), properties.getProperty("UPDATE_C_NAME"));
-	        assertEquals(client.getPhoneNumber(), properties.getProperty("UPDATE_C_PHONENUMBER"));
-	        assertEquals(client.getRegion(), properties.getProperty("UPDATE_C_REGION"));
-	        assertEquals(client.getTaxId(), Long.parseLong(properties.getProperty("UPDATE_C_TAXID")));
-	        assertEquals(client.getZipCode(), properties.getProperty("UPDATE_C_ZIPCODE"));
+	        assertEquals(client.getAddress(), Config.getProperty("UPDATE_C_ADDRESS"));
+	        assertEquals(client.getCity(), Config.getProperty("UPDATE_C_CITY"));
+	        assertEquals(client.getCountry(), Config.getProperty("UPDATE_C_COUNTRY"));
+	        assertEquals(client.getDescription(), Config.getProperty("UPDATE_C_DESCRIPTION"));
+	        assertEquals(client.getEmail(), Config.getProperty("UPDATE_C_EMAIL"));
+	        assertEquals(client.getFaxNumber(), Config.getProperty("UPDATE_C_FAXNUMBER"));
+	        assertEquals(client.getMobileNumber(), Config.getProperty("UPDATE_C_MOBILENUMBER"));
+	        assertEquals(client.getName(), Config.getProperty("UPDATE_C_NAME"));
+	        assertEquals(client.getPhoneNumber(), Config.getProperty("UPDATE_C_PHONENUMBER"));
+	        assertEquals(client.getRegion(), Config.getProperty("UPDATE_C_REGION"));
+	        assertEquals(client.getTaxId(), Long.parseLong(Config.getProperty("UPDATE_C_TAXID")));
+	        assertEquals(client.getZipCode(), Config.getProperty("UPDATE_C_ZIPCODE"));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -255,8 +249,8 @@ public class Client_ClientCategoryTest extends TestCase {
     {
     	try {
 	        ClientCategory clientCategory = new ClientCategory();
-	        clientCategory.setName(properties.getProperty("INSERT_CC_NAME_F"));
-	        clientCategory.setDescription(properties.getProperty("INSERT_CC_DESCRIPTION_F"));
+	        clientCategory.setName(Config.getProperty("INSERT_CC_NAME_F"));
+	        clientCategory.setDescription(Config.getProperty("INSERT_CC_DESCRIPTION_F"));
 	        
 	        clientCategory = clientCategoryRepo.performNew(clientCategory);
 	        
@@ -265,8 +259,8 @@ public class Client_ClientCategoryTest extends TestCase {
 	        
 	        clientCategory = clientCategoryRepo.findOne(CLIENT_CATEGORY_ID);
 	        
-	        assertEquals(clientCategory.getName(), properties.getProperty("INSERT_CC_NAME"));
-	        assertEquals(clientCategory.getDescription(), properties.getProperty("INSERT_CC_DESCRIPTION"));
+	        assertEquals(clientCategory.getName(), Config.getProperty("INSERT_CC_NAME"));
+	        assertEquals(clientCategory.getDescription(), Config.getProperty("INSERT_CC_DESCRIPTION"));
         } catch (Exception ex) {
         	throw ex;
         }
@@ -287,18 +281,18 @@ public class Client_ClientCategoryTest extends TestCase {
 	        
 	        //Die Felder werden gefüllt
 	        client.setClientCategory(clientCategory);
-	        client.setAddress(properties.getProperty("INSERT_C_ADDRESS_F"));
-	        client.setCity(properties.getProperty("INSERT_C_CITY_F"));
-	        client.setCountry(properties.getProperty("INSERT_C_COUNTRY_F"));
-	        client.setDescription(properties.getProperty("INSERT_C_DESCRIPTION_F"));
-	        client.setEmail(properties.getProperty("INSERT_C_EMAIL_F"));
-	        client.setFaxNumber(properties.getProperty("INSERT_C_FAXNUMBER_F"));
-	        client.setMobileNumber(properties.getProperty("INSERT_C_MOBILENUMBER_F"));
-	        client.setName(properties.getProperty("INSERT_C_NAME_F"));
-	        client.setPhoneNumber(properties.getProperty("INSERT_C_PHONENUMBER_F"));
-	        client.setRegion(properties.getProperty("INSERT_C_REGION_F"));
-	        client.setTaxId(Long.parseLong(properties.getProperty("INSERT_C_TAXID_F")));
-	        client.setZipCode(properties.getProperty("INSERT_C_ZIPCODE_F"));
+	        client.setAddress(Config.getProperty("INSERT_C_ADDRESS_F"));
+	        client.setCity(Config.getProperty("INSERT_C_CITY_F"));
+	        client.setCountry(Config.getProperty("INSERT_C_COUNTRY_F"));
+	        client.setDescription(Config.getProperty("INSERT_C_DESCRIPTION_F"));
+	        client.setEmail(Config.getProperty("INSERT_C_EMAIL_F"));
+	        client.setFaxNumber(Config.getProperty("INSERT_C_FAXNUMBER_F"));
+	        client.setMobileNumber(Config.getProperty("INSERT_C_MOBILENUMBER_F"));
+	        client.setName(Config.getProperty("INSERT_C_NAME_F"));
+	        client.setPhoneNumber(Config.getProperty("INSERT_C_PHONENUMBER_F"));
+	        client.setRegion(Config.getProperty("INSERT_C_REGION_F"));
+	        client.setTaxId(Long.parseLong(Config.getProperty("INSERT_C_TAXID_F")));
+	        client.setZipCode(Config.getProperty("INSERT_C_ZIPCODE_F"));
 	        
 	        client = clientRepository.performNew(client);
 	        
@@ -307,18 +301,18 @@ public class Client_ClientCategoryTest extends TestCase {
 
 	        client = clientRepository.findOne(CLIENT_ID);
 	        
-	        assertEquals(client.getAddress(), properties.getProperty("INSERT_C_ADDRESS"));
-	        assertEquals(client.getCity(), properties.getProperty("INSERT_C_CITY"));
-	        assertEquals(client.getCountry(), properties.getProperty("INSERT_C_COUNTRY"));
-	        assertEquals(client.getDescription(), properties.getProperty("INSERT_C_DESCRIPTION"));
-	        assertEquals(client.getEmail(), properties.getProperty("INSERT_C_EMAIL"));
-	        assertEquals(client.getFaxNumber(), properties.getProperty("INSERT_C_FAXNUMBER"));
-	        assertEquals(client.getMobileNumber(), properties.getProperty("INSERT_C_MOBILENUMBER"));
-	        assertEquals(client.getName(), properties.getProperty("INSERT_C_NAME"));
-	        assertEquals(client.getPhoneNumber(), properties.getProperty("INSERT_C_PHONENUMBER"));
-	        assertEquals(client.getRegion(), properties.getProperty("INSERT_C_REGION"));
-	        assertEquals(client.getTaxId(), Long.parseLong(properties.getProperty("INSERT_C_TAXID")));
-	        assertEquals(client.getZipCode(), properties.getProperty("INSERT_C_ZIPCODE"));
+	        assertEquals(client.getAddress(), Config.getProperty("INSERT_C_ADDRESS"));
+	        assertEquals(client.getCity(), Config.getProperty("INSERT_C_CITY"));
+	        assertEquals(client.getCountry(), Config.getProperty("INSERT_C_COUNTRY"));
+	        assertEquals(client.getDescription(), Config.getProperty("INSERT_C_DESCRIPTION"));
+	        assertEquals(client.getEmail(), Config.getProperty("INSERT_C_EMAIL"));
+	        assertEquals(client.getFaxNumber(), Config.getProperty("INSERT_C_FAXNUMBER"));
+	        assertEquals(client.getMobileNumber(), Config.getProperty("INSERT_C_MOBILENUMBER"));
+	        assertEquals(client.getName(), Config.getProperty("INSERT_C_NAME"));
+	        assertEquals(client.getPhoneNumber(), Config.getProperty("INSERT_C_PHONENUMBER"));
+	        assertEquals(client.getRegion(), Config.getProperty("INSERT_C_REGION"));
+	        assertEquals(client.getTaxId(), Long.parseLong(Config.getProperty("INSERT_C_TAXID")));
+	        assertEquals(client.getZipCode(), Config.getProperty("INSERT_C_ZIPCODE"));
 	        assertEquals(client.getClientCategory(), clientCategory);
 	    } catch (Exception ex) {
 	    	throw ex;

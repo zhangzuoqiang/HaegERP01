@@ -63,6 +63,7 @@ public class ClientOfferDetail implements Serializable {
 		if (quantity > Long.MAX_VALUE || quantity < 1L)
 			throw new LengthOverflowException("Quantity");
 		this.quantity = quantity;
+		ArticleTotalCalculation();
 	}
 
 	/**
@@ -82,6 +83,7 @@ public class ClientOfferDetail implements Serializable {
 		if (discount >= 100F || discount < 0.0F)
 			throw new LengthOverflowException("Discount");
 		this.discount = discount;
+		ArticleTotalCalculation();
 	}
 
 	/**
@@ -101,6 +103,15 @@ public class ClientOfferDetail implements Serializable {
 		if (totalArticle >= Float.MAX_VALUE || totalArticle < 0.0F)
 			throw new LengthOverflowException("TotalArticle");
 		this.totalArticle = totalArticle;
+	}
+	
+	/**
+	 * Die Summe wird ausgerechnt
+	 */
+	public void ArticleTotalCalculation(){
+		this.totalArticle = (float) (Math.floor((this.quantity 
+				* (1 - (this.discount/100)) 
+				* clientOfferDetailPK.getArticleHistory().getPriceSupplier())*100)/100);
 	}
 
 	public static long getSerialversionuid() {

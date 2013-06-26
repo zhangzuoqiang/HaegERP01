@@ -1,19 +1,17 @@
 package org.haegerp.entity;
 
-import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
-import org.haegerp.entity.repository.DivisionRepository;
-import org.haegerp.entity.repository.EmployeeRepository;
-import org.haegerp.entity.repository.PermissionRepository;
-import org.haegerp.entity.repository.SalaryCategoryRepository;
-import org.haegerp.entity.repository.UserGroupRepository;
+import org.haegerp.entity.repository.employee.DivisionRepository;
+import org.haegerp.entity.repository.employee.EmployeeRepository;
+import org.haegerp.entity.repository.employee.PermissionRepository;
+import org.haegerp.entity.repository.employee.SalaryCategoryRepository;
+import org.haegerp.entity.repository.employee.UserGroupRepository;
 import org.haegerp.exception.LengthOverflowException;
 import org.haegerp.session.Session;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +38,6 @@ import junit.framework.TestCase;
 @TransactionConfiguration(defaultRollback=false)
 public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	
-    private static Properties properties = new Properties();
-    
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
@@ -64,13 +60,12 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     private static boolean CHECK_SETUP = true;
     
     @Override
-    @BeforeClass
+    @Before
     public void setUp() throws Exception {
     	super.setUp();
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	properties.load(new FileInputStream("./config.properties"));
 	    	Session.setEmployee(employeeRepository.findOne(1L));
     	}
     }
@@ -84,9 +79,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
         try {
 	        //Die Felder werden gefüllt
 	        SalaryCategory salaryCategory = new SalaryCategory();
-	        salaryCategory.setDescription(properties.getProperty("INSERT_SC_DESCRIPTION"));
-	        salaryCategory.setSalaryFrom(Float.parseFloat(properties.getProperty("INSERT_SC_SALARYFROM")));
-	        salaryCategory.setSalaryTo(Float.parseFloat(properties.getProperty("INSERT_SC_SALARYTO")));
+	        salaryCategory.setDescription(Config.getProperty("INSERT_SC_DESCRIPTION"));
+	        salaryCategory.setSalaryFrom(Float.parseFloat(Config.getProperty("INSERT_SC_SALARYFROM")));
+	        salaryCategory.setSalaryTo(Float.parseFloat(Config.getProperty("INSERT_SC_SALARYTO")));
 	        
 	        salaryCategory = salaryCategoryRepository.performNew(salaryCategory);
 	        
@@ -94,9 +89,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
 	        salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	        
-	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(properties.getProperty("INSERT_SC_SALARYFROM")));
-	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(properties.getProperty("INSERT_SC_SALARYTO")));
-	        assertEquals(salaryCategory.getDescription(), properties.getProperty("INSERT_SC_DESCRIPTION"));
+	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(Config.getProperty("INSERT_SC_SALARYFROM")));
+	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(Config.getProperty("INSERT_SC_SALARYTO")));
+	        assertEquals(salaryCategory.getDescription(), Config.getProperty("INSERT_SC_DESCRIPTION"));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -113,18 +108,18 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	
 	        //Die Felder werden gefüllt
-	        salaryCategory.setDescription(properties.getProperty("UPDATE_SC_DESCRIPTION"));
-	        salaryCategory.setSalaryFrom(Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYFROM")));
-	        salaryCategory.setSalaryTo(Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYTO")));
+	        salaryCategory.setDescription(Config.getProperty("UPDATE_SC_DESCRIPTION"));
+	        salaryCategory.setSalaryFrom(Float.parseFloat(Config.getProperty("UPDATE_SC_SALARYFROM")));
+	        salaryCategory.setSalaryTo(Float.parseFloat(Config.getProperty("UPDATE_SC_SALARYTO")));
 	        
 	        salaryCategory = salaryCategoryRepository.performEdit(salaryCategory);
 	
 	        //Die geändert Gehaltkategorie wird geprüft
 	        salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	        
-	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYFROM")));
-	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(properties.getProperty("UPDATE_SC_SALARYTO")));
-	        assertEquals(salaryCategory.getDescription(), properties.getProperty("UPDATE_SC_DESCRIPTION"));
+	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(Config.getProperty("UPDATE_SC_SALARYFROM")));
+	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(Config.getProperty("UPDATE_SC_SALARYTO")));
+	        assertEquals(salaryCategory.getDescription(), Config.getProperty("UPDATE_SC_DESCRIPTION"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -140,8 +135,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
         try {
 	        //Die Felder werden gefüllt
 	        Division division = new Division();
-	        division.setDescription(properties.getProperty("INSERT_D_DESCRIPTION"));
-	        division.setName(properties.getProperty("INSERT_D_NAME"));
+	        division.setDescription(Config.getProperty("INSERT_D_DESCRIPTION"));
+	        division.setName(Config.getProperty("INSERT_D_NAME"));
 	        
 	        division = divisionRepository.performNew(division);
 	        
@@ -150,8 +145,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        division = divisionRepository.findOne(DIVISION_ID);
 	        
-	        assertEquals(division.getDescription(), properties.getProperty("INSERT_D_DESCRIPTION"));
-	        assertEquals(division.getName(), properties.getProperty("INSERT_D_NAME"));
+	        assertEquals(division.getDescription(), Config.getProperty("INSERT_D_DESCRIPTION"));
+	        assertEquals(division.getName(), Config.getProperty("INSERT_D_NAME"));
         } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -168,16 +163,16 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        Division division = divisionRepository.findOne(DIVISION_ID);
 	
 	        //Die Felder werden gefüllt
-	        division.setDescription(properties.getProperty("UPDATE_D_DESCRIPTION"));
-	        division.setName(properties.getProperty("UPDATE_D_NAME"));
+	        division.setDescription(Config.getProperty("UPDATE_D_DESCRIPTION"));
+	        division.setName(Config.getProperty("UPDATE_D_NAME"));
 	        
 	        division = divisionRepository.performEdit(division);
 	        
 	        //Die geändert Division wird geprüft
 	        division = divisionRepository.findOne(DIVISION_ID);
 	        
-	        assertEquals(division.getDescription(), properties.getProperty("UPDATE_D_DESCRIPTION"));
-	        assertEquals(division.getName(), properties.getProperty("UPDATE_D_NAME"));
+	        assertEquals(division.getDescription(), Config.getProperty("UPDATE_D_DESCRIPTION"));
+	        assertEquals(division.getName(), Config.getProperty("UPDATE_D_NAME"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -193,16 +188,16 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
         try {
 	        //Die Felder werden gefüllt
 	        UserGroup userGroup = new UserGroup();
-	        userGroup.setDescription(properties.getProperty("INSERT_UG_DESCRIPTION"));
-	        userGroup.setName(properties.getProperty("INSERT_UG_NAME"));
+	        userGroup.setDescription(Config.getProperty("INSERT_UG_DESCRIPTION"));
+	        userGroup.setName(Config.getProperty("INSERT_UG_NAME"));
 	        
 
 	        //Hinzufügen erlaubnise
 	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION1"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION2"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION3"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("INSERT_UG_PERMISSION1"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("INSERT_UG_PERMISSION2"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("INSERT_UG_PERMISSION3"))));
 	        
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
@@ -217,8 +212,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        assertTrue(userGroup.getPermissions().containsAll(permissionList));
 	        
-	        assertEquals(userGroup.getDescription(), properties.getProperty("INSERT_UG_DESCRIPTION"));
-	        assertEquals(userGroup.getName(), properties.getProperty("INSERT_UG_NAME"));
+	        assertEquals(userGroup.getDescription(), Config.getProperty("INSERT_UG_DESCRIPTION"));
+	        assertEquals(userGroup.getName(), Config.getProperty("INSERT_UG_NAME"));
         } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -235,16 +230,16 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	    	
 	        //Die Felder werden gefüllt
-	        userGroup.setDescription(properties.getProperty("UPDATE_UG_DESCRIPTION"));
-	        userGroup.setName(properties.getProperty("UPDATE_UG_NAME"));
+	        userGroup.setDescription(Config.getProperty("UPDATE_UG_DESCRIPTION"));
+	        userGroup.setName(Config.getProperty("UPDATE_UG_NAME"));
 	        userGroup.setPermissions(new HashSet<Permission>(0));
 	        
 	        //Hinzufügen erlaubnise
 	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("UPDATE_UG_PERMISSION1"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("UPDATE_UG_PERMISSION2"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("UPDATE_UG_PERMISSION3"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("UPDATE_UG_PERMISSION1"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("UPDATE_UG_PERMISSION2"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("UPDATE_UG_PERMISSION3"))));
 	        
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
@@ -257,8 +252,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        assertTrue(userGroup.getPermissions().containsAll(permissionList));
 	        
-	        assertEquals(userGroup.getDescription(), properties.getProperty("UPDATE_UG_DESCRIPTION"));
-	        assertEquals(userGroup.getName(), properties.getProperty("UPDATE_UG_NAME"));
+	        assertEquals(userGroup.getDescription(), Config.getProperty("UPDATE_UG_DESCRIPTION"));
+	        assertEquals(userGroup.getName(), Config.getProperty("UPDATE_UG_NAME"));
         } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -283,23 +278,23 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        Employee employee = new Employee();
 	        
 	        //Die Felder werden gefüllt
-	        employee.setAddress(properties.getProperty("INSERT_E_ADDRESS"));
-	        employee.setCity(properties.getProperty("INSERT_E_CITY"));
-	        employee.setCountry(properties.getProperty("INSERT_E_COUNTRY"));
+	        employee.setAddress(Config.getProperty("INSERT_E_ADDRESS"));
+	        employee.setCity(Config.getProperty("INSERT_E_CITY"));
+	        employee.setCountry(Config.getProperty("INSERT_E_COUNTRY"));
 	        employee.setDivision(division);
-	        employee.setEmail(properties.getProperty("INSERT_E_EMAIL"));
-	        employee.setIdCard(Long.parseLong(properties.getProperty("INSERT_E_IDCARD")));
-	        employee.setMobileNumber(properties.getProperty("INSERT_E_MOBILENUMBER"));
-	        employee.setName(properties.getProperty("INSERT_E_NAME"));
-	        employee.setPhoneNumber(properties.getProperty("INSERT_E_PHONENUMBER"));
-	        employee.setRegion(properties.getProperty("INSERT_E_REGION"));
+	        employee.setEmail(Config.getProperty("INSERT_E_EMAIL"));
+	        employee.setIdCard(Long.parseLong(Config.getProperty("INSERT_E_IDCARD")));
+	        employee.setMobileNumber(Config.getProperty("INSERT_E_MOBILENUMBER"));
+	        employee.setName(Config.getProperty("INSERT_E_NAME"));
+	        employee.setPhoneNumber(Config.getProperty("INSERT_E_PHONENUMBER"));
+	        employee.setRegion(Config.getProperty("INSERT_E_REGION"));
 	        employee.setSalaryCategory(salaryCategory);
 	        employee.setUserGroup(userGroup);
-	        employee.setZipCode(properties.getProperty("INSERT_E_ZIPCODE"));
+	        employee.setZipCode(Config.getProperty("INSERT_E_ZIPCODE"));
 	        
 	      //Benutzername und Kenntwort werden erstellt
-	        employee.setPassword(properties.getProperty("INSERT_E_PASSWORD"));
-	        employee.setUsername(properties.getProperty("INSERT_E_USERNAME"));
+	        employee.setPassword(Config.getProperty("INSERT_E_PASSWORD"));
+	        employee.setUsername(Config.getProperty("INSERT_E_USERNAME"));
 	        
 	        employee = employeeRepository.performNew(employee);
 	        
@@ -308,21 +303,21 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
-	        assertEquals(employee.getAddress(), properties.getProperty("INSERT_E_ADDRESS"));
-	        assertEquals(employee.getCity(), properties.getProperty("INSERT_E_CITY"));
-	        assertEquals(employee.getCountry(), properties.getProperty("INSERT_E_COUNTRY"));
+	        assertEquals(employee.getAddress(), Config.getProperty("INSERT_E_ADDRESS"));
+	        assertEquals(employee.getCity(), Config.getProperty("INSERT_E_CITY"));
+	        assertEquals(employee.getCountry(), Config.getProperty("INSERT_E_COUNTRY"));
 	        assertEquals(employee.getDivision(), division);
-	        assertEquals(employee.getEmail(), properties.getProperty("INSERT_E_EMAIL"));
-	        assertEquals(employee.getIdCard(), Long.parseLong(properties.getProperty("INSERT_E_IDCARD")));
-	        assertEquals(employee.getMobileNumber(), properties.getProperty("INSERT_E_MOBILENUMBER"));
-	        assertEquals(employee.getName(), properties.getProperty("INSERT_E_NAME"));
-	        assertEquals(employee.getPhoneNumber(), properties.getProperty("INSERT_E_PHONENUMBER"));
-	        assertEquals(employee.getRegion(), properties.getProperty("INSERT_E_REGION"));
+	        assertEquals(employee.getEmail(), Config.getProperty("INSERT_E_EMAIL"));
+	        assertEquals(employee.getIdCard(), Long.parseLong(Config.getProperty("INSERT_E_IDCARD")));
+	        assertEquals(employee.getMobileNumber(), Config.getProperty("INSERT_E_MOBILENUMBER"));
+	        assertEquals(employee.getName(), Config.getProperty("INSERT_E_NAME"));
+	        assertEquals(employee.getPhoneNumber(), Config.getProperty("INSERT_E_PHONENUMBER"));
+	        assertEquals(employee.getRegion(), Config.getProperty("INSERT_E_REGION"));
 	        assertEquals(employee.getSalaryCategory(), salaryCategory);
 	        assertEquals(employee.getUserGroup(), userGroup);
-	        assertEquals(employee.getZipCode(), properties.getProperty("INSERT_E_ZIPCODE"));
-	        assertEquals(employee.getPassword(), properties.getProperty("INSERT_E_PASSWORD"));
-	        assertEquals(employee.getUsername(), properties.getProperty("INSERT_E_USERNAME"));
+	        assertEquals(employee.getZipCode(), Config.getProperty("INSERT_E_ZIPCODE"));
+	        assertEquals(employee.getPassword(), Config.getProperty("INSERT_E_PASSWORD"));
+	        assertEquals(employee.getUsername(), Config.getProperty("INSERT_E_USERNAME"));
 	        
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
@@ -339,38 +334,38 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
 	        //Die Felder werden gefüllt
-	        employee.setAddress(properties.getProperty("UPDATE_E_ADDRESS"));
-	        employee.setCity(properties.getProperty("UPDATE_E_CITY"));
-	        employee.setCountry(properties.getProperty("UPDATE_E_COUNTRY"));
-	        employee.setEmail(properties.getProperty("UPDATE_E_EMAIL"));
-	        employee.setIdCard(Long.parseLong(properties.getProperty("UPDATE_E_IDCARD")));
-	        employee.setMobileNumber(properties.getProperty("UPDATE_E_MOBILENUMBER"));
-	        employee.setName(properties.getProperty("UPDATE_E_NAME"));
-	        employee.setPhoneNumber(properties.getProperty("UPDATE_E_PHONENUMBER"));
-	        employee.setRegion(properties.getProperty("UPDATE_E_REGION"));
-	        employee.setZipCode(properties.getProperty("UPDATE_E_ZIPCODE"));
+	        employee.setAddress(Config.getProperty("UPDATE_E_ADDRESS"));
+	        employee.setCity(Config.getProperty("UPDATE_E_CITY"));
+	        employee.setCountry(Config.getProperty("UPDATE_E_COUNTRY"));
+	        employee.setEmail(Config.getProperty("UPDATE_E_EMAIL"));
+	        employee.setIdCard(Long.parseLong(Config.getProperty("UPDATE_E_IDCARD")));
+	        employee.setMobileNumber(Config.getProperty("UPDATE_E_MOBILENUMBER"));
+	        employee.setName(Config.getProperty("UPDATE_E_NAME"));
+	        employee.setPhoneNumber(Config.getProperty("UPDATE_E_PHONENUMBER"));
+	        employee.setRegion(Config.getProperty("UPDATE_E_REGION"));
+	        employee.setZipCode(Config.getProperty("UPDATE_E_ZIPCODE"));
 	        
 	        //Benutzername und Kenntwort werden geändert
-	        employee.setPassword(properties.getProperty("UPDATE_E_PASSWORD"));
-	        employee.setUsername(properties.getProperty("UPDATE_E_USERNAME"));
+	        employee.setPassword(Config.getProperty("UPDATE_E_PASSWORD"));
+	        employee.setUsername(Config.getProperty("UPDATE_E_USERNAME"));
 	        
 	        employee = employeeRepository.performEdit(employee);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
 	        employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
-	        assertEquals(employee.getAddress(), properties.getProperty("UPDATE_E_ADDRESS"));
-	        assertEquals(employee.getCity(), properties.getProperty("UPDATE_E_CITY"));
-	        assertEquals(employee.getCountry(), properties.getProperty("UPDATE_E_COUNTRY"));
-	        assertEquals(employee.getEmail(), properties.getProperty("UPDATE_E_EMAIL"));
-	        assertEquals(employee.getIdCard(), Long.parseLong(properties.getProperty("UPDATE_E_IDCARD")));
-	        assertEquals(employee.getMobileNumber(), properties.getProperty("UPDATE_E_MOBILENUMBER"));
-	        assertEquals(employee.getName(), properties.getProperty("UPDATE_E_NAME"));
-	        assertEquals(employee.getPhoneNumber(), properties.getProperty("UPDATE_E_PHONENUMBER"));
-	        assertEquals(employee.getRegion(), properties.getProperty("UPDATE_E_REGION"));
-	        assertEquals(employee.getZipCode(), properties.getProperty("UPDATE_E_ZIPCODE"));
-	        assertEquals(employee.getPassword(), properties.getProperty("UPDATE_E_PASSWORD"));
-	        assertEquals(employee.getUsername(), properties.getProperty("UPDATE_E_USERNAME"));
+	        assertEquals(employee.getAddress(), Config.getProperty("UPDATE_E_ADDRESS"));
+	        assertEquals(employee.getCity(), Config.getProperty("UPDATE_E_CITY"));
+	        assertEquals(employee.getCountry(), Config.getProperty("UPDATE_E_COUNTRY"));
+	        assertEquals(employee.getEmail(), Config.getProperty("UPDATE_E_EMAIL"));
+	        assertEquals(employee.getIdCard(), Long.parseLong(Config.getProperty("UPDATE_E_IDCARD")));
+	        assertEquals(employee.getMobileNumber(), Config.getProperty("UPDATE_E_MOBILENUMBER"));
+	        assertEquals(employee.getName(), Config.getProperty("UPDATE_E_NAME"));
+	        assertEquals(employee.getPhoneNumber(), Config.getProperty("UPDATE_E_PHONENUMBER"));
+	        assertEquals(employee.getRegion(), Config.getProperty("UPDATE_E_REGION"));
+	        assertEquals(employee.getZipCode(), Config.getProperty("UPDATE_E_ZIPCODE"));
+	        assertEquals(employee.getPassword(), Config.getProperty("UPDATE_E_PASSWORD"));
+	        assertEquals(employee.getUsername(), Config.getProperty("UPDATE_E_USERNAME"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -465,9 +460,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
         try {
 	        //Die Felder werden gefüllt
 	        SalaryCategory salaryCategory = new SalaryCategory();
-	        salaryCategory.setDescription(properties.getProperty("INSERT_SC_DESCRIPTION_F"));
-	        salaryCategory.setSalaryFrom(Float.parseFloat(properties.getProperty("INSERT_SC_SALARYFROM_F")));
-	        salaryCategory.setSalaryTo(Float.parseFloat(properties.getProperty("INSERT_SC_SALARYTO_F")));
+	        salaryCategory.setDescription(Config.getProperty("INSERT_SC_DESCRIPTION_F"));
+	        salaryCategory.setSalaryFrom(Float.parseFloat(Config.getProperty("INSERT_SC_SALARYFROM_F")));
+	        salaryCategory.setSalaryTo(Float.parseFloat(Config.getProperty("INSERT_SC_SALARYTO_F")));
 	        
 	        salaryCategory = salaryCategoryRepository.performNew(salaryCategory);
 	        
@@ -475,9 +470,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
 	        salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	        
-	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(properties.getProperty("INSERT_SC_SALARYFROM")));
-	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(properties.getProperty("INSERT_SC_SALARYTO")));
-	        assertEquals(salaryCategory.getDescription(), properties.getProperty("INSERT_SC_DESCRIPTION"));
+	        assertEquals(salaryCategory.getSalaryFrom(), Float.parseFloat(Config.getProperty("INSERT_SC_SALARYFROM")));
+	        assertEquals(salaryCategory.getSalaryTo(), Float.parseFloat(Config.getProperty("INSERT_SC_SALARYTO")));
+	        assertEquals(salaryCategory.getDescription(), Config.getProperty("INSERT_SC_DESCRIPTION"));
 	    } catch (Exception ex) {
 	    	throw ex;
 	    }
@@ -493,8 +488,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
         try {
 	        //Die Felder werden gefüllt
 	        Division division = new Division();
-	        division.setDescription(properties.getProperty("INSERT_D_DESCRIPTION_F"));
-	        division.setName(properties.getProperty("INSERT_D_NAME_F"));
+	        division.setDescription(Config.getProperty("INSERT_D_DESCRIPTION_F"));
+	        division.setName(Config.getProperty("INSERT_D_NAME_F"));
 	        
 	        division = divisionRepository.performNew(division);
 	        
@@ -503,8 +498,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        division = divisionRepository.findOne(DIVISION_ID);
 	        
-	        assertEquals(division.getDescription(), properties.getProperty("INSERT_D_DESCRIPTION"));
-	        assertEquals(division.getName(), properties.getProperty("INSERT_D_NAME"));
+	        assertEquals(division.getDescription(), Config.getProperty("INSERT_D_DESCRIPTION"));
+	        assertEquals(division.getName(), Config.getProperty("INSERT_D_NAME"));
         } catch (Exception ex) {
 	    	throw ex;
 	    }
@@ -520,16 +515,16 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
         try {
 	        //Die Felder werden gefüllt
 	        UserGroup userGroup = new UserGroup();
-	        userGroup.setDescription(properties.getProperty("INSERT_UG_DESCRIPTION_F"));
-	        userGroup.setName(properties.getProperty("INSERT_UG_NAME_F"));
+	        userGroup.setDescription(Config.getProperty("INSERT_UG_DESCRIPTION_F"));
+	        userGroup.setName(Config.getProperty("INSERT_UG_NAME_F"));
 	        
 
 	        //Hinzufügen erlaubnise
 	        List<Permission> permissionList = new LinkedList<Permission>();
 	        
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION1_F"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION2_F"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(properties.getProperty("INSERT_UG_PERMISSION3_F"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("INSERT_UG_PERMISSION1_F"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("INSERT_UG_PERMISSION2_F"))));
+	        permissionList.add(permissionRepository.findOne(Long.parseLong(Config.getProperty("INSERT_UG_PERMISSION3_F"))));
 	        
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
@@ -544,8 +539,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        assertTrue(userGroup.getPermissions().containsAll(permissionList));
 	        
-	        assertEquals(userGroup.getDescription(), properties.getProperty("INSERT_UG_DESCRIPTION"));
-	        assertEquals(userGroup.getName(), properties.getProperty("INSERT_UG_NAME"));
+	        assertEquals(userGroup.getDescription(), Config.getProperty("INSERT_UG_DESCRIPTION"));
+	        assertEquals(userGroup.getName(), Config.getProperty("INSERT_UG_NAME"));
         } catch (Exception ex) {
 	    	throw ex;
 	    }
@@ -570,23 +565,23 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        Employee employee = new Employee();
 	        
 	        //Die Felder werden gefüllt
-	        employee.setAddress(properties.getProperty("INSERT_E_ADDRESS_F"));
-	        employee.setCity(properties.getProperty("INSERT_E_CITY_F"));
-	        employee.setCountry(properties.getProperty("INSERT_E_COUNTRY_F"));
+	        employee.setAddress(Config.getProperty("INSERT_E_ADDRESS_F"));
+	        employee.setCity(Config.getProperty("INSERT_E_CITY_F"));
+	        employee.setCountry(Config.getProperty("INSERT_E_COUNTRY_F"));
 	        employee.setDivision(division);
-	        employee.setEmail(properties.getProperty("INSERT_E_EMAIL_F"));
-	        employee.setIdCard(Long.parseLong(properties.getProperty("INSERT_E_IDCARD_F")));
-	        employee.setMobileNumber(properties.getProperty("INSERT_E_MOBILENUMBER_F"));
-	        employee.setName(properties.getProperty("INSERT_E_NAME_F"));
-	        employee.setPhoneNumber(properties.getProperty("INSERT_E_PHONENUMBER_F"));
-	        employee.setRegion(properties.getProperty("INSERT_E_REGION_F"));
+	        employee.setEmail(Config.getProperty("INSERT_E_EMAIL_F"));
+	        employee.setIdCard(Long.parseLong(Config.getProperty("INSERT_E_IDCARD_F")));
+	        employee.setMobileNumber(Config.getProperty("INSERT_E_MOBILENUMBER_F"));
+	        employee.setName(Config.getProperty("INSERT_E_NAME_F"));
+	        employee.setPhoneNumber(Config.getProperty("INSERT_E_PHONENUMBER_F"));
+	        employee.setRegion(Config.getProperty("INSERT_E_REGION_F"));
 	        employee.setSalaryCategory(salaryCategory);
 	        employee.setUserGroup(userGroup);
-	        employee.setZipCode(properties.getProperty("INSERT_E_ZIPCODE_F"));
+	        employee.setZipCode(Config.getProperty("INSERT_E_ZIPCODE_F"));
 	        
 	      //Benutzername und Kenntwort werden erstellt
-	        employee.setPassword(properties.getProperty("INSERT_E_PASSWORD_F"));
-	        employee.setUsername(properties.getProperty("INSERT_E_USERNAME_F"));
+	        employee.setPassword(Config.getProperty("INSERT_E_PASSWORD_F"));
+	        employee.setUsername(Config.getProperty("INSERT_E_USERNAME_F"));
 	        
 	        employee = employeeRepository.performNew(employee);
 	        
@@ -595,21 +590,21 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        employee = employeeRepository.findOne(EMPLOYEE_ID);
 	        
-	        assertEquals(employee.getAddress(), properties.getProperty("INSERT_E_ADDRESS"));
-	        assertEquals(employee.getCity(), properties.getProperty("INSERT_E_CITY"));
-	        assertEquals(employee.getCountry(), properties.getProperty("INSERT_E_COUNTRY"));
+	        assertEquals(employee.getAddress(), Config.getProperty("INSERT_E_ADDRESS"));
+	        assertEquals(employee.getCity(), Config.getProperty("INSERT_E_CITY"));
+	        assertEquals(employee.getCountry(), Config.getProperty("INSERT_E_COUNTRY"));
 	        assertEquals(employee.getDivision(), division);
-	        assertEquals(employee.getEmail(), properties.getProperty("INSERT_E_EMAIL"));
-	        assertEquals(employee.getIdCard(), Long.parseLong(properties.getProperty("INSERT_E_IDCARD")));
-	        assertEquals(employee.getMobileNumber(), properties.getProperty("INSERT_E_MOBILENUMBER"));
-	        assertEquals(employee.getName(), properties.getProperty("INSERT_E_NAME_F"));
-	        assertEquals(employee.getPhoneNumber(), properties.getProperty("INSERT_E_PHONENUMBER"));
-	        assertEquals(employee.getRegion(), properties.getProperty("INSERT_E_REGION"));
+	        assertEquals(employee.getEmail(), Config.getProperty("INSERT_E_EMAIL"));
+	        assertEquals(employee.getIdCard(), Long.parseLong(Config.getProperty("INSERT_E_IDCARD")));
+	        assertEquals(employee.getMobileNumber(), Config.getProperty("INSERT_E_MOBILENUMBER"));
+	        assertEquals(employee.getName(), Config.getProperty("INSERT_E_NAME_F"));
+	        assertEquals(employee.getPhoneNumber(), Config.getProperty("INSERT_E_PHONENUMBER"));
+	        assertEquals(employee.getRegion(), Config.getProperty("INSERT_E_REGION"));
 	        assertEquals(employee.getSalaryCategory(), salaryCategory);
 	        assertEquals(employee.getUserGroup(), userGroup);
-	        assertEquals(employee.getZipCode(), properties.getProperty("INSERT_E_ZIPCODE"));
-	        assertEquals(employee.getPassword(), properties.getProperty("INSERT_E_PASSWORD"));
-	        assertEquals(employee.getUsername(), properties.getProperty("INSERT_E_USERNAME"));
+	        assertEquals(employee.getZipCode(), Config.getProperty("INSERT_E_ZIPCODE"));
+	        assertEquals(employee.getPassword(), Config.getProperty("INSERT_E_PASSWORD"));
+	        assertEquals(employee.getUsername(), Config.getProperty("INSERT_E_USERNAME"));
 	        
     	} catch (Exception ex) {
 	    	throw ex;

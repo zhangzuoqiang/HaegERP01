@@ -34,17 +34,14 @@ CREATE TABLE article(
 CREATE TABLE articlehistory(
 	idArticleHistory	INTEGER			NOT NULL,
 	idArticle			INTEGER			NOT NULL,
-	idArticleCategory	INTEGER			NOT NULL,
+	articleCategory		VARCHAR2(50)	NOT NULL,
 	ean					INTEGER			NOT NULL,
 	name				VARCHAR2(80)	NOT NULL,
 	priceVat			NUMBER(5,2)		NOT NULL,
 	priceGross			NUMBER(20,2)	NOT NULL,
 	priceSupplier		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_articleHistory
-		PRIMARY KEY (idArticle, idArticleHistory),
-	CONSTRAINT fk_articleH_articleCategory
-		FOREIGN KEY (idArticleCategory)
-		REFERENCES articlecategory (idArticleCategory)
+		PRIMARY KEY (idArticle, idArticleHistory)
 );
 
 /* ******************************************/
@@ -235,7 +232,9 @@ CREATE TABLE supplierorder_article (
 
 CREATE TABLE clientbill (
 	idClientBill		INTEGER		NOT NULL,
-	paidDate			DATE		NOT NULL,
+	billedDate			DATE		NOT NULL,
+	paidDate			DATE,
+	
 	CONSTRAINT pk_clientbill
 		PRIMARY KEY (idClientBill)
 );

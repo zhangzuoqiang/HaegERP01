@@ -11,10 +11,6 @@
 			</key-property>
 		</composite-id>
 		
-		<many-to-one name="articleCategory" class="org.haegerp.entity.ArticleCategory"  fetch="select">
-			<column name="IDARTICLECATEGORY" not-null="true" />
-		</many-to-one>
-		
 		<set name="supplierOrderDetails" inverse="true" fetch="select">
 			<key>
 				<column name="IDARTICLE" not-null="true"></column>
@@ -23,6 +19,17 @@
 			<one-to-many class="org.haegerp.entity.SupplierOrderDetail"/>
 		</set>
 		
+		<set name="clientOfferDetails" inverse="true" fetch="select">
+			<key>
+				<column name="IDARTICLE" not-null="true"></column>
+				<column name="IDARTICLEHISTORY" not-null="true"></column>
+			</key>
+			<one-to-many class="org.haegerp.entity.ClientOfferDetail"/>
+		</set>
+		
+		<property name="articleCategory" type="string">
+			<column name="ARTICLECATEGORY" not-null="true" length="50" />
+		</property>
 		<property name="ean" type="long">
 			<column name="EAN" not-null="true" />
 		</property>

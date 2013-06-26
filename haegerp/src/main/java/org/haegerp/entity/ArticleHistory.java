@@ -19,8 +19,8 @@ public class ArticleHistory implements Serializable {
 
 	//Primary Key (Erforderlich)
 	private ArticleHistoryPK articleHistoryPK;
-	//Kategorie, dass der Artikel von diese Version gehört (Erforderlich)
-	private ArticleCategory articleCategory;
+	//Name der Kategorie, dass der Artikel von diese Version gehört (Erforderlich)
+	private String articleCategory;
 	//Artikels EAN (Erforderlich)
 	private long ean;
 	//Artikels Name (Erforderlich)
@@ -31,9 +31,10 @@ public class ArticleHistory implements Serializable {
 	private float priceGross;
 	//Artikels Liferantpreis (Erforderlich)
 	private float priceSupplier;
-	//Bestellungen, dass diese Version gehört
+	//Liferantbestellungen, dass diese Version gehört
 	private Set<SupplierOrderDetail> supplierOrderDetails = new HashSet<SupplierOrderDetail>(0);
-	
+	//Kundenbestellungen, dass diese Version gehört
+	private Set<ClientOfferDetail> clientOfferDetails = new HashSet<ClientOfferDetail>(0);
 	/**
 	 * Konstruktor mit keinen Parametern
 	 * Ideal für eine neue Artikelversion
@@ -61,7 +62,7 @@ public class ArticleHistory implements Serializable {
 	 * 
 	 * @return articleCategory - Kategorie, dass der Artikel von diese Version gehört (Erforderlich)
 	 */
-	public ArticleCategory getArticleCategory() {
+	public String getArticleCategory() {
 		return articleCategory;
 	}
 
@@ -69,7 +70,7 @@ public class ArticleHistory implements Serializable {
 	 * 
 	 * @param articleCategory Kategorie, dass der Artikel von diese Version gehört (Erforderlich)
 	 */
-	public void setArticleCategory(ArticleCategory articleCategory) {
+	public void setArticleCategory(String articleCategory) {
 		this.articleCategory = articleCategory;
 	}
 
@@ -183,6 +184,22 @@ public class ArticleHistory implements Serializable {
 	public void setSupplierOrderDetails(
 			Set<SupplierOrderDetail> supplierOrderDetails) {
 		this.supplierOrderDetails = supplierOrderDetails;
+	}
+	
+	/**
+	 * 
+	 * @return clientOfferDetails - Kundenbestellungen, dass diese Version gehört
+	 */
+	public Set<ClientOfferDetail> getClientOfferDetails() {
+		return clientOfferDetails;
+	}
+
+	/**
+	 * 
+	 * @param clientOfferDetails Kundenbestellungen, dass diese Version gehört
+	 */
+	public void setClientOfferDetails(Set<ClientOfferDetail> clientOfferDetails) {
+		this.clientOfferDetails = clientOfferDetails;
 	}
 
 	public static long getSerialversionuid() {
