@@ -2,6 +2,7 @@
 /* *			Cleanning Script			*/
 /* ******************************************/
 
+DELETE FROM company;
 DELETE FROM outstanding;
 DELETE FROM clientoffer_article;
 DELETE FROM clientoffer;
