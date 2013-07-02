@@ -1,0 +1,25 @@
+CREATE SEQUENCE log_seq
+	MINVALUE 1
+	START WITH 1
+	INCREMENT BY 1
+	NOCHACHE;
+
+CREATE TRIGGER trg_article_logging
+AFTER INSERT OR UPDATE OR DELETE
+ON ARTICLE
+FOR EACH ROW
+AS
+DECLARE
+	operationType VARCHAR2(20);
+BEGIN
+	IF DELETING THEN
+		operationType := 'Delete':
+	ELSEIF UPDATING THEN
+		operationType := 'Update':
+	ELSE
+		operationType := 'Insert':
+	END IF;
+	
+	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+	VALUES (log_seq.nextval, 'Article', operationType, ??, SYSDATE);
+END

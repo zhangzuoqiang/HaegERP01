@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 
 import org.haegerp.entity.Log;
+import org.haegerp.entity.repository.LogRepository;
 import org.haegerp.entity.repository.MyRepository;
 import org.haegerp.session.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -25,6 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class MyRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements MyRepository<T, ID>{
 
 	private EntityManager entityManager;
+	
+	@Autowired
+	private LogRepository logRepository;
 	
 	public MyRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
 		super(domainClass, entityManager);

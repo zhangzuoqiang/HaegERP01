@@ -1,5 +1,6 @@
 package org.haegerp.entity;
 
+import org.haegerp.Properties;
 import org.haegerp.entity.repository.CompanyRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
@@ -50,6 +51,9 @@ public class CompanyTest extends TestCase {
     	{
     		CHECK_SETUP = false;
 	    	Session.setEmployee(employeeRepository.findOne(1L));
+	    	if (!Properties.loadProperties()){
+	    		fail("Failed to load Properties File.");
+	    	}
     	}
     }
     
@@ -62,34 +66,34 @@ public class CompanyTest extends TestCase {
     	try {
     		Company company = companyRepository.findOne(COMPANY_ID);
 	        
-    		company.setName(Config.getProperty("UPDATE_COMPANY_NAME"));
-    		company.setTaxId(Long.parseLong(Config.getProperty("UPDATE_COMPANY_TAXID")));
-    		company.setOwner(Config.getProperty("UPDATE_COMPANY_OWNER"));
-    		company.setSector(Config.getProperty("UPDATE_COMPANY_SECTOR"));
-    		company.setAddress(Config.getProperty("UPDATE_COMPANY_ADDRESS"));
-    		company.setZipCode(Config.getProperty("UPDATE_COMPANY_ZIPCODE"));
-    		company.setCity(Config.getProperty("UPDATE_COMPANY_CITY"));
-    		company.setRegion(Config.getProperty("UPDATE_COMPANY_REGION"));
-    		company.setCountry(Config.getProperty("UPDATE_COMPANY_COUNTRY"));
-    		company.setPhoneNumber(Config.getProperty("UPDATE_COMPANY_PHONENUMBER"));
-    		company.setFaxNumber(Config.getProperty("UPDATE_COMPANY_FAXNUMBER"));
+    		company.setName(Properties.getProperty("UPDATE_COMPANY_NAME"));
+    		company.setTaxId(Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
+    		company.setOwner(Properties.getProperty("UPDATE_COMPANY_OWNER"));
+    		company.setSector(Properties.getProperty("UPDATE_COMPANY_SECTOR"));
+    		company.setAddress(Properties.getProperty("UPDATE_COMPANY_ADDRESS"));
+    		company.setZipCode(Properties.getProperty("UPDATE_COMPANY_ZIPCODE"));
+    		company.setCity(Properties.getProperty("UPDATE_COMPANY_CITY"));
+    		company.setRegion(Properties.getProperty("UPDATE_COMPANY_REGION"));
+    		company.setCountry(Properties.getProperty("UPDATE_COMPANY_COUNTRY"));
+    		company.setPhoneNumber(Properties.getProperty("UPDATE_COMPANY_PHONENUMBER"));
+    		company.setFaxNumber(Properties.getProperty("UPDATE_COMPANY_FAXNUMBER"));
     		
     		companyRepository.performEdit(company);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        company = companyRepository.findOne(COMPANY_ID);
 	        
-	        assertEquals(company.getName(), Config.getProperty("UPDATE_COMPANY_NAME"));
-	        assertEquals(company.getTaxId(), Long.parseLong(Config.getProperty("UPDATE_COMPANY_TAXID")));
-	        assertEquals(company.getOwner(), Config.getProperty("UPDATE_COMPANY_OWNER"));
-	        assertEquals(company.getSector(), Config.getProperty("UPDATE_COMPANY_SECTOR"));
-	        assertEquals(company.getAddress(), Config.getProperty("UPDATE_COMPANY_ADDRESS"));
-	        assertEquals(company.getZipCode(), Config.getProperty("UPDATE_COMPANY_ZIPCODE"));
-	        assertEquals(company.getCity(), Config.getProperty("UPDATE_COMPANY_CITY"));
-	        assertEquals(company.getRegion(), Config.getProperty("UPDATE_COMPANY_REGION"));
-	        assertEquals(company.getCountry(), Config.getProperty("UPDATE_COMPANY_COUNTRY"));
-	        assertEquals(company.getPhoneNumber(), Config.getProperty("UPDATE_COMPANY_PHONENUMBER"));
-	        assertEquals(company.getFaxNumber(), Config.getProperty("UPDATE_COMPANY_FAXNUMBER"));
+	        assertEquals(company.getName(), Properties.getProperty("UPDATE_COMPANY_NAME"));
+	        assertEquals(company.getTaxId(), Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
+	        assertEquals(company.getOwner(), Properties.getProperty("UPDATE_COMPANY_OWNER"));
+	        assertEquals(company.getSector(), Properties.getProperty("UPDATE_COMPANY_SECTOR"));
+	        assertEquals(company.getAddress(), Properties.getProperty("UPDATE_COMPANY_ADDRESS"));
+	        assertEquals(company.getZipCode(), Properties.getProperty("UPDATE_COMPANY_ZIPCODE"));
+	        assertEquals(company.getCity(), Properties.getProperty("UPDATE_COMPANY_CITY"));
+	        assertEquals(company.getRegion(), Properties.getProperty("UPDATE_COMPANY_REGION"));
+	        assertEquals(company.getCountry(), Properties.getProperty("UPDATE_COMPANY_COUNTRY"));
+	        assertEquals(company.getPhoneNumber(), Properties.getProperty("UPDATE_COMPANY_PHONENUMBER"));
+	        assertEquals(company.getFaxNumber(), Properties.getProperty("UPDATE_COMPANY_FAXNUMBER"));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -105,34 +109,34 @@ public class CompanyTest extends TestCase {
         try {
         	Company company = companyRepository.findOne(COMPANY_ID);
 	        
-    		company.setName(Config.getProperty("UPDATE_COMPANY_NAME_F"));
-    		company.setTaxId(Long.parseLong(Config.getProperty("UPDATE_COMPANY_TAXID_F")));
-    		company.setOwner(Config.getProperty("UPDATE_COMPANY_OWNER_F"));
-    		company.setSector(Config.getProperty("UPDATE_COMPANY_SECTOR_F"));
-    		company.setAddress(Config.getProperty("UPDATE_COMPANY_ADDRESS_F"));
-    		company.setZipCode(Config.getProperty("UPDATE_COMPANY_ZIPCODE_F"));
-    		company.setCity(Config.getProperty("UPDATE_COMPANY_CITY_F"));
-    		company.setRegion(Config.getProperty("UPDATE_COMPANY_REGION_F"));
-    		company.setCountry(Config.getProperty("UPDATE_COMPANY_COUNTRY_F"));
-    		company.setPhoneNumber(Config.getProperty("UPDATE_COMPANY_PHONENUMBER_F"));
-    		company.setFaxNumber(Config.getProperty("UPDATE_COMPANY_FAXNUMBER_F"));
+    		company.setName(Properties.getProperty("UPDATE_COMPANY_NAME_F"));
+    		company.setTaxId(Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID_F")));
+    		company.setOwner(Properties.getProperty("UPDATE_COMPANY_OWNER_F"));
+    		company.setSector(Properties.getProperty("UPDATE_COMPANY_SECTOR_F"));
+    		company.setAddress(Properties.getProperty("UPDATE_COMPANY_ADDRESS_F"));
+    		company.setZipCode(Properties.getProperty("UPDATE_COMPANY_ZIPCODE_F"));
+    		company.setCity(Properties.getProperty("UPDATE_COMPANY_CITY_F"));
+    		company.setRegion(Properties.getProperty("UPDATE_COMPANY_REGION_F"));
+    		company.setCountry(Properties.getProperty("UPDATE_COMPANY_COUNTRY_F"));
+    		company.setPhoneNumber(Properties.getProperty("UPDATE_COMPANY_PHONENUMBER_F"));
+    		company.setFaxNumber(Properties.getProperty("UPDATE_COMPANY_FAXNUMBER_F"));
     		
     		companyRepository.performEdit(company);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        company = companyRepository.findOne(COMPANY_ID);
 	        
-	        assertEquals(company.getName(), Config.getProperty("UPDATE_COMPANY_NAME"));
-	        assertEquals(company.getTaxId(), Long.parseLong(Config.getProperty("UPDATE_COMPANY_TAXID")));
-	        assertEquals(company.getOwner(), Config.getProperty("UPDATE_COMPANY_OWNER"));
-	        assertEquals(company.getSector(), Config.getProperty("UPDATE_COMPANY_SECTOR"));
-	        assertEquals(company.getAddress(), Config.getProperty("UPDATE_COMPANY_ADDRESS"));
-	        assertEquals(company.getZipCode(), Config.getProperty("UPDATE_COMPANY_ZIPCODE"));
-	        assertEquals(company.getCity(), Config.getProperty("UPDATE_COMPANY_CITY"));
-	        assertEquals(company.getRegion(), Config.getProperty("UPDATE_COMPANY_REGION"));
-	        assertEquals(company.getCountry(), Config.getProperty("UPDATE_COMPANY_COUNTRY"));
-	        assertEquals(company.getPhoneNumber(), Config.getProperty("UPDATE_COMPANY_PHONENUMBER"));
-	        assertEquals(company.getFaxNumber(), Config.getProperty("UPDATE_COMPANY_FAXNUMBER"));
+	        assertEquals(company.getName(), Properties.getProperty("UPDATE_COMPANY_NAME"));
+	        assertEquals(company.getTaxId(), Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
+	        assertEquals(company.getOwner(), Properties.getProperty("UPDATE_COMPANY_OWNER"));
+	        assertEquals(company.getSector(), Properties.getProperty("UPDATE_COMPANY_SECTOR"));
+	        assertEquals(company.getAddress(), Properties.getProperty("UPDATE_COMPANY_ADDRESS"));
+	        assertEquals(company.getZipCode(), Properties.getProperty("UPDATE_COMPANY_ZIPCODE"));
+	        assertEquals(company.getCity(), Properties.getProperty("UPDATE_COMPANY_CITY"));
+	        assertEquals(company.getRegion(), Properties.getProperty("UPDATE_COMPANY_REGION"));
+	        assertEquals(company.getCountry(), Properties.getProperty("UPDATE_COMPANY_COUNTRY"));
+	        assertEquals(company.getPhoneNumber(), Properties.getProperty("UPDATE_COMPANY_PHONENUMBER"));
+	        assertEquals(company.getFaxNumber(), Properties.getProperty("UPDATE_COMPANY_FAXNUMBER"));
 	    } catch (Exception ex) {
 	    	throw ex;
 	    }
