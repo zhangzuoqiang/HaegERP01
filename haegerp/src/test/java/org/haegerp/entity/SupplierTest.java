@@ -4,7 +4,7 @@ import org.haegerp.Properties;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.entity.repository.supplier.SupplierRepository;
 import org.haegerp.exception.LengthOverflowException;
-import org.haegerp.session.Session;
+import org.haegerp.session.EmployeeSession;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class SupplierTest extends TestCase {
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	Session.setEmployee(employeeRepository.findOne(1L));
+	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -77,7 +77,7 @@ public class SupplierTest extends TestCase {
 	    	supplier.setFaxNumber(Properties.getProperty("INSERT_S_FAXNUMBER"));
 	    	supplier.setDescription(Properties.getProperty("INSERT_S_DESCRIPTION"));
 	    	
-	    	supplier = supplierRepo.performNew(supplier);
+	    	supplier = supplierRepo.save(supplier);
 	    	
 	        //Die erstellt Artikelkategorie wird geprüft
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
@@ -122,7 +122,7 @@ public class SupplierTest extends TestCase {
 	    	supplier.setFaxNumber(Properties.getProperty("UPDATE_S_FAXNUMBER"));
 	    	supplier.setDescription(Properties.getProperty("UPDATE_S_DESCRIPTION"));
 	    	
-	    	supplierRepo.performEdit(supplier);
+	    	supplierRepo.save(supplier);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        supplier = supplierRepo.findOne(SUPPLIER_ID);
@@ -185,7 +185,7 @@ public class SupplierTest extends TestCase {
 	    	supplier.setFaxNumber(Properties.getProperty("INSERT_S_FAXNUMBER_F"));
 	    	supplier.setDescription(Properties.getProperty("INSERT_S_DESCRIPTION_F"));
 	    	
-	    	supplier = supplierRepo.performNew(supplier);
+	    	supplier = supplierRepo.save(supplier);
 	    	
 	        //Die erstellt Artikelkategorie wird geprüft
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();

@@ -6,7 +6,7 @@ import org.haegerp.entity.repository.article.ArticleHistoryRepository;
 import org.haegerp.entity.repository.article.ArticleRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
-import org.haegerp.session.Session;
+import org.haegerp.session.EmployeeSession;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -56,7 +56,9 @@ public class Article_ArticleCategoryTest extends TestCase {
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	Session.setEmployee(employeeRepository.findOne(1L));
+    		
+    		EmployeeSession.setEmployee(employeeRepository.findOne(1L));
+	    	
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -74,11 +76,10 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        articleCategory.setName(Properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION"));
 	        
-	        articleCategory = articleCategoryRepo.performNew(articleCategory);
+	        articleCategory = articleCategoryRepo.save(articleCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
-	        
 	        
 	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	        
@@ -103,7 +104,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        articleCategory.setName(Properties.getProperty("UPDATE_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("UPDATE_AC_DESCRIPTION"));
 	        
-	        articleCategory = articleCategoryRepo.performEdit(articleCategory);
+	        articleCategory = articleCategoryRepo.save(articleCategory);
 	        
 	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
 	        
@@ -141,7 +142,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
 	        
-	        article = articleRepo.performNew(article);
+	        article = articleRepo.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
 	        articleRepo.createArticleHistory(article);
@@ -193,7 +194,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
 	        
-	        article = articleRepo.performEdit(article);
+	        article = articleRepo.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
 	        articleRepo.createArticleHistory(article);
@@ -269,7 +270,7 @@ public class Article_ArticleCategoryTest extends TestCase {
         articleCategory.setName(Properties.getProperty("INSERT_AC_NAME_F"));
         articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION_F"));
         
-        articleCategory = articleCategoryRepo.performNew(articleCategory);
+        articleCategory = articleCategoryRepo.save(articleCategory);
 
         //Die erstellt Artikelkategorie wird geprüft
         ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
@@ -307,7 +308,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW_F")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK_F")));
 	        
-	        article = articleRepo.performNew(article);
+	        article = articleRepo.save(article);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();

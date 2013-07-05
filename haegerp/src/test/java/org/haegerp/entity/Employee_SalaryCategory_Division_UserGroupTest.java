@@ -11,7 +11,7 @@ import org.haegerp.entity.repository.employee.PermissionRepository;
 import org.haegerp.entity.repository.employee.SalaryCategoryRepository;
 import org.haegerp.entity.repository.employee.UserGroupRepository;
 import org.haegerp.exception.LengthOverflowException;
-import org.haegerp.session.Session;
+import org.haegerp.session.EmployeeSession;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -67,7 +67,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	Session.setEmployee(employeeRepository.findOne(1L));
+	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -87,7 +87,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYTO")));
 	        
-	        salaryCategory = salaryCategoryRepository.performNew(salaryCategory);
+	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	        
 	        //Die erstellt Gehaltkategorie wird geprüft
 	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
@@ -116,7 +116,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("UPDATE_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("UPDATE_SC_SALARYTO")));
 	        
-	        salaryCategory = salaryCategoryRepository.performEdit(salaryCategory);
+	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	
 	        //Die geändert Gehaltkategorie wird geprüft
 	        salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
@@ -142,7 +142,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        division.setDescription(Properties.getProperty("INSERT_D_DESCRIPTION"));
 	        division.setName(Properties.getProperty("INSERT_D_NAME"));
 	        
-	        division = divisionRepository.performNew(division);
+	        division = divisionRepository.save(division);
 	        
 	        //Die erstellt Division wird geprüft
 	        DIVISION_ID = division.getIdDivision();
@@ -170,7 +170,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        division.setDescription(Properties.getProperty("UPDATE_D_DESCRIPTION"));
 	        division.setName(Properties.getProperty("UPDATE_D_NAME"));
 	        
-	        division = divisionRepository.performEdit(division);
+	        division = divisionRepository.save(division);
 	        
 	        //Die geändert Division wird geprüft
 	        division = divisionRepository.findOne(DIVISION_ID);
@@ -207,7 +207,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
 	        
-	        userGroup = userGroupRepository.performNew(userGroup);
+	        userGroup = userGroupRepository.save(userGroup);
 	        
 	        //Die erstellt Benutzergruppe wird geprüft
 	        USER_GROUP_ID = userGroup.getIdUserGroup();
@@ -249,7 +249,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
 	        
-	        userGroup = userGroupRepository.performEdit(userGroup);
+	        userGroup = userGroupRepository.save(userGroup);
 	        
 	        //Die geändert Benutzergruppe wird geprüft
 	        userGroup = userGroupRepository.findOne(USER_GROUP_ID);
@@ -300,7 +300,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setPassword(Properties.getProperty("INSERT_E_PASSWORD"));
 	        employee.setUsername(Properties.getProperty("INSERT_E_USERNAME"));
 	        
-	        employee = employeeRepository.performNew(employee);
+	        employee = employeeRepository.save(employee);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
 	        EMPLOYEE_ID = employee.getIdEmployee();
@@ -353,7 +353,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setPassword(Properties.getProperty("UPDATE_E_PASSWORD"));
 	        employee.setUsername(Properties.getProperty("UPDATE_E_USERNAME"));
 	        
-	        employee = employeeRepository.performEdit(employee);
+	        employee = employeeRepository.save(employee);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
 	        employee = employeeRepository.findOne(EMPLOYEE_ID);
@@ -468,7 +468,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYFROM_F")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYTO_F")));
 	        
-	        salaryCategory = salaryCategoryRepository.performNew(salaryCategory);
+	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	        
 	        //Die erstellt Gehaltkategorie wird geprüft
 	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
@@ -495,7 +495,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        division.setDescription(Properties.getProperty("INSERT_D_DESCRIPTION_F"));
 	        division.setName(Properties.getProperty("INSERT_D_NAME_F"));
 	        
-	        division = divisionRepository.performNew(division);
+	        division = divisionRepository.save(division);
 	        
 	        //Die erstellt Division wird geprüft
 	        DIVISION_ID = division.getIdDivision();
@@ -534,7 +534,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
 	        
-	        userGroup = userGroupRepository.performNew(userGroup);
+	        userGroup = userGroupRepository.save(userGroup);
 	        
 	        //Die erstellt Benutzergruppe wird geprüft
 	        USER_GROUP_ID = userGroup.getIdUserGroup();
@@ -587,7 +587,7 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setPassword(Properties.getProperty("INSERT_E_PASSWORD_F"));
 	        employee.setUsername(Properties.getProperty("INSERT_E_USERNAME_F"));
 	        
-	        employee = employeeRepository.performNew(employee);
+	        employee = employeeRepository.save(employee);
 	        
 	        //Der erstellter Mitarbeiter wird geprüft
 	        EMPLOYEE_ID = employee.getIdEmployee();

@@ -5,7 +5,7 @@ import org.haegerp.entity.repository.client.ClientCategoryRepository;
 import org.haegerp.entity.repository.client.ClientRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
-import org.haegerp.session.Session;
+import org.haegerp.session.EmployeeSession;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -52,7 +52,7 @@ public class Client_ClientCategoryTest extends TestCase {
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	Session.setEmployee(employeeRepository.findOne(1L));
+	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -70,7 +70,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        clientCategory.setName(Properties.getProperty("INSERT_CC_NAME"));
 	        clientCategory.setDescription(Properties.getProperty("INSERT_CC_DESCRIPTION"));
 	        
-	        clientCategory = clientCategoryRepository.performNew(clientCategory);
+	        clientCategory = clientCategoryRepository.save(clientCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        CLIENT_CATEGORY_ID = clientCategory.getIdClientCategory();
@@ -97,7 +97,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        clientCategory.setName(Properties.getProperty("UPDATE_CC_NAME"));
 	        clientCategory.setDescription(Properties.getProperty("UPDATE_CC_DESCRIPTION"));
 	        
-	        clientCategoryRepository.performEdit(clientCategory);
+	        clientCategoryRepository.save(clientCategory);
 	        
 	        clientCategory = clientCategoryRepository.findOne(CLIENT_CATEGORY_ID);
 	        
@@ -135,7 +135,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setTaxId(Long.parseLong(Properties.getProperty("INSERT_C_TAXID")));
 	        client.setZipCode(Properties.getProperty("INSERT_C_ZIPCODE"));
 	        
-	        client = clientRepository.performNew(client);
+	        client = clientRepository.save(client);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        CLIENT_ID = client.getIdBusinessPartner();
@@ -184,7 +184,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setTaxId(Long.parseLong(Properties.getProperty("UPDATE_C_TAXID")));
 	        client.setZipCode(Properties.getProperty("UPDATE_C_ZIPCODE"));
 	        
-	        client = clientRepository.performEdit(client);
+	        client = clientRepository.save(client);
 	        
 	        //Der geänderter Artikel wird geprüft
 	        client = clientRepository.findOne(CLIENT_ID);
@@ -256,7 +256,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        clientCategory.setName(Properties.getProperty("INSERT_CC_NAME_F"));
 	        clientCategory.setDescription(Properties.getProperty("INSERT_CC_DESCRIPTION_F"));
 	        
-	        clientCategory = clientCategoryRepository.performNew(clientCategory);
+	        clientCategory = clientCategoryRepository.save(clientCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        CLIENT_CATEGORY_ID = clientCategory.getIdClientCategory();
@@ -298,7 +298,7 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setTaxId(Long.parseLong(Properties.getProperty("INSERT_C_TAXID_F")));
 	        client.setZipCode(Properties.getProperty("INSERT_C_ZIPCODE_F"));
 	        
-	        client = clientRepository.performNew(client);
+	        client = clientRepository.save(client);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        CLIENT_ID = client.getIdBusinessPartner();

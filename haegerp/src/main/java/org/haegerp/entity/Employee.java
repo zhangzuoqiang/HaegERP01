@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.haegerp.exception.LengthOverflowException;
 
@@ -46,6 +47,8 @@ public class Employee implements Serializable {
 	private String username;
 	//Kenntwort (Erforderlich)
 	private String password;
+	//Wann der Benutzer eine Operation macht, dann wird die Datum gespeichert
+	private Date dateLastAction;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -344,6 +347,22 @@ public class Employee implements Serializable {
 		if (password.length() > 32)
 			throw new LengthOverflowException("Password");
 		this.password = password;
+	}
+
+	/**
+	 * 
+	 * @return dateLastAction - TimeStamp von der letzten Operation
+	 */
+	public Date getDateLastAction() {
+		return dateLastAction;
+	}
+
+	/**
+	 * 
+	 * @param dateLastAction TimeStamp von der letzten Operation
+	 */
+	public void setDateLastAction(Date dateLastAction) {
+		this.dateLastAction = dateLastAction;
 	}
 
 	public static long getSerialversionuid() {

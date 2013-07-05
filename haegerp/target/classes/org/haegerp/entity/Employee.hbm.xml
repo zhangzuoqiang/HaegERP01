@@ -57,5 +57,8 @@
 		<property name="password" type="string">
 			<column name="PASSWORD" length="32" not-null="true" />
 		</property>
+		<property name="dateLastAction" type="timestamp">
+			<column name="DATELASTACTION" not-null="false" />
+		</property>
 	</class>
 </hibernate-mapping>

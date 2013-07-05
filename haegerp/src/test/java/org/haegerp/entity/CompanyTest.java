@@ -4,7 +4,7 @@ import org.haegerp.Properties;
 import org.haegerp.entity.repository.CompanyRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
-import org.haegerp.session.Session;
+import org.haegerp.session.EmployeeSession;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class CompanyTest extends TestCase {
     	if (CHECK_SETUP)
     	{
     		CHECK_SETUP = false;
-	    	Session.setEmployee(employeeRepository.findOne(1L));
+	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -78,7 +78,7 @@ public class CompanyTest extends TestCase {
     		company.setPhoneNumber(Properties.getProperty("UPDATE_COMPANY_PHONENUMBER"));
     		company.setFaxNumber(Properties.getProperty("UPDATE_COMPANY_FAXNUMBER"));
     		
-    		companyRepository.performEdit(company);
+    		companyRepository.save(company);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        company = companyRepository.findOne(COMPANY_ID);
@@ -121,7 +121,7 @@ public class CompanyTest extends TestCase {
     		company.setPhoneNumber(Properties.getProperty("UPDATE_COMPANY_PHONENUMBER_F"));
     		company.setFaxNumber(Properties.getProperty("UPDATE_COMPANY_FAXNUMBER_F"));
     		
-    		companyRepository.performEdit(company);
+    		companyRepository.save(company);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        company = companyRepository.findOne(COMPANY_ID);

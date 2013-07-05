@@ -18,6 +18,22 @@ public class Article implements Serializable{
 
 	private static final long serialVersionUID = 5903001912808144518L;
 	
+	public enum COLUMS{
+		IDARTICLE,
+		IDARTICLECATEGORY,
+		EAN,
+		NAME,
+		PRICEVAT,
+		PRICEGROSS,
+		PRICESUPPLIER,
+		STOCK,
+		COLOR,
+		SIZEH,
+		SIZEL,
+		SIZEW,
+		DESCRIPTION
+	}
+	
 	//Primary Key (Erforderlich - Automatisch)
 	private long idArticle;
 	

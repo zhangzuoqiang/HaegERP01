@@ -142,6 +142,7 @@ CREATE TABLE employee (
 	email				VARCHAR2(50),
 	phoneNumber			VARCHAR2(20),
 	mobileNumber		VARCHAR2(20),
+	dateLastAction		DATE,
 	CONSTRAINT pk_employee
 		PRIMARY KEY (idEmployee),
 	CONSTRAINT fk_employee_salaryCategory
@@ -234,7 +235,6 @@ CREATE TABLE clientbill (
 	idClientBill		INTEGER		NOT NULL,
 	billedDate			DATE		NOT NULL,
 	paidDate			DATE,
-	
 	CONSTRAINT pk_clientbill
 		PRIMARY KEY (idClientBill)
 );

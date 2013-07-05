@@ -20,7 +20,7 @@ import org.haegerp.entity.repository.supplier.SupplierBillRepository;
 import org.haegerp.entity.repository.supplier.SupplierOrderDetailRepository;
 import org.haegerp.entity.repository.supplier.SupplierOrderRepository;
 import org.haegerp.entity.repository.supplier.SupplierRepository;
-import org.haegerp.session.Session;
+import org.haegerp.session.EmployeeSession;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -98,7 +98,7 @@ public class SupplierOrderTest extends TestCase {
     	{
     		CHECK_SETUP = false;
     		
-	    	Session.setEmployee(employeeRepository.findOne(1L));
+	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -109,7 +109,7 @@ public class SupplierOrderTest extends TestCase {
 	        articleCategory.setName(Properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION"));
 	        
-	        articleCategory = articleCategoryRepo.performNew(articleCategory);
+	        articleCategory = articleCategoryRepo.save(articleCategory);
 	        
 	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
 	        
@@ -130,7 +130,7 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
 	        
-	        article = articleRepo.performNew(article);
+	        article = articleRepo.save(article);
 	        ARTICLE1_ID = article.getIdArticle();
 	        
 	        //Die Artikelversion wird kontrolliert
@@ -150,7 +150,7 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
 	        
-	        article = articleRepo.performEdit(article);
+	        article = articleRepo.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
 	        articleRepo.createArticleHistory(article);
@@ -170,7 +170,7 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
 	        
-	        article = articleRepo.performNew(article);
+	        article = articleRepo.save(article);
 	        ARTICLE2_ID = article.getIdArticle();
 	        
 	        //Die Artikelversion wird kontrolliert
@@ -191,7 +191,7 @@ public class SupplierOrderTest extends TestCase {
 	    	supplier.setFaxNumber(Properties.getProperty("INSERT_S_FAXNUMBER"));
 	    	supplier.setDescription(Properties.getProperty("INSERT_S_DESCRIPTION"));
 	    	
-	    	supplier = supplierRepo.performNew(supplier);
+	    	supplier = supplierRepo.save(supplier);
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
 	    	
 	    	//Mitarbeiter wird erstellt
@@ -201,7 +201,7 @@ public class SupplierOrderTest extends TestCase {
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYTO")));
 	        
-	        salaryCategory = salaryCategoryRepository.performNew(salaryCategory);
+	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
 	        
 	        //Abteilung
@@ -209,7 +209,7 @@ public class SupplierOrderTest extends TestCase {
 	        division.setDescription(Properties.getProperty("INSERT_D_DESCRIPTION"));
 	        division.setName(Properties.getProperty("INSERT_D_NAME"));
 	        
-	        division = divisionRepository.performNew(division);
+	        division = divisionRepository.save(division);
 	        DIVISION_ID = division.getIdDivision();
 	        
 	        //Benutzergruppe
@@ -228,7 +228,7 @@ public class SupplierOrderTest extends TestCase {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
 	        
-	        userGroup = userGroupRepository.performNew(userGroup);
+	        userGroup = userGroupRepository.save(userGroup);
 	        USER_GROUP_ID = userGroup.getIdUserGroup();
 	        
 	        //Mitarbeiter
@@ -249,7 +249,7 @@ public class SupplierOrderTest extends TestCase {
 	        employee.setPassword(Properties.getProperty("INSERT_E_PASSWORD"));
 	        employee.setUsername(Properties.getProperty("INSERT_E_USERNAME"));
 	        
-	        employee = employeeRepository.performNew(employee);
+	        employee = employeeRepository.save(employee);
 	        EMPLOYEE_ID = employee.getIdEmployee();
     	}
         
@@ -312,7 +312,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.setSupplier(supplier);
     		supplierOrder.setTotal(0);
     		
-    		supplierOrder = supplierOrderRepository.performNew(supplierOrder);
+    		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
     		SUPPLIERORDER_ID = supplierOrder.getIdSupplierOrder();
     		
@@ -335,7 +335,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrderDetail.setDiscount(Float.parseFloat(Properties.getProperty("INSERT_SOD_A1_DISCOUNT")));
     		supplierOrderDetail.setQuantity(Long.parseLong(Properties.getProperty("INSERT_SOD_A1_QUANTITY")));
     		
-    		supplierOrderDetail = supplierOrderDetailRepository.performNew(supplierOrderDetail);
+    		supplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
     		
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
     		supplierOrder.calculateTotal();
@@ -350,7 +350,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrderDetail.setDiscount(Float.parseFloat(Properties.getProperty("INSERT_SOD_A2_DISCOUNT")));
     		supplierOrderDetail.setQuantity(Long.parseLong(Properties.getProperty("INSERT_SOD_A2_QUANTITY")));
     		
-    		supplierOrderDetail = supplierOrderDetailRepository.performNew(supplierOrderDetail);
+    		supplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
     		
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
     		supplierOrder.calculateTotal();
@@ -403,7 +403,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.setEmployee(employee);
     		supplierOrder.setSupplier(supplier);
     		
-    		supplierOrder = supplierOrderRepository.performEdit(supplierOrder);
+    		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
     		//Die Bestellung des Lieferant wird geprüft
     		supplierOrder = supplierOrderRepository.findOne(SUPPLIERORDER_ID);
@@ -423,7 +423,7 @@ public class SupplierOrderTest extends TestCase {
 					orderArticle.setDiscount(Float.parseFloat(Properties.getProperty("UPDATE_SOD_A2_DISCOUNT")));
 		    		orderArticle.setQuantity(Long.parseLong(Properties.getProperty("UPDATE_SOD_A2_QUANTITY")));
 				}
-				supplierOrderDetailRepository.performEdit(orderArticle);
+				supplierOrderDetailRepository.save(orderArticle);
     		}
     		supplierOrder.calculateTotal();
     		
@@ -472,10 +472,10 @@ public class SupplierOrderTest extends TestCase {
     		supplierBill.setReceivedDate(dateFormat.parse(Properties.getProperty("INSERT_SB_RECEIVEDDATE")));
     		supplierBill.setPaidDate(dateFormat.parse(Properties.getProperty("INSERT_SB_PAIDDATE")));
     		
-    		supplierBill = supplierBillRepository.performNew(supplierBill);
+    		supplierBill = supplierBillRepository.save(supplierBill);
     		
     		supplierOrder.setSupplierBill(supplierBill);
-    		supplierOrder = supplierOrderRepository.performEdit(supplierOrder);
+    		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
     		//Die Bestellung des Lieferant wird geprüft
     		SUPPLIERBILL_ID = supplierBill.getIdSupplierBill();
@@ -513,7 +513,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierBill.setReceivedDate(dateFormat.parse(Properties.getProperty("UPDATE_SB_RECEIVEDDATE")));
     		supplierBill.setPaidDate(dateFormat.parse(Properties.getProperty("UPDATE_SB_PAIDDATE")));
     		
-    		supplierBill = supplierBillRepository.performEdit(supplierBill);
+    		supplierBill = supplierBillRepository.save(supplierBill);
     		
     		supplierBill = supplierBillRepository.findOne(SUPPLIERBILL_ID);
     		
@@ -593,7 +593,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.setSupplier(supplier);
     		supplierOrder.setTotal(0);
     		
-    		supplierOrder = supplierOrderRepository.performNew(supplierOrder);
+    		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
     		SUPPLIERORDER_ID = supplierOrder.getIdSupplierOrder();
     		
@@ -616,7 +616,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrderDetail.setDiscount(Float.parseFloat(Properties.getProperty("INSERT_SOD_A1_DISCOUNT_F")));
     		supplierOrderDetail.setQuantity(Long.parseLong(Properties.getProperty("INSERT_SOD_A1_QUANTITY_F")));
     		
-    		supplierOrderDetail = supplierOrderDetailRepository.performNew(supplierOrderDetail);
+    		supplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
     		
     		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getTotalArticle());
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
@@ -631,7 +631,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrderDetail.setDiscount(Float.parseFloat(Properties.getProperty("INSERT_SOD_A2_DISCOUNT_F")));
     		supplierOrderDetail.setQuantity(Long.parseLong(Properties.getProperty("INSERT_SOD_A2_QUANTITY_F")));
     		
-    		supplierOrderDetail = supplierOrderDetailRepository.performNew(supplierOrderDetail);
+    		supplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
     		
     		supplierOrder.setTotal(supplierOrder.getTotal() + supplierOrderDetail.getTotalArticle());
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
@@ -681,10 +681,10 @@ public class SupplierOrderTest extends TestCase {
     		supplierBill.setReceivedDate(dateFormat.parse(Properties.getProperty("INSERT_SB_RECEIVEDDATE_F")));
     		supplierBill.setPaidDate(dateFormat.parse(Properties.getProperty("INSERT_SB_PAIDDATE_F")));
     		
-    		supplierBill = supplierBillRepository.performNew(supplierBill);
+    		supplierBill = supplierBillRepository.save(supplierBill);
     		
     		supplierOrder.setSupplierBill(supplierBill);
-    		supplierOrder = supplierOrderRepository.performEdit(supplierOrder);
+    		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
     		//Die Bestellung des Lieferant wird geprüft
     		SUPPLIERBILL_ID = supplierBill.getIdSupplierBill();

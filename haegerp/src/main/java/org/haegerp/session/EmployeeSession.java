@@ -8,11 +8,11 @@ import org.haegerp.entity.Employee;
  * @author Wolf
  *
  */
-public class Session {
+public class EmployeeSession {
 	
 	//Welcher Mitarbeiter wird angemeldet
 	private static Employee employee;
-
+	
 	/**
 	 * 
 	 * @return employee - Welcher Mitarbeiter wird angemeldet
@@ -26,7 +26,7 @@ public class Session {
 	 * @param employee Welcher Mitarbeiter wird angemeldet
 	 */
 	public static void setEmployee(Employee employee) {
-		Session.employee = employee;
+		EmployeeSession.employee = employee;
 	}
 	
 	

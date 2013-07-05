@@ -1,14 +1,13 @@
 package org.haegerp.entity.repository.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-import org.haegerp.entity.Log;
-import org.haegerp.entity.repository.LogRepository;
 import org.haegerp.entity.repository.MyRepository;
-import org.haegerp.session.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.haegerp.session.EmployeeSession;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -28,62 +27,36 @@ public class MyRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepos
 
 	private EntityManager entityManager;
 	
-	@Autowired
-	private LogRepository logRepository;
-	
 	public MyRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
 		super(domainClass, entityManager);
 		this.entityManager = entityManager;
-	}
-	
-	@Transactional
-	@Modifying
-	/**
-	 * Methode, die eine Entität in der Datenbank erstellt.<br/>
-	 * Das Log der Operation wird auch gespeichert.<br/>
-	 * 
-	 * @param entity Die Entität, die gespeichert wird.
-	 */
-	public <S extends T> S performNew(S entity) {
-		Log log;
-		log = new Log(entity.getClass().getSimpleName(), "New", Session.getEmployee());
-		entityManager.persist(log);
-		return super.save(entity);
-	}
-	
-	@Transactional
-	@Modifying
-	/**
-	 * Methode, die eine Entität in der Datenbank geändert.<br/>
-	 * Das Log der Operation wird auch gespeichert.<br/>
-	 * 
-	 * @param entity Die Entität, die geändert wird.
-	 */
-	public <S extends T> S performEdit(S entity) {
-		Log log;
-		log = new Log(entity.getClass().getSimpleName(), "Edit", Session.getEmployee());
-		entityManager.persist(log);
-		return super.save(entity);
 	}
 	
 	@Override
 	@Transactional
 	@Modifying
 	public void delete(T entity) {
-		Log log;
-		log = new Log(entity.getClass().getSimpleName(), "Delete", Session.getEmployee());
-		entityManager.persist(log);
+		updateDateLastAction();
 		super.delete(entity);
 	}
 	
-	@Deprecated
 	@Override
 	@Transactional
 	@Modifying
-	/**
-	 * Bitte benutz performNew oder performEdit Methode
-	 */
 	public <S extends T> S save(S entity) {
-		return performNew(entity);
+		updateDateLastAction();
+		return super.save(entity);
+	}
+	
+	@Modifying
+	@Transactional
+	public void updateDateLastAction(){
+		long idEmployee = EmployeeSession.getEmployee().getIdEmployee();
+		
+		Query query = entityManager.createQuery("UPDATE Employee e SET e.dateLastAction = ?1 where e.idEmployee = ?2");
+		query.setParameter(1, new Date());
+		query.setParameter(2, idEmployee);
+		
+		query.executeUpdate();
 	}
 }

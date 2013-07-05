@@ -43,7 +43,7 @@ public class ArticleRepositoryCustomImpl implements ArticleRepositoryCustom{
 	        articleHistory.setPriceGross(article.getPriceGross());
 	        articleHistory.setPriceSupplier(article.getPriceSupplier());
 	        articleHistory.setPriceVat(article.getPriceVat());
-	        articleHistory = articleHistoryRepository.performNew(articleHistory);
+	        articleHistory = articleHistoryRepository.save(articleHistory);
 		} catch (LengthOverflowException ex) {
 			throw ex;
 		}
