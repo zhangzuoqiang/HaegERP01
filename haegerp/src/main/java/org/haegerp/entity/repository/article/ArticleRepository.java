@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
-public interface ArticleRepository extends MyRepository<Article, Long>, ArticleRepositoryCustom {
+public interface ArticleRepository extends MyRepository<Article, Long> {
 	
 }

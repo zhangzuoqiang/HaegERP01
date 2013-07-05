@@ -123,9 +123,6 @@ public class ClientOrderTest extends TestCase {
 	        article = articleRepository.save(article);
 	        ARTICLE1_ID = article.getIdArticle();
 	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepository.createArticleHistory(article);
-	        
 	        //Artikel Eins wird geändert
 	        article = articleRepository.findOne(ARTICLE1_ID);
 	        article.setColor(Properties.getProperty("INSERT_A_COLOR"));
@@ -141,9 +138,6 @@ public class ClientOrderTest extends TestCase {
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
 	        
 	        article = articleRepository.save(article);
-	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepository.createArticleHistory(article);
 	        
 	        //Artikel zwei
 	        article = new Article();
@@ -162,9 +156,6 @@ public class ClientOrderTest extends TestCase {
 	        
 	        article = articleRepository.save(article);
 	        ARTICLE2_ID = article.getIdArticle();
-	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepository.createArticleHistory(article);
 	        
 	        //Der Kunde wird erstellt
 	        //Kategorie

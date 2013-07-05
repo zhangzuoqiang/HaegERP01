@@ -145,7 +145,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article = articleRepo.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
-	        articleRepo.createArticleHistory(article);
+	        //articleRepo.createArticleHistory(article);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();
@@ -197,7 +197,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article = articleRepo.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
-	        articleRepo.createArticleHistory(article);
+	        //articleRepo.createArticleHistory(article);
 	        
 	        //Der geänderter Artikel wird geprüft
 	        article = articleRepo.findOne(ARTICLE_ID);

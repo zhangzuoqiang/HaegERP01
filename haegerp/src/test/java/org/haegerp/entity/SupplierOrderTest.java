@@ -133,9 +133,6 @@ public class SupplierOrderTest extends TestCase {
 	        article = articleRepo.save(article);
 	        ARTICLE1_ID = article.getIdArticle();
 	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepo.createArticleHistory(article);
-	        
 	        //Artikel Eins wird geändert
 	        article = articleRepo.findOne(ARTICLE1_ID);
 	        article.setColor(Properties.getProperty("INSERT_A_COLOR"));
@@ -151,9 +148,6 @@ public class SupplierOrderTest extends TestCase {
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
 	        
 	        article = articleRepo.save(article);
-	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepo.createArticleHistory(article);
 	        
 	        //Artikel zwei
 	        article = new Article();
@@ -172,9 +166,6 @@ public class SupplierOrderTest extends TestCase {
 	        
 	        article = articleRepo.save(article);
 	        ARTICLE2_ID = article.getIdArticle();
-	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepo.createArticleHistory(article);
 	        
 	        //Der Lieferant wird erstellt
 	        Supplier supplier = new Supplier();

@@ -178,9 +178,6 @@ public class ExportTest extends TestCase {
 	        
 	        article = articleRepository.save(article);
 	        
-	        //Die Artikelversion wird kontrolliert
-	        articleRepository.createArticleHistory(article);
-	        
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();
 	        
