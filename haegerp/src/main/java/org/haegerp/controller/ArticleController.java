@@ -4,12 +4,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.haegerp.entity.Article;
-import org.haegerp.entity.ArticleCategory;
 import org.haegerp.entity.repository.article.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ArticleController {
 	
 	private static String REGEX_ONLY_NUMBERS="[0-9]*";
@@ -19,7 +20,7 @@ public class ArticleController {
 	private ArticleRepository articleRepository;
 	
 	public ArticleController() {
-		Page<Article> articlesPage = getPageArticles(0);
+		//Page<Article> articlesPage = getPageArticles(0);
 	}
 	
 	public Page<Article> getPageArticles(int page){

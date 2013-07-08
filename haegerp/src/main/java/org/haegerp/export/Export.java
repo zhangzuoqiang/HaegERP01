@@ -15,9 +15,10 @@ public interface Export {
 	 * Die Liste der Artikel wird in Dateien gespeichert
 	 * 
 	 * @param articles Die Artikel, die die Datei 
+	 * @param path 
 	 * @return Wenn die Operation erfolgreich war - True; sonst - False
 	 * @throws Exception Wann ein Problem bekommt wird
 	 */
-	public boolean export(List<Article> articles) throws Exception;
+	public boolean export(List<Article> articles, String path) throws Exception;
 	
 }

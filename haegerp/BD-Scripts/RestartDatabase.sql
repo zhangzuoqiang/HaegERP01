@@ -540,38 +540,6 @@ BEGIN
 END;
 /
 
-/*
-/* ARTICLEHISTORY */
-CREATE OR REPLACE TRIGGER trg_log_ArticleHistory
-AFTER INSERT OR UPDATE OR DELETE
-ON ARTICLEHISTORY
-FOR EACH ROW
-
-DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
-BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ArticleHistory', v_operationType, v_IdEmployee, v_SystemDate);
-END;
-/
-*/
 /* ARTICLECATEGORY */
 CREATE OR REPLACE TRIGGER trg_log_ArticleCategory
 AFTER INSERT OR UPDATE OR DELETE

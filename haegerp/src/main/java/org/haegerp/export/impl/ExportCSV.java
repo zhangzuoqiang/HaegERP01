@@ -1,4 +1,4 @@
-package org.haegerp.export;
+package org.haegerp.export.impl;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.haegerp.entity.Article;
+import org.haegerp.enums.ArticleColumns;
+import org.haegerp.export.Export;
+import org.springframework.stereotype.Service;
 
 /**
  * Exportation zur CSV-Datei
@@ -13,22 +16,23 @@ import org.haegerp.entity.Article;
  * @author Wolf
  *
  */
+@Service
 public class ExportCSV implements Export {
 
-	public boolean export(List<Article> articles) throws Exception{
+	public boolean export(List<Article> articles, String path) throws Exception{
 		if (articles.isEmpty())
 			return false;
 		
 		try {
-			File file = new File("Exports");
+			File file = new File(path);
 			file.mkdirs();
-			file = new File("Exports\\CSV-Export_" + String.valueOf((new Date()).getTime()) + ".csv");
+			file = new File(path + "\\CSV-Export_" + String.valueOf((new Date()).getTime()) + ".csv");
 			file.createNewFile();
 			FileWriter writer = new FileWriter(file);
 			
-			for (int x = 0; x < Article.COLUMS.values().length; x++){
-				writer.append(Article.COLUMS.values()[x].toString());
-				if (x+1 < Article.COLUMS.values().length)
+			for (int x = 0; x < ArticleColumns.values().length; x++){
+				writer.append(ArticleColumns.values()[x].toString());
+				if (x+1 < ArticleColumns.values().length)
 					writer.append(',');
 			}
 			

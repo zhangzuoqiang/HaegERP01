@@ -1,6 +1,5 @@
 package org.haegerp.entity;
 
-import org.haegerp.Properties;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +11,7 @@ import org.haegerp.entity.repository.employee.SalaryCategoryRepository;
 import org.haegerp.entity.repository.employee.UserGroupRepository;
 import org.haegerp.exception.LengthOverflowException;
 import org.haegerp.session.EmployeeSession;
+import org.haegerp.tools.Properties;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

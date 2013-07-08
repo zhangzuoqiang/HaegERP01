@@ -1,0 +1,17 @@
+package org.haegerp.enums;
+
+public enum ArticleColumns{
+	IDARTICLE,
+	IDARTICLECATEGORY,
+	EAN,
+	NAME,
+	PRICEVAT,
+	PRICEGROSS,
+	PRICESUPPLIER,
+	STOCK,
+	COLOR,
+	SIZEH,
+	SIZEL,
+	SIZEW,
+	DESCRIPTION
+}

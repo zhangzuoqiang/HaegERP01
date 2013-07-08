@@ -1,14 +1,16 @@
 package org.haegerp.export;
 
-import org.haegerp.Properties;
+import junit.framework.TestCase;
+
+import org.haegerp.controller.ArticleController;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
 import org.haegerp.entity.repository.article.ArticleCategoryRepository;
+import org.haegerp.entity.repository.article.ArticleHistoryRepository;
 import org.haegerp.entity.repository.article.ArticleRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
-import org.haegerp.export.ExportCSV;
-import org.haegerp.export.ExportXML;
 import org.haegerp.session.EmployeeSession;
+import org.haegerp.tools.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -16,12 +18,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import junit.framework.TestCase;
 
 
 /**
@@ -50,10 +51,24 @@ public class ExportTest extends TestCase {
     private ArticleRepository articleRepository;
     
     @Autowired
+    private ArticleHistoryRepository articleHistoryRepository;
+    
+    @Autowired
     private ArticleCategoryRepository articleCategoryRepository;
     
     @Autowired
     private EmployeeRepository employeeRepository;
+    
+    @Autowired
+    private ArticleController articleController;
+    
+    @Autowired
+    @Qualifier("exportToCSV")
+    private Export exportToCSV;
+    
+    @Autowired
+    @Qualifier("exportToXML")
+    private Export exportToXML;
     
     @Override
     @Before
@@ -63,6 +78,10 @@ public class ExportTest extends TestCase {
     	{
     		CHECK_SETUP = false;
 	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
+	    	
+	    	if (!Properties.loadProperties()){
+	    		fail("Failed to load Properties File.");
+	    	}
 	    	
 	    	insertArticleCategory();
 	    	ARTICLES_ID = new Long[4];
@@ -74,25 +93,25 @@ public class ExportTest extends TestCase {
         	ARTICLES_ID[2] = ARTICLE_ID;
         	insertArticle();
         	ARTICLES_ID[3] = ARTICLE_ID;
-	    	
-	    	if (!Properties.loadProperties()){
-	    		fail("Failed to load Properties File.");
-	    	}
     	}
     }
     
     @Override
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
     	super.tearDown();
     	if (CHECK_DESTROY)
     	{
     		CHECK_DESTROY = false;
     		
     		articleRepository.delete(ARTICLES_ID[0]);
+    		articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLES_ID[0]);
     		articleRepository.delete(ARTICLES_ID[1]);
+    		articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLES_ID[1]);
     		articleRepository.delete(ARTICLES_ID[2]);
+    		articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLES_ID[2]);
     		articleRepository.delete(ARTICLES_ID[3]);
+    		articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLES_ID[3]);
     		articleCategoryRepository.delete(ARTICLE_CATEGORY_ID);
     	}
     }
@@ -103,8 +122,7 @@ public class ExportTest extends TestCase {
     @Test
     public void test1ExportCSV(){
         try {
-        	ExportCSV exportCSV = new ExportCSV();
-        	assertTrue(exportCSV.export(articleRepository.findAll()));
+        	assertTrue(exportToCSV.export(articleRepository.findAll(), Properties.getProperty("EXPORT_PATH")));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -117,9 +135,8 @@ public class ExportTest extends TestCase {
     @Test
     public void test2ExportXML(){
         try {
-        	ExportXML exportXML = new ExportXML();
-        	assertTrue(exportXML.export(articleRepository.findAll()));
         	CHECK_DESTROY = true;
+        	assertTrue(exportToXML.export(articleRepository.findAll(), Properties.getProperty("EXPORT_PATH")));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());

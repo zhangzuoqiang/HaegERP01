@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.haegerp.exception.LengthOverflowException;
 
 /**
@@ -17,6 +21,7 @@ public class ArticleCategory implements Serializable{
 	private static final long serialVersionUID = 4064612947215250133L;
 	
 	//Primary Key (Erforderlich - Automatisch)
+	
 	private long idArticleCategory;
 	
 	//Name von der Artikelkategorie (Erforderlich)
@@ -39,6 +44,7 @@ public class ArticleCategory implements Serializable{
 	 * 
 	 * @return idArticleCategory - Primary Key (Erforderlich - Automatisch)
 	 */
+	@XmlAttribute(name="id")
 	public long getIdArticleCategory() {
 		return idArticleCategory;
 	}
@@ -55,6 +61,7 @@ public class ArticleCategory implements Serializable{
 	 * 
 	 * @return name - Artikelkategorie Name
 	 */
+	@XmlElement
 	public String getName() {
 		return name;
 	}
@@ -74,6 +81,7 @@ public class ArticleCategory implements Serializable{
 	 * 
 	 * @return description - Artikelkategorie Beschreibung
 	 */
+	@XmlElement
 	public String getDescription() {
 		return description;
 	}
@@ -93,6 +101,7 @@ public class ArticleCategory implements Serializable{
 	 * 
 	 * @return articles - Artikel, dass angeschlossen werden mit der Artikelkategorie
 	 */
+	@XmlTransient
 	public Set<Article> getArticles() {
 		return articles;
 	}

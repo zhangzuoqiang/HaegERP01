@@ -11,12 +11,6 @@
 		<many-to-one name="articleCategory" class="org.haegerp.entity.ArticleCategory"  fetch="select">
 			<column name="IDARTICLECATEGORY" not-null="true" />
 		</many-to-one>
-		<set name="supplierOrderDetail" inverse="true" fetch="select">
-			<key>
-				<column name="IDARTICLE" not-null="true"></column>
-			</key>
-			<one-to-many class="org.haegerp.entity.SupplierOrderDetail"/>
-		</set>
 		
 		<property name="ean" type="long">
 			<column name="EAN" not-null="true" />

@@ -1,12 +1,12 @@
 package org.haegerp.entity;
 
-import org.haegerp.Properties;
 import org.haegerp.entity.repository.article.ArticleCategoryRepository;
 import org.haegerp.entity.repository.article.ArticleHistoryRepository;
 import org.haegerp.entity.repository.article.ArticleRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
 import org.haegerp.session.EmployeeSession;
+import org.haegerp.tools.Properties;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

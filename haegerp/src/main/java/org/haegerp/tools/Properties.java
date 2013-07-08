@@ -1,4 +1,4 @@
-package org.haegerp;
+package org.haegerp.tools;
 
 import java.io.FileInputStream;
 

@@ -1,8 +1,10 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.haegerp.exception.LengthOverflowException;
 
@@ -14,25 +16,10 @@ import org.haegerp.exception.LengthOverflowException;
  * @author Wolf
  *
  */
+@XmlRootElement
 public class Article implements Serializable{
 
 	private static final long serialVersionUID = 5903001912808144518L;
-	
-	public enum COLUMS{
-		IDARTICLE,
-		IDARTICLECATEGORY,
-		EAN,
-		NAME,
-		PRICEVAT,
-		PRICEGROSS,
-		PRICESUPPLIER,
-		STOCK,
-		COLOR,
-		SIZEH,
-		SIZEL,
-		SIZEW,
-		DESCRIPTION
-	}
 	
 	//Primary Key (Erforderlich - Automatisch)
 	private long idArticle;
@@ -73,9 +60,6 @@ public class Article implements Serializable{
 	//Artikels Beschreibung
 	private String description;
 	
-	//Welche Bestellung gehört den Artikel
-	private Set<SupplierOrderDetail> supplierOrderDetail = new HashSet<SupplierOrderDetail>(0);
-	
 	/**
 	 * Konstruktor mit keinen Parametern
 	 * Ideal für einen neuen Artikel
@@ -87,6 +71,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return idArticle - Primary Key (Erforderlich - Automatisch)
 	 */
+	@XmlAttribute(name="id")
 	public long getIdArticle() {
 		return idArticle;
 	}
@@ -103,6 +88,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return articleCategory - Kategorie, dass Artikel gehört
 	 */
+	@XmlElement
 	public ArticleCategory getArticleCategory() {
 		return articleCategory;
 	}
@@ -119,6 +105,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return ean - Artikels EAN
 	 */
+	@XmlElement
 	public long getEan() {
 		return ean;
 	}
@@ -138,6 +125,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return name - Artikels Name
 	 */
+	@XmlElement(name="article")
 	public String getName() {
 		return name;
 	}
@@ -157,6 +145,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return priceVat - Artikels MwSt Preis
 	 */
+	@XmlElement
 	public float getPriceVat() {
 		return priceVat;
 	}
@@ -176,6 +165,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return priceGross - Artikels Nettopreis
 	 */
+	@XmlElement
 	public float getPriceGross() {
 		return priceGross;
 	}
@@ -195,6 +185,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return priceSupplier - Artikels Liferantpreis
 	 */
+	@XmlElement
 	public float getPriceSupplier() {
 		return priceSupplier;
 	}
@@ -214,6 +205,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return stock - Artikels Lager
 	 */
+	@XmlElement
 	public long getStock() {
 		return stock;
 	}
@@ -238,6 +230,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return color - Artikels Farbe
 	 */
+	@XmlElement
 	public String getColor() {
 		return color;
 	}
@@ -256,6 +249,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return sizeH - Artikels Höhegröße
 	 */
+	@XmlElement
 	public float getSizeH() {
 		return sizeH;
 	}
@@ -281,6 +275,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return sizeL - Artikels Längegröße
 	 */
+	@XmlElement
 	public float getSizeL() {
 		return sizeL;
 	}
@@ -306,6 +301,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return sizeW - Artikels Breitegröße
 	 */
+	@XmlElement
 	public float getSizeW() {
 		return sizeW;
 	}
@@ -330,6 +326,7 @@ public class Article implements Serializable{
 	 * 
 	 * @return description - Artikels Beschreibung
 	 */
+	@XmlElement
 	public String getDescription() {
 		return description;
 	}
@@ -343,22 +340,6 @@ public class Article implements Serializable{
 		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("description");
 		this.description = description;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Set<SupplierOrderDetail> getSupplierOrderDetail() {
-		return supplierOrderDetail;
-	}
-
-	/**
-	 * 
-	 * @param supplierOrderDetail
-	 */
-	public void setSupplierOrderDetail(Set<SupplierOrderDetail> supplierOrderDetail) {
-		this.supplierOrderDetail = supplierOrderDetail;
 	}
 
 	public static long getSerialversionuid() {

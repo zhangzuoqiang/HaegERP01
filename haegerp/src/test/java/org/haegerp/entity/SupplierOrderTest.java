@@ -1,6 +1,5 @@
 package org.haegerp.entity;
 
-import org.haegerp.Properties;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +20,7 @@ import org.haegerp.entity.repository.supplier.SupplierOrderDetailRepository;
 import org.haegerp.entity.repository.supplier.SupplierOrderRepository;
 import org.haegerp.entity.repository.supplier.SupplierRepository;
 import org.haegerp.session.EmployeeSession;
+import org.haegerp.tools.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;

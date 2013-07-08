@@ -19,7 +19,13 @@ xsi:schemaLocation="
 	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 	http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.1.xsd">
- 
+	
+	<context:annotation-config />
+	
+ 	<context:component-scan base-package="org.haegerp.controller" />
+	
+	<bean id="exportToXML" class="org.haegerp.export.impl.ExportXML" />
+	<bean id="exportToCSV" class="org.haegerp.export.impl.ExportCSV" />
 	 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
  	
