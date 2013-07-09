@@ -17,6 +17,7 @@ public class SupplierOrderDetailPK implements Serializable {
 	private SupplierOrder supplierOrder;
 	//Artikel Version
 	private ArticleHistory articleHistory;
+	//ID des Mitarbeiter, der erstellt hat order geändert
 	
 	/**
 	 * Default Kontruktor

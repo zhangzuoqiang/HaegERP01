@@ -8,5 +8,11 @@
 		<many-to-one name="clientCategory" class="org.haegerp.entity.ClientCategory" fetch="select">
 			<column name="IDCLIENTCATEGORY" not-null="true" />
 		</many-to-one>
+		<property name="idEmployeeModify" type="long">
+			<column name="IDEMPLOYEEMODIFY" not-null="false" />
+		</property>
+		<property name="lastModifiedDate" type="timestamp">
+			<column name="LASTMODIFIEDDATE" not-null="false" />
+		</property>
 	</joined-subclass>
 </hibernate-mapping>

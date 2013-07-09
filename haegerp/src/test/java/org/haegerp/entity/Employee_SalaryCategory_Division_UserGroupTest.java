@@ -1,5 +1,6 @@
 package org.haegerp.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -86,6 +87,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        salaryCategory.setDescription(Properties.getProperty("INSERT_SC_DESCRIPTION"));
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYTO")));
+	        salaryCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        salaryCategory.setLastModifiedDate(new Date());
 	        
 	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	        
@@ -115,6 +118,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        salaryCategory.setDescription(Properties.getProperty("UPDATE_SC_DESCRIPTION"));
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("UPDATE_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("UPDATE_SC_SALARYTO")));
+	        salaryCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        salaryCategory.setLastModifiedDate(new Date());
 	        
 	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	
@@ -141,6 +146,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        Division division = new Division();
 	        division.setDescription(Properties.getProperty("INSERT_D_DESCRIPTION"));
 	        division.setName(Properties.getProperty("INSERT_D_NAME"));
+	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        division.setLastModifiedDate(new Date());
 	        
 	        division = divisionRepository.save(division);
 	        
@@ -158,10 +165,10 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     }
     
     /**
-     * Die letzte Gehaltkategorie wird geändert
+     * Die letzte Division wird geändert
      */
     @Test
-    public void test04UpdateSalaryCategory()
+    public void test04UpdateDivision()
     {
     	try {
 	        Division division = divisionRepository.findOne(DIVISION_ID);
@@ -169,6 +176,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        //Die Felder werden gefüllt
 	        division.setDescription(Properties.getProperty("UPDATE_D_DESCRIPTION"));
 	        division.setName(Properties.getProperty("UPDATE_D_NAME"));
+	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        division.setLastModifiedDate(new Date());
 	        
 	        division = divisionRepository.save(division);
 	        
@@ -194,7 +203,6 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        UserGroup userGroup = new UserGroup();
 	        userGroup.setDescription(Properties.getProperty("INSERT_UG_DESCRIPTION"));
 	        userGroup.setName(Properties.getProperty("INSERT_UG_NAME"));
-	        
 
 	        //Hinzufügen erlaubnise
 	        List<Permission> permissionList = new LinkedList<Permission>();
@@ -206,6 +214,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
+	        
+	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        userGroup.setLastModifiedDate(new Date());
 	        
 	        userGroup = userGroupRepository.save(userGroup);
 	        
@@ -248,6 +259,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
+	        
+	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        userGroup.setLastModifiedDate(new Date());
 	        
 	        userGroup = userGroupRepository.save(userGroup);
 	        
@@ -295,6 +309,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setSalaryCategory(salaryCategory);
 	        employee.setUserGroup(userGroup);
 	        employee.setZipCode(Properties.getProperty("INSERT_E_ZIPCODE"));
+	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        employee.setLastModifiedDate(new Date());
 	        
 	      //Benutzername und Kenntwort werden erstellt
 	        employee.setPassword(Properties.getProperty("INSERT_E_PASSWORD"));
@@ -348,6 +364,8 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        employee.setPhoneNumber(Properties.getProperty("UPDATE_E_PHONENUMBER"));
 	        employee.setRegion(Properties.getProperty("UPDATE_E_REGION"));
 	        employee.setZipCode(Properties.getProperty("UPDATE_E_ZIPCODE"));
+	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        employee.setLastModifiedDate(new Date());
 	        
 	        //Benutzername und Kenntwort werden geändert
 	        employee.setPassword(Properties.getProperty("UPDATE_E_PASSWORD"));
@@ -385,6 +403,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	    	
 	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
 	    	
+	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        employee.setLastModifiedDate(new Date());
+	        
 	        employeeRepository.delete(employee);
 	        
 	        
@@ -406,6 +427,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
 	        
 	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
 	    	
+	        salaryCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        salaryCategory.setLastModifiedDate(new Date());
+	        
 	        salaryCategoryRepository.delete(salaryCategory);
 
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
@@ -425,6 +449,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     	try {
 	        Division division = divisionRepository.findOne(DIVISION_ID);
 	    	
+	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        division.setLastModifiedDate(new Date());
+	        
 	        divisionRepository.delete(division);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
@@ -444,6 +471,9 @@ public class Employee_SalaryCategory_Division_UserGroupTest extends TestCase {
     	try {
 	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
 	    	
+	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        userGroup.setLastModifiedDate(new Date());
+	        
 	        userGroupRepository.delete(userGroup);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden

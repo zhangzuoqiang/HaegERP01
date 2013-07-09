@@ -45,6 +45,12 @@
 		<property name="priceSupplier" type="float">
 			<column name="PRICESUPPLIER" not-null="true" precision="17" scale="2"/>
 		</property>
+		<property name="idEmployeeModify" type="long">
+			<column name="IDEMPLOYEEMODIFY" not-null="false" />
+		</property>
+		<property name="lastModifiedDate" type="timestamp">
+			<column name="LASTMODIFIEDDATE" not-null="false" />
+		</property>
 		
 	</class>
 </hibernate-mapping>

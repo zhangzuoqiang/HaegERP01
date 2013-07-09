@@ -1,5 +1,7 @@
 package org.haegerp.entity;
 
+import java.util.Date;
+
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.entity.repository.supplier.SupplierRepository;
 import org.haegerp.exception.LengthOverflowException;
@@ -38,7 +40,7 @@ public class SupplierTest extends TestCase {
     
     //Repositories
     @Autowired
-    private SupplierRepository supplierRepo;
+    private SupplierRepository supplierRepository;
     
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -76,12 +78,14 @@ public class SupplierTest extends TestCase {
 	    	supplier.setMobileNumber(Properties.getProperty("INSERT_S_MOBILENUMBER"));
 	    	supplier.setFaxNumber(Properties.getProperty("INSERT_S_FAXNUMBER"));
 	    	supplier.setDescription(Properties.getProperty("INSERT_S_DESCRIPTION"));
+	    	supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	    	supplier.setLastModifiedDate(new Date());
 	    	
-	    	supplier = supplierRepo.save(supplier);
+	    	supplier = supplierRepository.save(supplier);
 	    	
 	        //Die erstellt Artikelkategorie wird geprüft
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
-	        supplier = supplierRepo.findOne(SUPPLIER_ID);
+	        supplier = supplierRepository.findOne(SUPPLIER_ID);
 	        
 	        assertEquals(supplier.getName(), Properties.getProperty("INSERT_S_NAME"));
 	        assertEquals(supplier.getTaxId(), Long.parseLong(Properties.getProperty("INSERT_S_TAXID")));
@@ -107,7 +111,7 @@ public class SupplierTest extends TestCase {
     @Test
     public void test2UpdateSupplier(){
     	try {
-	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
+	        Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
 	        
 	    	supplier.setName(Properties.getProperty("UPDATE_S_NAME"));
 	    	supplier.setTaxId(Long.parseLong(Properties.getProperty("UPDATE_S_TAXID")));
@@ -121,11 +125,13 @@ public class SupplierTest extends TestCase {
 	    	supplier.setMobileNumber(Properties.getProperty("UPDATE_S_MOBILENUMBER"));
 	    	supplier.setFaxNumber(Properties.getProperty("UPDATE_S_FAXNUMBER"));
 	    	supplier.setDescription(Properties.getProperty("UPDATE_S_DESCRIPTION"));
+	    	supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	    	supplier.setLastModifiedDate(new Date());
 	    	
-	    	supplierRepo.save(supplier);
+	    	supplierRepository.save(supplier);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
-	        supplier = supplierRepo.findOne(SUPPLIER_ID);
+	        supplier = supplierRepository.findOne(SUPPLIER_ID);
 	        
 	        assertEquals(supplier.getName(), Properties.getProperty("UPDATE_S_NAME"));
 	        assertEquals(supplier.getTaxId(), Long.parseLong(Properties.getProperty("UPDATE_S_TAXID")));
@@ -152,12 +158,15 @@ public class SupplierTest extends TestCase {
     public void test3DeleteSupplier()
     {
     	try {
-	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
+	        Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
+	        
+	        supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	    	supplier.setLastModifiedDate(new Date());
 	    	
-	        supplierRepo.delete(supplier.getIdBusinessPartner());
+	        supplierRepository.delete(supplier.getIdBusinessPartner());
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertNull(supplierRepo.findOne(SUPPLIER_ID));
+	        assertNull(supplierRepository.findOne(SUPPLIER_ID));
     	} catch (Exception ex) {
 	    	ex.printStackTrace();
 	    	fail(ex.getMessage());
@@ -185,11 +194,11 @@ public class SupplierTest extends TestCase {
 	    	supplier.setFaxNumber(Properties.getProperty("INSERT_S_FAXNUMBER_F"));
 	    	supplier.setDescription(Properties.getProperty("INSERT_S_DESCRIPTION_F"));
 	    	
-	    	supplier = supplierRepo.save(supplier);
+	    	supplier = supplierRepository.save(supplier);
 	    	
 	        //Die erstellt Artikelkategorie wird geprüft
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
-	        supplier = supplierRepo.findOne(SUPPLIER_ID);
+	        supplier = supplierRepository.findOne(SUPPLIER_ID);
 	        
 	        assertEquals(supplier.getName(), Properties.getProperty("INSERT_S_NAME"));
 	        assertEquals(supplier.getTaxId(), Long.parseLong(Properties.getProperty("INSERT_S_TAXID")));

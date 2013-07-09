@@ -34,6 +34,10 @@ public class SupplierOrder implements Serializable {
 	private String description;
 	//Details / Artikel der Bestellung
 	private Set<SupplierOrderDetail> supplierOrderDetail = new HashSet<SupplierOrderDetail>(0);
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	public SupplierOrder() {
 	}
@@ -195,6 +199,38 @@ public class SupplierOrder implements Serializable {
 		for (SupplierOrderDetail supplierOrderDetail : this.supplierOrderDetail) {
 			this.total = this.total + supplierOrderDetail.getTotalArticle();
 		}
+	}
+	
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

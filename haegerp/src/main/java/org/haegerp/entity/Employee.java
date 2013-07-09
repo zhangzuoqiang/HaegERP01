@@ -47,8 +47,10 @@ public class Employee implements Serializable {
 	private String username;
 	//Kenntwort (Erforderlich)
 	private String password;
-	//Wann der Benutzer eine Operation macht, dann wird die Datum gespeichert
-	private Date dateLastAction;
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -348,21 +350,37 @@ public class Employee implements Serializable {
 			throw new LengthOverflowException("Password");
 		this.password = password;
 	}
-
+	
 	/**
 	 * 
-	 * @return dateLastAction - TimeStamp von der letzten Operation
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
 	 */
-	public Date getDateLastAction() {
-		return dateLastAction;
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
 	}
 
 	/**
 	 * 
-	 * @param dateLastAction TimeStamp von der letzten Operation
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
 	 */
-	public void setDateLastAction(Date dateLastAction) {
-		this.dateLastAction = dateLastAction;
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

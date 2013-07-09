@@ -1,5 +1,7 @@
 package org.haegerp.entity;
 
+import java.util.Date;
+
 import org.haegerp.entity.repository.client.ClientCategoryRepository;
 import org.haegerp.entity.repository.client.ClientRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
@@ -69,6 +71,8 @@ public class Client_ClientCategoryTest extends TestCase {
 	        ClientCategory clientCategory = new ClientCategory();
 	        clientCategory.setName(Properties.getProperty("INSERT_CC_NAME"));
 	        clientCategory.setDescription(Properties.getProperty("INSERT_CC_DESCRIPTION"));
+	        clientCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        clientCategory.setLastModifiedDate(new Date());
 	        
 	        clientCategory = clientCategoryRepository.save(clientCategory);
 	        
@@ -96,6 +100,8 @@ public class Client_ClientCategoryTest extends TestCase {
 	    	
 	        clientCategory.setName(Properties.getProperty("UPDATE_CC_NAME"));
 	        clientCategory.setDescription(Properties.getProperty("UPDATE_CC_DESCRIPTION"));
+	        clientCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        clientCategory.setLastModifiedDate(new Date());
 	        
 	        clientCategoryRepository.save(clientCategory);
 	        
@@ -134,6 +140,8 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setRegion(Properties.getProperty("INSERT_C_REGION"));
 	        client.setTaxId(Long.parseLong(Properties.getProperty("INSERT_C_TAXID")));
 	        client.setZipCode(Properties.getProperty("INSERT_C_ZIPCODE"));
+	        client.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        client.setLastModifiedDate(new Date());
 	        
 	        client = clientRepository.save(client);
 	        
@@ -183,6 +191,8 @@ public class Client_ClientCategoryTest extends TestCase {
 	        client.setRegion(Properties.getProperty("UPDATE_C_REGION"));
 	        client.setTaxId(Long.parseLong(Properties.getProperty("UPDATE_C_TAXID")));
 	        client.setZipCode(Properties.getProperty("UPDATE_C_ZIPCODE"));
+	        client.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        client.setLastModifiedDate(new Date());
 	        
 	        client = clientRepository.save(client);
 	        
@@ -214,6 +224,9 @@ public class Client_ClientCategoryTest extends TestCase {
     public void test5DeleteClient(){
     	try {
 	        Client client = clientRepository.findOne(CLIENT_ID);
+	        
+	        client.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        client.setLastModifiedDate(new Date());
 	    	
 	        clientRepository.delete(client);
 	        
@@ -233,6 +246,9 @@ public class Client_ClientCategoryTest extends TestCase {
     {
     	try {
 	        ClientCategory clientCategory = clientCategoryRepository.findOne(CLIENT_CATEGORY_ID);
+	        
+	        clientCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        clientCategory.setLastModifiedDate(new Date());
 	    	
 	        clientCategoryRepository.delete(clientCategory);
 	        

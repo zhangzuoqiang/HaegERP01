@@ -23,5 +23,11 @@
 			</key>
 			<one-to-many class="org.haegerp.entity.Employee"/>
 		</set>
+		<property name="idEmployeeModify" type="long">
+			<column name="IDEMPLOYEEMODIFY" not-null="false" />
+		</property>
+		<property name="lastModifiedDate" type="timestamp">
+			<column name="LASTMODIFIEDDATE" not-null="false" />
+		</property>
 	</class>
 </hibernate-mapping>

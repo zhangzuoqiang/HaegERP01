@@ -5,5 +5,11 @@
 <hibernate-mapping>
 	<joined-subclass name="org.haegerp.entity.Supplier" table="SUPPLIER" extends="org.haegerp.entity.BusinessPartner">
 		<key column="IDBUSINESSPARTNER"/>
+		<property name="idEmployeeModify" type="long">
+			<column name="IDEMPLOYEEMODIFY" not-null="false" />
+		</property>
+		<property name="lastModifiedDate" type="timestamp">
+			<column name="LASTMODIFIEDDATE" not-null="false" />
+		</property>
 	</joined-subclass>
 </hibernate-mapping>

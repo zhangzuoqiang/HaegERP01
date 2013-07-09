@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="org.haegerp.entity.Article" table="article">
+	<class name="org.haegerp.entity.Article" table="ARTICLE">
 		<id name="idArticle" type="long">
 			<column name="IDARTICLE" not-null="true" />
 			<generator class="increment" />
@@ -44,6 +44,12 @@
 		</property>
 		<property name="description" type="string">
 			<column name="DESCRIPTION" not-null="false" length="256" />
+		</property>
+		<property name="idEmployeeModify" type="long">
+			<column name="IDEMPLOYEEMODIFY" not-null="false" />
+		</property>
+		<property name="lastModifiedDate" type="timestamp">
+			<column name="LASTMODIFIEDDATE" not-null="false" />
 		</property>
 	</class>
 </hibernate-mapping>

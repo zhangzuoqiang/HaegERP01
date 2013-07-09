@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,17 +22,17 @@ public class ArticleCategory implements Serializable{
 	private static final long serialVersionUID = 4064612947215250133L;
 	
 	//Primary Key (Erforderlich - Automatisch)
-	
 	private long idArticleCategory;
-	
 	//Name von der Artikelkategorie (Erforderlich)
 	private String name;
-	
 	//Artikelkategorie Beschreibung
 	private String description;
-	
 	//(One-To-Many) Artikel, dass angeschlossen werden mit der Artikelkategorie
 	private Set<Article> articles = new HashSet<Article>(0);
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -112,6 +113,38 @@ public class ArticleCategory implements Serializable{
 	 */
 	public void setArticles(Set<Article> articles) {
 		this.articles = articles;
+	}
+	
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

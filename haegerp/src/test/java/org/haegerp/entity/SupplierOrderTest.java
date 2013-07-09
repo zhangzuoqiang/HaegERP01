@@ -67,13 +67,13 @@ public class SupplierOrderTest extends TestCase {
     private static boolean CHECK_ERASE = false;
     
     @Autowired
-    private ArticleRepository articleRepo;
+    private ArticleRepository articleRepository;
     @Autowired
-    private ArticleCategoryRepository articleCategoryRepo;
+    private ArticleCategoryRepository articleCategoryRepository;
     @Autowired
     private ArticleHistoryRepository articleHistoryRepository;
     @Autowired
-    private SupplierRepository supplierRepo;
+    private SupplierRepository supplierRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
@@ -108,8 +108,10 @@ public class SupplierOrderTest extends TestCase {
 	    	ArticleCategory articleCategory = new ArticleCategory();
 	        articleCategory.setName(Properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION"));
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
 	        
-	        articleCategory = articleCategoryRepo.save(articleCategory);
+	        articleCategory = articleCategoryRepository.save(articleCategory);
 	        
 	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
 	        
@@ -129,12 +131,14 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepository.save(article);
 	        ARTICLE1_ID = article.getIdArticle();
 	        
 	        //Artikel Eins wird geändert
-	        article = articleRepo.findOne(ARTICLE1_ID);
+	        article = articleRepository.findOne(ARTICLE1_ID);
 	        article.setColor(Properties.getProperty("INSERT_A_COLOR"));
 	        article.setDescription(Properties.getProperty("INSERT_A_DESCRIPTION"));
 	        article.setEan(Long.parseLong(Properties.getProperty("INSERT_A_EAN")));
@@ -146,8 +150,10 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepository.save(article);
 	        
 	        //Artikel zwei
 	        article = new Article();
@@ -163,8 +169,10 @@ public class SupplierOrderTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepository.save(article);
 	        ARTICLE2_ID = article.getIdArticle();
 	        
 	        //Der Lieferant wird erstellt
@@ -181,8 +189,10 @@ public class SupplierOrderTest extends TestCase {
 	    	supplier.setMobileNumber(Properties.getProperty("INSERT_S_MOBILENUMBER"));
 	    	supplier.setFaxNumber(Properties.getProperty("INSERT_S_FAXNUMBER"));
 	    	supplier.setDescription(Properties.getProperty("INSERT_S_DESCRIPTION"));
+	    	supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        supplier.setLastModifiedDate(new Date());
 	    	
-	    	supplier = supplierRepo.save(supplier);
+	    	supplier = supplierRepository.save(supplier);
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
 	    	
 	    	//Mitarbeiter wird erstellt
@@ -191,6 +201,8 @@ public class SupplierOrderTest extends TestCase {
 	        salaryCategory.setDescription(Properties.getProperty("INSERT_SC_DESCRIPTION"));
 	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYFROM")));
 	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYTO")));
+	        salaryCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        salaryCategory.setLastModifiedDate(new Date());
 	        
 	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
 	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
@@ -199,6 +211,8 @@ public class SupplierOrderTest extends TestCase {
 	        Division division = new Division();
 	        division.setDescription(Properties.getProperty("INSERT_D_DESCRIPTION"));
 	        division.setName(Properties.getProperty("INSERT_D_NAME"));
+	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        division.setLastModifiedDate(new Date());
 	        
 	        division = divisionRepository.save(division);
 	        DIVISION_ID = division.getIdDivision();
@@ -218,6 +232,9 @@ public class SupplierOrderTest extends TestCase {
 	        for (int i = 0; i < permissionList.size(); i++) {
 				userGroup.getPermissions().add(permissionList.get(i));
 			}
+	        
+	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        userGroup.setLastModifiedDate(new Date());
 	        
 	        userGroup = userGroupRepository.save(userGroup);
 	        USER_GROUP_ID = userGroup.getIdUserGroup();
@@ -239,6 +256,8 @@ public class SupplierOrderTest extends TestCase {
 	        employee.setZipCode(Properties.getProperty("INSERT_E_ZIPCODE"));
 	        employee.setPassword(Properties.getProperty("INSERT_E_PASSWORD"));
 	        employee.setUsername(Properties.getProperty("INSERT_E_USERNAME"));
+	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        employee.setLastModifiedDate(new Date());
 	        
 	        employee = employeeRepository.save(employee);
 	        EMPLOYEE_ID = employee.getIdEmployee();
@@ -252,33 +271,53 @@ public class SupplierOrderTest extends TestCase {
     	if (CHECK_ERASE)
     	{
 	    	//Die Artikel werden gelöscht
-	    	Article article = articleRepo.findOne(ARTICLE1_ID);
-	        articleRepo.delete(article);
-	        article = articleRepo.findOne(ARTICLE2_ID);
-	        articleRepo.delete(article);
+	    	Article article = articleRepository.findOne(ARTICLE1_ID);
+	    	article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	    	article.setLastModifiedDate(new Date());
+	        articleRepository.delete(article);
+	        
+	        article = articleRepository.findOne(ARTICLE2_ID);
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
+	        articleRepository.delete(article);
 	        
 	        articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLE1_ID);
 	        articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLE2_ID);
 	        
 	        //Die Artikelkategorie wird gelöscht
-	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
-	        articleCategoryRepo.delete(articleCategory);
+	        ArticleCategory articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
+	        articleCategoryRepository.delete(articleCategory);
 	        
 	        //Der Lieferant wird gelöscht
-	        Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
-	        supplierRepo.delete(supplier.getIdBusinessPartner());
+	        Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
+	        supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        supplier.setLastModifiedDate(new Date());
+	        supplierRepository.delete(supplier.getIdBusinessPartner());
 	        
 	        //Der Mitarbeiter wird gelöscht
 	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
+	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        employee.setLastModifiedDate(new Date());
 	        employeeRepository.delete(employee);
+	        
 	        //Gehaltkategorie
 	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
+	        supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        supplier.setLastModifiedDate(new Date());
 	        salaryCategoryRepository.delete(salaryCategory);
+	        
 	        //Abteilung
 	        Division division = divisionRepository.findOne(DIVISION_ID);
+	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        division.setLastModifiedDate(new Date());
 	        divisionRepository.delete(division);
+	        
 	        //Benutzergrupper
 	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
+	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        userGroup.setLastModifiedDate(new Date());
 	        userGroupRepository.delete(userGroup);
 	        CHECK_ERASE = false;
     	}
@@ -290,7 +329,7 @@ public class SupplierOrderTest extends TestCase {
     @Test
     public void test1InsertSupplierOrder(){
     	try {
-    		Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
+    		Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
     		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
@@ -302,6 +341,8 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.setEmployee(employee);
     		supplierOrder.setSupplier(supplier);
     		supplierOrder.setTotal(0);
+    		supplierOrder.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		supplierOrder.setLastModifiedDate(new Date());
     		
     		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
@@ -317,7 +358,7 @@ public class SupplierOrderTest extends TestCase {
 	        assertEquals(supplierOrder.getTotal(), 0.0F);
     		
     		//Hinzufügen den ersten Artikel
-    		Article article = articleRepo.findOne(ARTICLE1_ID);
+    		Article article = articleRepository.findOne(ARTICLE1_ID);
     		ArticleHistory articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(ARTICLE1_ID), article));
     		
     		SupplierOrderDetail supplierOrderDetail = new SupplierOrderDetail();
@@ -332,7 +373,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.calculateTotal();
     		
     		//Hinzufügen den zweiten Artikel
-    		article = articleRepo.findOne(ARTICLE2_ID);
+    		article = articleRepository.findOne(ARTICLE2_ID);
     		articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(ARTICLE2_ID), article));
     		
     		supplierOrderDetail = new SupplierOrderDetail();
@@ -383,7 +424,7 @@ public class SupplierOrderTest extends TestCase {
     @Test
     public void test2UpdateSupplierOrder(){
     	try {
-    		Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
+    		Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
     		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
@@ -393,6 +434,8 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.setDescription(Properties.getProperty("UPDATE_SO_DESCRIPTION"));
     		supplierOrder.setEmployee(employee);
     		supplierOrder.setSupplier(supplier);
+    		supplierOrder.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		supplierOrder.setLastModifiedDate(new Date());
     		
     		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
@@ -462,10 +505,14 @@ public class SupplierOrderTest extends TestCase {
     		
     		supplierBill.setReceivedDate(dateFormat.parse(Properties.getProperty("INSERT_SB_RECEIVEDDATE")));
     		supplierBill.setPaidDate(dateFormat.parse(Properties.getProperty("INSERT_SB_PAIDDATE")));
+    		supplierBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		supplierBill.setLastModifiedDate(new Date());
     		
     		supplierBill = supplierBillRepository.save(supplierBill);
     		
     		supplierOrder.setSupplierBill(supplierBill);
+    		supplierOrder.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		supplierOrder.setLastModifiedDate(new Date());
     		supplierOrder = supplierOrderRepository.save(supplierOrder);
     		
     		//Die Bestellung des Lieferant wird geprüft
@@ -503,6 +550,8 @@ public class SupplierOrderTest extends TestCase {
     		
     		supplierBill.setReceivedDate(dateFormat.parse(Properties.getProperty("UPDATE_SB_RECEIVEDDATE")));
     		supplierBill.setPaidDate(dateFormat.parse(Properties.getProperty("UPDATE_SB_PAIDDATE")));
+    		supplierBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		supplierBill.setLastModifiedDate(new Date());
     		
     		supplierBill = supplierBillRepository.save(supplierBill);
     		
@@ -530,8 +579,16 @@ public class SupplierOrderTest extends TestCase {
     	try {
 	        SupplierBill supplierBill = supplierBillRepository.findOne(SUPPLIERBILL_ID);
 	    	SupplierOrder supplierOrder = supplierOrderRepository.findOne(SUPPLIERORDER_ID);
+	    	
 	    	supplierOrder.setSupplierBill(null);
-	        
+	    	supplierOrder.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	    	supplierOrder.setLastModifiedDate(new Date());
+	    	
+	    	supplierOrderRepository.delete(supplierOrder);
+	    	
+	    	supplierBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		supplierBill.setLastModifiedDate(new Date());
+	    	
 	    	supplierBillRepository.delete(supplierBill);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
@@ -550,7 +607,9 @@ public class SupplierOrderTest extends TestCase {
     {
     	try {
 	    	SupplierOrder supplierOrder = supplierOrderRepository.findOne(SUPPLIERORDER_ID);
-
+	    	supplierOrder.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	    	supplierOrder.setLastModifiedDate(new Date());
+	    	
 	    	supplierOrderDetailRepository.delete(supplierOrder.getSupplierOrderDetail());
 	        
 	    	supplierOrderRepository.delete(supplierOrder);
@@ -571,7 +630,7 @@ public class SupplierOrderTest extends TestCase {
     @Test(expected=ParseException.class)
     public void test7InsertSupplierOrderError() throws Exception{
     	try {
-    		Supplier supplier = supplierRepo.findOne(SUPPLIER_ID);
+    		Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
     		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
@@ -598,7 +657,7 @@ public class SupplierOrderTest extends TestCase {
 	        assertEquals(supplierOrder.getTotal(), 0.0F);
     		
     		//Hinzufügen den ersten Artikel
-    		Article article = articleRepo.findOne(ARTICLE1_ID);
+    		Article article = articleRepository.findOne(ARTICLE1_ID);
     		ArticleHistory articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(ARTICLE1_ID), article));
     		
     		SupplierOrderDetail supplierOrderDetail = new SupplierOrderDetail();
@@ -613,7 +672,7 @@ public class SupplierOrderTest extends TestCase {
     		supplierOrder.getSupplierOrderDetail().add(supplierOrderDetail);
     		
     		//Hinzufügen den zweiten Artikel
-    		article = articleRepo.findOne(ARTICLE2_ID);
+    		article = articleRepository.findOne(ARTICLE2_ID);
     		articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(ARTICLE2_ID), article));
     		
     		supplierOrderDetail = new SupplierOrderDetail();

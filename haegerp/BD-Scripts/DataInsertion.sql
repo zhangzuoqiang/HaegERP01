@@ -6,23 +6,23 @@
 /* *				Permission					*/
 /* **********************************************/
 
-INSERT INTO permission (idPermission, moduleName)
-VALUES (1, 'Articles Administration');
+INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (1, 'Articles Administration', SYSDATE, 1);
 
-INSERT INTO permission (idPermission, moduleName)
-VALUES (2, 'Business Partners Administration');
+INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (2, 'Business Partners Administration', SYSDATE, 1);
 
-INSERT INTO permission (idPermission, moduleName)
-VALUES (3, 'Human Resources Administration');
+INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (3, 'Human Resources Administration', SYSDATE, 1);
 
-INSERT INTO permission (idPermission, moduleName)
-VALUES (4, 'Client Orders Administration');
+INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (4, 'Client Orders Administration', SYSDATE, 1);
 
-INSERT INTO permission (idPermission, moduleName)
-VALUES (5, 'Suppliers Order Administration');
+INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (5, 'Suppliers Order Administration', SYSDATE, 1);
 
-INSERT INTO permission (idPermission, moduleName)
-VALUES (6, 'Company Administration');
+INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (6, 'Company Administration', SYSDATE, 1);
 
 ALTER TABLE permission READ ONLY;
 
@@ -31,14 +31,14 @@ ALTER TABLE permission READ ONLY;
 /* **********************************************/
 
 INSERT INTO SALARYCATEGORY
-(SALARYFROM, SALARYTO, IDSALARYCATEGORY)
+(SALARYFROM, SALARYTO, IDSALARYCATEGORY, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
 VALUES
-(30000, 40000, 1);
+(30000, 40000, 1, SYSDATE, 1);
 
 INSERT INTO DIVISION
-(NAME, IDDIVISION)
+(NAME, IDDIVISION, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
 VALUES
-('Administration', 1);
+('Administration', 1, SYSDATE, 1);
 
 INSERT INTO USERGROUP
 (NAME, IDUSERGROUP)
@@ -69,9 +69,9 @@ INSERT INTO USERGROUP_PERMISSION
 VALUES (1, 6);
 
 INSERT INTO EMPLOYEE
-(IDSALARYCATEGORY, IDDIVISION, IDUSERGROUP, IDCARD, NAME, ADDRESS, ZIPCODE, CITY, COUNTRY, USERNAME, PASSWORD, IDEMPLOYEE)
+(IDSALARYCATEGORY, IDDIVISION, IDUSERGROUP, IDCARD, NAME, ADDRESS, ZIPCODE, CITY, COUNTRY, USERNAME, PASSWORD, IDEMPLOYEE, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
 VALUES
-(1, 1, 1, 123456789, 'Ze Mario', 'Konigswinter Str. 200', '53299', 'Bonn', 'Deutschland', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1);
+(1, 1, 1, 123456789, 'Ze Mario', 'Konigswinter Str. 200', '53299', 'Bonn', 'Deutschland', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, SYSDATE, 1);
 
 /* ******************************************/
 /* *				Company					*/
@@ -84,11 +84,11 @@ VALUES(1);
 /* *			Outstanding					*/
 /* ******************************************/
 
-INSERT INTO ArticleCategory (IDARTICLECATEGORY, NAME)
-VALUES (0, 'Outstanding');
+INSERT INTO ArticleCategory (IDARTICLECATEGORY, NAME, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (0, 'Outstanding', SYSDATE, 1);
 
-INSERT INTO Article (IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
-VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 17, 20, 0);
+INSERT INTO Article (IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, STOCK, SIZEH, SIZEL, SIZEW, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 17, 20, 0, 0, 0, 0, 0, SYSDATE, 1);
 
-INSERT INTO ArticleHistory (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
-VALUES (1, 0, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 17, 20, 0);
+INSERT INTO ArticleHistory (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES (1, 0, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 17, 20, 0, SYSDATE, 1);

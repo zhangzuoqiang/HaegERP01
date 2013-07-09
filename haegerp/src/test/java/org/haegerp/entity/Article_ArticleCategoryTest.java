@@ -1,5 +1,7 @@
 package org.haegerp.entity;
 
+import java.util.Date;
+
 import org.haegerp.entity.repository.article.ArticleCategoryRepository;
 import org.haegerp.entity.repository.article.ArticleHistoryRepository;
 import org.haegerp.entity.repository.article.ArticleRepository;
@@ -38,13 +40,13 @@ public class Article_ArticleCategoryTest extends TestCase {
     private static boolean CHECK_SETUP = true;
     
     @Autowired
-    private ArticleRepository articleRepo;
+    private ArticleRepository articleRepository;
     
     @Autowired
     private ArticleHistoryRepository articleHistoryRepository;
     
     @Autowired
-    private ArticleCategoryRepository articleCategoryRepo;
+    private ArticleCategoryRepository articleCategoryRepository;
     
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -58,8 +60,8 @@ public class Article_ArticleCategoryTest extends TestCase {
     		CHECK_SETUP = false;
     		
     		EmployeeSession.setEmployee(employeeRepository.findOne(1L));
-	    	
-	    	if (!Properties.loadProperties()){
+    		
+    		if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
     	}
@@ -75,13 +77,15 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        ArticleCategory articleCategory = new ArticleCategory();
 	        articleCategory.setName(Properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION"));
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
 	        
-	        articleCategory = articleCategoryRepo.save(articleCategory);
+	        articleCategory = articleCategoryRepository.save(articleCategory);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
 	        ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
 	        
-	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	        articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
 	        
 	        assertEquals(articleCategory.getName(), Properties.getProperty("INSERT_AC_NAME"));
 	        assertEquals(articleCategory.getDescription(), Properties.getProperty("INSERT_AC_DESCRIPTION"));
@@ -99,14 +103,16 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test2UpdateArticleCategory()
     {
     	try {
-    		ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+    		ArticleCategory articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
     	
 	        articleCategory.setName(Properties.getProperty("UPDATE_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("UPDATE_AC_DESCRIPTION"));
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
 	        
-	        articleCategory = articleCategoryRepo.save(articleCategory);
+	        articleCategory = articleCategoryRepository.save(articleCategory);
 	        
-	        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	        articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
 	        
 	        assertEquals(articleCategory.getName(), Properties.getProperty("UPDATE_AC_NAME"));
 	        assertEquals(articleCategory.getDescription(), Properties.getProperty("UPDATE_AC_DESCRIPTION"));
@@ -124,7 +130,7 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test3InsertArticle(){
     	try {
 	    	//Die Artikelkategorie wird geholt
-	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	        ArticleCategory articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
 	    	
 	        Article article = new Article();
         
@@ -141,8 +147,10 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepository.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
 	        //articleRepo.createArticleHistory(article);
@@ -150,7 +158,7 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();
 	        
-	        article = articleRepo.findOne(ARTICLE_ID);
+	        article = articleRepository.findOne(ARTICLE_ID);
 	        
 	        assertEquals(article.getColor(), Properties.getProperty("INSERT_A_COLOR"));
 	        assertEquals(article.getDescription(), Properties.getProperty("INSERT_A_DESCRIPTION"));
@@ -179,7 +187,7 @@ public class Article_ArticleCategoryTest extends TestCase {
     	
     	try {
 	    	//Die Artikelkategorie wird geholt
-	        Article article = articleRepo.findOne(ARTICLE_ID);
+	        Article article = articleRepository.findOne(ARTICLE_ID);
 	    	
 	        //Die Felder werden geändert
 	        article.setColor(Properties.getProperty("UPDATE_A_COLOR"));
@@ -193,14 +201,16 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepository.save(article);
 	        
 	        //Die Artikelversion wird kontrolliert
 	        //articleRepo.createArticleHistory(article);
 	        
 	        //Der geänderter Artikel wird geprüft
-	        article = articleRepo.findOne(ARTICLE_ID);
+	        article = articleRepository.findOne(ARTICLE_ID);
 	        
 	        assertEquals(article.getColor(), Properties.getProperty("UPDATE_A_COLOR"));
 	        assertEquals(article.getDescription(), Properties.getProperty("UPDATE_A_DESCRIPTION"));
@@ -225,14 +235,17 @@ public class Article_ArticleCategoryTest extends TestCase {
     @Test
     public void test5DeleteArticle(){
     	try {
-	        Article article = articleRepo.findOne(ARTICLE_ID);
+	        Article article = articleRepository.findOne(ARTICLE_ID);
 	    	
 	        articleHistoryRepository.deleteAllVersionsOfArticle(article.getIdArticle());
 	        
-	        articleRepo.delete(article);
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
+	        
+	        articleRepository.delete(article);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(!articleRepo.exists(ARTICLE_ID));
+	        assertTrue(!articleRepository.exists(ARTICLE_ID));
     	} catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
@@ -246,12 +259,15 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test6DeleteArticleCategory()
     {
     	try {
-	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	        ArticleCategory articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
 	    	
-	        articleCategoryRepo.delete(articleCategory);
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
+	        
+	        articleCategoryRepository.delete(articleCategory);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
-	        assertTrue(!articleCategoryRepo.exists(ARTICLE_CATEGORY_ID));
+	        assertTrue(!articleCategoryRepository.exists(ARTICLE_CATEGORY_ID));
 	    } catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
@@ -270,13 +286,13 @@ public class Article_ArticleCategoryTest extends TestCase {
         articleCategory.setName(Properties.getProperty("INSERT_AC_NAME_F"));
         articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION_F"));
         
-        articleCategory = articleCategoryRepo.save(articleCategory);
+        articleCategory = articleCategoryRepository.save(articleCategory);
 
         //Die erstellt Artikelkategorie wird geprüft
         ARTICLE_CATEGORY_ID = articleCategory.getIdArticleCategory();
         
         
-        articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+        articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
         
         assertEquals(articleCategory.getName(), Properties.getProperty("INSERT_AC_NAME"));
         assertEquals(articleCategory.getDescription(), Properties.getProperty("INSERT_AC_DESCRIPTION"));
@@ -291,7 +307,7 @@ public class Article_ArticleCategoryTest extends TestCase {
     public void test8InsertArticleError() throws Exception{
     	try {
 	    	//Die Artikelkategorie wird geholt
-	        ArticleCategory articleCategory = articleCategoryRepo.findOne(ARTICLE_CATEGORY_ID);
+	        ArticleCategory articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
 	    	
 	        Article article = new Article();
 	    
@@ -308,12 +324,12 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW_F")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK_F")));
 	        
-	        article = articleRepo.save(article);
+	        article = articleRepository.save(article);
 	        
 	        //Der erstellter Artikel wird geprüft
 	        ARTICLE_ID = article.getIdArticle();
 	        
-	        article = articleRepo.findOne(ARTICLE_ID);
+	        article = articleRepository.findOne(ARTICLE_ID);
 	        
 	        assertEquals(article.getColor(), Properties.getProperty("INSERT_A_COLOR"));
 	        assertEquals(article.getDescription(), Properties.getProperty("INSERT_A_DESCRIPTION"));

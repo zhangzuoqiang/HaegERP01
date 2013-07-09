@@ -4,20 +4,6 @@ CREATE SEQUENCE log_seq
 	INCREMENT BY 1
 	NOCACHE;
 
-/* EMPLOYEE_CREATE */
-CREATE OR REPLACE TRIGGER trg_Creation_Employee
-BEFORE INSERT
-ON EMPLOYEE
-FOR EACH ROW
-
-DECLARE
-	v_DateLastAction DATE;
-BEGIN
-	SELECT SysDate INTO v_DateLastAction FROM DUAL;
-	:NEW.dateLastAction := v_DateLastAction;
-END;
-/
-
 /* ARTICLE */
 CREATE OR REPLACE TRIGGER trg_log_Article
 AFTER INSERT OR UPDATE OR DELETE
@@ -25,58 +11,43 @@ ON ARTICLE
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Article', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Article';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
-/* ARTICLEHISTORY */
 CREATE OR REPLACE TRIGGER trg_log_ArticleHistory
 AFTER INSERT OR UPDATE OR DELETE
 ON ARTICLEHISTORY
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ArticleHistory', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'ArticleHistory';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -87,27 +58,20 @@ ON ARTICLECATEGORY
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ArticleCategory', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'ArticleCategory';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -118,27 +82,20 @@ ON BUSINESSPARTNER
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'BusinessPartner', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'BusinessPartner';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -149,27 +106,20 @@ ON SUPPLIER
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Supplier', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Supplier';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -180,27 +130,20 @@ ON CLIENTCATEGORY
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ClientCategory', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'ClientCategory';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -211,27 +154,20 @@ ON CLIENT
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Client', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Client';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -242,27 +178,20 @@ ON SALARYCATEGORY
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'SalaryCategory', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'SalaryCategory';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -273,27 +202,20 @@ ON DIVISION
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Division', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Division';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -304,27 +226,20 @@ ON USERGROUP
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'UserGroup', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'UserGroup';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -335,29 +250,20 @@ ON EMPLOYEE
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	IF NOT UPDATING ('dateLastAction') THEN
-		SELECT SysDate INTO v_SystemDate FROM Dual;
-		SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-		SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-		
-		INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-		VALUES (log_seq.nextval, 'Employee', v_operationType, v_IdEmployee, v_SystemDate);
-	END IF;
+	v_entity := 'Employee';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -368,58 +274,20 @@ ON PERMISSION
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Permission', v_operationType, v_IdEmployee, v_SystemDate);
-END;
-/
-
-/* USERGROUP_PERMISSION */
-CREATE OR REPLACE TRIGGER trg_log_UserGroupPermission
-AFTER INSERT OR UPDATE OR DELETE
-ON USERGROUP_PERMISSION
-FOR EACH ROW
-
-DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
-BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'UserGroupPermission', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Permission';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -430,27 +298,20 @@ ON SUPPLIERBILL
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'SupplierBill', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'SupplierBill';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -461,27 +322,20 @@ ON SUPPLIERORDER
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'SupplierOrder', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'SupplierOrder';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -492,27 +346,35 @@ ON SUPPLIERORDER_ARTICLE
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
+	v_idEmployeeModify INTEGER;
+	v_lastModifiedDate DATE;
 BEGIN
+	v_entity := 'SupplierOrderDetail';
 	IF DELETING THEN
-		v_operationType := 'Delete';
+		SELECT idEmployeeModify
+			INTO v_idEmployeeModify
+		FROM SUPPLIERORDER
+		WHERE IDSUPPLIERBILL = :OLD.IDSUPPLIERORDER;
+		
+		SELECT lastModifiedDate
+			INTO v_lastModifiedDate
+		FROM SUPPLIERORDER
+		WHERE IDSUPPLIERBILL = :OLD.IDSUPPLIERORDER;
 	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
+		SELECT idEmployeeModify
+			INTO v_idEmployeeModify
+		FROM SUPPLIERORDER
+		WHERE IDSUPPLIERBILL = :NEW.IDSUPPLIERORDER;
+		
+		SELECT lastModifiedDate
+			INTO v_lastModifiedDate
+		FROM SUPPLIERORDER
+		WHERE IDSUPPLIERBILL = :NEW.IDSUPPLIERORDER;
 	END IF;
 	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
 	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'SupplierOrderArticle', v_operationType, v_IdEmployee, v_SystemDate);
+	VALUES (log_seq.nextval, v_entity, 'Update', v_idEmployeeModify, v_lastModifiedDate);
 END;
 /
 
@@ -523,27 +385,20 @@ ON CLIENTBILL
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ClientBill', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'ClientBill';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -554,27 +409,20 @@ ON CLIENTOFFER
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ClientOffer', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'ClientOffer';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -585,27 +433,35 @@ ON CLIENTOFFER_ARTICLE
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
+	v_idEmployeeModify INTEGER;
+	v_lastModifiedDate DATE;
 BEGIN
+	v_entity := 'ClientOfferDetails';
 	IF DELETING THEN
-		v_operationType := 'Delete';
+		SELECT idEmployeeModify
+			INTO v_idEmployeeModify
+		FROM CLIENTOFFER
+		WHERE IDCLIENTOFFER = :OLD.IDCLIENTOFFER;
+		
+		SELECT lastModifiedDate
+			INTO v_lastModifiedDate
+		FROM CLIENTOFFER
+		WHERE IDCLIENTOFFER = :OLD.IDCLIENTOFFER;
 	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
+		SELECT idEmployeeModify
+			INTO v_idEmployeeModify
+		FROM CLIENTOFFER
+		WHERE IDCLIENTOFFER = :NEW.IDCLIENTOFFER;
+		
+		SELECT lastModifiedDate
+			INTO v_lastModifiedDate
+		FROM CLIENTOFFER
+		WHERE IDCLIENTOFFER = :NEW.IDCLIENTOFFER;
 	END IF;
 	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
 	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'ClientOfferArticle', v_operationType, v_IdEmployee, v_SystemDate);
+	VALUES (log_seq.nextval, v_entity, 'Update', v_idEmployeeModify, v_lastModifiedDate);
 END;
 /
 
@@ -616,27 +472,20 @@ ON OUTSTANDING
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Outstanding', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Outstanding';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /
 
@@ -647,26 +496,19 @@ ON COMPANY
 FOR EACH ROW
 
 DECLARE
-	v_operationType VARCHAR2(20);
-	v_DateLastAction DATE;
-	v_IdEmployee INTEGER;
-	v_SystemDate DATE;
+	v_entity VARCHAR2(100);
 BEGIN
-	IF DELETING THEN
-		v_operationType := 'Delete';
-	ELSE
-		IF UPDATING THEN
-			v_operationType := 'Update';
-		ELSE
-			v_operationType := 'Insert';
-		END IF;
-	END IF;
-	
-	SELECT SysDate INTO v_SystemDate FROM Dual;
-	SELECT MAX(DateLastAction) INTO v_DateLastAction FROM Employee;
-	SELECT IdEmployee INTO v_IdEmployee FROM Employee WHERE DateLastAction = v_DateLastAction;
-	
-	INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
-	VALUES (log_seq.nextval, 'Company', v_operationType, v_IdEmployee, v_SystemDate);
+	v_entity := 'Company';
+	CASE
+		WHEN INSERTING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Insert', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN UPDATING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Update', :NEW.idEmployeeModify, :NEW.LastModifiedDate);
+		WHEN DELETING THEN
+			INSERT INTO Log (IDLOG, ENTITY, OPERATION, IDEMPLOYEE, OPERATIONDATE)
+			VALUES (log_seq.nextval, v_entity, 'Delete', :OLD.idEmployeeModify, :OLD.LastModifiedDate);
+	END CASE;
 END;
 /

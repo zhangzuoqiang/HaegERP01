@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +19,14 @@ public class Permission implements Serializable {
 	
 	//Primary Key (Erforderlich)
 	private long idPermission;
-	
 	//Name der Erlaubnis (Erforderlich)
 	private String moduleName;
-	
 	//(Many-To-Many) BenutzerGruppen, dass angeschlossen werden mit der Erlaubnis
 	private Set<UserGroup> userGroups = new HashSet<UserGroup>(0);
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -81,6 +84,38 @@ public class Permission implements Serializable {
 	 */
 	public void setUserGroups(Set<UserGroup> userGroups) {
 		this.userGroups = userGroups;
+	}
+	
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

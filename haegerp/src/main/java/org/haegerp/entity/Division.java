@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,15 +19,16 @@ public class Division implements Serializable {
 
 	//Primary Key (Erforderlich - Automatisch)
 	private long idDivision;
-	
 	//Name des Divisions (Erforderlich)
 	private String name;
-	
 	//Division Beschreibung
 	private String description;
-	
 	//(One-To-Many) Mitarbeiter, dass hier gehört
 	private Set<Employee> employees = new HashSet<Employee>(0);
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -103,6 +105,38 @@ public class Division implements Serializable {
 	 */
 	public void setEmployees(Set<Employee> employees) {
 		this.employees = employees;
+	}
+	
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

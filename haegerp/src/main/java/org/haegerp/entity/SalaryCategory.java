@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,18 +19,18 @@ public class SalaryCategory implements Serializable {
 	
 	//Primary Key (Erforderlich - Automatisch)
 	private long idSalaryCategory;
-
 	//Gehalt Minimum (Erforderlich)
 	private float salaryFrom;
-	
 	//Gehalt Maximal (Erforderlich)
 	private float salaryTo;
-	
 	//Gehaltkategorie Beschreibung
 	private String description;
-	
 	//Mitarbeiter, dass hier gehört
 	private Set<Employee> employees = new HashSet<Employee>(0);
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -125,6 +126,38 @@ public class SalaryCategory implements Serializable {
 		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("Description");
 		this.description = description;
+	}
+	
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

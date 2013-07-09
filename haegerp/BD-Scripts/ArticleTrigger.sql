@@ -22,7 +22,7 @@ BEGIN
 	FROM ArticleCategory
 	WHERE idArticleCategory = :NEW.idArticleCategory;
 	
-	INSERT INTO ARTICLEHISTORY (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER)
-	VALUES (v_currentVersion, :NEW.idArticle, v_categoryName, :NEW.ean, :NEW.name, :NEW.priceVat, :NEW.priceGross, :NEW.priceSupplier);
+	INSERT INTO ARTICLEHISTORY (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+	VALUES (v_currentVersion, :NEW.idArticle, v_categoryName, :NEW.ean, :NEW.name, :NEW.priceVat, :NEW.priceGross, :NEW.priceSupplier, :NEW.lastModifiedDate, :NEW.IdEmployeeModify);
 END;
 /

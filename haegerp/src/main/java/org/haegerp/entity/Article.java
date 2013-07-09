@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -23,42 +24,34 @@ public class Article implements Serializable{
 	
 	//Primary Key (Erforderlich - Automatisch)
 	private long idArticle;
-	
 	//(Many-To-One) Kategorie, dass Artikel gehört (Erforderlich)
 	private ArticleCategory articleCategory;
-	
 	//Artikels EAN (Erforderlich)
 	private long ean;
-	
 	//Artikels Name (Erforderlich)
 	private String name;
-	
 	//Artikels MwSt Preis (Erforderlich)
 	private float priceVat;
-	
 	//Artikels Bruttopreis (Erforderlich)
 	private float priceGross;
-	
 	//Artikels Liferantpreis (Erforderlich)
 	private float priceSupplier;
-	
 	//Artikels Lager
 	private long stock;
-	
 	//Artikels Farbe
 	private String color;
-	
 	//Artikels Höhegröße
 	private float sizeH;
-	
 	//Artikels Längegröße
 	private float sizeL;
-	
 	//Artikels Breitegröße
 	private float sizeW;
-	
 	//Artikels Beschreibung
 	private String description;
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
 	
 	/**
 	 * Konstruktor mit keinen Parametern
@@ -340,6 +333,38 @@ public class Article implements Serializable{
 		if (description != null && description.length() > 256)
 			throw new LengthOverflowException("description");
 		this.description = description;
+	}
+
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public static long getSerialversionuid() {

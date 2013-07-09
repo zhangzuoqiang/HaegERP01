@@ -20,5 +20,11 @@
 		<property name="emailDate" type="timestamp">
 			<column name="EMAILDATE" not-null="false" sql-type="timestamp"/>
 		</property>
+		<property name="idEmployeeModify" type="long">
+			<column name="IDEMPLOYEEMODIFY" not-null="false" />
+		</property>
+		<property name="lastModifiedDate" type="timestamp">
+			<column name="LASTMODIFIEDDATE" not-null="false" />
+		</property>
 	</class>
 </hibernate-mapping>

@@ -1,11 +1,9 @@
-/* ******************************************/
-/* *				Articles				*/
-/* ******************************************/
-
 CREATE TABLE articlecategory(
 	idArticleCategory	INTEGER			NOT NULL,
 	name				VARCHAR2(50)	NOT NULL,
 	description			VARCHAR(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_articleCategory
 		PRIMARY KEY (idArticleCategory)
 );
@@ -24,6 +22,8 @@ CREATE TABLE article(
 	sizeL				NUMBER(20,3),
 	sizeW				NUMBER(20,3),
 	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_article
 		PRIMARY KEY (idArticle),
 	CONSTRAINT fk_article_articleCategory
@@ -40,6 +40,8 @@ CREATE TABLE articlehistory(
 	priceVat			NUMBER(5,2)		NOT NULL,
 	priceGross			NUMBER(20,2)	NOT NULL,
 	priceSupplier		NUMBER(20,2)	NOT NULL,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_articleHistory
 		PRIMARY KEY (idArticle, idArticleHistory)
 );
@@ -62,12 +64,16 @@ CREATE TABLE businesspartner(
 	mobileNumber		VARCHAR2(20),
 	faxNumber			VARCHAR2(20),
 	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_businessPartner
 		PRIMARY KEY (idBusinessPartner)
 );
 
 CREATE TABLE supplier(
 	idBusinessPartner	INTEGER			NOT NULL,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_supplier
 		PRIMARY KEY (idBusinessPartner),
 	CONSTRAINT fk_supplier_businessPartner
@@ -79,6 +85,8 @@ CREATE TABLE clientcategory(
 	idClientCategory	INTEGER			NOT NULL,
 	name				VARCHAR2(50)	NOT NULL,
 	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT idClientCategory
 		PRIMARY KEY (idClientCategory)
 );
@@ -86,6 +94,8 @@ CREATE TABLE clientcategory(
 CREATE TABLE client(
 	idBusinessPartner	INTEGER			NOT NULL,
 	idClientCategory	INTEGER			NOT NULL,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_client
 		PRIMARY KEY (idBusinessPartner),
 	CONSTRAINT fk_client_businessPartner
@@ -105,22 +115,28 @@ CREATE TABLE salarycategory (
 	salaryFrom			NUMBER(20,2)	NOT NULL,
 	salaryTo			NUMBER(20,2)	NOT NULL,
 	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_salaryCategory
 		PRIMARY KEY (idSalaryCategory)
 );
 
 CREATE TABLE division (
-	idDivision		INTEGER			NOT NULL,
-	name			VARCHAR2(50)	NOT NULL,
-	description		VARCHAR2(256),
+	idDivision			INTEGER			NOT NULL,
+	name				VARCHAR2(50)	NOT NULL,
+	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_division
 		PRIMARY KEY (idDivision)
 );
 
 CREATE TABLE usergroup (
-	idUserGroup		INTEGER			NOT NULL,
-	name			VARCHAR2(50)	NOT NULL,
-	description		VARCHAR2(256),
+	idUserGroup			INTEGER			NOT NULL,
+	name				VARCHAR2(50)	NOT NULL,
+	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_usergroup
 		PRIMARY KEY (idUserGroup)
 );
@@ -142,7 +158,8 @@ CREATE TABLE employee (
 	email				VARCHAR2(50),
 	phoneNumber			VARCHAR2(20),
 	mobileNumber		VARCHAR2(20),
-	dateLastAction		DATE,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_employee
 		PRIMARY KEY (idEmployee),
 	CONSTRAINT fk_employee_salaryCategory
@@ -157,15 +174,17 @@ CREATE TABLE employee (
 );
 
 CREATE TABLE permission (
-	idPermission	INTEGER			NOT NULL,
-	moduleName		VARCHAR2(50)	NOT NULL,
+	idPermission		INTEGER			NOT NULL,
+	moduleName			VARCHAR2(50)	NOT NULL,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_permission
 		PRIMARY KEY (idPermission)
 );
 
 CREATE TABLE usergroup_permission (
-	idUserGroup		INTEGER		NOT NULL,
-	idPermission	INTEGER		NOT NULL,
+	idUserGroup			INTEGER		NOT NULL,
+	idPermission		INTEGER		NOT NULL,
 	CONSTRAINT pk_usergroup_permission
 		PRIMARY KEY (idUserGroup, idPermission),
 	CONSTRAINT fk_usergroup_permission
@@ -184,6 +203,8 @@ CREATE TABLE supplierbill (
 	idSupplierBill		INTEGER		NOT NULL,
 	receivedDate		DATE		NOT NULL,
 	paidDate			DATE,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_supplierbill
 		PRIMARY KEY (idSupplierBill)
 );
@@ -197,6 +218,8 @@ CREATE TABLE supplierorder (
 	total				NUMBER(20,2),
 	sendDate			DATE,
 	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_supplierorder
 		PRIMARY KEY (idSupplierOrder),
 	CONSTRAINT fk_supplierorder_supplierbill
@@ -235,6 +258,8 @@ CREATE TABLE clientbill (
 	idClientBill		INTEGER		NOT NULL,
 	billedDate			DATE		NOT NULL,
 	paidDate			DATE,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_clientbill
 		PRIMARY KEY (idClientBill)
 );
@@ -248,6 +273,8 @@ CREATE TABLE clientoffer (
 	total				NUMBER(20,2),
 	sendDate			DATE,
 	description			VARCHAR2(256),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_clientoffer
 		PRIMARY KEY (idClientOffer),
 	CONSTRAINT fk_clientoffer_clientbill
@@ -283,6 +310,8 @@ CREATE TABLE outstanding (
 	idClientBill		INTEGER		NOT NULL,
 	expireDate			DATE		NOT NULL,
 	emailDate			DATE,
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_outstanding
 		PRIMARY KEY (idOutstanding),
 	CONSTRAINT fk_outstanding_clientbill
@@ -295,18 +324,20 @@ CREATE TABLE outstanding (
 /* ******************************************/
 
 CREATE TABLE company (
-	idCompany		INTEGER			NOT NULL,
-	name			VARCHAR2(50),
-	taxID			INTEGER,
-	owner			VARCHAR2(100),
-	sector			VARCHAR2(100),
-	address			VARCHAR2(100),
-	zipCode			VARCHAR2(15),
-	city			VARCHAR2(30),
-	region			VARCHAR2(50),
-	country			VARCHAR2(30),
-	phoneNumber		VARCHAR2(20),
-	faxNumber		VARCHAR2(20),
+	idCompany			INTEGER			NOT NULL,
+	name				VARCHAR2(50),
+	taxID				INTEGER,
+	owner				VARCHAR2(100),
+	sector				VARCHAR2(100),
+	address				VARCHAR2(100),
+	zipCode				VARCHAR2(15),
+	city				VARCHAR2(30),
+	region				VARCHAR2(50),
+	country				VARCHAR2(30),
+	phoneNumber			VARCHAR2(20),
+	faxNumber			VARCHAR2(20),
+	LastModifiedDate	DATE,
+	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_company
 		PRIMARY KEY (idCompany)
 );

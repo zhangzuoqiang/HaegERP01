@@ -116,7 +116,7 @@ public class ClientOfferDetail implements Serializable {
 				* (1 + (clientOfferDetailPK.getArticleHistory().getPriceVat()/100))
 				) * 100)/100);
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

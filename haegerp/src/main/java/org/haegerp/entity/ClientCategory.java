@@ -1,6 +1,7 @@
 package org.haegerp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,16 +19,17 @@ public class ClientCategory implements Serializable {
 
 	//Primary Key (Erforderlich - Automatisch)
 	private long idClientCategory;
-	
 	//Name von der Artikelkategorie (Erforderlich)
 	private String name;
-	
 	//Kundenkategorie Beschreibung
 	private String description;
-	
 	//(One-To-Many) Kunden, dass angeschlossen werden mit der Kundenkategorie
 	private Set<Client> clients = new HashSet<Client>(0);
-	
+	//ID des Mitarbeiter, der erstellt hat order geändert
+	private Long idEmployeeModify;
+	//Datum von der letzten Änderung
+	private Date  lastModifiedDate;
+		
 	/**
 	 * Konstruktor mit keinen Parametern
 	 * Ideal für eine neue Kundenkategorie
@@ -103,6 +105,37 @@ public class ClientCategory implements Serializable {
 	 */
 	public void setClients(Set<Client> clients) {
 		this.clients = clients;
+	}
+	/**
+	 * 
+	 * @return idEmployeeModify - ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public Long getIdEmployeeModify() {
+		return idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @param idEmployeeModify ID des Mitarbeiter, der erstellt hat order geändert
+	 */
+	public void setIdEmployeeModify(Long idEmployeeModify) {
+		this.idEmployeeModify = idEmployeeModify;
+	}
+
+	/**
+	 * 
+	 * @return lastModifiedDate - Datum von der letzten Änderung
+	 */
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	/**
+	 * 
+	 * @param lastModifiedDate Datum von der letzten Änderung
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 	
 	public static long getSerialversionuid() {

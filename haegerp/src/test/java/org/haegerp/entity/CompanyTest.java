@@ -1,5 +1,7 @@
 package org.haegerp.entity;
 
+import java.util.Date;
+
 import org.haegerp.entity.repository.CompanyRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.exception.LengthOverflowException;
@@ -77,7 +79,9 @@ public class CompanyTest extends TestCase {
     		company.setCountry(Properties.getProperty("UPDATE_COMPANY_COUNTRY"));
     		company.setPhoneNumber(Properties.getProperty("UPDATE_COMPANY_PHONENUMBER"));
     		company.setFaxNumber(Properties.getProperty("UPDATE_COMPANY_FAXNUMBER"));
-    		
+    		company.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        company.setLastModifiedDate(new Date());
+	        
     		companyRepository.save(company);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft
@@ -120,7 +124,9 @@ public class CompanyTest extends TestCase {
     		company.setCountry(Properties.getProperty("UPDATE_COMPANY_COUNTRY_F"));
     		company.setPhoneNumber(Properties.getProperty("UPDATE_COMPANY_PHONENUMBER_F"));
     		company.setFaxNumber(Properties.getProperty("UPDATE_COMPANY_FAXNUMBER_F"));
-    		
+    		company.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        company.setLastModifiedDate(new Date());
+	        
     		companyRepository.save(company);
 	        
 	        //Die erstellt Artikelkategorie wird geprüft

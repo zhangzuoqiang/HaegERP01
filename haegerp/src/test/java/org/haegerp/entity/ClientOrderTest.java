@@ -89,6 +89,7 @@ public class ClientOrderTest extends TestCase {
     		CHECK_SETUP = false;
     		
 	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
+	    	
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -98,6 +99,8 @@ public class ClientOrderTest extends TestCase {
 	    	ArticleCategory articleCategory = new ArticleCategory();
 	        articleCategory.setName(Properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION"));
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
 	        
 	        articleCategory = articleCategoryRepository.save(articleCategory);
 	        
@@ -119,6 +122,8 @@ public class ClientOrderTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
 	        article = articleRepository.save(article);
 	        ARTICLE1_ID = article.getIdArticle();
@@ -136,6 +141,8 @@ public class ClientOrderTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
 	        article = articleRepository.save(article);
 	        
@@ -153,6 +160,8 @@ public class ClientOrderTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("UPDATE_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("UPDATE_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
 	        article = articleRepository.save(article);
 	        ARTICLE2_ID = article.getIdArticle();
@@ -162,6 +171,8 @@ public class ClientOrderTest extends TestCase {
 	        ClientCategory clientCategory = new ClientCategory();
 	        clientCategory.setName(Properties.getProperty("INSERT_CC_NAME"));
 	        clientCategory.setDescription("INSERT_CC_DESCRIPTION");
+	        clientCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        clientCategory.setLastModifiedDate(new Date());
 	        
 	        clientCategory = clientCategoryRepository.save(clientCategory);
 	        CLIENT_CATEGORY_ID = clientCategory.getIdClientCategory();
@@ -181,12 +192,13 @@ public class ClientOrderTest extends TestCase {
 	        client.setMobileNumber(Properties.getProperty("INSERT_C_MOBILENUMBER"));
 	        client.setFaxNumber(Properties.getProperty("INSERT_C_FAXNUMBER"));
 	        client.setDescription(Properties.getProperty("INSERT_C_DESCRIPTION"));
+	        client.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        client.setLastModifiedDate(new Date());
 	    	
 	        client = clientRepository.save(client);
 	    	CLIENT_ID = client.getIdBusinessPartner();
 	    	
-	        //Mitarbeiter
-	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
+	    	clientRepository.flush();
     	}
         
     }
@@ -198,8 +210,13 @@ public class ClientOrderTest extends TestCase {
     	{
 	    	//Die Artikel werden gelöscht
 	    	Article article = articleRepository.findOne(ARTICLE1_ID);
-	        articleRepository.delete(article);
+	    	article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
+	    	articleRepository.delete(article);
+	    	
 	        article = articleRepository.findOne(ARTICLE2_ID);
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        articleRepository.delete(article);
 	        
 	        articleHistoryRepository.deleteAllVersionsOfArticle(ARTICLE1_ID);
@@ -207,14 +224,20 @@ public class ClientOrderTest extends TestCase {
 	        
 	        //Die Artikelkategorie wird gelöscht
 	        ArticleCategory articleCategory = articleCategoryRepository.findOne(ARTICLE_CATEGORY_ID);
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
 	        articleCategoryRepository.delete(articleCategory);
 	        
 	        //Der Kunde wird gelöscht
 	        Client client = clientRepository.findOne(CLIENT_ID);
+	        client.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        client.setLastModifiedDate(new Date());
 	        clientRepository.delete(client.getIdBusinessPartner());
 	        
 	        //Gehaltkategorie
 	        ClientCategory clientCategory = clientCategoryRepository.findOne(CLIENT_CATEGORY_ID);
+	        clientCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        clientCategory.setLastModifiedDate(new Date());
 	        clientCategoryRepository.delete(clientCategory);
 	        
 	        CHECK_ERASE = false;
@@ -237,6 +260,8 @@ public class ClientOrderTest extends TestCase {
     		clientOffer.setEmployee(EmployeeSession.getEmployee());
     		clientOffer.setClient(client);
     		clientOffer.setTotal(0.0F);
+    		clientOffer.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientOffer.setLastModifiedDate(new Date());
     		
     		clientOffer = clientOfferRepository.save(clientOffer);
     		
@@ -327,6 +352,8 @@ public class ClientOrderTest extends TestCase {
     		clientOffer.setDescription(Properties.getProperty("UPDATE_CO_DESCRIPTION"));
     		clientOffer.setEmployee(EmployeeSession.getEmployee());
     		clientOffer.setClient(client);
+    		clientOffer.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientOffer.setLastModifiedDate(new Date());
     		
     		clientOffer = clientOfferRepository.save(clientOffer);
     		
@@ -396,6 +423,8 @@ public class ClientOrderTest extends TestCase {
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
     		clientBill.setBilledDate(dateFormat.parse(Properties.getProperty("INSERT_CB_BILLEDDATE")));
+    		clientBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientBill.setLastModifiedDate(new Date());
     		
     		clientBill = clientBillRepository.save(clientBill);
     		
@@ -433,10 +462,14 @@ public class ClientOrderTest extends TestCase {
     		
     		outstanding.setClientBill(clientBill);
     		outstanding.setExpireDate(dateFormat.parse(Properties.getProperty("INSERT_OC_EXPIREDATE")));
+    		outstanding.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		outstanding.setLastModifiedDate(new Date());
     		
     		outstanding = outstandingRepository.save(outstanding);
     		
     		clientBill.setOutstanding(outstanding);
+    		clientBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientBill.setLastModifiedDate(new Date());
     		
     		clientBill = clientBillRepository.save(clientBill);
     		
@@ -476,21 +509,24 @@ public class ClientOrderTest extends TestCase {
 			outstanding.setEmailDate(dateFormat.parse(Properties.getProperty("UPDATE_OC_SENDDATE")));
 			
 			//Der Aufpreis wird ergestellt
-			ArticleHistory articleHistory = articleHistoryRepository.findOne(
-					new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(0L), articleRepository.findOne(0L))
-					);
-			
-			ClientOfferDetailPK clientOfferDetailPK = new ClientOfferDetailPK(outstanding.getClientBill().getClientOffer(), articleHistory);
-			ClientOfferDetail clientOfferDetail = new ClientOfferDetail();
-			clientOfferDetail.setClientOfferDetailPK(clientOfferDetailPK);
+    		ArticleHistory articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(0L), articleRepository.findOne(0L)));
+    		
+    		ClientOfferDetail clientOfferDetail = new ClientOfferDetail();
+    		clientOfferDetail.setClientOfferDetailPK(new ClientOfferDetailPK(outstanding.getClientBill().getClientOffer(), articleHistory));
 			clientOfferDetail.setDiscount(0);
 			clientOfferDetail.setQuantity(1);
+			
+			clientOfferDetail.getClientOfferDetailPK().getClientOffer().setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientOfferDetail.getClientOfferDetailPK().getClientOffer().setLastModifiedDate(new Date());
 			
 			clientOfferDetailRepository.save(clientOfferDetail);
 			outstanding.getClientBill().getClientOffer().getClientOfferDetail().add(clientOfferDetail);
 			outstanding.getClientBill().getClientOffer().calculateTotal();
 			
 			clientOfferRepository.save(outstanding.getClientBill().getClientOffer());
+			
+			outstanding.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		outstanding.setLastModifiedDate(new Date());
 			
 			outstanding = outstandingRepository.save(outstanding);
 			
@@ -529,6 +565,8 @@ public class ClientOrderTest extends TestCase {
     		
     		clientBill.setBilledDate(dateFormat.parse(Properties.getProperty("UPDATE_CB_BILLEDDATE")));
     		clientBill.setPaidDate(dateFormat.parse(Properties.getProperty("UPDATE_CB_PAIDDATE")));
+    		clientBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientBill.setLastModifiedDate(new Date());
     		
     		clientBill = clientBillRepository.save(clientBill);
     		
@@ -557,8 +595,16 @@ public class ClientOrderTest extends TestCase {
     	try {
 	        ClientBill clientBill = clientBillRepository.findOne(CLIENT_BILL_ID);
 	        Outstanding outstanding = outstandingRepository.findOne(CLIENT_OUTSTANDING_ID);
-	    	clientBill.setOutstanding(null);
-	        
+	    	
+	        clientBill.setOutstanding(null);
+	        clientBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientBill.setLastModifiedDate(new Date());
+    		
+    		clientBillRepository.save(clientBill);
+    		
+    		outstanding.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		outstanding.setLastModifiedDate(new Date());
+    		
 	    	outstandingRepository.delete(outstanding);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
@@ -578,8 +624,16 @@ public class ClientOrderTest extends TestCase {
     	try {
 	        ClientBill clientBill = clientBillRepository.findOne(CLIENT_BILL_ID);
 	    	ClientOffer clientOffer = clientOfferRepository.findOne(CLIENT_OFFER_ID);
+	    	
 	    	clientOffer.setClientBill(null);
-	        
+	    	clientOffer.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientOffer.setLastModifiedDate(new Date());
+	    	
+	    	clientOfferRepository.save(clientOffer);
+    		
+	    	clientBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientBill.setLastModifiedDate(new Date());
+	    	
 	    	clientBillRepository.delete(clientBill);
 	        
 	        //Suchen noch einmal und keine Aufzeichnung gefunden
@@ -599,6 +653,9 @@ public class ClientOrderTest extends TestCase {
     	try {
 	    	ClientOffer clientOffer = clientOfferRepository.findOne(CLIENT_OFFER_ID);
 
+	    	clientOffer.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+    		clientOffer.setLastModifiedDate(new Date());
+	    	
 	    	clientOfferDetailRepository.delete(clientOffer.getClientOfferDetail());
 	        
 	    	clientOfferRepository.delete(clientOffer);
