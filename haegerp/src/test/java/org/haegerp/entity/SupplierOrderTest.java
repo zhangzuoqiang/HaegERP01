@@ -4,8 +4,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.haegerp.entity.repository.article.ArticleCategoryRepository;
 import org.haegerp.entity.repository.article.ArticleHistoryRepository;
@@ -55,11 +53,6 @@ public class SupplierOrderTest extends TestCase {
     
     private static long SUPPLIER_ID;
     
-    private static long EMPLOYEE_ID;
-    private static long SALARY_CATEGORY_ID;
-    private static long DIVISION_ID;
-    private static long USER_GROUP_ID;
-    
     private static long SUPPLIERORDER_ID;
     private static long SUPPLIERBILL_ID;
     
@@ -99,6 +92,7 @@ public class SupplierOrderTest extends TestCase {
     		CHECK_SETUP = false;
     		
 	    	EmployeeSession.setEmployee(employeeRepository.findOne(1L));
+	    	
 	    	if (!Properties.loadProperties()){
 	    		fail("Failed to load Properties File.");
 	    	}
@@ -195,72 +189,7 @@ public class SupplierOrderTest extends TestCase {
 	    	supplier = supplierRepository.save(supplier);
 	    	SUPPLIER_ID = supplier.getIdBusinessPartner();
 	    	
-	    	//Mitarbeiter wird erstellt
-	    	//Gehaltkategorie
-	    	SalaryCategory salaryCategory = new SalaryCategory();
-	        salaryCategory.setDescription(Properties.getProperty("INSERT_SC_DESCRIPTION"));
-	        salaryCategory.setSalaryFrom(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYFROM")));
-	        salaryCategory.setSalaryTo(Float.parseFloat(Properties.getProperty("INSERT_SC_SALARYTO")));
-	        salaryCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        salaryCategory.setLastModifiedDate(new Date());
-	        
-	        salaryCategory = salaryCategoryRepository.save(salaryCategory);
-	        SALARY_CATEGORY_ID = salaryCategory.getIdSalaryCategory();
-	        
-	        //Abteilung
-	        Division division = new Division();
-	        division.setDescription(Properties.getProperty("INSERT_D_DESCRIPTION"));
-	        division.setName(Properties.getProperty("INSERT_D_NAME"));
-	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        division.setLastModifiedDate(new Date());
-	        
-	        division = divisionRepository.save(division);
-	        DIVISION_ID = division.getIdDivision();
-	        
-	        //Benutzergruppe
-	        UserGroup userGroup = new UserGroup();
-	        userGroup.setDescription(Properties.getProperty("INSERT_UG_DESCRIPTION"));
-	        userGroup.setName(Properties.getProperty("INSERT_UG_NAME"));
-	        
-	        //Hinzufügen erlaubnise
-	        List<Permission> permissionList = new LinkedList<Permission>();
-	        
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(Properties.getProperty("INSERT_UG_PERMISSION1"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(Properties.getProperty("INSERT_UG_PERMISSION2"))));
-	        permissionList.add(permissionRepository.findOne(Long.parseLong(Properties.getProperty("INSERT_UG_PERMISSION3"))));
-	        
-	        for (int i = 0; i < permissionList.size(); i++) {
-				userGroup.getPermissions().add(permissionList.get(i));
-			}
-	        
-	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        userGroup.setLastModifiedDate(new Date());
-	        
-	        userGroup = userGroupRepository.save(userGroup);
-	        USER_GROUP_ID = userGroup.getIdUserGroup();
-	        
-	        //Mitarbeiter
-	        Employee employee = new Employee();
-	        employee.setAddress(Properties.getProperty("INSERT_E_ADDRESS"));
-	        employee.setCity(Properties.getProperty("INSERT_E_CITY"));
-	        employee.setCountry(Properties.getProperty("INSERT_E_COUNTRY"));
-	        employee.setDivision(division);
-	        employee.setEmail(Properties.getProperty("INSERT_E_EMAIL"));
-	        employee.setIdCard(Long.parseLong(Properties.getProperty("INSERT_E_IDCARD")));
-	        employee.setMobileNumber(Properties.getProperty("INSERT_E_MOBILENUMBER"));
-	        employee.setName(Properties.getProperty("INSERT_E_NAME"));
-	        employee.setPhoneNumber(Properties.getProperty("INSERT_E_PHONENUMBER"));
-	        employee.setRegion(Properties.getProperty("INSERT_E_REGION"));
-	        employee.setSalaryCategory(salaryCategory);
-	        employee.setUserGroup(userGroup);
-	        employee.setZipCode(Properties.getProperty("INSERT_E_ZIPCODE"));
-	        employee.setPassword(Properties.getProperty("INSERT_E_PASSWORD"));
-	        employee.setUsername(Properties.getProperty("INSERT_E_USERNAME"));
-	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        employee.setLastModifiedDate(new Date());
-	        
-	        employee = employeeRepository.save(employee);
-	        EMPLOYEE_ID = employee.getIdEmployee();
+	    	supplierRepository.flush();
     	}
         
     }
@@ -296,29 +225,6 @@ public class SupplierOrderTest extends TestCase {
 	        supplier.setLastModifiedDate(new Date());
 	        supplierRepository.delete(supplier.getIdBusinessPartner());
 	        
-	        //Der Mitarbeiter wird gelöscht
-	        Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
-	        employee.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        employee.setLastModifiedDate(new Date());
-	        employeeRepository.delete(employee);
-	        
-	        //Gehaltkategorie
-	        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(SALARY_CATEGORY_ID);
-	        supplier.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        supplier.setLastModifiedDate(new Date());
-	        salaryCategoryRepository.delete(salaryCategory);
-	        
-	        //Abteilung
-	        Division division = divisionRepository.findOne(DIVISION_ID);
-	        division.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        division.setLastModifiedDate(new Date());
-	        divisionRepository.delete(division);
-	        
-	        //Benutzergrupper
-	        UserGroup userGroup = userGroupRepository.findOne(USER_GROUP_ID);
-	        userGroup.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
-	        userGroup.setLastModifiedDate(new Date());
-	        userGroupRepository.delete(userGroup);
 	        CHECK_ERASE = false;
     	}
     }
@@ -330,7 +236,7 @@ public class SupplierOrderTest extends TestCase {
     public void test1InsertSupplierOrder(){
     	try {
     		Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
-    		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
+    		Employee employee = employeeRepository.findOne(EmployeeSession.getEmployee().getIdEmployee());
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
     		//Die Felder werden gefüllt
@@ -425,7 +331,7 @@ public class SupplierOrderTest extends TestCase {
     public void test2UpdateSupplierOrder(){
     	try {
     		Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
-    		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
+    		Employee employee = employeeRepository.findOne(EmployeeSession.getEmployee().getIdEmployee());
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
     		//Die Felder werden gefüllt
@@ -584,7 +490,7 @@ public class SupplierOrderTest extends TestCase {
 	    	supplierOrder.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
 	    	supplierOrder.setLastModifiedDate(new Date());
 	    	
-	    	supplierOrderRepository.delete(supplierOrder);
+	    	supplierOrderRepository.save(supplierOrder);
 	    	
 	    	supplierBill.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
     		supplierBill.setLastModifiedDate(new Date());
@@ -631,7 +537,7 @@ public class SupplierOrderTest extends TestCase {
     public void test7InsertSupplierOrderError() throws Exception{
     	try {
     		Supplier supplier = supplierRepository.findOne(SUPPLIER_ID);
-    		Employee employee = employeeRepository.findOne(EMPLOYEE_ID);
+    		Employee employee = employeeRepository.findOne(EmployeeSession.getEmployee().getIdEmployee());
     		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
     		
     		//Die Felder werden gefüllt
