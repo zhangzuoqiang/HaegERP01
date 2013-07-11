@@ -2,13 +2,36 @@ package org.haegerp.view;
 
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
+import org.haegerp.view.main.MainMenuArticle;
+import org.haegerp.view.main.MainMenuClientOrders;
+import org.haegerp.view.main.MainMenuHumanResources;
+import org.haegerp.view.main.MainMenuInterface;
+import org.haegerp.view.main.MainMenuNormal;
+import org.haegerp.view.main.MainMenuPartners;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+/**
+ * Das ist das Hauptmenü von dem System
+ * 
+ * @author Wolf
+ *
+ */
 public class MainMenu extends JFrame {
 
 	private static final long serialVersionUID = 3267457954593344809L;
+	
+	private MainMenuInterface mainMenuView;
 	
 	/**
 	 * Launch the application.
@@ -25,21 +48,314 @@ public class MainMenu extends JFrame {
 			}
 		});
 	}
-
+	
+	//Article
+	/**
+	 * Menü der Artikel werden gezeigt oder ausgeblendet.
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnArticlesMenu_ActionPerformed(ActionEvent e) {
+		if (mainMenuView instanceof MainMenuArticle)
+			mainMenuView = new MainMenuNormal();
+		else
+			mainMenuView = new MainMenuArticle();
+		
+		mainMenuView.applyView(this);
+	}
+	
+	/**
+	 * Diese Methode wird die Artikelverwaltung öffnen
+	 * 
+	 * @param e 
+	 * 		Default Parameter
+	 */
+	private void btnArticlesSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Article Management
+	}
+	
+	/**
+	 * Diese Methode wird die Artikelkategorieverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnArticlesCategorySubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open ArticleCategory Management
+	}
+	
+	/**
+	 * Menü der Geschäftspartners werden gezeigt oder ausgeblendet.
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnPartnersMenu_ActionPerformed(ActionEvent e) {
+		if (mainMenuView instanceof MainMenuPartners)
+			mainMenuView = new MainMenuNormal();
+		else
+			mainMenuView = new MainMenuPartners();
+		
+		mainMenuView.applyView(this);
+	}
+	
+	/**
+	 * Diese Methode wird die Kundenverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnPartnersClientSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Client Management
+	}
+	
+	/**
+	 * Diese Methode wird die Lieferantenverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnPartnersSupplierSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Supplier Management
+	}
+	
+	/**
+	 * Menü der Personalabteilung werden gezeigt oder ausgeblendet.
+	 *  
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnHumanResourcesMenu_ActionPerformed(ActionEvent e) {
+		if (mainMenuView instanceof MainMenuHumanResources)
+			mainMenuView = new MainMenuNormal();
+		else
+			mainMenuView = new MainMenuHumanResources();
+		
+		mainMenuView.applyView(this);
+	}
+	
+	/**
+	 * Diese Methode wird die Mitarbeiterverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnHumanResourcesEmployeeSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Employee Management
+	}
+	
+	/**
+	 * Diese Methode wird die Divisionverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnHumanResourcesDivisionSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Division Management
+	}
+	
+	/**
+	 * Diese Methode wird die Gehaltkategorieverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnHumanResourcesSalaryCategorySubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open SalaryCategory Management
+	}
+	
+	/**
+	 * Diese Methode wird die Gehaltkategorieverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnHumanResourcesUserGroupSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open UserGroup Management
+	}
+	
+	/**
+	 * Diese Methode wird die Firmaverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnCompanyMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Company Management
+	}
+	
+	/**
+	 * Diese Methode wird die Lieferantenbestellungenverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnSupplierOrdersMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open SupplierOrder Management
+	}
+	
+	/**
+	 * Menü der Kundenbestellungen werden gezeigt oder ausgeblendet.
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnClientOrdersMenu_ActionPerformed(ActionEvent e) {
+		if (mainMenuView instanceof MainMenuClientOrders)
+			mainMenuView = new MainMenuNormal();
+		else
+			mainMenuView = new MainMenuClientOrders();
+		
+		mainMenuView.applyView(this);
+	}
+	
+	/**
+	 * Diese Methode wird die ausstehende Verwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnClientOrdersOutstandingSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO Open Outstanding Management
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public MainMenu() {
+		mainMenuView = new MainMenuNormal();
+		
 		setTitle("HaegERP");
 		pnlForm = new JPanel();
         pnlMenus = new JPanel();
-        lblHumanResourcesMenu = new JLabel();
-        lblArticlesMenu = new JLabel();
-        lblPartnersMenu = new JLabel();
-        lblCompanyMenu = new JLabel();
-        lblSupplierOrdersMenu = new JLabel();
-        lblClientOrdersMenu = new JLabel();
-        lblOutstandingMenu = new JLabel();
+        
+        //Articles
+        btnArticlesMenu = new JButton();
+        btnArticlesMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnArticlesMenu_ActionPerformed(e);
+			}
+        });
+        btnArticlesMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnArticlesSubMenu = new JButton();
+        btnArticlesSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnArticlesSubMenu_ActionPerformed(e);
+			}
+		});
+        btnArticlesSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnArticlesCategorySubMenu = new JButton();
+        btnArticlesCategorySubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnArticlesCategorySubMenu_ActionPerformed(e);
+			}
+		});
+        btnArticlesCategorySubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        //BusinessPartners
+        btnPartnersMenu = new JButton();
+        btnPartnersMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnPartnersMenu_ActionPerformed(e);
+			}
+		});
+        btnPartnersMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnPartnersClientSubMenu = new JButton();
+        btnPartnersClientSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnPartnersClientSubMenu_ActionPerformed(e);
+			}
+		});
+        btnPartnersClientSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnPartnersSupplierSubMenu = new JButton();
+        btnPartnersSupplierSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnPartnersSupplierSubMenu_ActionPerformed(e);
+			}
+		});
+        btnPartnersSupplierSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        //HumanResources
+        btnHumanResourcesMenu = new JButton();
+        btnHumanResourcesMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnHumanResourcesMenu_ActionPerformed(e);
+			}
+		});
+        btnHumanResourcesMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnHumanResourcesEmployeeSubMenu = new JButton();
+        btnHumanResourcesEmployeeSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnHumanResourcesEmployeeSubMenu_ActionPerformed(e);
+			}
+		});
+        btnHumanResourcesEmployeeSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnHumanResourcesDivisionSubMenu = new JButton();
+        btnHumanResourcesDivisionSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnHumanResourcesDivisionSubMenu_ActionPerformed(e);
+			}
+		});
+        btnHumanResourcesDivisionSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnHumanResourcesSalaryCategorySubMenu = new JButton();
+        btnHumanResourcesSalaryCategorySubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnHumanResourcesSalaryCategorySubMenu_ActionPerformed(e);
+			}
+		});
+        btnHumanResourcesSalaryCategorySubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnHumanResourcesUserGroupSubMenu = new JButton();
+        btnHumanResourcesUserGroupSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnHumanResourcesUserGroupSubMenu_ActionPerformed(e);
+			}
+		});
+        btnHumanResourcesUserGroupSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        //Company
+        btnCompanyMenu = new JButton();
+        btnCompanyMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnCompanyMenu_ActionPerformed(e);
+			}
+		});
+        btnCompanyMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        //SupplierOrders
+        btnSupplierOrdersMenu = new JButton();
+        btnSupplierOrdersMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnSupplierOrdersMenu_ActionPerformed(e);
+			}
+		});
+        btnSupplierOrdersMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        //ClientOrders
+        btnClientOrdersMenu = new JButton();
+        btnClientOrdersMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnClientOrdersMenu_ActionPerformed(e);
+			}
+		});
+        btnClientOrdersMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnClientOrdersOutstandingSubMenu = new JButton();
+        btnClientOrdersOutstandingSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnClientOrdersOutstandingSubMenu_ActionPerformed(e);
+			}
+		});
+        btnClientOrdersOutstandingSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
         pnlContent = new JPanel();
         lblTitle = new JLabel();
 
@@ -49,97 +365,104 @@ public class MainMenu extends JFrame {
 
         pnlMenus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnlMenus.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        
+        //Articles
+        btnArticlesMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnArticlesMenu.setIcon(null);
+        btnArticlesMenu.setText(" Article Menu");
+        btnArticlesMenu.setBorder(UIManager.getBorder("Button.border"));
 
-        lblHumanResourcesMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblHumanResourcesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblHumanResourcesMenu.setText(" Human Resources");
-        lblHumanResourcesMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblHumanResourcesMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnArticlesSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnArticlesSubMenu.setIcon(null);
+        btnArticlesSubMenu.setText(" Articles");
+        btnArticlesSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        
+        btnArticlesCategorySubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnArticlesCategorySubMenu.setIcon(null);
+        btnArticlesCategorySubMenu.setText(" Articles Category");
+        btnArticlesCategorySubMenu.setBorder(UIManager.getBorder("Button.border"));
+        
+        //BusinessPartners
+        btnPartnersMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnPartnersMenu.setIcon(null);
+        btnPartnersMenu.setText(" Business Partners Menu");
+        btnPartnersMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnPartnersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnPartnersClientSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnPartnersClientSubMenu.setIcon(null);
+        btnPartnersClientSubMenu.setText(" Clients");
+        btnPartnersClientSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnPartnersClientSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnPartnersSupplierSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnPartnersSupplierSubMenu.setIcon(null);
+        btnPartnersSupplierSubMenu.setText(" Suppliers");
+        btnPartnersSupplierSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnPartnersSupplierSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblArticlesMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblArticlesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblArticlesMenu.setText(" Articles");
-        lblArticlesMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        //HumanResources
+        btnHumanResourcesMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnHumanResourcesMenu.setIcon(null);
+        btnHumanResourcesMenu.setText(" Human Resources Menu");
+        btnHumanResourcesMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnHumanResourcesMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnHumanResourcesEmployeeSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnHumanResourcesEmployeeSubMenu.setIcon(null);
+        btnHumanResourcesEmployeeSubMenu.setText(" Employee");
+        btnHumanResourcesEmployeeSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnHumanResourcesEmployeeSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnHumanResourcesDivisionSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnHumanResourcesDivisionSubMenu.setIcon(null);
+        btnHumanResourcesDivisionSubMenu.setText(" Division");
+        btnHumanResourcesDivisionSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnHumanResourcesDivisionSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnHumanResourcesSalaryCategorySubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnHumanResourcesSalaryCategorySubMenu.setIcon(null);
+        btnHumanResourcesSalaryCategorySubMenu.setText(" Salary Groups");
+        btnHumanResourcesSalaryCategorySubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnHumanResourcesSalaryCategorySubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnHumanResourcesUserGroupSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnHumanResourcesUserGroupSubMenu.setIcon(null);
+        btnHumanResourcesUserGroupSubMenu.setText(" User Groups");
+        btnHumanResourcesUserGroupSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnHumanResourcesUserGroupSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        //Company
+        btnCompanyMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnCompanyMenu.setIcon(null);
+        btnCompanyMenu.setText(" Company Menu");
+        btnCompanyMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnCompanyMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblPartnersMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblPartnersMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblPartnersMenu.setText(" Business Partners");
-        lblPartnersMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblPartnersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        //SupplierOrders
+        btnSupplierOrdersMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnSupplierOrdersMenu.setIcon(null);
+        btnSupplierOrdersMenu.setText(" Supplier's Orders Menu");
+        btnSupplierOrdersMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnSupplierOrdersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblCompanyMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblCompanyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblCompanyMenu.setText(" Company");
-        lblCompanyMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblCompanyMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        //ClientOrders
+        btnClientOrdersMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnClientOrdersMenu.setIcon(null);
+        btnClientOrdersMenu.setText(" Client's Orders Menu");
+        btnClientOrdersMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnClientOrdersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblSupplierOrdersMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblSupplierOrdersMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblSupplierOrdersMenu.setText(" Supplier's Orders");
-        lblSupplierOrdersMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblSupplierOrdersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnClientOrdersOutstandingSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnClientOrdersOutstandingSubMenu.setIcon(null);
+        btnClientOrdersOutstandingSubMenu.setText(" Outstanding");
+        btnClientOrdersOutstandingSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnClientOrdersOutstandingSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblClientOrdersMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblClientOrdersMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblClientOrdersMenu.setText(" Client's Orders");
-        lblClientOrdersMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblClientOrdersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        lblOutstandingMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        lblOutstandingMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/haegerp/resources/images/open.png")));
-        lblOutstandingMenu.setText(" Outstanding");
-        lblOutstandingMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblOutstandingMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout pnlMenusLayout = new javax.swing.GroupLayout(pnlMenus);
-        pnlMenus.setLayout(pnlMenusLayout);
-        pnlMenusLayout.setHorizontalGroup(
-            pnlMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenusLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblHumanResourcesMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(lblPartnersMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(lblCompanyMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(lblSupplierOrdersMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(lblClientOrdersMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(lblOutstandingMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addComponent(lblArticlesMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        pnlMenusLayout.setVerticalGroup(
-            pnlMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenusLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblArticlesMenu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPartnersMenu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblHumanResourcesMenu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCompanyMenu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSupplierOrdersMenu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblClientOrdersMenu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblOutstandingMenu)
-                .addContainerGap(286, Short.MAX_VALUE))
-        );
-
+        mainMenuView.applyView(this);
+        
         pnlContent.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnlContent.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-
-        javax.swing.GroupLayout pnlContentLayout = new javax.swing.GroupLayout(pnlContent);
-        pnlContent.setLayout(pnlContentLayout);
-        pnlContentLayout.setHorizontalGroup(
-            pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
-        );
-        pnlContentLayout.setVerticalGroup(
-            pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout pnlFormLayout = new javax.swing.GroupLayout(pnlForm);
         pnlForm.setLayout(pnlFormLayout);
@@ -161,6 +484,16 @@ public class MainMenu extends JFrame {
                     .addComponent(pnlMenus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+        GroupLayout gl_pnlContent = new GroupLayout(pnlContent);
+        gl_pnlContent.setHorizontalGroup(
+        	gl_pnlContent.createParallelGroup(Alignment.LEADING)
+        		.addGap(0, 508, Short.MAX_VALUE)
+        );
+        gl_pnlContent.setVerticalGroup(
+        	gl_pnlContent.createParallelGroup(Alignment.LEADING)
+        		.addGap(0, 501, Short.MAX_VALUE)
+        );
+        pnlContent.setLayout(gl_pnlContent);
 
         lblTitle.setFont(new java.awt.Font("Calibri", 1, 36));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -190,15 +523,31 @@ public class MainMenu extends JFrame {
         pack();
 	}
 	
-	private JLabel lblArticlesMenu;
-    private JLabel lblClientOrdersMenu;
-    private JLabel lblCompanyMenu;
-    private JLabel lblHumanResourcesMenu;
-    private JLabel lblOutstandingMenu;
-    private JLabel lblPartnersMenu;
-    private JLabel lblSupplierOrdersMenu;
-    private JLabel lblTitle;
-    private JPanel pnlContent;
-    private JPanel pnlForm;
-    private JPanel pnlMenus;
+	public JPanel pnlForm;
+	public JLabel lblTitle;
+	
+	public JPanel pnlMenus;
+	
+	public JButton btnArticlesMenu;
+	public JButton btnArticlesSubMenu;
+	public JButton btnArticlesCategorySubMenu;
+	
+	public JButton btnPartnersMenu;
+	public JButton btnPartnersClientSubMenu;
+	public JButton btnPartnersSupplierSubMenu;
+	
+	public JButton btnHumanResourcesMenu;
+	public JButton btnHumanResourcesEmployeeSubMenu;
+	public JButton btnHumanResourcesDivisionSubMenu;
+	public JButton btnHumanResourcesSalaryCategorySubMenu;
+	public JButton btnHumanResourcesUserGroupSubMenu;
+	
+	public JButton btnCompanyMenu;
+    
+	public JButton btnSupplierOrdersMenu;
+    
+	public JButton btnClientOrdersMenu;
+	public JButton btnClientOrdersOutstandingSubMenu;
+    
+	public JPanel pnlContent;
 }

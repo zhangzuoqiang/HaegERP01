@@ -11,6 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+/**
+ * Diese Klasse besitzt die Geschäftslogik von dem Artikel.
+ * 
+ * @author Wolf
+ *
+ */
 public class ArticleController {
 	
 	private static String REGEX_ONLY_NUMBERS="[0-9]*";
@@ -23,6 +29,12 @@ public class ArticleController {
 		//Page<Article> articlesPage = getPageArticles(0);
 	}
 	
+	/**
+	 * Eine neue Seite wird erhalt
+	 * 
+	 * @param page Nummer der Seite
+	 * @return Seite mit Artikel
+	 */
 	public Page<Article> getPageArticles(int page){
 		PageRequest pageRequest = new PageRequest(page*10 + 1, page*10 + 10);
 		return articleRepository.findAll(pageRequest);

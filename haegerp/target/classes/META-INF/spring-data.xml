@@ -6,6 +6,8 @@ xmlns:context="http://www.springframework.org/schema/context"
 xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 xmlns:util="http://www.springframework.org/schema/util"
+xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
 xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -18,17 +20,24 @@ xsi:schemaLocation="
 	http://www.springframework.org/schema/data/jpa
 	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 	http://www.springframework.org/schema/util
-	http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+	http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	http://jax-ws.dev.java.net/spring/core
+    http://jax-ws.dev.java.net/spring/core.xsd
+    http://jax-ws.dev.java.net/spring/servlet
+    http://jax-ws.dev.java.net/spring/servlet.xsd">
 	
 	<context:annotation-config />
 	
- 	<context:component-scan base-package="org.haegerp.controller" />
+ 	<context:component-scan base-package="org.haegerp" />
 	
 	<bean id="exportToXML" class="org.haegerp.export.impl.ExportXML" />
 	<bean id="exportToCSV" class="org.haegerp.export.impl.ExportCSV" />
+	
+	<bean id="articleRepository" class="org.haegerp.entity.repository.article.ArticleRepository" />
+	<bean id="articleCategoryRepository" class="org.haegerp.entity.repository.article.ArticleCategoryRepository" />
 	 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
- 	
+	
 	<!-- Activate Spring Data JPA repository support -->
 	<jpa:repositories base-package="org.haegerp.entity.repository" repository-impl-postfix="CustomImpl" factory-class="org.haegerp.entity.repository.MyRepositoryFactoryBean" />
 	

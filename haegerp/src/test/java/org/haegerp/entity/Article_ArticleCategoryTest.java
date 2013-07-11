@@ -206,9 +206,6 @@ public class Article_ArticleCategoryTest extends TestCase {
 	        
 	        article = articleRepository.save(article);
 	        
-	        //Die Artikelversion wird kontrolliert
-	        //articleRepo.createArticleHistory(article);
-	        
 	        //Der geänderter Artikel wird geprüft
 	        article = articleRepository.findOne(ARTICLE_ID);
 	        

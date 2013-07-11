@@ -50,6 +50,14 @@ public class ExportXML implements Export {
 		}
 	}
 	
+	/**
+	 * Ein neue Element für das XML-Dokument wird erstellt.
+	 * 
+	 * @param doc Welches XML-Dokument
+	 * @param nodeName Name des Node
+	 * @param nodeValue Wert des Node
+	 * @return Ein Neue Element
+	 */
 	public Element newNode(Document doc, String nodeName, String nodeValue)
 	{
 		Element element = doc.createElement(nodeName);

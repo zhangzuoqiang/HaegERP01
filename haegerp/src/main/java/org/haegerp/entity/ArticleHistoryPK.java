@@ -2,6 +2,12 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 
+/**
+ * Die ID von der Artikelhistorie ist Kompost, und für jede Kompost ID muss man eine Klasse erstellen.
+ * 
+ * @author Wolf
+ *
+ */
 public class ArticleHistoryPK implements Serializable {
 	
 	private static final long serialVersionUID = 7009602054952700253L;

@@ -28,6 +28,7 @@ public interface ArticleHistoryRepository extends MyRepository<ArticleHistory, A
 	
 	/**
 	 * Diese Methode löcht alle Versionen von einem Artikel.
+	 * 
 	 * @param idArticle ID des Artikel.
 	 */
 	@Modifying
