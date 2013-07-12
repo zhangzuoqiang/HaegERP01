@@ -33,6 +33,8 @@ xsi:schemaLocation="
 	<bean id="exportToXML" class="org.haegerp.export.impl.ExportXML" />
 	<bean id="exportToCSV" class="org.haegerp.export.impl.ExportCSV" />
 	
+	<bean id="launcher" class="org.haegerp.launcher.Main"/>
+	
 	<bean id="articleRepository" class="org.haegerp.entity.repository.article.ArticleRepository" />
 	<bean id="articleCategoryRepository" class="org.haegerp.entity.repository.article.ArticleCategoryRepository" />
 	 

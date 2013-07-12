@@ -17,6 +17,8 @@ import org.haegerp.view.main.MainMenuHumanResources;
 import org.haegerp.view.main.MainMenuInterface;
 import org.haegerp.view.main.MainMenuNormal;
 import org.haegerp.view.main.MainMenuPartners;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,11 +29,15 @@ import java.awt.event.ActionEvent;
  * @author Wolf
  *
  */
+@Component("mainMenu")
 public class MainMenu extends JFrame {
 
 	private static final long serialVersionUID = 3267457954593344809L;
 	
 	private MainMenuInterface mainMenuView;
+	
+	@Autowired
+	private Article articleView;
 	
 	/**
 	 * Launch the application.
@@ -72,7 +78,8 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	private void btnArticlesSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Article Management
+		articleView.setUp();
+		articleView.setVisible(true);
 	}
 	
 	/**
@@ -220,11 +227,12 @@ public class MainMenu extends JFrame {
 		// TODO Open Outstanding Management
 	}
 	
-	/**
-	 * Create the frame.
-	 */
 	public MainMenu() {
-		mainMenuView = new MainMenuNormal();
+		
+	}
+	
+	public void setUp(){
+mainMenuView = new MainMenuNormal();
 		
 		setTitle("HaegERP");
 		pnlForm = new JPanel();

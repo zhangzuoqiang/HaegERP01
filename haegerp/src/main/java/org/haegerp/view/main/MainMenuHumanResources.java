@@ -67,8 +67,6 @@ public class MainMenuHumanResources implements MainMenuInterface {
 	        			.addContainerGap(217, Short.MAX_VALUE))
 	        );
 	        mainMenu.pnlMenus.setLayout(pnlMenusLayout);
-			
-			mainMenu.pack();
 	}
 
 }

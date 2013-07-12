@@ -63,7 +63,5 @@ public class MainMenuArticle implements MainMenuInterface {
 	        			.addContainerGap(267, Short.MAX_VALUE))
 	        );
 	        mainMenu.pnlMenus.setLayout(pnlMenusLayout);
-	        
-	        mainMenu.pack();
 	}
 }

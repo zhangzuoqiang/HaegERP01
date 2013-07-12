@@ -61,8 +61,6 @@ public class MainMenuClientOrders implements MainMenuInterface {
 	        			.addContainerGap(292, Short.MAX_VALUE))
 	        );
 	        mainMenu.pnlMenus.setLayout(pnlMenusLayout);
-			
-			mainMenu.pack();
 	}
 
 }
