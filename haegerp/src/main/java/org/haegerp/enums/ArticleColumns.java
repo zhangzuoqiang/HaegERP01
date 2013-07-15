@@ -7,17 +7,17 @@ package org.haegerp.enums;
  *
  */
 public enum ArticleColumns{
-	IDARTICLE,
-	IDARTICLECATEGORY,
+	IdArticle,
+	IdArticleCategory,
 	EAN,
-	NAME,
-	PRICEVAT,
-	PRICEGROSS,
-	PRICESUPPLIER,
-	STOCK,
-	COLOR,
-	SIZEH,
-	SIZEL,
-	SIZEW,
-	DESCRIPTION
+	Name,
+	PriceVAT,
+	PriceGross,
+	PriceSupplier,
+	Stock,
+	Color,
+	SizeH,
+	SizeL,
+	SizeW,
+	Description
 }

@@ -37,7 +37,7 @@ public class MainMenu extends JFrame {
 	private MainMenuInterface mainMenuView;
 	
 	@Autowired
-	private Article articleView;
+	private ArticleView articleView;
 	
 	/**
 	 * Launch the application.

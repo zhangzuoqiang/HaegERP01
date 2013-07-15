@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.haegerp.entity.Article;
+import org.haegerp.entity.ArticleCategory;
+import org.haegerp.entity.repository.article.ArticleCategoryRepository;
 import org.haegerp.entity.repository.article.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,20 +26,35 @@ public class ArticleController {
 	
 	@Autowired
 	private ArticleRepository articleRepository;
+	@Autowired
+	private ArticleCategoryRepository articleCategoryRepository;
 	
+	private int pageNumber;
+	private Page<Article> page;
+	
+	public Page<Article> getPage() {
+		return page;
+	}
+
 	public ArticleController() {
-		//Page<Article> articlesPage = getPageArticles(0);
+		pageNumber = 0;
+	}
+	
+	public void loadPage(int size){
+		page = loadArticlesPage(size);
 	}
 	
 	/**
 	 * Eine neue Seite wird erhalt
 	 * 
 	 * @param page Nummer der Seite
-	 * @return Seite mit Artikel
+	 * @param size Grösse der Seite
+	 * @return Seite mit den Artikeln
 	 */
-	public Page<Article> getPageArticles(int page){
-		PageRequest pageRequest = new PageRequest(page*10 + 1, page*10 + 10);
-		return articleRepository.findAll(pageRequest);
+	private Page<Article> loadArticlesPage(int size){
+		PageRequest pageRequest = new PageRequest(pageNumber, size);
+		this.page = articleRepository.findAll(pageRequest);
+		return page;
 	}
 	
 	/**
@@ -86,5 +103,39 @@ public class ArticleController {
             }
         }
 	}
+
+	public boolean getNextPage(int size) {
+		if (page.hasNextPage()){
+			pageNumber++;
+			page = loadArticlesPage(size);
+			return true;
+		}
+		else
+			return false;
+	}
+
+	public boolean getPreviousPage(int size) {
+		if (page.hasPreviousPage()){
+			pageNumber--;
+			page = loadArticlesPage(size);
+			return true;
+		}
+		else
+			return false;
+	}
 	
+	public boolean getFirstPage(int size){
+		pageNumber = 0;
+		page = loadArticlesPage(size);
+		return true;
+	}
+	
+	public boolean getArticlesByCategory(String categoryName, int size){
+		//TODO: Finish function and Determine DI or Interface.
+		pageNumber = 0;
+		PageRequest pageRequest = new PageRequest(pageNumber, size);
+		ArticleCategory articleCategory = articleCategoryRepository.findByName(categoryName);
+		
+		return true;
+	}
 }

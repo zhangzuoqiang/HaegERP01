@@ -2,6 +2,8 @@ package org.haegerp.entity.repository.article;
 
 import org.haegerp.entity.Article;
 import org.haegerp.entity.repository.MyRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,5 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
 public interface ArticleRepository extends MyRepository<Article, Long> {
+	
+	public Page<Article> findByArticleCategoryId(long idArticleCategory, Pageable pageable);
 	
 }

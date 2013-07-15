@@ -14,7 +14,6 @@ public class ArticleCategoryController {
 	private ArticleCategoryRepository articleCategoryRepository;
 	
 	public ArticleCategoryController() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public List<ArticleCategory> getAllCategories() {

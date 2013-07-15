@@ -14,4 +14,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
 public interface ArticleCategoryRepository extends MyRepository<ArticleCategory, Long> {
 	
+	public ArticleCategory findByName(String name);
 }
