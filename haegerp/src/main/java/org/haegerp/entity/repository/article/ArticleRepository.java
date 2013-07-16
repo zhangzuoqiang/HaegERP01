@@ -4,6 +4,7 @@ import org.haegerp.entity.Article;
 import org.haegerp.entity.repository.MyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
 public interface ArticleRepository extends MyRepository<Article, Long> {
 	
-	public Page<Article> findByArticleCategoryId(long idArticleCategory, Pageable pageable);
+	@Query(countQuery="SELECT COUNT(*) FROM Article WHERE articleCategory.idArticleCategory = ?1", value="FROM Article WHERE articleCategory.idArticleCategory = ?1")
+	public Page<Article> findByIdArticleCategory(long idArticleCategory, Pageable pageable);
 	
 }
