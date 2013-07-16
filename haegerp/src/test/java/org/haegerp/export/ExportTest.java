@@ -2,7 +2,6 @@ package org.haegerp.export;
 
 import junit.framework.TestCase;
 
-import org.haegerp.controller.ArticleController;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
 import org.haegerp.entity.repository.article.ArticleCategoryRepository;
@@ -58,9 +57,6 @@ public class ExportTest extends TestCase {
     
     @Autowired
     private EmployeeRepository employeeRepository;
-    
-    @Autowired
-    private ArticleController articleController;
     
     @Autowired
     @Qualifier("exportToCSV")

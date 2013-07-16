@@ -16,8 +16,25 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly=true, propagation=Propagation.MANDATORY)
 public interface ArticleRepository extends MyRepository<Article, Long> {
-	
-	@Query(countQuery="SELECT COUNT(*) FROM Article WHERE articleCategory.idArticleCategory = ?1", value="FROM Article WHERE articleCategory.idArticleCategory = ?1")
-	public Page<Article> findByIdArticleCategory(long idArticleCategory, Pageable pageable);
+	/*
+	@Query(countQuery="SELECT COUNT(*) " +
+			"WHERE (1 = ?1 AND idArticleCategory = ?2)" +
+				"OR (1 = ?3 AND ean = ?4)" +
+				"OR (1 = ?5 AND name LIKE '%' || ?6 || '%')" +
+				"OR (1 = ?7 AND (priceVat >= (?8 - 0.5) AND priceVat <= (?8 + 0.5)))" +
+				"OR (1 = ?9 AND (priceGross >= (?10 - 5.0) AND priceGross <= (?10 + 5.0)))" +
+				"OR (1 = ?11 AND (priceSupplier >= (?12 - 5.0) AND priceSupplier <= (?12 + 5.0)))" +
+				"OR (1 = ?13 AND (stock >= (?14 - 10) AND stock <= (?14 + 10)))" +
+				"OR (1 = ?15)",
+			value="FROM Article" +
+					"WHERE (1 = ?1 AND idArticleCategory = ?2)" +
+						"OR (1 = ?3 AND ean = ?4)" +
+						"OR (1 = ?5 AND name LIKE '%' || ?6 || '%')" +
+						"OR (1 = ?7 AND (priceVat >= (?8 - 0.5) AND priceVat <= (?8 + 0.5)))" +
+						"OR (1 = ?9 AND (priceGross >= (?10 - 5.0) AND priceGross <= (?10 + 5.0)))" +
+						"OR (1 = ?11 AND (priceSupplier >= (?12 - 5.0) AND priceSupplier <= (?12 + 5.0)))" +
+						"OR (1 = ?13 AND (stock >= (?14 - 10) AND stock <= (?14 + 10)))" +
+						"OR (1 = ?15)")
+	public Page<Article> findWithFilters(Pageable pageable);*/
 	
 }
