@@ -27,6 +27,7 @@ DROP TABLE articlecategory;
 DROP SEQUENCE log_seq;
 
 COMMIT;
+
 CREATE TABLE articlecategory(
 	idArticleCategory	INTEGER			NOT NULL,
 	name				VARCHAR2(50)	NOT NULL,
@@ -42,7 +43,7 @@ CREATE TABLE article(
 	idArticleCategory	INTEGER			NOT NULL,
 	ean					INTEGER			NOT NULL,
 	name				VARCHAR2(80)	NOT NULL,
-	priceVat			NUMBER(5,2)		NOT NULL,
+	priceVat			NUMBER(6,4)		NOT NULL,
 	priceGross			NUMBER(20,2)	NOT NULL,
 	priceSupplier		NUMBER(20,2)	NOT NULL,
 	stock				INTEGER,
@@ -66,7 +67,7 @@ CREATE TABLE articlehistory(
 	articleCategory		VARCHAR2(50)	NOT NULL,
 	ean					INTEGER			NOT NULL,
 	name				VARCHAR2(80)	NOT NULL,
-	priceVat			NUMBER(5,2)		NOT NULL,
+	priceVat			NUMBER(6,4)		NOT NULL,
 	priceGross			NUMBER(20,2)	NOT NULL,
 	priceSupplier		NUMBER(20,2)	NOT NULL,
 	LastModifiedDate	DATE,
@@ -267,7 +268,7 @@ CREATE TABLE supplierorder_article (
 	idArticle			INTEGER			NOT NULL,
 	idArticleHistory	INTEGER			NOT NULL,
 	quantity			INTEGER			NOT NULL,
-	discount			NUMBER(5,3)		NOT NULL,
+	discount			NUMBER(6,4)		NOT NULL,
 	totalArticle		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_supplierorder_article
 		PRIMARY KEY (idSupplierOrder, idArticle, idArticleHistory),
@@ -322,7 +323,7 @@ CREATE TABLE clientoffer_article (
 	idArticle			INTEGER			NOT NULL,
 	idArticleHistory	INTEGER			NOT NULL,
 	quantity			INTEGER			NOT NULL,
-	discount			NUMBER(5,3)		NOT NULL,
+	discount			NUMBER(6,4)		NOT NULL,
 	totalArticle		NUMBER(20,2)	NOT NULL,
 	CONSTRAINT pk_clientoffer_article
 		PRIMARY KEY (idClientOffer, idArticle, idArticleHistory),
@@ -479,10 +480,10 @@ INSERT INTO ArticleCategory (IDARTICLECATEGORY, NAME, LASTMODIFIEDDATE, IDEMPLOY
 VALUES (0, 'Outstanding', SYSDATE, 1);
 
 INSERT INTO Article (IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, STOCK, SIZEH, SIZEL, SIZEW, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 17, 20, 0, 0, 0, 0, 0, SYSDATE, 1);
+VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 0.17, 20, 0, 0, 0, 0, 0, SYSDATE, 1);
 
 INSERT INTO ArticleHistory (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (1, 0, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 17, 20, 0, SYSDATE, 1);
+VALUES (1, 0, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 0.17, 20, 0, SYSDATE, 1);
 
 COMMIT;
 

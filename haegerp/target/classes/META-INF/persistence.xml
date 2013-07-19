@@ -3,11 +3,12 @@
 	<persistence-unit name="haegerp-persistence" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-			<property name="hibernate.show_sql" value="true" />
+		    <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+		    <property name="show_sql" value="true" />
 		</properties>
 		<mapping resource="org/haegerp/entity/Article.hbm.xml" />
 		<mapping resource="org/haegerp/entity/ArticleCategory.hbm.xml" />
+		<mapping resource="org/haegerp/entity/ArticleHistory.hbm.xml" />
 		<mapping resource="org/haegerp/entity/BusinessPartner.hbm.xml" />
 		<mapping resource="org/haegerp/entity/Supplier.hbm.xml" />
 		<mapping resource="org/haegerp/entity/Client.hbm.xml" />

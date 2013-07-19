@@ -80,7 +80,7 @@ public class ClientOfferDetail implements Serializable {
 	 * @throws LengthOverflowException
 	 */
 	public void setDiscount(float discount) throws LengthOverflowException {
-		if (discount >= 100F || discount < 0.0F)
+		if (discount > 1.0F || discount < 0.0F)
 			throw new LengthOverflowException("Discount");
 		this.discount = discount;
 		ArticleTotalCalculation();
@@ -111,9 +111,9 @@ public class ClientOfferDetail implements Serializable {
 	public void ArticleTotalCalculation(){
 		this.totalArticle = (float) (Math.floor((
 				this.quantity 
-				* (1 - (this.discount/100)) 
+				* (1 - (this.discount)) 
 				* clientOfferDetailPK.getArticleHistory().getPriceGross()
-				* (1 + (clientOfferDetailPK.getArticleHistory().getPriceVat()/100))
+				* (1 + (clientOfferDetailPK.getArticleHistory().getPriceVat()))
 				) * 100)/100);
 	}
 	

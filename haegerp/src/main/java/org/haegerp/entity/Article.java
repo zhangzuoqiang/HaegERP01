@@ -149,7 +149,7 @@ public class Article implements Serializable{
 	 * @throws LengthOverflowException 
 	 */
 	public void setPriceVat(float priceVat) throws LengthOverflowException {
-		if (priceVat > 99.99F || priceVat < 0.0F)
+		if (priceVat > 1.0F || priceVat < 0.0F)
 			throw new LengthOverflowException("PriceVat");
 		this.priceVat = priceVat;
 	}

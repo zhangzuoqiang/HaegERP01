@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class Main {
 	
 	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring-data.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring-data-gui.xml");
 		Main app = (Main) context.getBean("launcher");
 		app.start(args);
 	}

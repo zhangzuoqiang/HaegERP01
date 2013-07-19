@@ -16,7 +16,7 @@
 		</property>
 		<set name="articles" inverse="true" fetch="select">
 			<key>
-				<column name="idArticleCategory" not-null="true"></column>
+				<column name="idArticleCategory"></column>
 			</key>
 			<one-to-many class="org.haegerp.entity.Article"/>
 		</set>

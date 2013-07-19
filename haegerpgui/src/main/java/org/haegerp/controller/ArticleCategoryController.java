@@ -19,4 +19,5 @@ public class ArticleCategoryController {
 	public List<ArticleCategory> getAllCategories() {
 		return articleCategoryRepository.findAll();
 	}
+
 }

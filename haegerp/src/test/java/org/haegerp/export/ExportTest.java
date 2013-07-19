@@ -1,5 +1,7 @@
 package org.haegerp.export;
 
+import java.util.Date;
+
 import junit.framework.TestCase;
 
 import org.haegerp.entity.Article;
@@ -131,7 +133,7 @@ public class ExportTest extends TestCase {
     @Test
     public void test2ExportXML(){
         try {
-        	CHECK_DESTROY = true;
+        	//CHECK_DESTROY = true;
         	assertTrue(exportToXML.export(articleRepository.findAll(), Properties.getProperty("EXPORT_PATH")));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
@@ -148,6 +150,8 @@ public class ExportTest extends TestCase {
 	        ArticleCategory articleCategory = new ArticleCategory();
 	        articleCategory.setName(Properties.getProperty("INSERT_AC_NAME"));
 	        articleCategory.setDescription(Properties.getProperty("INSERT_AC_DESCRIPTION"));
+	        articleCategory.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        articleCategory.setLastModifiedDate(new Date());
 	        
 	        articleCategory = articleCategoryRepository.save(articleCategory);
 	        
@@ -158,7 +162,7 @@ public class ExportTest extends TestCase {
 	        
 	        assertEquals(articleCategory.getName(), Properties.getProperty("INSERT_AC_NAME"));
 	        assertEquals(articleCategory.getDescription(), Properties.getProperty("INSERT_AC_DESCRIPTION"));
-        
+	    
 	    } catch (Exception e) {
 			e.printStackTrace();
 	    	fail(e.getMessage());
@@ -188,6 +192,8 @@ public class ExportTest extends TestCase {
 	        article.setSizeL(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEL")));
 	        article.setSizeW(Float.parseFloat(Properties.getProperty("INSERT_A_SIZEW")));
 	        article.setStock(Long.parseLong(Properties.getProperty("INSERT_A_STOCK")));
+	        article.setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+	        article.setLastModifiedDate(new Date());
 	        
 	        article = articleRepository.save(article);
 	        

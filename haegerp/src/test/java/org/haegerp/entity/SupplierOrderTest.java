@@ -311,7 +311,7 @@ public class SupplierOrderTest extends TestCase {
 				
 				articleTotal = orderArticle.getSupplierOrderDetailPK().getArticleHistory().getPriceSupplier()
 						* orderArticle.getQuantity()
-						* (1 - (orderArticle.getDiscount() / 100));
+						* (1 - (orderArticle.getDiscount()));
 
 				assertEquals(orderArticle.getTotalArticle(), articleTotal);
 				assertEquals(orderArticle.getDiscount(), discount);
@@ -385,7 +385,7 @@ public class SupplierOrderTest extends TestCase {
 				
 				articleTotal = orderArticle.getSupplierOrderDetailPK().getArticleHistory().getPriceSupplier()
 						* orderArticle.getQuantity()
-						* (1 - (orderArticle.getDiscount() / 100));
+						* (1 - (orderArticle.getDiscount()));
 
 				assertEquals(orderArticle.getTotalArticle(), articleTotal);
 				assertEquals(orderArticle.getDiscount(), discount);
@@ -610,7 +610,7 @@ public class SupplierOrderTest extends TestCase {
 				
 				articleTotal = orderArticle.getSupplierOrderDetailPK().getArticleHistory().getPriceSupplier()
 						* orderArticle.getQuantity()
-						* (1 - (orderArticle.getDiscount() / 100));
+						* (1 - (orderArticle.getDiscount()));
 
 				assertEquals(orderArticle.getTotalArticle(), articleTotal);
 				assertEquals(orderArticle.getDiscount(), discount);

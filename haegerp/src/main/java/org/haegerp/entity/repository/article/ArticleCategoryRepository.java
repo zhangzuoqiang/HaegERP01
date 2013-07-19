@@ -2,8 +2,7 @@ package org.haegerp.entity.repository.article;
 
 import org.haegerp.entity.ArticleCategory;
 import org.haegerp.entity.repository.MyRepository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 /**
  * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Artikelkategorie bereitstellt
@@ -11,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Wolf
  *
  */
-@Transactional(readOnly=true, propagation=Propagation.MANDATORY)
+@Repository
 public interface ArticleCategoryRepository extends MyRepository<ArticleCategory, Long> {
 	
-	public ArticleCategory findByName(String name);
 }

@@ -2,12 +2,13 @@ package org.haegerp.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -15,12 +16,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -34,11 +37,13 @@ import org.haegerp.entity.repository.article.ArticleCategoryRepository;
 import org.haegerp.enums.ArticleColumns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
-import javax.swing.SwingConstants;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Component
-public class ArticleView extends JFrame {
+import javax.swing.ListSelectionModel;
+
+@Service
+public class ArticleManagement extends JFrame {
 	
 	private static final long serialVersionUID = 2464190735195227843L;
 	
@@ -51,9 +56,15 @@ public class ArticleView extends JFrame {
 	@Autowired
 	private ArticleCategoryRepository articleCategoryRepository;
 	
-	public ArticleView() {
+	@Autowired
+	private ArticleDetails articleDetails;
+	
+	private List<ArticleCategory> categories;
+	
+	public ArticleManagement() {
     }
 	
+	//Listeners
 	protected void btnNext_ActionPerformed(ActionEvent e) {
 		articleController.getNextPage(sldNumberResults.getValue());
 		loadTable();
@@ -69,21 +80,64 @@ public class ArticleView extends JFrame {
 		loadTable();
 	}
 	
-	protected void cbbCategory_PropertyChange(PropertyChangeEvent e) {
-		//FIXME: LoadTable with DI or Interfaces
-		
-		//articleController.getArticlesByCategory(((String)cbbCategory.getSelectedItem()));
-		//loadTable();
+	protected void cbbCategory_ActionPerformed(ActionEvent e) {
+		int cbbIndex = cbbCategory.getSelectedIndex() -1;
+		if (cbbIndex == -1)
+			articleController.setCategory((long)cbbIndex, sldNumberResults.getValue());
+		else
+			articleController.setCategory((categories.get(cbbIndex)).getIdArticleCategory(), sldNumberResults.getValue());
+		loadTable();
 	}
 	
+	protected void cbbField_ActionListener(ActionEvent e) {
+		articleController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
+		loadTable();
+	}
+	
+	protected void txtSearch_KeyReleased(KeyEvent e) {
+		articleController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
+		loadTable();
+	}
+	
+	protected void btnNew_ActionListener(ActionEvent e) {
+		articleDetails.setNewMode();
+		articleDetails.setVisible(true);
+	}
+	
+	protected void btnEdit_ActionPerformed(ActionEvent e) {
+		int row = tblArticles.getSelectedRow();
+		if (row != -1) {
+			Article article = articleController.getPage().getContent().get(row);
+			articleDetails.setArticle(article);
+			articleDetails.setEditMode();
+			articleDetails.setVisible(true);
+		}
+	}
+	
+	protected void btnDelete_ActionListener(ActionEvent e) {
+		int row = tblArticles.getSelectedRow();
+		if (row != -1) {
+			Article article = articleController.getPage().getContent().get(row);
+			int option = JOptionPane.showConfirmDialog(this, "Delete: " + article.getName() + "\nAre you sure?", "", JOptionPane.YES_NO_OPTION);
+			if (option == JOptionPane.YES_OPTION) {
+				articleController.delete(article);
+				loadTable();
+			}
+		}
+	}
+	
+	protected void tblArticles_MouseDoubleClick(MouseEvent e) {
+		int row = tblArticles.getSelectedRow();
+		if (row != -1) {
+			Article article = articleController.getPage().getContent().get(row);
+			articleDetails.setArticle(article);
+			articleDetails.setShowMode();
+			articleDetails.setVisible(true);
+		}
+	}
+	
+	@PostConstruct
 	public void setUp(){
-		/** FIXME: Articles
-		 * ----> Category
-		 * ----> Search
-		 * ----> Delete
-		 * ----> New
-		 * ----> Edit
-		 */
 		pnlTblArticles = new JScrollPane();
         tblArticles = new JTable();
         btnPrevious = new JButton();
@@ -97,7 +151,25 @@ public class ArticleView extends JFrame {
         
         setTitle("Articles Management");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 415));
 
+        tblArticles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblArticles.addMouseListener(new MouseListener() {
+			
+			public void mouseReleased(MouseEvent e) { }
+			
+			public void mousePressed(MouseEvent e) {
+				if (e.getClickCount() > 1)
+					tblArticles_MouseDoubleClick(e);
+			}
+			
+			public void mouseExited(MouseEvent e) { }
+			
+			public void mouseEntered(MouseEvent e) { }
+			
+			public void mouseClicked(MouseEvent e) { }
+		});
+        
         pnlTblArticles.setViewportView(tblArticles);
 
         btnPrevious.setText("Previous");
@@ -115,10 +187,28 @@ public class ArticleView extends JFrame {
         btnNext.setText("Next");
 
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				btnEdit_ActionPerformed(e);
+			}
+		});
 
         btnDelete.setText("Delete");
-
+        btnDelete.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				btnDelete_ActionListener(e);
+			}
+		});
+        
         btnNew.setText("New");
+        btnNew.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				btnNew_ActionListener(e);
+			}
+		});
 
         javax.swing.GroupLayout gl_pnlCenterNewR = new javax.swing.GroupLayout(pnlCenterNewR);
         pnlCenterNewR.setLayout(gl_pnlCenterNewR);
@@ -204,10 +294,10 @@ public class ArticleView extends JFrame {
         cbbCategory.setModel(new DefaultComboBoxModel<String>(new String[] {"All"}));
         cbbCategory.setSelectedIndex(0);
         loadCbbCategory();
-        cbbCategory.addPropertyChangeListener(new PropertyChangeListener() {
+        cbbCategory.addActionListener(new ActionListener() {
 			
-			public void propertyChange(PropertyChangeEvent e) {
-				cbbCategory_PropertyChange(e);
+			public void actionPerformed(ActionEvent e) {
+				cbbCategory_ActionPerformed(e);
 			}
 		});
         
@@ -215,23 +305,33 @@ public class ArticleView extends JFrame {
         txtSearch.setBounds(86, 58, 177, 20);
         pnlSearch.add(txtSearch);
         txtSearch.setColumns(10);
+        txtSearch.addKeyListener(new KeyListener() {
+			
+			public void keyTyped(KeyEvent e) { }
+			
+			public void keyReleased(KeyEvent e) {
+				txtSearch_KeyReleased(e);
+			}
+			
+			public void keyPressed(KeyEvent e) { }
+		});
         
         lblSearch = new JLabel();
         lblSearch.setText("Search");
         lblSearch.setBounds(10, 61, 45, 14);
         pnlSearch.add(lblSearch);
         
-        btnSearch = new JButton();
-        btnSearch.setText("Search");
-        btnSearch.setBounds(487, 57, 75, 23);
-        pnlSearch.add(btnSearch);
-        
         cbbField = new JComboBox<String>();
         cbbField.setBounds(275, 57, 200, 22);
         pnlSearch.add(cbbField);
-        cbbField.setModel(new DefaultComboBoxModel<String>(new String[] {"All"}));
-        cbbField.setSelectedIndex(0);
         loadCbbField();
+        cbbField.setSelectedIndex(0);
+        cbbField.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				cbbField_ActionListener(e);
+			}
+		});
         
         lblSlider.setBounds(487, 28, 26, 14);
         pnlSearch.add(lblSlider);
@@ -260,29 +360,30 @@ public class ArticleView extends JFrame {
         
         sldNumberResults.setValue(10);
         sldNumberResults.setMajorTickSpacing(20);
-        sldNumberResults.setMaximum(200);
+        sldNumberResults.setMaximum(100);
         sldNumberResults.setMinimum(10);
         sldNumberResults.setBounds(275, 19, 200, 27);
         pnlSearch.add(sldNumberResults);
         
         lblPage = new JLabel("");
         lblPage.setHorizontalAlignment(SwingConstants.LEFT);
-        lblPage.setBounds(580, 62, 110, 16);
+        lblPage.setBounds(485, 60, 110, 16);
         pnlSearch.add(lblPage);
         
         loadTable();
         
         pack();
 	}
-
+	
 	private void loadCbbField() {
 		for (int i = 2; i < 8; i++) {
 			cbbField.addItem(ArticleColumns.values()[i].name());
 		}
 	}
-
+	
 	private void loadCbbCategory(){
-		List<ArticleCategory> categories = articleCategoryController.getAllCategories();
+		categories = articleCategoryController.getAllCategories();
+		
 		for (ArticleCategory articleCategory : categories) {
 			cbbCategory.addItem(articleCategory.getName());
 		}
@@ -307,19 +408,21 @@ public class ArticleView extends JFrame {
 		lblPage.setText("Page " + (articleController.getPage().getNumber() +1) + "/" + articleController.getPage().getTotalPages());
 	}
 	
+	@Transactional
 	private Object[][] loadTablePage(int size){
-		articleController.loadPage(size);
-		Page<Article> page = articleController.getPage();
+		Page<Article> page = articleController.loadArticlesPage(size);
         Object[][] rows = new Object[page.getContent().size()][7];
         for (int i = 0; i < page.getContent().size(); i++) {
         	Article article = page.getContent().get(i);
         	
         	rows[i][0] = article.getEan();
         	rows[i][1] = article.getName();
-			rows[i][2] = articleCategoryRepository.findOne(article.getArticleCategory().getIdArticleCategory()).getName();
-			rows[i][3] = article.getPriceVat();
-			rows[i][4] = article.getPriceGross();
-			rows[i][5] = article.getPriceSupplier();
+        	//FIXME: Mit LazyLoad muss man die Kategorie selber laden
+        	article.setArticleCategory(articleCategoryRepository.findOne(article.getArticleCategory().getIdArticleCategory()));
+        	rows[i][2] = article.getArticleCategory().getName();
+			rows[i][3] = (article.getPriceVat() * 100) + " %";
+			rows[i][4] = article.getPriceGross() + " €";
+			rows[i][5] = article.getPriceSupplier() + " €";
 			rows[i][6] = article.getStock();
 		}
         
@@ -343,7 +446,6 @@ public class ArticleView extends JFrame {
 	private JLabel lblCategory;
 	private JComboBox<String> cbbCategory;
 	private JLabel lblSearch;
-	private JButton btnSearch;
 	
 	private JLabel lblSlider;
 	private JSlider sldNumberResults;

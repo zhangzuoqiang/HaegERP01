@@ -19,6 +19,7 @@ import org.haegerp.gui.main.MainMenuNormal;
 import org.haegerp.gui.main.MainMenuPartners;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -37,7 +38,7 @@ public class MainMenu extends JFrame {
 	private MainMenuInterface mainMenuView;
 	
 	@Autowired
-	private ArticleView articleView;
+	private ArticleManagement articleView;
 	
 	/**
 	 * Launch the application.
@@ -77,8 +78,8 @@ public class MainMenu extends JFrame {
 	 * @param e 
 	 * 		Default Parameter
 	 */
+	@Transactional
 	private void btnArticlesSubMenu_ActionPerformed(ActionEvent e) {
-		articleView.setUp();
 		articleView.setVisible(true);
 	}
 	
@@ -92,6 +93,7 @@ public class MainMenu extends JFrame {
 		// TODO Open ArticleCategory Management
 	}
 	
+	//Business Partners
 	/**
 	 * Menü der Geschäftspartners werden gezeigt oder ausgeblendet.
 	 * 
@@ -127,6 +129,7 @@ public class MainMenu extends JFrame {
 		// TODO Open Supplier Management
 	}
 	
+	//Human Resources
 	/**
 	 * Menü der Personalabteilung werden gezeigt oder ausgeblendet.
 	 *  
@@ -182,6 +185,7 @@ public class MainMenu extends JFrame {
 		// TODO Open UserGroup Management
 	}
 	
+	//Company
 	/**
 	 * Diese Methode wird die Firmaverwaltung öffnen
 	 * 
@@ -192,6 +196,7 @@ public class MainMenu extends JFrame {
 		// TODO Open Company Management
 	}
 	
+	//Supplier Orders
 	/**
 	 * Diese Methode wird die Lieferantenbestellungenverwaltung öffnen
 	 * 
@@ -202,6 +207,7 @@ public class MainMenu extends JFrame {
 		// TODO Open SupplierOrder Management
 	}
 	
+	//Client Orders
 	/**
 	 * Menü der Kundenbestellungen werden gezeigt oder ausgeblendet.
 	 * 
@@ -227,12 +233,10 @@ public class MainMenu extends JFrame {
 		// TODO Open Outstanding Management
 	}
 	
-	public MainMenu() {
-		
-	}
+	public MainMenu() { }
 	
 	public void setUp(){
-mainMenuView = new MainMenuNormal();
+		mainMenuView = new MainMenuNormal();
 		
 		setTitle("HaegERP");
 		pnlForm = new JPanel();
