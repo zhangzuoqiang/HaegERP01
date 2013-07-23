@@ -1,5 +1,7 @@
 package org.haegerp.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -33,16 +35,13 @@ import org.haegerp.controller.ArticleCategoryController;
 import org.haegerp.controller.ArticleController;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
-import org.haegerp.entity.repository.article.ArticleCategoryRepository;
 import org.haegerp.enums.ArticleColumns;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import javax.swing.ListSelectionModel;
 
-@Service
+@Component
 public class ArticleManagement extends JFrame {
 	
 	private static final long serialVersionUID = 2464190735195227843L;
@@ -52,9 +51,6 @@ public class ArticleManagement extends JFrame {
 	
 	@Autowired
 	private ArticleCategoryController articleCategoryController;
-	
-	@Autowired
-	private ArticleCategoryRepository articleCategoryRepository;
 	
 	@Autowired
 	private ArticleDetails articleDetails;
@@ -373,6 +369,9 @@ public class ArticleManagement extends JFrame {
         loadTable();
         
         pack();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
 	}
 	
 	private void loadCbbField() {
@@ -389,12 +388,12 @@ public class ArticleManagement extends JFrame {
 		}
 	}
 	
-	private void loadTable(){
+	public void loadTable(){
 		tblArticles.setModel(
         	new DefaultTableModel(
-        			loadTablePage(sldNumberResults.getValue()) ,
+        			articleController.loadTableRows(sldNumberResults.getValue()) ,
         			new String [] {
-        				"EAN", "Name", "Category", "Price Vat", "Price Gross", "Price Supplier", "Stock"
+        				"EAN", "Name", "Category", "Price Vat", "Price Gross", "Price Supplier", "Stock", "Last Modified", "Modified By"
         			})
 	        {
 				private static final long serialVersionUID = 1L;
@@ -406,27 +405,6 @@ public class ArticleManagement extends JFrame {
 	        }
     	);
 		lblPage.setText("Page " + (articleController.getPage().getNumber() +1) + "/" + articleController.getPage().getTotalPages());
-	}
-	
-	@Transactional
-	private Object[][] loadTablePage(int size){
-		Page<Article> page = articleController.loadArticlesPage(size);
-        Object[][] rows = new Object[page.getContent().size()][7];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	Article article = page.getContent().get(i);
-        	
-        	rows[i][0] = article.getEan();
-        	rows[i][1] = article.getName();
-        	//FIXME: Mit LazyLoad muss man die Kategorie selber laden
-        	article.setArticleCategory(articleCategoryRepository.findOne(article.getArticleCategory().getIdArticleCategory()));
-        	rows[i][2] = article.getArticleCategory().getName();
-			rows[i][3] = (article.getPriceVat() * 100) + " %";
-			rows[i][4] = article.getPriceGross() + " €";
-			rows[i][5] = article.getPriceSupplier() + " €";
-			rows[i][6] = article.getStock();
-		}
-        
-        return rows;
 	}
 	
 	private JButton btnDelete;

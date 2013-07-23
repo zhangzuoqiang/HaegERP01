@@ -10,20 +10,6 @@ public class ArticleShowView implements ArticleDetailsInterface {
 		articleDetailsMenu.btnSaveEdit.setEnabled(true);
 		articleDetailsMenu.btnSaveEdit.setText("Edit");
 		
-		articleDetailsMenu.cbbCategory.setEnabled(false);
-		
-		articleDetailsMenu.txtColor.setEditable(false);
-		articleDetailsMenu.txtDescription.setEditable(false);
-		articleDetailsMenu.txtEan.setEditable(false);
-		articleDetailsMenu.txtName.setEditable(false);
-		articleDetailsMenu.txtPriceGross.setEditable(false);
-		articleDetailsMenu.txtPriceSupplier.setEditable(false);
-		articleDetailsMenu.txtPriceVat.setEditable(false);
-		articleDetailsMenu.txtSizeH.setEditable(false);
-		articleDetailsMenu.txtSizeL.setEditable(false);
-		articleDetailsMenu.txtSizeW.setEditable(false);
-		articleDetailsMenu.txtStock.setEditable(false);
-		
 		articleDetailsMenu.txtEan.setValue(articleDetailsMenu.getArticle().getEan());
 		articleDetailsMenu.txtName.setText(articleDetailsMenu.getArticle().getName());
 		articleDetailsMenu.cbbCategory.setSelectedItem(articleDetailsMenu.getArticle().getArticleCategory().getName());
@@ -36,6 +22,19 @@ public class ArticleShowView implements ArticleDetailsInterface {
 		articleDetailsMenu.txtSizeL.setValue(articleDetailsMenu.getArticle().getSizeL());
 		articleDetailsMenu.txtSizeW.setValue(articleDetailsMenu.getArticle().getSizeW());
 		articleDetailsMenu.txtDescription.setText(articleDetailsMenu.getArticle().getDescription());
+		
+		articleDetailsMenu.cbbCategory.setEnabled(false);
+		articleDetailsMenu.txtColor.setEditable(false);
+		articleDetailsMenu.txtDescription.setEditable(false);
+		articleDetailsMenu.txtEan.setEditable(false);
+		articleDetailsMenu.txtName.setEditable(false);
+		articleDetailsMenu.txtPriceGross.setEditable(false);
+		articleDetailsMenu.txtPriceSupplier.setEditable(false);
+		articleDetailsMenu.txtPriceVat.setEditable(false);
+		articleDetailsMenu.txtSizeH.setEditable(false);
+		articleDetailsMenu.txtSizeL.setEditable(false);
+		articleDetailsMenu.txtSizeW.setEditable(false);
+		articleDetailsMenu.txtStock.setEditable(false);
 	}
 
 	public void btnSaveEdit(ArticleDetails articleDetailsMenu) {

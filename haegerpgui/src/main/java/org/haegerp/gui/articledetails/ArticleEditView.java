@@ -1,8 +1,13 @@
 package org.haegerp.gui.articledetails;
 
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 
 import org.haegerp.gui.ArticleDetails;
+import org.haegerp.session.EmployeeSession;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public class ArticleEditView implements ArticleDetailsInterface {
 
@@ -40,10 +45,9 @@ public class ArticleEditView implements ArticleDetailsInterface {
 		articleDetailsMenu.txtDescription.setText(articleDetailsMenu.getArticle().getDescription());
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(ArticleDetails articleDetailsMenu) {
 		try {
-			//FIXME: Null or Transient error (Proxy problem)
-			//Not-null property references a transient value - transient instance must be saved before current operation
 			articleDetailsMenu.getArticle().setEan((Long) articleDetailsMenu.txtEan.getValue());
 			articleDetailsMenu.getArticle().setName(articleDetailsMenu.txtName.getText());
 			
@@ -63,7 +67,10 @@ public class ArticleEditView implements ArticleDetailsInterface {
 			
 			articleDetailsMenu.getArticle().setDescription(articleDetailsMenu.txtDescription.getText());
 			
-			articleDetailsMenu.getArticleController().saveArticle(articleDetailsMenu.getArticle());
+			articleDetailsMenu.getArticle().setIdEmployeeModify(EmployeeSession.getEmployee().getIdEmployee());
+			articleDetailsMenu.getArticle().setLastModifiedDate(new Date());
+			
+			articleDetailsMenu.setArticle(articleDetailsMenu.getArticleController().save(articleDetailsMenu.getArticle()));
 			
 			articleDetailsMenu.setShowMode();
 		} catch (Exception ex) {

@@ -19,5 +19,8 @@ public enum ArticleColumns{
 	SizeH,
 	SizeL,
 	SizeW,
-	Description
+	Description,
+	LastModifiedDate,
+	IDEmployeeModify,
+	
 }

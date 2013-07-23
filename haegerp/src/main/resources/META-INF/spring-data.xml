@@ -37,7 +37,7 @@ xsi:schemaLocation="
 	<bean id="articleRepository" class="org.haegerp.entity.repository.article.ArticleRepository" />
 	<bean id="articleCategoryRepository" class="org.haegerp.entity.repository.article.ArticleCategoryRepository" />
 	 
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false" />
 	
 	<!-- Activate Spring Data JPA repository support -->
 	<jpa:repositories

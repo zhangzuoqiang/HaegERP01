@@ -5,13 +5,19 @@ FOR EACH ROW
 
 DECLARE
 	v_currentVersion INTEGER;
+	v_articleCount INTEGER;
 	v_categoryName VARCHAR2(50);
 BEGIN
-	IF UPDATING THEN
+	SELECT COUNT(idArticleHistory)
+		INTO v_articleCount
+	FROM ARTICLEHISTORY
+	WHERE idArticle = :NEW.idArticle;
+	
+	IF (v_articleCount > 0) THEN
 		SELECT MAX(idArticleHistory)
 			INTO v_currentVersion
 		FROM ARTICLEHISTORY
-		WHERE idArticle = :OLD.idArticle;
+		WHERE idArticle = :NEW.idArticle;
 		v_currentVersion := v_currentVersion + 1;
 	ELSE
 		v_currentVersion := 1;

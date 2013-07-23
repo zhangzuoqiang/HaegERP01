@@ -1,7 +1,5 @@
 package org.haegerp.gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,12 +9,14 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.gui.main.MainMenuArticle;
 import org.haegerp.gui.main.MainMenuClientOrders;
 import org.haegerp.gui.main.MainMenuHumanResources;
 import org.haegerp.gui.main.MainMenuInterface;
 import org.haegerp.gui.main.MainMenuNormal;
 import org.haegerp.gui.main.MainMenuPartners;
+import org.haegerp.session.EmployeeSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,21 +40,15 @@ public class MainMenu extends JFrame {
 	@Autowired
 	private ArticleManagement articleView;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainMenu frame = new MainMenu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	@Autowired
+	private ArticleCategoryManagement articleCategoryManagement;
+	
+	@Autowired
+	private ClientManagement clientManagement;
+	
+	//FIXME Login Form!
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	
 	//Article
 	/**
@@ -90,7 +84,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnArticlesCategorySubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open ArticleCategory Management
+		articleCategoryManagement.setVisible(true);
 	}
 	
 	//Business Partners
@@ -116,7 +110,17 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnPartnersClientSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Client Management
+		clientManagement.setVisible(true);
+	}
+	
+	/**
+	 * Diese Methode wird die Kundenkategorieverwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnPartnersClientCategorySubMenu_ActionPerformed(ActionEvent e) {
+		//TODO 01.) Open Client Category Management
 	}
 	
 	/**
@@ -126,7 +130,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnPartnersSupplierSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Supplier Management
+		// TODO 02.) Open Supplier Management
 	}
 	
 	//Human Resources
@@ -152,7 +156,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesEmployeeSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Employee Management
+		// TODO 03.) Open Employee Management
 	}
 	
 	/**
@@ -162,7 +166,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesDivisionSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Division Management
+		// TODO 04.) Open Division Management
 	}
 	
 	/**
@@ -172,7 +176,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesSalaryCategorySubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open SalaryCategory Management
+		// TODO 05.) Open SalaryCategory Management
 	}
 	
 	/**
@@ -182,7 +186,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesUserGroupSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open UserGroup Management
+		// TODO 06.) Open UserGroup Management
 	}
 	
 	//Company
@@ -193,7 +197,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnCompanyMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Company Management
+		// TODO 07.) Open Company Management
 	}
 	
 	//Supplier Orders
@@ -204,7 +208,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnSupplierOrdersMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open SupplierOrder Management
+		// TODO 08.) Open SupplierOrder Management
 	}
 	
 	//Client Orders
@@ -224,18 +228,30 @@ public class MainMenu extends JFrame {
 	}
 	
 	/**
+	 * Diese Methode wird die Kundenbestelungen Verwaltung öffnen
+	 * 
+	 * @param e
+	 * 		Default Parameter
+	 */
+	public void btnClientOrdersSubMenu_ActionPerformed(ActionEvent e) {
+		// TODO 09.) Open Client Orders Management
+	}
+	
+	/**
 	 * Diese Methode wird die ausstehende Verwaltung öffnen
 	 * 
 	 * @param e
 	 * 		Default Parameter
 	 */
 	public void btnClientOrdersOutstandingSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO Open Outstanding Management
+		// TODO 10.) Open Outstanding Management
 	}
 	
 	public MainMenu() { }
 	
 	public void setUp(){
+		EmployeeSession.setEmployee(employeeRepository.findOne(1L));
+		
 		mainMenuView = new MainMenuNormal();
 		
 		setTitle("HaegERP");
@@ -283,6 +299,14 @@ public class MainMenu extends JFrame {
 			}
 		});
         btnPartnersClientSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
+        btnPartnersClientCategorySubMenu = new JButton();
+        btnPartnersClientCategorySubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnPartnersClientCategorySubMenu_ActionPerformed(e);
+			}
+		});
+        btnPartnersClientCategorySubMenu.setHorizontalAlignment(SwingConstants.LEFT);
         
         btnPartnersSupplierSubMenu = new JButton();
         btnPartnersSupplierSubMenu.addActionListener(new ActionListener() {
@@ -368,6 +392,14 @@ public class MainMenu extends JFrame {
 		});
         btnClientOrdersOutstandingSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
         
+        btnClientOrdersSubMenu = new JButton();
+        btnClientOrdersSubMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnClientOrdersSubMenu_ActionPerformed(e);
+			}
+		});
+        btnClientOrdersSubMenu.setHorizontalAlignment(SwingConstants.LEFT);
+        
         pnlContent = new JPanel();
         lblTitle = new JLabel();
 
@@ -406,6 +438,12 @@ public class MainMenu extends JFrame {
         btnPartnersClientSubMenu.setText(" Clients");
         btnPartnersClientSubMenu.setBorder(UIManager.getBorder("Button.border"));
         btnPartnersClientSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        btnPartnersClientCategorySubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnPartnersClientCategorySubMenu.setIcon(null);
+        btnPartnersClientCategorySubMenu.setText(" Client Category");
+        btnPartnersClientCategorySubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnPartnersClientCategorySubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         
         btnPartnersSupplierSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
         btnPartnersSupplierSubMenu.setIcon(null);
@@ -465,6 +503,12 @@ public class MainMenu extends JFrame {
         btnClientOrdersMenu.setBorder(UIManager.getBorder("Button.border"));
         btnClientOrdersMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        btnClientOrdersSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
+        btnClientOrdersSubMenu.setIcon(null);
+        btnClientOrdersSubMenu.setText(" Client Orders");
+        btnClientOrdersSubMenu.setBorder(UIManager.getBorder("Button.border"));
+        btnClientOrdersSubMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
         btnClientOrdersOutstandingSubMenu.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
         btnClientOrdersOutstandingSubMenu.setIcon(null);
         btnClientOrdersOutstandingSubMenu.setText(" Outstanding");
@@ -533,6 +577,8 @@ public class MainMenu extends JFrame {
         );
 
         pack();
+        
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
 	
 	public JPanel pnlForm;
@@ -546,6 +592,7 @@ public class MainMenu extends JFrame {
 	
 	public JButton btnPartnersMenu;
 	public JButton btnPartnersClientSubMenu;
+	public JButton btnPartnersClientCategorySubMenu;
 	public JButton btnPartnersSupplierSubMenu;
 	
 	public JButton btnHumanResourcesMenu;
@@ -559,6 +606,7 @@ public class MainMenu extends JFrame {
 	public JButton btnSupplierOrdersMenu;
     
 	public JButton btnClientOrdersMenu;
+	public JButton btnClientOrdersSubMenu;
 	public JButton btnClientOrdersOutstandingSubMenu;
     
 	public JPanel pnlContent;

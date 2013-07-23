@@ -509,7 +509,7 @@ public class ClientOrderTest extends TestCase {
 			outstanding.setEmailDate(dateFormat.parse(Properties.getProperty("UPDATE_OC_SENDDATE")));
 			
 			//Der Aufpreis wird ergestellt
-    		ArticleHistory articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(0L), articleRepository.findOne(0L)));
+    		ArticleHistory articleHistory = articleHistoryRepository.findOne(new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(1L), articleRepository.findOne(1L)));
     		
     		ClientOfferDetail clientOfferDetail = new ClientOfferDetail();
     		clientOfferDetail.setClientOfferDetailPK(new ClientOfferDetailPK(outstanding.getClientBill().getClientOffer(), articleHistory));

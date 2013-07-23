@@ -1,5 +1,7 @@
 package org.haegerp.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
@@ -399,6 +401,9 @@ public class ArticleDetails extends javax.swing.JFrame {
         );
 
         pack();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
     }
     
 	public javax.swing.JButton btnCancel;

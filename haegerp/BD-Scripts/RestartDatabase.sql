@@ -477,13 +477,13 @@ VALUES(1);
 /* ******************************************/
 
 INSERT INTO ArticleCategory (IDARTICLECATEGORY, NAME, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (0, 'Outstanding', SYSDATE, 1);
+VALUES (1, 'Outstanding', SYSDATE, 1);
 
 INSERT INTO Article (IDARTICLE, IDARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, STOCK, SIZEH, SIZEL, SIZEW, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (0, 0, 0000000000000, 'Outstanding Surcharge', 0.17, 20, 0, 0, 0, 0, 0, SYSDATE, 1);
+VALUES (1, 1, 0000000000000, 'Outstanding Surcharge', 0.17, 20, 0, 0, 0, 0, 0, SYSDATE, 1);
 
 INSERT INTO ArticleHistory (IDARTICLEHISTORY, IDARTICLE, ARTICLECATEGORY, EAN, NAME, PRICEVAT, PRICEGROSS, PRICESUPPLIER, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (1, 0, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 0.17, 20, 0, SYSDATE, 1);
+VALUES (1, 1, 'Outstanding', 0000000000000, 'Outstanding Surcharge', 0.17, 20, 0, SYSDATE, 1);
 
 COMMIT;
 
@@ -498,13 +498,19 @@ FOR EACH ROW
 
 DECLARE
 	v_currentVersion INTEGER;
+	v_articleCount INTEGER;
 	v_categoryName VARCHAR2(50);
 BEGIN
-	IF UPDATING THEN
+	SELECT COUNT(idArticleHistory)
+		INTO v_articleCount
+	FROM ARTICLEHISTORY
+	WHERE idArticle = :NEW.idArticle;
+	
+	IF (v_articleCount > 0) THEN
 		SELECT MAX(idArticleHistory)
 			INTO v_currentVersion
 		FROM ARTICLEHISTORY
-		WHERE idArticle = :OLD.idArticle;
+		WHERE idArticle = :NEW.idArticle;
 		v_currentVersion := v_currentVersion + 1;
 	ELSE
 		v_currentVersion := 1;

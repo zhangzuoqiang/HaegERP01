@@ -33,6 +33,7 @@ public class MainMenuClientOrders implements MainMenuInterface {
 	        				.addComponent(mainMenu.btnSupplierOrdersMenu, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
 	        				
 	        				.addComponent(mainMenu.btnClientOrdersMenu, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+	        				.addComponent(mainMenu.btnClientOrdersSubMenu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
 	        				.addComponent(mainMenu.btnClientOrdersOutstandingSubMenu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
 	        				)
 	        			.addContainerGap())
@@ -57,6 +58,7 @@ public class MainMenuClientOrders implements MainMenuInterface {
 	        			.addPreferredGap(ComponentPlacement.RELATED)
 	        			
 	        			.addComponent(mainMenu.btnClientOrdersMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+	        			.addComponent(mainMenu.btnClientOrdersSubMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 	        			.addComponent(mainMenu.btnClientOrdersOutstandingSubMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 	        			.addContainerGap(292, Short.MAX_VALUE))
 	        );

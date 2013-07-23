@@ -26,6 +26,7 @@ public class MainMenuPartners implements MainMenuInterface {
 	        				
 	        				.addComponent(mainMenu.btnPartnersMenu, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
 	        				.addComponent(mainMenu.btnPartnersClientSubMenu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+	        				.addComponent(mainMenu.btnPartnersClientCategorySubMenu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
 	        				.addComponent(mainMenu.btnPartnersSupplierSubMenu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
 	        				
 	        				.addComponent(mainMenu.btnHumanResourcesMenu, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
@@ -47,6 +48,7 @@ public class MainMenuPartners implements MainMenuInterface {
 	        			
 	        			.addComponent(mainMenu.btnPartnersMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 	        			.addComponent(mainMenu.btnPartnersClientSubMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+	        			.addComponent(mainMenu.btnPartnersClientCategorySubMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 	        			.addComponent(mainMenu.btnPartnersSupplierSubMenu, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 	        			.addPreferredGap(ComponentPlacement.RELATED)
 	        			

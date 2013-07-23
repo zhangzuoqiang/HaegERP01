@@ -1,6 +1,8 @@
 package org.haegerp.gui.articledetails;
 
 import org.haegerp.gui.ArticleDetails;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ArticleDetailsInterface {
 	
@@ -12,14 +14,15 @@ public interface ArticleDetailsInterface {
 	public void applyView(ArticleDetails articleDetailsMenu);
 	
 	/**
-	 * Einsatz, dass die Taste tut
+	 * Betrieb, dass die Taste tut.
 	 * 
 	 * @param articleDetailsMenu Das ArtikelDetailsmenü
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(ArticleDetails articleDetailsMenu);
 	
 	/**
-	 * Einsatz, dass die Taste tut
+	 * Betrieb, dass die Taste tut
 	 * 
 	 * @param articleDetailsMenu Das ArtikelDetailsmenü
 	 */

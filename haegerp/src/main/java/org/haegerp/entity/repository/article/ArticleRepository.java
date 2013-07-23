@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Artikel bereitstellt
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
+@Transactional
 public interface ArticleRepository extends MyRepository<Article, Long> {
 	
 	@Query(countQuery="SELECT COUNT(*) " +
@@ -25,7 +28,7 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 							"OR " +
 							"( " +
 								"(1 = ?5 AND ean >= ?6 AND ean <= ?7) " +
-								"OR (1 = ?8 AND name LIKE '%' || ?9 || '%') " +
+								"OR (1 = ?8 AND UPPER(name) LIKE '%' || UPPER(?9) || '%') " +
 								"OR (1 = ?10 AND (priceVat >= (?11 - 0.5) AND priceVat <= (?11 + 0.5))) " +
 								"OR (1 = ?12 AND (priceGross >= (?13 - 5.0) AND priceGross <= (?13 + 5.0))) " +
 								"OR (1 = ?14 AND (priceSupplier >= (?15 - 5.0) AND priceSupplier <= (?15 + 5.0))) " +
@@ -41,7 +44,7 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 						"OR " +
 						"( " +
 							"(1 = ?5 AND ean >= ?6 AND ean <= ?7) " +
-							"OR (1 = ?8 AND name LIKE '%' || ?9 || '%') " +
+							"OR (1 = ?8 AND UPPER(name) LIKE '%' || UPPER(?9) || '%') " +
 							"OR (1 = ?10 AND (priceVat >= (?11 - 0.5) AND priceVat <= (?11 + 0.5))) " +
 							"OR (1 = ?12 AND (priceGross >= (?13 - 5.0) AND priceGross <= (?13 + 5.0))) " +
 							"OR (1 = ?14 AND (priceSupplier >= (?15 - 5.0) AND priceSupplier <= (?15 + 5.0))) " +
@@ -57,7 +60,7 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 	 * @param enableSearchCategory Keine suchen Kategorie? := 1; Sonst := 2
 	 * @param enableSearchFilters Keine suchen Filter? := 1; Sonst := 2
 	 * @param enableEan 1 - True; 0 - False.
-	 * @param eanMinimum EAN des Artikel, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMin: 5600000000000)
+	 * @param eanMinimum EAN des Artikel, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMin: 560)
 	 * @param eanMaximum EAN des Artikel, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMax: 5609999999999)
 	 * @param enableName 1 - True; 0 - False.
 	 * @param name Name des Artikel, dass der Benutzer eingefügt.
@@ -73,6 +76,7 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 	 * @param pageable PageRequest Klasse.
 	 * @return Eine Seite mit den Artikeln.
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Page<Article> findWithFilters(
 			Integer enableCategory, Long idArticleCategory,
 			Integer enableSearchCategory, Integer enableSearchFilters,
