@@ -133,6 +133,7 @@ public class ArticleCategoryManagement extends JFrame {
 				articleCategoryController.delete(articleCategory);
 				loadTable();
 				articleManagement.loadTable();
+				articleManagement.loadCbbCategory();
 			}
 		}
 	}

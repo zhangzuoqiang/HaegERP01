@@ -117,5 +117,4 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
         
         return rows;
 	}
-
 }

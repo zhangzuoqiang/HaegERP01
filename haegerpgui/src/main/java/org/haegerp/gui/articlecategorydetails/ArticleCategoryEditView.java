@@ -39,6 +39,8 @@ public class ArticleCategoryEditView implements ArticleCategoryDetailsInterface 
 			articleCategoryDetailsMenu.setArticleCategory(articleCategoryDetailsMenu.getArticleCategoryController().save(articleCategoryDetailsMenu.getArticleCategory()));
 			
 			articleCategoryDetailsMenu.setShowMode();
+			
+			articleCategoryDetailsMenu.getArticleManagement().loadCbbCategory();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(articleCategoryDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

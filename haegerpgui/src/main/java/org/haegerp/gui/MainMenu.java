@@ -46,6 +46,9 @@ public class MainMenu extends JFrame {
 	@Autowired
 	private ClientManagement clientManagement;
 	
+	@Autowired
+	private ClientCategoryManagement clientCategoryManagement;
+	
 	//FIXME Login Form!
 	@Autowired
 	private EmployeeRepository employeeRepository;
@@ -120,7 +123,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnPartnersClientCategorySubMenu_ActionPerformed(ActionEvent e) {
-		//TODO 01.) Open Client Category Management
+		clientCategoryManagement.setVisible(true);
 	}
 	
 	/**

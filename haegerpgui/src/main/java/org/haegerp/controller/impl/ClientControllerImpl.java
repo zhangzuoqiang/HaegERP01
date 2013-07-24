@@ -1,11 +1,14 @@
 package org.haegerp.controller.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 
 import org.haegerp.controller.ClientController;
 import org.haegerp.entity.Client;
+import org.haegerp.entity.ClientCategory;
 import org.haegerp.entity.repository.client.ClientRepository;
 import org.haegerp.entity.repository.employee.EmployeeRepository;
+import org.haegerp.gui.ClientManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,10 +25,20 @@ public class ClientControllerImpl implements ClientController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
+	@Autowired
+	private ClientManagement clientManagement;
+	
 	String name, email, city, country;
 	long taxIdMin, taxIdMax, idClientCategory;
 	int enableAll = 1;
-	int disableSearchCategory = 0, disableSearchFilters = 0, enableCategory = 0, enableTaxID = 0, enableName = 0, enableEmail = 0, enableCity = 0, enableCountry = 0;
+	int disableSearchCategory = 1,
+			disableSearchFilters = 1,
+			enableCategory = 0,
+			enableTaxID = 0,
+			enableName = 0,
+			enableEmail = 0,
+			enableCity = 0,
+			enableCountry = 0;
 	
 	private int pageNumber;
 	private Page<Client> page;
@@ -70,7 +83,7 @@ public class ClientControllerImpl implements ClientController {
 				case 0:
 					enableTaxID = 1;
 					taxIdMin = Long.parseLong(value);
-					value = value + String.valueOf(Math.round(Math.pow(10, 13 - value.length()) -1));
+					value = value + String.valueOf(Math.round(Math.pow(10, 15 - value.length()) -1));
 					taxIdMax = Long.parseLong(value);
 					break;
 				
@@ -157,6 +170,23 @@ public class ClientControllerImpl implements ClientController {
 													enableCountry, country,
 													enableAll, pageRequest);
 		return page;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Client save(Client client) {
+		Client savedClient = clientRepository.save(client);
+		clientManagement.loadTable();
+		return savedClient;
+	}
+
+	public void delete(Client client) {
+		clientRepository.delete(client);
+	}
+	
+	@Transactional
+	public void deleteAllArticleFromCategory(ClientCategory clientCategory) {
+		clientRepository.deleteInBatch(clientCategory.getClients());
+		clientCategory.setClients(new HashSet<Client>(0));
 	}
 
 }

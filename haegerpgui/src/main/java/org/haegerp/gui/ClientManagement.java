@@ -11,13 +11,13 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.haegerp.controller.ClientCategoryController;
 import org.haegerp.controller.ClientController;
+import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientCategory;
 import org.haegerp.enums.ClientColumns;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,8 @@ public class ClientManagement extends JFrame {
 	@Autowired
 	private ClientCategoryController clientCategoryController;
 	
-	//@Autowired
-	//private ClientDetails clientDetails;
+	@Autowired
+	private ClientDetails clientDetails;
 	
 	private List<ClientCategory> categories;
 	
@@ -75,7 +76,7 @@ public class ClientManagement extends JFrame {
 	
 	protected void cbbCategory_ActionPerformed(ActionEvent e) {
 		int cbbIndex = cbbCategory.getSelectedIndex() -1;
-		if (cbbIndex == -1)
+		if (cbbIndex < 0)
 			clientController.setCategory((long)cbbIndex, sldNumberResults.getValue());
 		else
 			clientController.setCategory((categories.get(cbbIndex)).getIdClientCategory(), sldNumberResults.getValue());
@@ -93,39 +94,39 @@ public class ClientManagement extends JFrame {
 	}
 	
 	protected void btnNew_ActionListener(ActionEvent e) {
-		//articleDetails.setNewMode();
-		//articleDetails.setVisible(true);
+		clientDetails.setNewMode();
+		clientDetails.setVisible(true);
 	}
 	
 	protected void btnEdit_ActionPerformed(ActionEvent e) {
 		int row = tblArticles.getSelectedRow();
 		if (row != -1) {
-			//Article article = articleController.getPage().getContent().get(row);
-			//articleDetails.setArticle(article);
-			//articleDetails.setEditMode();
-			//articleDetails.setVisible(true);
+			Client client = clientController.getPage().getContent().get(row);
+			clientDetails.setClient(client);
+			clientDetails.setEditMode();
+			clientDetails.setVisible(true);
 		}
 	}
 	
 	protected void btnDelete_ActionListener(ActionEvent e) {
 		int row = tblArticles.getSelectedRow();
 		if (row != -1) {
-//			Article article = articleController.getPage().getContent().get(row);
-//			int option = JOptionPane.showConfirmDialog(this, "Delete: " + article.getName() + "\nAre you sure?", "", JOptionPane.YES_NO_OPTION);
-//			if (option == JOptionPane.YES_OPTION) {
-//				articleController.delete(article);
-//				loadTable();
-//			}
+			Client client = clientController.getPage().getContent().get(row);
+			int option = JOptionPane.showConfirmDialog(this, "Delete: " + client.getName() + "\nAre you sure?", "", JOptionPane.YES_NO_OPTION);
+			if (option == JOptionPane.YES_OPTION) {
+				clientController.delete(client);
+				loadTable();
+			}
 		}
 	}
 	
 	protected void tblArticles_MouseDoubleClick(MouseEvent e) {
 		int row = tblArticles.getSelectedRow();
 		if (row != -1) {
-//			Article article = articleController.getPage().getContent().get(row);
-//			articleDetails.setArticle(article);
-//			articleDetails.setShowMode();
-//			articleDetails.setVisible(true);
+			Client client = clientController.getPage().getContent().get(row);
+			clientDetails.setClient(client);
+			clientDetails.setShowMode();
+			clientDetails.setVisible(true);
 		}
 	}
 	
@@ -284,9 +285,8 @@ public class ClientManagement extends JFrame {
         cbbCategory = new JComboBox<String>();
         cbbCategory.setBounds(86, 24, 177, 22);
         pnlSearch.add(cbbCategory);
-        cbbCategory.setModel(new DefaultComboBoxModel<String>(new String[] {"All"}));
-        cbbCategory.setSelectedIndex(0);
         loadCbbCategory();
+        cbbCategory.setSelectedIndex(0);
         cbbCategory.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -377,9 +377,11 @@ public class ClientManagement extends JFrame {
 		}
 	}
 	
-	private void loadCbbCategory(){
+	public void loadCbbCategory(){
+		cbbCategory.removeAllItems();
 		categories = clientCategoryController.getAllCategories();
 		
+		cbbCategory.addItem("All");
 		for (ClientCategory clientCategory : categories) {
 			cbbCategory.addItem(clientCategory.getName());
 		}

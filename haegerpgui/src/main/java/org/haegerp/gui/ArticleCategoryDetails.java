@@ -26,6 +26,13 @@ public class ArticleCategoryDetails extends javax.swing.JFrame {
 	private static final long serialVersionUID = 2949647041784163844L;
 	
 	@Autowired
+	private ArticleManagement articleManagement;
+	
+	public ArticleManagement getArticleManagement() {
+		return articleManagement;
+	}
+
+	@Autowired
 	private ArticleCategoryController articleCategoryController;
 	
 	public ArticleCategoryController getArticleCategoryController() {

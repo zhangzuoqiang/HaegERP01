@@ -1,7 +1,7 @@
 package org.haegerp.entity.repository;
 
 import org.haegerp.entity.Log;
-import org.springframework.transaction.annotation.Propagation;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Wolf
  *
  */
-@Transactional(readOnly=true, propagation=Propagation.MANDATORY)
+@Repository
+@Transactional
 public interface LogRepository extends MyRepository<Log, Long> {
 
 }

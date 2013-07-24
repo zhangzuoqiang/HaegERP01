@@ -14,7 +14,7 @@
 		</many-to-one>
 		
 		<many-to-one name="supplier" class="org.haegerp.entity.Supplier"  fetch="select">
-			<column name="IDBUSINESSPARTNER" not-null="true" />
+			<column name="IDSUPPLIER" not-null="true" />
 		</many-to-one>
 		
 		<many-to-one name="employee" class="org.haegerp.entity.Employee"  fetch="select">

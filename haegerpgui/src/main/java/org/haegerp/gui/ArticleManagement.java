@@ -11,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -78,7 +77,7 @@ public class ArticleManagement extends JFrame {
 	
 	protected void cbbCategory_ActionPerformed(ActionEvent e) {
 		int cbbIndex = cbbCategory.getSelectedIndex() -1;
-		if (cbbIndex == -1)
+		if (cbbIndex < 0)
 			articleController.setCategory((long)cbbIndex, sldNumberResults.getValue());
 		else
 			articleController.setCategory((categories.get(cbbIndex)).getIdArticleCategory(), sldNumberResults.getValue());
@@ -287,9 +286,8 @@ public class ArticleManagement extends JFrame {
         cbbCategory = new JComboBox<String>();
         cbbCategory.setBounds(86, 24, 177, 22);
         pnlSearch.add(cbbCategory);
-        cbbCategory.setModel(new DefaultComboBoxModel<String>(new String[] {"All"}));
-        cbbCategory.setSelectedIndex(0);
         loadCbbCategory();
+        cbbCategory.setSelectedIndex(0);
         cbbCategory.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -380,9 +378,11 @@ public class ArticleManagement extends JFrame {
 		}
 	}
 	
-	private void loadCbbCategory(){
+	public void loadCbbCategory(){
+		cbbCategory.removeAllItems();
 		categories = articleCategoryController.getAllCategories();
 		
+		cbbCategory.addItem("All");
 		for (ArticleCategory articleCategory : categories) {
 			cbbCategory.addItem(articleCategory.getName());
 		}

@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
 	<joined-subclass name="org.haegerp.entity.Client" table="CLIENT" extends="org.haegerp.entity.BusinessPartner">
-		<key column="IDBUSINESSPARTNER"/>
+		<key column="IDCLIENT" on-delete="cascade"/>
 		<many-to-one name="clientCategory" class="org.haegerp.entity.ClientCategory" fetch="select">
 			<column name="IDCLIENTCATEGORY" not-null="true" />
 		</many-to-one>

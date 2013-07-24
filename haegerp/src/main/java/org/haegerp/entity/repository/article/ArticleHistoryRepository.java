@@ -5,7 +5,7 @@ import org.haegerp.entity.ArticleHistoryPK;
 import org.haegerp.entity.repository.MyRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Propagation;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Wolf
  *
  */
-@Transactional(readOnly=true, propagation=Propagation.MANDATORY)
+@Repository
+@Transactional
 public interface ArticleHistoryRepository extends MyRepository<ArticleHistory, ArticleHistoryPK> {
 	
 	/**

@@ -2,7 +2,7 @@ package org.haegerp.entity.repository.supplier;
 
 import org.haegerp.entity.Supplier;
 import org.haegerp.entity.repository.MyRepository;
-import org.springframework.transaction.annotation.Propagation;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Wolf
  *
  */
-@Transactional(readOnly=true, propagation=Propagation.MANDATORY)
+@Repository
+@Transactional
 public interface SupplierRepository extends MyRepository<Supplier, Long> {
 
 }

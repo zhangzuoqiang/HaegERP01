@@ -5,6 +5,7 @@ import org.haegerp.entity.repository.MyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Wolf
  *
  */
-@Transactional(readOnly=true, propagation=Propagation.MANDATORY)
+@Repository
+@Transactional
 public interface ClientRepository extends MyRepository<Client, Long> {
 	
 	@Query(countQuery="SELECT COUNT(*) " +
@@ -70,6 +72,7 @@ value="FROM Client " +
 	 * @param pageRequest PageRequest Klasse.
 	 * @return Eine Seite mit den Kunden.
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Page<Client> findWithFilters(int enableCategory, long idClientCategory,
 										int disableSearchCategory, int disableSearchFilters,
 										int enableTaxID, long taxIdMin, long taxIdMax,

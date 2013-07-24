@@ -1,6 +1,7 @@
 package org.haegerp.controller;
 
 import org.haegerp.entity.Client;
+import org.haegerp.entity.ClientCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,7 +28,7 @@ public interface ClientController {
 	 * @param value
 	 * @return
 	 */
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int value);
 
 	/**
@@ -72,4 +73,20 @@ public interface ClientController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Page<Client> loadPage(int size);
+
+	/**
+	 * TODO: Commentary
+	 * @param client
+	 * @return
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Client save(Client client);
+
+	/**
+	 * TODO: Commentary
+	 * @param client
+	 */
+	public void delete(Client client);
+
+	public void deleteAllArticleFromCategory(ClientCategory clientCategory);
 }

@@ -101,13 +101,13 @@ CREATE TABLE businesspartner(
 );
 
 CREATE TABLE supplier(
-	idBusinessPartner	INTEGER			NOT NULL,
+	idSupplier			INTEGER			NOT NULL,
 	LastModifiedDate	DATE,
 	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_supplier
-		PRIMARY KEY (idBusinessPartner),
+		PRIMARY KEY (idSupplier),
 	CONSTRAINT fk_supplier_businessPartner
-		FOREIGN KEY (idBusinessPartner)
+		FOREIGN KEY (idSupplier)
 		REFERENCES businesspartner (idBusinessPartner)
 );
 
@@ -122,14 +122,14 @@ CREATE TABLE clientcategory(
 );
 
 CREATE TABLE client(
-	idBusinessPartner	INTEGER			NOT NULL,
+	idClient			INTEGER			NOT NULL,
 	idClientCategory	INTEGER			NOT NULL,
 	LastModifiedDate	DATE,
 	idEmployeeModify	INTEGER,
 	CONSTRAINT pk_client
-		PRIMARY KEY (idBusinessPartner),
+		PRIMARY KEY (idClient),
 	CONSTRAINT fk_client_businessPartner
-		FOREIGN KEY (idBusinessPartner)
+		FOREIGN KEY (idClient)
 		REFERENCES businesspartner (idBusinessPartner),
 	CONSTRAINT fk_client_clientCategory
 		FOREIGN KEY (idClientCategory)
@@ -242,7 +242,7 @@ CREATE TABLE supplierbill (
 CREATE TABLE supplierorder (
 	idSupplierOrder		INTEGER		NOT NULL,
 	idSupplierBill		INTEGER,
-	idBusinessPartner	INTEGER		NOT NULL,
+	idSupplier			INTEGER		NOT NULL,
 	idEmployee			INTEGER		NOT NULL,
 	orderDate			DATE		NOT NULL,
 	total				NUMBER(20,2),
@@ -256,8 +256,8 @@ CREATE TABLE supplierorder (
 		FOREIGN KEY (idSupplierBill)
 		REFERENCES supplierbill (idSupplierBill),
 	CONSTRAINT fk_supplierorder_supplier
-		FOREIGN KEY (idBusinessPartner)
-		REFERENCES supplier (idBusinessPartner),
+		FOREIGN KEY (idSupplier)
+		REFERENCES supplier (idSupplier),
 	CONSTRAINT fk_supplierorder_employee
 		FOREIGN KEY (idEmployee)
 		REFERENCES employee (idEmployee)
@@ -297,7 +297,7 @@ CREATE TABLE clientbill (
 CREATE TABLE clientoffer (
 	idClientOffer		INTEGER		NOT NULL,
 	idClientBill		INTEGER,
-	idBusinessPartner	INTEGER		NOT NULL,
+	idClient			INTEGER		NOT NULL,
 	idEmployee			INTEGER		NOT NULL,
 	offerDate			DATE		NOT NULL,
 	total				NUMBER(20,2),
@@ -311,8 +311,8 @@ CREATE TABLE clientoffer (
 		FOREIGN KEY (idClientBill)
 		REFERENCES clientbill (idClientBill),
 	CONSTRAINT fk_clientoffer_client
-		FOREIGN KEY (idBusinessPartner)
-		REFERENCES client (idBusinessPartner),
+		FOREIGN KEY (idClient)
+		REFERENCES client (idClient),
 	CONSTRAINT fk_clientoffer_employee
 		FOREIGN KEY (idEmployee)
 		REFERENCES employee (idEmployee)
