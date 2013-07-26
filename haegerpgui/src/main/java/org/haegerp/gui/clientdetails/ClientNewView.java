@@ -53,7 +53,7 @@ public class ClientNewView implements ClientDetailsInterface {
 		try {
 			clientDetailsMenu.getClient().setTaxId((Long) clientDetailsMenu.txtTaxID.getValue());
 			clientDetailsMenu.getClient().setName(clientDetailsMenu.txtName.getText());
-			clientDetailsMenu.getClient().setClientCategory(clientDetailsMenu.getCategories().get(clientDetailsMenu.cbbCategory.getSelectedIndex()));
+			clientDetailsMenu.getClient().setClientCategory(clientDetailsMenu.getCategories().get(clientDetailsMenu.cbbCategory.getSelectedIndex()-1));
 			
 			clientDetailsMenu.getClient().setAddress(clientDetailsMenu.txtAddress.getText());
 			clientDetailsMenu.getClient().setCity(clientDetailsMenu.txtCity.getText());
@@ -74,6 +74,8 @@ public class ClientNewView implements ClientDetailsInterface {
 			clientDetailsMenu.setClient(clientDetailsMenu.getClientController().save(clientDetailsMenu.getClient()));
 			
 			clientDetailsMenu.setShowMode();
+			
+			clientDetailsMenu.getClientCategoryManagement().loadTable();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(clientDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

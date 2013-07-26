@@ -1,5 +1,6 @@
 package org.haegerp.gui;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ import java.awt.event.ActionEvent;
  * @author Wolf
  *
  */
-@Component("mainMenu")
+@Component
 public class MainMenu extends JFrame {
 
 	private static final long serialVersionUID = 3267457954593344809L;
@@ -48,6 +49,9 @@ public class MainMenu extends JFrame {
 	
 	@Autowired
 	private ClientCategoryManagement clientCategoryManagement;
+	
+	@Autowired
+	private SupplierManagement supplierManagement;
 	
 	//FIXME Login Form!
 	@Autowired
@@ -133,7 +137,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnPartnersSupplierSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO 02.) Open Supplier Management
+		supplierManagement.setVisible(true);
 	}
 	
 	//Human Resources
@@ -252,6 +256,7 @@ public class MainMenu extends JFrame {
 	
 	public MainMenu() { }
 	
+	@PostConstruct
 	public void setUp(){
 		EmployeeSession.setEmployee(employeeRepository.findOne(1L));
 		

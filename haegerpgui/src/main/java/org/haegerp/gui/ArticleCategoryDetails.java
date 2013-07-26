@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JOptionPane;
 
 import org.haegerp.controller.ArticleCategoryController;
 import org.haegerp.entity.ArticleCategory;
@@ -30,6 +31,13 @@ public class ArticleCategoryDetails extends javax.swing.JFrame {
 	
 	public ArticleManagement getArticleManagement() {
 		return articleManagement;
+	}
+	
+	@Autowired
+	private ArticleDetails articleDetails;
+
+	public ArticleDetails getArticleDetails() {
+		return articleDetails;
 	}
 
 	@Autowired
@@ -71,7 +79,22 @@ public class ArticleCategoryDetails extends javax.swing.JFrame {
     
     //Listeners
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
-    	articleCategoryDetailsView.btnSaveEdit(this);
+    	String errors = "";
+    	if (!(articleCategoryDetailsView instanceof ArticleCategoryShowView)) {
+    		errors = checkFields();
+    	}
+    	if (errors.equals(""))
+    		articleCategoryDetailsView.btnSaveEdit(this);
+    	else
+    		JOptionPane.showMessageDialog(this, "The following fields have not been filled:\n" + errors + "\nThose fields are required.", "", JOptionPane.ERROR_MESSAGE);
+	}
+    
+    private String checkFields() {
+		String errors = "";
+		if (txtName.getText().equals(""))
+			errors += "Name\n";
+		
+		return errors;
 	}
     
 	protected void btnCancel_ActionPerformed(ActionEvent e) {

@@ -111,7 +111,7 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
         	rows[i][0] = articleCategory.getName();
         	rows[i][1] = articleCategory.getArticles().size();
         	rows[i][2] = articleCategory.getDescription();
-        	rows[i][3] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(articleCategory.getLastModifiedDate());
+        	rows[i][3] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(articleCategory.getLastModifiedDate());
         	rows[i][4] = employeeRepository.findOne(articleCategory.getIdEmployeeModify()).getName();
 		}
         

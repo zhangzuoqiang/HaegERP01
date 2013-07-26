@@ -99,7 +99,7 @@ public class ClientManagement extends JFrame {
 	}
 	
 	protected void btnEdit_ActionPerformed(ActionEvent e) {
-		int row = tblArticles.getSelectedRow();
+		int row = tblClients.getSelectedRow();
 		if (row != -1) {
 			Client client = clientController.getPage().getContent().get(row);
 			clientDetails.setClient(client);
@@ -109,7 +109,7 @@ public class ClientManagement extends JFrame {
 	}
 	
 	protected void btnDelete_ActionListener(ActionEvent e) {
-		int row = tblArticles.getSelectedRow();
+		int row = tblClients.getSelectedRow();
 		if (row != -1) {
 			Client client = clientController.getPage().getContent().get(row);
 			int option = JOptionPane.showConfirmDialog(this, "Delete: " + client.getName() + "\nAre you sure?", "", JOptionPane.YES_NO_OPTION);
@@ -120,8 +120,8 @@ public class ClientManagement extends JFrame {
 		}
 	}
 	
-	protected void tblArticles_MouseDoubleClick(MouseEvent e) {
-		int row = tblArticles.getSelectedRow();
+	protected void tblClients_MouseDoubleClick(MouseEvent e) {
+		int row = tblClients.getSelectedRow();
 		if (row != -1) {
 			Client client = clientController.getPage().getContent().get(row);
 			clientDetails.setClient(client);
@@ -132,8 +132,8 @@ public class ClientManagement extends JFrame {
 	
 	@PostConstruct
 	public void setUp(){
-		pnlTblArticles = new JScrollPane();
-        tblArticles = new JTable();
+		pnltblClients = new JScrollPane();
+        tblClients = new JTable();
         btnPrevious = new JButton();
         btnNext = new JButton();
         btnEdit = new JButton();
@@ -147,14 +147,14 @@ public class ClientManagement extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
 
-        tblArticles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblArticles.addMouseListener(new MouseListener() {
+        tblClients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblClients.addMouseListener(new MouseListener() {
 			
 			public void mouseReleased(MouseEvent e) { }
 			
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() > 1)
-					tblArticles_MouseDoubleClick(e);
+					tblClients_MouseDoubleClick(e);
 			}
 			
 			public void mouseExited(MouseEvent e) { }
@@ -164,7 +164,7 @@ public class ClientManagement extends JFrame {
 			public void mouseClicked(MouseEvent e) { }
 		});
         
-        pnlTblArticles.setViewportView(tblArticles);
+        pnltblClients.setViewportView(tblClients);
 
         btnPrevious.setText("Previous");
         btnPrevious.addActionListener(new ActionListener() {
@@ -235,7 +235,7 @@ public class ClientManagement extends JFrame {
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(pnlTblArticles, GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+        				.addComponent(pnltblClients, GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
         				.addComponent(pnlSearch, GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
         				.addGroup(layout.createSequentialGroup()
         					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
@@ -259,7 +259,7 @@ public class ClientManagement extends JFrame {
         			.addContainerGap()
         			.addComponent(pnlSearch, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(pnlTblArticles, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+        			.addComponent(pnltblClients, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
         			.addGap(18)
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(layout.createSequentialGroup()
@@ -388,7 +388,7 @@ public class ClientManagement extends JFrame {
 	}
 	
 	public void loadTable(){
-		tblArticles.setModel(
+		tblClients.setModel(
         	new DefaultTableModel(
         			clientController.loadTableRows(sldNumberResults.getValue()) ,
         			new String [] {
@@ -421,8 +421,8 @@ public class ClientManagement extends JFrame {
     private JPanel pnlCenterNewR;
     private JPanel pnlCenterNewL;
     
-    private JScrollPane pnlTblArticles;
-    private JTable tblArticles;
+    private JScrollPane pnltblClients;
+    private JTable tblClients;
     
     private JPanel pnlSearch;
     private JTextField txtSearch;

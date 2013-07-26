@@ -2,7 +2,7 @@ package org.haegerp.launcher;
 
 import java.awt.EventQueue;
 
-import org.haegerp.gui.MainMenu;
+import org.haegerp.gui.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,14 +18,13 @@ public class Main {
 	}
 	
 	@Autowired
-	private MainMenu mainMenu;
+	private Login login;
 
 	private void start(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mainMenu.setUp();
-					mainMenu.setVisible(true);
+					login.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

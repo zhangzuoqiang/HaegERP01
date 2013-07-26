@@ -54,6 +54,9 @@ public class ArticleManagement extends JFrame {
 	@Autowired
 	private ArticleDetails articleDetails;
 	
+	@Autowired
+	private ArticleCategoryManagement articleCategoryManagement;
+	
 	private List<ArticleCategory> categories;
 	
 	public ArticleManagement() {
@@ -117,6 +120,7 @@ public class ArticleManagement extends JFrame {
 			if (option == JOptionPane.YES_OPTION) {
 				articleController.delete(article);
 				loadTable();
+				articleCategoryManagement.loadTable();
 			}
 		}
 	}

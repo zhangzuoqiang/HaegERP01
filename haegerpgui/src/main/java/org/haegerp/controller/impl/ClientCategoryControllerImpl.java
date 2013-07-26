@@ -111,7 +111,7 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
         	rows[i][0] = clientCategory.getName();
         	rows[i][1] = clientCategory.getClients().size();
         	rows[i][2] = clientCategory.getDescription();
-        	rows[i][3] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(clientCategory.getLastModifiedDate());
+        	rows[i][3] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(clientCategory.getLastModifiedDate());
         	rows[i][4] = employeeRepository.findOne(clientCategory.getIdEmployeeModify()).getName();
 		}
         

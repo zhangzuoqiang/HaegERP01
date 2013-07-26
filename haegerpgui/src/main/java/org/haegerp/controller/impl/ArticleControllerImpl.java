@@ -34,8 +34,7 @@ public final class ArticleControllerImpl implements ArticleController {
 	
 	//Fields
 	//EAN
-	private Long eanMin = 0L;
-	private Long eanMax = 0L;
+	private String ean = "";
 	private Integer enableEan = 0;
 	
 	//Name
@@ -43,19 +42,19 @@ public final class ArticleControllerImpl implements ArticleController {
 	private Integer enableName = 0;
 	
 	//Price VAT
-	private Float priceVat = 0.0F;
+	private String priceVat = "";
 	private Integer enablePriceVat = 0;
 
 	//Price Gross
-	private Float priceGross = 0.0F;
+	private String priceGross = "";
 	private Integer enablePriceGross = 0;
 
 	//Price Supplier
-	private Float priceSupplier = 0.0F;
+	private String priceSupplier = "";
 	private Integer enablePriceSupplier = 0;
 
 	//Stock
-	private Integer stock = 0;
+	private String stock = "";
 	private Integer enableStock = 0;
 	
 	//AllSwitch, FilterSwitch and CategorySwitch
@@ -114,7 +113,7 @@ public final class ArticleControllerImpl implements ArticleController {
 			rows[i][4] = article.getPriceGross() + " €";
 			rows[i][5] = article.getPriceSupplier() + " €";
 			rows[i][6] = article.getStock();
-			rows[i][7] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(article.getLastModifiedDate());
+			rows[i][7] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(article.getLastModifiedDate());
 			rows[i][8] = employeeRepository.findOne(article.getIdEmployeeModify()).getName();
 		}
         
@@ -147,9 +146,7 @@ public final class ArticleControllerImpl implements ArticleController {
 				switch (field) {
 				case 0:
 					enableEan = 1;
-					eanMin = Long.parseLong(value);
-					value = value + String.valueOf(Math.round(Math.pow(10, 13 - value.length()) -1));
-					eanMax = Long.parseLong(value);
+					ean = value;
 					break;
 				
 				case 1:
@@ -159,22 +156,25 @@ public final class ArticleControllerImpl implements ArticleController {
 				
 				case 2:
 					enablePriceVat = 1;
-					priceVat = Float.parseFloat(value);
+					value = value.replace('.', ',');
+					priceVat = value;
 					break;
 					
 				case 3:
 					enablePriceGross = 1;
-					priceGross = Float.parseFloat(value);
+					value = value.replace('.', ',');
+					priceGross = value;
 					break;
 					
 				case 4:
 					enablePriceSupplier = 1;
-					priceSupplier = Float.parseFloat(value);
+					value = value.replace('.', ',');
+					priceSupplier = value;
 					break;
 					
 				case 5:
 					enableStock = 1;
-					stock = Integer.parseInt(value);
+					stock = value;
 					break;
 				}
 				
@@ -204,11 +204,11 @@ public final class ArticleControllerImpl implements ArticleController {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = articleRepository.findWithFilters(enableCategory, idArticleCategory,
 													disableSearchCategory, disableSearchFilters,
-													enableEan, eanMin, eanMax,
+													enableEan, ean,
 													enableName, name,
-													enablePriceVat, Double.parseDouble(priceVat.toString()),
-													enablePriceGross, Double.parseDouble(priceGross.toString()),
-													enablePriceSupplier, Double.parseDouble(priceSupplier.toString()),
+													enablePriceVat, priceVat,
+													enablePriceGross, priceGross,
+													enablePriceSupplier, priceSupplier,
 													enableStock, stock,
 													enableAll, pageRequest);
 		return page;

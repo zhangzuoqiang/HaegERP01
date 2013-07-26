@@ -10,56 +10,53 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ClientCategoryController {
 
 	/**
-	 * TODO: Commentary
-	 * @return
+	 * Bekommt alle Kategorien in einer Liste.
+	 * @return Liste mit den Kategorien
 	 */
 	public List<ClientCategory> getAllCategories();
 	
 	/**
-	 * TODO: Commentary
-	 * @return
+	 * Holt die Seite
+	 * @return Aktueller Staat der Seite
 	 */
 	public Page<ClientCategory> getPage();
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Lädt die nächste Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Lädt die vorherige Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Diese Methode gibt die erste Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param value
-	 * @param field
-	 * @param size
-	 * @return
+	 * Diese Methode vorbereitet die Suche
+	 * @param value Wert, der der Benutzer geschrieben hat
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param article
+	 * Die Kundenkategorie wurde gelöscht
+	 * @param clientCategory Die Kundenkategorie
 	 */
 	public void delete(ClientCategory clientCategory);
 	
 	/**
-	 * TODO: Commentary
-	 * @param article
+	 * Die Kundenkategorie wurde gespeichert
+	 * @param clientCategory Die Kundenkategorie
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ClientCategory save(ClientCategory clientCategory);
@@ -67,17 +64,16 @@ public interface ClientCategoryController {
 	/**
 	 * Eine neue Seite wird erhalt
 	 * 
-	 * @param page Nummer der Seite
-	 * @param size Grösse der Seite
-	 * @return Seite mit den Artikeln
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return Seite mit den Kundenkategorien
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Page<ClientCategory> loadPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Wickelt den Inhalt der Tabelle ab
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);

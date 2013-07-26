@@ -52,6 +52,13 @@ public class ClientCategoryManagement extends JFrame {
 	private ClientCategoryDetails clientCategoryDetails;
 
 	@Autowired
+	private ClientDetails clientDetails;
+
+	public ClientDetails getClientDetails() {
+		return clientDetails;
+	}
+	
+	@Autowired
 	private ClientManagement clientManagement;
 	
 	public ClientCategoryManagement() {
@@ -134,6 +141,7 @@ public class ClientCategoryManagement extends JFrame {
 				loadTable();
 				clientManagement.loadTable();
 				clientManagement.loadCbbCategory();
+				clientDetails.loadCbbCategory();
 			}
 		}
 	}

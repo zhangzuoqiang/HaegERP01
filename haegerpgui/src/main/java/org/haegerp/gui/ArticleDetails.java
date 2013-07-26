@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JOptionPane;
 import javax.swing.text.NumberFormatter;
 
 import org.haegerp.controller.ArticleCategoryController;
@@ -43,6 +44,13 @@ public class ArticleDetails extends javax.swing.JFrame {
 	
 	public ArticleCategoryController getArticleCategoryController() {
 		return articleCategoryController;
+	}
+
+	@Autowired
+	private ArticleCategoryManagement articleCategoryManagement;
+	
+	public ArticleCategoryManagement getArticleCategoryManagement() {
+		return articleCategoryManagement;
 	}
 
 	private ArticleDetailsInterface articleDetailsView;
@@ -83,9 +91,34 @@ public class ArticleDetails extends javax.swing.JFrame {
     
     //Listeners
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
-		articleDetailsView.btnSaveEdit(this);
+    	String errors = "";
+    	if (!(articleDetailsView instanceof ArticleShowView)) {
+    		errors = checkFields();
+    	}
+    	if (errors.equals(""))
+    		articleDetailsView.btnSaveEdit(this);
+    	else
+    		JOptionPane.showMessageDialog(this, "The following fields have not been filled:\n" + errors + "\nThose fields are required.", "", JOptionPane.ERROR_MESSAGE);
 	}
     
+	private String checkFields() {
+		String errors = "";
+		if (txtEan.getText().equals(""))
+			errors += "EAN\n";
+		if (txtName.getText().equals(""))
+			errors += "Name\n";
+		if (cbbCategory.getSelectedIndex() < 1)
+			errors += "Article Category\n";
+		if (txtPriceVat.getText().equals(""))
+			errors += "Price VAT\n";
+		if (txtPriceGross.getText().equals(""))
+			errors += "Price Gross\n";
+		if (txtPriceSupplier.getText().equals(""))
+			errors += "Price Supplier\n";
+		
+		return errors;
+	}
+
 	protected void btnCancel_ActionPerformed(ActionEvent e) {
 		articleDetailsView.btnCancel(this);
 	}
@@ -159,11 +192,7 @@ public class ArticleDetails extends javax.swing.JFrame {
 
         lblDescription.setText("Description");
         
-        categories = articleCategoryController.getAllCategories();
-		
-		for (ArticleCategory articleCategory : categories) {
-			cbbCategory.addItem(articleCategory.getName());
-		}
+        loadCbbCategory();
 
         txtDescription.setColumns(20);
         txtDescription.setRows(5);
@@ -406,6 +435,16 @@ public class ArticleDetails extends javax.swing.JFrame {
         setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
     }
     
+	public void loadCbbCategory() {
+		cbbCategory.removeAllItems();
+		categories = articleCategoryController.getAllCategories();
+		
+		cbbCategory.addItem("Choose One");
+		for (ArticleCategory articleCategory : categories) {
+			cbbCategory.addItem(articleCategory.getName());
+		}
+	}
+
 	public javax.swing.JButton btnCancel;
     public javax.swing.JButton btnSaveEdit;
     

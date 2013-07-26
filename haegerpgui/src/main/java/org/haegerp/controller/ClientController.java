@@ -18,56 +18,57 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ClientController {
 
 	/**
-	 * TODO: Commentary
-	 * @return
+	 * Holt die Seite
+	 * @return Aktueller Staat der Seite
 	 */
 	public Page<Client> getPage();
 
 	/**
-	 * TODO: Commentary
-	 * @param value
-	 * @return
+	 * Wickelt den Inhalt der Tabelle ab
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int value);
 
 	/**
-	 * TODO: Commentary
-	 * @param text
-	 * @param selectedIndex
-	 * @param value
+	 * Diese Methode vorbereitet die Suche
+	 * @param value Wert, der der Benutzer geschrieben hat
+	 * @param field Welches Feld, das der Benutzer suchen will
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public void setSearch(String text, int selectedIndex, int value);
 
 	/**
-	 * TODO: Commentary
-	 * @param cbbIndex
-	 * @param value
+	 * Diese Methode vorbereitet die Suche
+	 * @param cbbIndex Welche Kategorie, die der Benutzer gewählt hat
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public void setCategory(long cbbIndex, int value);
 
 	/**
-	 * TODO: Commentary
-	 * @param value
+	 * Lädt die nächste Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 
 	/**
-	 * TODO: Commentary
-	 * @param value
+	 * Lädt die vorherige Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 
 	/**
-	 * TODO: Commentary
-	 * @param value
+	 * Diese Methode gibt die erste Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 
 	/**
 	 * Eine neue Seite wird erhalt
 	 * 
-	 * @param page Nummer der Seite
 	 * @param size Grösse der Seite
 	 * @return Seite mit den Kunden
 	 */
@@ -75,18 +76,21 @@ public interface ClientController {
 	public Page<Client> loadPage(int size);
 
 	/**
-	 * TODO: Commentary
-	 * @param client
-	 * @return
+	 * Der Kunde wurde gespeichert
+	 * @param client Der Kunde
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Client save(Client client);
 
 	/**
-	 * TODO: Commentary
-	 * @param client
+	 * Der Kunde wurde gelöscht
+	 * @param client Der Kunde
 	 */
 	public void delete(Client client);
 
+	/**
+	 * Diese Methode löscht alle Kunden von einer Kategorie
+	 * @param clientCategory Kundenkategorie
+	 */
 	public void deleteAllArticleFromCategory(ClientCategory clientCategory);
 }

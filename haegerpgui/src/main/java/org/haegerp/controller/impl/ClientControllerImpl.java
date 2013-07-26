@@ -28,8 +28,8 @@ public class ClientControllerImpl implements ClientController {
 	@Autowired
 	private ClientManagement clientManagement;
 	
-	String name, email, city, country;
-	long taxIdMin, taxIdMax, idClientCategory;
+	String taxId, name, email, city, country;
+	long idClientCategory;
 	int enableAll = 1;
 	int disableSearchCategory = 1,
 			disableSearchFilters = 1,
@@ -64,7 +64,7 @@ public class ClientControllerImpl implements ClientController {
 			rows[i][3] = client.getEmail();
 			rows[i][4] = client.getCity();
 			rows[i][5] = client.getCountry();
-			rows[i][6] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(client.getLastModifiedDate());
+			rows[i][6] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(client.getLastModifiedDate());
 			rows[i][7] = employeeRepository.findOne(client.getIdEmployeeModify()).getName();
 		}
         
@@ -82,9 +82,7 @@ public class ClientControllerImpl implements ClientController {
 				switch (field) {
 				case 0:
 					enableTaxID = 1;
-					taxIdMin = Long.parseLong(value);
-					value = value + String.valueOf(Math.round(Math.pow(10, 15 - value.length()) -1));
-					taxIdMax = Long.parseLong(value);
+					taxId = value;
 					break;
 				
 				case 1:
@@ -163,7 +161,7 @@ public class ClientControllerImpl implements ClientController {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = clientRepository.findWithFilters(enableCategory, idClientCategory,
 													disableSearchCategory, disableSearchFilters,
-													enableTaxID, taxIdMin, taxIdMax,
+													enableTaxID, taxId,
 													enableName, name,
 													enableEmail, email,
 													enableCity, city,

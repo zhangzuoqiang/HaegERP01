@@ -27,14 +27,14 @@ public interface ClientRepository extends MyRepository<Client, Long> {
 				"(1 = ?4) " +
 				"OR " +
 				"( " +
-					"(1 = ?5 AND taxID >= ?6 AND taxID <= ?7) " +
-					"OR (1 = ?8 AND UPPER(name) LIKE '%' || UPPER(?9) || '%') " +
-					"OR (1 = ?10 AND UPPER(email) LIKE '%' || UPPER(?11) || '%') " +
-					"OR (1 = ?12 AND UPPER(city) LIKE '%' || UPPER(?13) || '%') " +
-					"OR (1 = ?14 AND UPPER(country) LIKE '%' || UPPER(?15) || '%') " +
+					"(1 = ?5 AND TO_CHAR(taxID) LIKE '%' || ?6 || '%') " +
+					"OR (1 = ?7 AND UPPER(name) LIKE '%' || UPPER(?8) || '%') " +
+					"OR (1 = ?9 AND UPPER(email) LIKE '%' || UPPER(?10) || '%') " +
+					"OR (1 = ?11 AND UPPER(city) LIKE '%' || UPPER(?12) || '%') " +
+					"OR (1 = ?13 AND UPPER(country) LIKE '%' || UPPER(?14) || '%') " +
 				") " +
 			") " +
-			"OR (1 = ?16)",
+			"OR (1 = ?15)",
 value="FROM Client " +
 		"WHERE ((1 = ?1 AND idClientCategory = ?2) OR 1=?3) " +
 		"AND " +
@@ -42,14 +42,14 @@ value="FROM Client " +
 			"(1 = ?4) " +
 			"OR " +
 			"( " +
-				"(1 = ?5 AND taxID >= ?6 AND taxID <= ?7) " +
-				"OR (1 = ?8 AND UPPER(name) LIKE '%' || UPPER(?9) || '%') " +
-				"OR (1 = ?10 AND UPPER(email) LIKE '%' || UPPER(?11) || '%') " +
-				"OR (1 = ?12 AND UPPER(city) LIKE '%' || UPPER(?13) || '%') " +
-				"OR (1 = ?14 AND UPPER(country) LIKE '%' || UPPER(?15) || '%') " +
+				"(1 = ?5 AND TO_CHAR(taxID) LIKE '%' || ?6 || '%') " +
+				"OR (1 = ?7 AND UPPER(name) LIKE '%' || UPPER(?8) || '%') " +
+				"OR (1 = ?9 AND UPPER(email) LIKE '%' || UPPER(?10) || '%') " +
+				"OR (1 = ?11 AND UPPER(city) LIKE '%' || UPPER(?12) || '%') " +
+				"OR (1 = ?13 AND UPPER(country) LIKE '%' || UPPER(?14) || '%') " +
 			") " +
 		") " +
-		"OR (1 = ?16)")
+		"OR (1 = ?15)")
 	/**
 	 * Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
 	 * 
@@ -58,8 +58,7 @@ value="FROM Client " +
 	 * @param disableSearchCategory Keine suchen Kategorie? := 1; Sonst := 2
 	 * @param disableSearchFilters Keine suchen Filter? := 1; Sonst := 2
 	 * @param enableTaxID 1 - True; 0 - False.
-	 * @param taxIdMin ID des Kunden, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMax: 560)
-	 * @param taxIdMax ID des Kunden, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMax: 56099999999)
+	 * @param taxId ID des Kunden, dass der Benutzer eingefügt.
 	 * @param enableName 1 - True; 0 - False.
 	 * @param name Namme des Kunden, dass der Benutzer eingefügt.
 	 * @param enableEmail 1 - True; 0 - False.
@@ -75,7 +74,7 @@ value="FROM Client " +
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Page<Client> findWithFilters(int enableCategory, long idClientCategory,
 										int disableSearchCategory, int disableSearchFilters,
-										int enableTaxID, long taxIdMin, long taxIdMax,
+										int enableTaxID, String taxId,
 										int enableName, String name,
 										int enableEmail, String email,
 										int enableCity, String city,

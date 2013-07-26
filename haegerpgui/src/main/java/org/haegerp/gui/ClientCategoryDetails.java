@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JOptionPane;
 
 import org.haegerp.controller.ClientCategoryController;
 import org.haegerp.entity.ClientCategory;
@@ -30,6 +31,13 @@ public class ClientCategoryDetails extends javax.swing.JFrame {
 	
 	public ClientManagement getClientManagement() {
 		return clientManagement;
+	}
+	
+	@Autowired
+	private ClientDetails clientDetails;
+
+	public ClientDetails getClientDetails() {
+		return clientDetails;
 	}
 
 	@Autowired
@@ -71,7 +79,22 @@ public class ClientCategoryDetails extends javax.swing.JFrame {
     
     //Listeners
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
-    	clientCategoryDetailsView.btnSaveEdit(this);
+    	String errors = "";
+    	if (!(clientCategoryDetailsView instanceof ClientCategoryShowView)) {
+    		errors = checkFields();
+    	}
+    	if (errors.equals(""))
+    		clientCategoryDetailsView.btnSaveEdit(this);
+    	else
+    		JOptionPane.showMessageDialog(this, "The following fields have not been filled:\n" + errors + "\nThose fields are required.", "", JOptionPane.ERROR_MESSAGE);
+	}
+    
+    private String checkFields() {
+		String errors = "";
+		if (txtName.getText().equals(""))
+			errors += "Name\n";
+		
+		return errors;
 	}
     
 	protected void btnCancel_ActionPerformed(ActionEvent e) {

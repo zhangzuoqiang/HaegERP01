@@ -20,22 +20,22 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ArticleRepository extends MyRepository<Article, Long> {
 	
 	@Query(countQuery="SELECT COUNT(*) " +
-						"FROM Article " +
-						"WHERE ((1 = ?1 AND idArticleCategory = ?2) OR 1=?3) " +
-						"AND " +
-						"( " +
-							"(1 = ?4) " +
-							"OR " +
-							"( " +
-								"(1 = ?5 AND ean >= ?6 AND ean <= ?7) " +
-								"OR (1 = ?8 AND UPPER(name) LIKE '%' || UPPER(?9) || '%') " +
-								"OR (1 = ?10 AND (priceVat >= (?11 - 0.5) AND priceVat <= (?11 + 0.5))) " +
-								"OR (1 = ?12 AND (priceGross >= (?13 - 5.0) AND priceGross <= (?13 + 5.0))) " +
-								"OR (1 = ?14 AND (priceSupplier >= (?15 - 5.0) AND priceSupplier <= (?15 + 5.0))) " +
-								"OR (1 = ?16 AND (stock >= (?17 - 10) AND stock <= (?17 + 10))) " +
-							") " +
-						") " +
-						"OR (1 = ?18)",
+			"FROM Article " +
+			"WHERE ((1 = ?1 AND idArticleCategory = ?2) OR 1=?3) " +
+			"AND " +
+			"( " +
+				"(1 = ?4) " +
+				"OR " +
+				"( " +
+					"(1 = ?5 AND TO_CHAR(ean) LIKE '%' || ?6 || '%') " +
+					"OR (1 = ?7 AND UPPER(name) LIKE '%' || UPPER(?8) || '%') " +
+					"OR (1 = ?9 AND TO_CHAR(priceVat*100) LIKE '%' || ?10 || '%') " +
+					"OR (1 = ?11 AND TO_CHAR(priceGross) LIKE '%' || ?12 || '%') " +
+					"OR (1 = ?13 AND TO_CHAR(priceSupplier) LIKE '%' || ?14 || '%') " +
+					"OR (1 = ?15 AND TO_CHAR(stock) LIKE '%' || ?16 || '%') " +
+				") " +
+			") " +
+			"OR (1 = ?17)",
 			value="FROM Article " +
 					"WHERE ((1 = ?1 AND idArticleCategory = ?2) OR 1=?3) " +
 					"AND " +
@@ -43,25 +43,24 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 						"(1 = ?4) " +
 						"OR " +
 						"( " +
-							"(1 = ?5 AND ean >= ?6 AND ean <= ?7) " +
-							"OR (1 = ?8 AND UPPER(name) LIKE '%' || UPPER(?9) || '%') " +
-							"OR (1 = ?10 AND (priceVat >= (?11 - 0.5) AND priceVat <= (?11 + 0.5))) " +
-							"OR (1 = ?12 AND (priceGross >= (?13 - 5.0) AND priceGross <= (?13 + 5.0))) " +
-							"OR (1 = ?14 AND (priceSupplier >= (?15 - 5.0) AND priceSupplier <= (?15 + 5.0))) " +
-							"OR (1 = ?16 AND (stock >= (?17 - 10) AND stock <= (?17 + 10))) " +
+							"(1 = ?5 AND TO_CHAR(ean) LIKE '%' || ?6 || '%') " +
+							"OR (1 = ?7 AND UPPER(name) LIKE '%' || UPPER(?8) || '%') " +
+							"OR (1 = ?9 AND TO_CHAR(priceVat*100) LIKE '%' || ?10 || '%') " +
+							"OR (1 = ?11 AND TO_CHAR(priceGross) LIKE '%' || ?12 || '%') " +
+							"OR (1 = ?13 AND TO_CHAR(priceSupplier) LIKE '%' || ?14 || '%') " +
+							"OR (1 = ?15 AND TO_CHAR(stock) LIKE '%' || ?16 || '%') " +
 						") " +
 					") " +
-					"OR (1 = ?18)")
+					"OR (1 = ?17)")
 	/**
 	 * Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
 	 * 
 	 * @param enableCategory 1 - True; 0 - False.
 	 * @param idArticleCategory ID der Kategorie, dass der Benutzer gewählt hat.
-	 * @param enableSearchCategory Keine suchen Kategorie? := 1; Sonst := 2
-	 * @param enableSearchFilters Keine suchen Filter? := 1; Sonst := 2
+	 * @param enableSearchCategory Keine suchen Kategorie? := 1; Sonst := 0
+	 * @param enableSearchFilters Keine suchen Filter? := 1; Sonst := 0
 	 * @param enableEan 1 - True; 0 - False.
-	 * @param eanMinimum EAN des Artikel, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMin: 560)
-	 * @param eanMaximum EAN des Artikel, dass der Benutzer eingefügt. z.B. (Benutzer einfügt: 560, eanMax: 5609999999999)
+	 * @param ean EAN des Artikel, dass der Benutzer eingefügt.
 	 * @param enableName 1 - True; 0 - False.
 	 * @param name Name des Artikel, dass der Benutzer eingefügt.
 	 * @param enablePriceVat 1 - True; 0 - False.
@@ -71,8 +70,8 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 	 * @param enablePriceSupplier 1 - True; 0 - False.
 	 * @param priceSupplier Lieferantspreis des Artikel, dass der Benutzer eingefügt.
 	 * @param enableStock 1 - True; 0 - False.
-	 * @param stock Stock des Artikel.
-	 * @param enableAll Wenn andere "enable" Variablen 0 sind, dann muss diese Variable 1 sein.
+	 * @param stock Stock des Artikel, dass der Benutzer eingefügt.
+	 * @param enableAll 1 - True; 0 - False.
 	 * @param pageable PageRequest Klasse.
 	 * @return Eine Seite mit den Artikeln.
 	 */
@@ -80,12 +79,12 @@ public interface ArticleRepository extends MyRepository<Article, Long> {
 	public Page<Article> findWithFilters(
 			Integer enableCategory, Long idArticleCategory,
 			Integer enableSearchCategory, Integer enableSearchFilters,
-			Integer enableEan, Long eanMinimum, Long eanMaximum,
+			Integer enableEan, String ean,
 			Integer enableName, String name,
-			Integer enablePriceVat, Double priceVat,
-			Integer enablePriceGross, Double priceGross,
-			Integer enablePriceSupplier, Double priceSupplier,
-			Integer enableStock, Integer stock,
+			Integer enablePriceVat, String priceVat,
+			Integer enablePriceGross, String priceGross,
+			Integer enablePriceSupplier, String priceSupplier,
+			Integer enableStock, String stock,
 			Integer enableAll,
 			Pageable pageable);
 	

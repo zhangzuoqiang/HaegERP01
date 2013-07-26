@@ -13,56 +13,53 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ArticleCategoryController {
 	
 	/**
-	 * TODO: Commentary
-	 * @return
+	 * Bekommt alle Kategorien in einer Liste.
+	 * @return Liste mit den Kategorien
 	 */
 	public List<ArticleCategory> getAllCategories();
 	
 	/**
-	 * TODO: Commentary
-	 * @return
+	 * Holt die Seite
+	 * @return Aktueller Staat der Seite
 	 */
 	public Page<ArticleCategory> getPage();
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Lädt die nächste Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Lädt die vorherige Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Diese Methode gibt die erste Seite
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param value
-	 * @param field
-	 * @param size
-	 * @return
+	 * Diese Methode vorbereitet die Suche
+	 * @param value Wert, der der Benutzer geschrieben hat
+	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param article
+	 * Die Artikelkategorie wurde gelöscht
+	 * @param articleCategory Die Artikelkategorie
 	 */
 	public void delete(ArticleCategory articleCategory);
 	
 	/**
-	 * TODO: Commentary
-	 * @param article
+	 * Die Artikelkategorie wurde gespeichert
+	 * @param articleCategory Die Artikelkategorie
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ArticleCategory save(ArticleCategory articleCategory);
@@ -70,17 +67,16 @@ public interface ArticleCategoryController {
 	/**
 	 * Eine neue Seite wird erhalt
 	 * 
-	 * @param page Nummer der Seite
-	 * @param size Grösse der Seite
-	 * @return Seite mit den Artikeln
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return Seite mit den Artikelkategorien
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Page<ArticleCategory> loadPage(int size);
 	
 	/**
-	 * TODO: Commentary
-	 * @param size
-	 * @return
+	 * Wickelt den Inhalt der Tabelle ab
+	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);

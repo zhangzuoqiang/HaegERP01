@@ -45,6 +45,7 @@ public class ClientCategoryNewView implements ClientCategoryDetailsInterface {
 			clientCategoryDetailsMenu.setShowMode();
 			
 			clientCategoryDetailsMenu.getClientManagement().loadCbbCategory();
+			clientCategoryDetailsMenu.getClientDetails().loadCbbCategory();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(clientCategoryDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

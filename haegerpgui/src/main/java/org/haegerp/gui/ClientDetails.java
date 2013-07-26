@@ -5,8 +5,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JOptionPane;
 
 import org.haegerp.controller.ClientCategoryController;
 import org.haegerp.controller.ClientController;
@@ -28,6 +31,10 @@ public class ClientDetails extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 2949647041784163844L;
 	
+	private static final String REGEX_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private static final String REGEX_ZIPCODE = "^[A-Za-z]-[0-9]*5|[0-9]*5$";
+	private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
+	
 	@Autowired
 	private ClientController clientController;
 	
@@ -40,6 +47,13 @@ public class ClientDetails extends javax.swing.JFrame {
 	
 	public ClientCategoryController getClientCategoryController() {
 		return clientCategoryController;
+	}
+
+	@Autowired
+	private ClientCategoryManagement clientCategoryManagement;
+	
+	public ClientCategoryManagement getClientCategoryManagement() {
+		return clientCategoryManagement;
 	}
 
 	private ClientDetailsInterface clientDetailsView;
@@ -80,7 +94,67 @@ public class ClientDetails extends javax.swing.JFrame {
     
     //Listeners
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
-    	clientDetailsView.btnSaveEdit(this);
+    	String errors = "";
+    	if (!(clientDetailsView instanceof ClientShowView)) {
+    		errors = checkFields();
+    	}
+    	if (errors.equals(""))
+    		clientDetailsView.btnSaveEdit(this);
+    	else
+    		JOptionPane.showMessageDialog(this, errors, "", JOptionPane.ERROR_MESSAGE);
+	}
+    
+    private String checkFields() {
+		String errors = "";
+		
+		//Required Fields
+		if (txtTaxID.getText().equals(""))
+			errors += "ID\n";
+		if (txtName.getText().equals(""))
+			errors += "Name\n";
+		if (cbbCategory.getSelectedIndex() < 1)
+			errors += "Client Category\n";
+		if (txtAddress.getText().equals(""))
+			errors += "Address\n";
+		if (txtCity.getText().equals(""))
+			errors += "City\n";
+		if (txtZipCode.getText().equals(""))
+			errors += "ZIP Code\n";
+		if (txtCountry.getText().equals(""))
+			errors += "Country\n";
+		if (txtEmail.getText().equals(""))
+			errors += "E-Mail\n";
+		
+		if (!errors.equals(""))
+			errors = "The following fields have not been filled and are required:\n" + errors + "\nThose fields are required.";
+		else {
+			Pattern pattern = Pattern.compile(REGEX_EMAIL);
+			Matcher matcher = pattern.matcher(txtEmail.getText());
+			if (!matcher.matches())
+				errors += "E-Mail: client@domain.com\n";
+			pattern = Pattern.compile(REGEX_ZIPCODE);
+			matcher = pattern.matcher(txtZipCode.getText());
+			if (!matcher.matches())
+				errors += "Zip-Code: X-##### or #####\n";
+			pattern = Pattern.compile(REGEX_PHONE);
+			matcher = pattern.matcher(txtPhoneNumber.getText());
+			if (!txtPhoneNumber.getText().equals("") && !matcher.matches())
+				errors += "Phone Number: +49888123456 or 0888123456\n";
+			pattern = Pattern.compile(REGEX_PHONE);
+			matcher = pattern.matcher(txtMobileNumber.getText());
+			if (!txtMobileNumber.getText().equals("") && !matcher.matches())
+				errors += "Mobile Number: +49888123456 or 0888123456\n";
+			pattern = Pattern.compile(REGEX_PHONE);
+			matcher = pattern.matcher(txtFaxNumber.getText());
+			if (!txtFaxNumber.getText().equals("") && !matcher.matches())
+				errors += "Fax Number: +49888123456 or 0888123456\n";
+			
+			if (!errors.equals(""))
+				errors = "The following fields contain errors:\n" + errors;
+		}
+		
+		
+		return errors;
 	}
     
 	protected void btnCancel_ActionPerformed(ActionEvent e) {
@@ -156,11 +230,7 @@ public class ClientDetails extends javax.swing.JFrame {
         lblFaxNumber.setText("Fax Number");
         lblDescription.setText("Description");
         
-        categories = clientCategoryController.getAllCategories();
-		
-		for (ClientCategory clientCategory : categories) {
-			cbbCategory.addItem(clientCategory.getName());
-		}
+        loadCbbCategory();
 
         txtDescription.setColumns(20);
         txtDescription.setRows(5);
@@ -344,6 +414,16 @@ public class ClientDetails extends javax.swing.JFrame {
         setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
     }
     
+	public void loadCbbCategory() {
+		cbbCategory.removeAllItems();
+		categories = clientCategoryController.getAllCategories();
+		
+		cbbCategory.addItem("Choose One");
+		for (ClientCategory clientCategory : categories) {
+			cbbCategory.addItem(clientCategory.getName());
+		}
+	}
+
 	public javax.swing.JButton btnCancel;
     public javax.swing.JButton btnSaveEdit;
     

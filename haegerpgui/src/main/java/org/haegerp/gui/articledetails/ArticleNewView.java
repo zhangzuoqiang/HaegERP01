@@ -63,7 +63,7 @@ public class ArticleNewView implements ArticleDetailsInterface {
 			articleDetailsMenu.getArticle().setEan((Long) articleDetailsMenu.txtEan.getValue());
 			articleDetailsMenu.getArticle().setName(articleDetailsMenu.txtName.getText());
 			
-			articleDetailsMenu.getArticle().setArticleCategory(articleDetailsMenu.getCategories().get(articleDetailsMenu.cbbCategory.getSelectedIndex()));
+			articleDetailsMenu.getArticle().setArticleCategory(articleDetailsMenu.getCategories().get(articleDetailsMenu.cbbCategory.getSelectedIndex()-1));
 			
 			articleDetailsMenu.getArticle().setColor(articleDetailsMenu.txtColor.getText());
 			
@@ -85,6 +85,8 @@ public class ArticleNewView implements ArticleDetailsInterface {
 			articleDetailsMenu.setArticle(articleDetailsMenu.getArticleController().save(articleDetailsMenu.getArticle()));
 			
 			articleDetailsMenu.setShowMode();
+			
+			articleDetailsMenu.getArticleCategoryManagement().loadTable();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(articleDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
