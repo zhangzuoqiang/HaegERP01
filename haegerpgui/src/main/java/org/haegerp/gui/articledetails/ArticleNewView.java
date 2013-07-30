@@ -86,6 +86,7 @@ public class ArticleNewView implements ArticleDetailsInterface {
 			
 			articleDetailsMenu.setShowMode();
 			
+			articleDetailsMenu.getArticleManagement().loadTable();
 			articleDetailsMenu.getArticleCategoryManagement().loadTable();
 		} catch (Exception ex) {
 			ex.printStackTrace();

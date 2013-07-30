@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -113,6 +115,10 @@ public class SupplierManagement extends JFrame {
 		}
 	}
 	
+	protected void ArticleDetails_FocusGained(FocusEvent e) {
+		loadTable();
+	}
+	
 	@PostConstruct
 	public void setUp(){
 		pnltblSuppliers = new JScrollPane();
@@ -130,6 +136,15 @@ public class SupplierManagement extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
 
+        addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) { }
+			
+			public void focusGained(FocusEvent e) {
+				ArticleDetails_FocusGained(e);
+			}
+		});
+        
         tblSuppliers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblSuppliers.addMouseListener(new MouseListener() {
 			

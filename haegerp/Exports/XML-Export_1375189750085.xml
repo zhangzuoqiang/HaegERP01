@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<exportList>
+    <article id="84">
+        <articleCategory id="40">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="85">
+        <articleCategory id="40">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="86">
+        <articleCategory id="40">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="87">
+        <articleCategory id="40">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:53:37+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="5">
+        <articleCategory id="4">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T09:01:01+02:00</lastModifiedDate>
+            <name>D=</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T07:59:35+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="6">
+        <articleCategory id="4">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T09:01:01+02:00</lastModifiedDate>
+            <name>D=</name>
+        </articleCategory>
+        <color>Schwarzgrün</color>
+        <description>Nicht so frisch</description>
+        <ean>3210987654321</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T07:59:35+02:00</lastModifiedDate>
+        <article>Kohl</article>
+        <priceGross>1200.0</priceGross>
+        <priceSupplier>900.0</priceSupplier>
+        <priceVat>0.115</priceVat>
+        <sizeH>20.1</sizeH>
+        <sizeL>15.6</sizeL>
+        <sizeW>14.9</sizeW>
+        <stock>100</stock>
+    </article>
+    <article id="17">
+        <articleCategory id="10">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T09:47:15+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:47:15+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="39">
+        <articleCategory id="20">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T09:00:03+02:00</lastModifiedDate>
+            <name>xDDD</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T10:23:22+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="49">
+        <articleCategory id="24">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="18">
+        <articleCategory id="10">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T09:47:15+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Schwarzgrün</color>
+        <description>Nicht so frisch</description>
+        <ean>3210987654321</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:47:15+02:00</lastModifiedDate>
+        <article>Kohl</article>
+        <priceGross>1200.0</priceGross>
+        <priceSupplier>900.0</priceSupplier>
+        <priceVat>0.115</priceVat>
+        <sizeH>20.1</sizeH>
+        <sizeL>15.6</sizeL>
+        <sizeW>14.9</sizeW>
+        <stock>100</stock>
+    </article>
+    <article id="50">
+        <articleCategory id="24">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="40">
+        <articleCategory id="20">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T09:00:03+02:00</lastModifiedDate>
+            <name>xDDD</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T10:23:22+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="41">
+        <articleCategory id="20">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T09:00:03+02:00</lastModifiedDate>
+            <name>xDDD</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T10:23:22+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="42">
+        <articleCategory id="20">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T09:00:03+02:00</lastModifiedDate>
+            <name>xDDD</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T10:23:22+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="48">
+        <articleCategory id="24">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="51">
+        <articleCategory id="24">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T12:27:28+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="12">
+        <articleCategory id="8">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="75">
+        <articleCategory id="36">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="21">
+        <articleCategory id="12">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T08:59:39+02:00</lastModifiedDate>
+            <name>lolol</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:47:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="13">
+        <articleCategory id="8">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="14">
+        <articleCategory id="8">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="15">
+        <articleCategory id="8">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T08:25:40+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="57">
+        <articleCategory id="28">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="22">
+        <articleCategory id="12">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T08:59:39+02:00</lastModifiedDate>
+            <name>lolol</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:47:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="23">
+        <articleCategory id="12">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T08:59:39+02:00</lastModifiedDate>
+            <name>lolol</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:47:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="24">
+        <articleCategory id="12">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T08:59:39+02:00</lastModifiedDate>
+            <name>lolol</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:47:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="58">
+        <articleCategory id="28">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="59">
+        <articleCategory id="28">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="60">
+        <articleCategory id="28">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T11:10:45+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="76">
+        <articleCategory id="36">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="77">
+        <articleCategory id="36">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="78">
+        <articleCategory id="36">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:40:19+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="93">
+        <articleCategory id="44">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="94">
+        <articleCategory id="44">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="95">
+        <articleCategory id="44">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="96">
+        <articleCategory id="44">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T15:09:09+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="1">
+        <articleCategory id="1">
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-24T16:34:15+02:00</lastModifiedDate>
+            <name>Outstanding</name>
+        </articleCategory>
+        <ean>0</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-26T10:41:52+02:00</lastModifiedDate>
+        <article>Outstanding Surcharge</article>
+        <priceGross>20.0</priceGross>
+        <priceSupplier>0.0</priceSupplier>
+        <priceVat>0.175</priceVat>
+        <sizeH>0.0</sizeH>
+        <sizeL>0.0</sizeL>
+        <sizeW>0.0</sizeW>
+        <stock>0</stock>
+    </article>
+    <article id="30">
+        <articleCategory id="16">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="31">
+        <articleCategory id="16">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="32">
+        <articleCategory id="16">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="33">
+        <articleCategory id="16">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-29T09:48:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="66">
+        <articleCategory id="32">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="67">
+        <articleCategory id="32">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="68">
+        <articleCategory id="32">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+    <article id="69">
+        <articleCategory id="32">
+            <description>Alle sind gut</description>
+            <idEmployeeModify>1</idEmployeeModify>
+            <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+            <name>Essen</name>
+        </articleCategory>
+        <color>Braun</color>
+        <description>Frisch</description>
+        <ean>1234567890123</ean>
+        <idEmployeeModify>1</idEmployeeModify>
+        <lastModifiedDate>2013-07-30T12:00:29+02:00</lastModifiedDate>
+        <article>Kartoffel</article>
+        <priceGross>1500.0</priceGross>
+        <priceSupplier>1200.0</priceSupplier>
+        <priceVat>0.195</priceVat>
+        <sizeH>2.1</sizeH>
+        <sizeL>1.6</sizeL>
+        <sizeW>1.9</sizeW>
+        <stock>500</stock>
+    </article>
+</exportList>

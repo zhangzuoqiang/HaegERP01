@@ -134,6 +134,7 @@ public class ArticleCategoryManagement extends JFrame {
 				loadTable();
 				articleManagement.loadTable();
 				articleManagement.loadCbbCategory();
+				articleManagement.getArticleDetails().loadCbbCategory();
 			}
 		}
 	}

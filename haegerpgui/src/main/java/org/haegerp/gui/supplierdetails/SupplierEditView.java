@@ -70,6 +70,8 @@ public class SupplierEditView implements SupplierDetailsInterface {
 			
 			supplierDetailsMenu.setShowMode();
 			
+			supplierDetailsMenu.getSupplierManagement().loadTable();
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(supplierDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

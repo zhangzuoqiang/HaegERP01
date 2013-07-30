@@ -41,7 +41,9 @@ public class ClientCategoryEditView implements ClientCategoryDetailsInterface {
 			clientCategoryDetailsMenu.setShowMode();
 			
 			clientCategoryDetailsMenu.getClientManagement().loadCbbCategory();
+			clientCategoryDetailsMenu.getClientManagement().loadTable();
 			clientCategoryDetailsMenu.getClientDetails().loadCbbCategory();
+			clientCategoryDetailsMenu.getClientCategoryManagement().loadTable();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(clientCategoryDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

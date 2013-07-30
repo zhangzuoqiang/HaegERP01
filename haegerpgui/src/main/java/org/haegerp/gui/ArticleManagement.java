@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -54,9 +56,17 @@ public class ArticleManagement extends JFrame {
 	@Autowired
 	private ArticleDetails articleDetails;
 	
+	public ArticleDetails getArticleDetails() {
+		return articleDetails;
+	}
+
 	@Autowired
 	private ArticleCategoryManagement articleCategoryManagement;
 	
+	public ArticleCategoryManagement getArticleCategoryManagement() {
+		return articleCategoryManagement;
+	}
+
 	private List<ArticleCategory> categories;
 	
 	public ArticleManagement() {
@@ -135,6 +145,11 @@ public class ArticleManagement extends JFrame {
 		}
 	}
 	
+	protected void ArticleManagement_FocusGained(FocusEvent e) {
+		loadTable();
+		loadCbbCategory();
+	}
+	
 	@PostConstruct
 	public void setUp(){
 		pnlTblArticles = new JScrollPane();
@@ -152,6 +167,15 @@ public class ArticleManagement extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
 
+        addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) { }
+			
+			public void focusGained(FocusEvent e) {
+				ArticleManagement_FocusGained(e);
+			}
+		});
+        
         tblArticles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblArticles.addMouseListener(new MouseListener() {
 			
@@ -383,6 +407,10 @@ public class ArticleManagement extends JFrame {
 	}
 	
 	public void loadCbbCategory(){
+		Object idx = null;
+		if (cbbCategory.getItemCount() > 0)
+			idx = cbbCategory.getSelectedItem();
+		
 		cbbCategory.removeAllItems();
 		categories = articleCategoryController.getAllCategories();
 		
@@ -390,6 +418,8 @@ public class ArticleManagement extends JFrame {
 		for (ArticleCategory articleCategory : categories) {
 			cbbCategory.addItem(articleCategory.getName());
 		}
+		
+		cbbCategory.setSelectedItem(idx);
 	}
 	
 	public void loadTable(){

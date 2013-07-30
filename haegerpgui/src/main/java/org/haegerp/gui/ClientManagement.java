@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -52,6 +54,9 @@ public class ClientManagement extends JFrame {
 	
 	@Autowired
 	private ClientDetails clientDetails;
+	
+	@Autowired
+	private ClientCategoryManagement clientCategoryManagement;
 	
 	private List<ClientCategory> categories;
 	
@@ -116,6 +121,7 @@ public class ClientManagement extends JFrame {
 			if (option == JOptionPane.YES_OPTION) {
 				clientController.delete(client);
 				loadTable();
+				clientCategoryManagement.loadTable();
 			}
 		}
 	}
@@ -128,6 +134,11 @@ public class ClientManagement extends JFrame {
 			clientDetails.setShowMode();
 			clientDetails.setVisible(true);
 		}
+	}
+	
+	protected void ClientManagement_FocusGained(FocusEvent e) {
+		loadTable();
+		loadCbbCategory();
 	}
 	
 	@PostConstruct
@@ -147,6 +158,15 @@ public class ClientManagement extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
 
+        addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) { }
+			
+			public void focusGained(FocusEvent e) {
+				ClientManagement_FocusGained(e);
+			}
+		});
+        
         tblClients.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblClients.addMouseListener(new MouseListener() {
 			
@@ -378,6 +398,10 @@ public class ClientManagement extends JFrame {
 	}
 	
 	public void loadCbbCategory(){
+		Object idx = null;
+		if (cbbCategory.getItemCount() > 0)
+			idx = cbbCategory.getSelectedItem();
+			
 		cbbCategory.removeAllItems();
 		categories = clientCategoryController.getAllCategories();
 		
@@ -385,6 +409,8 @@ public class ClientManagement extends JFrame {
 		for (ClientCategory clientCategory : categories) {
 			cbbCategory.addItem(clientCategory.getName());
 		}
+		
+		cbbCategory.setSelectedItem(idx);
 	}
 	
 	public void loadTable(){

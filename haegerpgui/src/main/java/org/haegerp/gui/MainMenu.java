@@ -1,29 +1,27 @@
 package org.haegerp.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.annotation.PostConstruct;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import org.haegerp.entity.repository.employee.EmployeeRepository;
 import org.haegerp.gui.main.MainMenuArticle;
 import org.haegerp.gui.main.MainMenuClientOrders;
 import org.haegerp.gui.main.MainMenuHumanResources;
 import org.haegerp.gui.main.MainMenuInterface;
 import org.haegerp.gui.main.MainMenuNormal;
 import org.haegerp.gui.main.MainMenuPartners;
-import org.haegerp.session.EmployeeSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * Das ist das Hauptmenü von dem System
@@ -39,7 +37,7 @@ public class MainMenu extends JFrame {
 	private MainMenuInterface mainMenuView;
 	
 	@Autowired
-	private ArticleManagement articleView;
+	private ArticleManagement articleManagement;
 	
 	@Autowired
 	private ArticleCategoryManagement articleCategoryManagement;
@@ -53,9 +51,11 @@ public class MainMenu extends JFrame {
 	@Autowired
 	private SupplierManagement supplierManagement;
 	
-	//FIXME Login Form!
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private DivisionManagement divisionManagement;
+	
+	@Autowired
+	private SalaryCategoryManagement salaryCategoryManagement;
 	
 	//Article
 	/**
@@ -81,7 +81,7 @@ public class MainMenu extends JFrame {
 	 */
 	@Transactional
 	private void btnArticlesSubMenu_ActionPerformed(ActionEvent e) {
-		articleView.setVisible(true);
+		articleManagement.setVisible(true);
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesDivisionSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO 04.) Open Division Management
+		divisionManagement.setVisible(true);
 	}
 	
 	/**
@@ -183,7 +183,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesSalaryCategorySubMenu_ActionPerformed(ActionEvent e) {
-		// TODO 05.) Open SalaryCategory Management
+		salaryCategoryManagement.setVisible(true);
 	}
 	
 	/**
@@ -258,8 +258,6 @@ public class MainMenu extends JFrame {
 	
 	@PostConstruct
 	public void setUp(){
-		EmployeeSession.setEmployee(employeeRepository.findOne(1L));
-		
 		mainMenuView = new MainMenuNormal();
 		
 		setTitle("HaegERP");

@@ -44,7 +44,9 @@ public class ArticleCategoryNewView implements ArticleCategoryDetailsInterface {
 			
 			articleCategoryDetailsMenu.setShowMode();
 			
+			articleCategoryDetailsMenu.getArticleCategoryManagement().loadTable();
 			articleCategoryDetailsMenu.getArticleManagement().loadCbbCategory();
+			articleCategoryDetailsMenu.getArticleManagement().loadTable();
 			articleCategoryDetailsMenu.getArticleDetails().loadCbbCategory();
 		} catch (Exception ex) {
 			ex.printStackTrace();

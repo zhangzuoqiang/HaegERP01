@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;
@@ -53,6 +55,13 @@ public class ArticleDetails extends javax.swing.JFrame {
 		return articleCategoryManagement;
 	}
 
+	@Autowired
+	private ArticleManagement articleManagement;
+	
+	public ArticleManagement getArticleManagement() {
+		return articleManagement;
+	}
+
 	private ArticleDetailsInterface articleDetailsView;
 	
 	private List<ArticleCategory> categories;
@@ -89,19 +98,7 @@ public class ArticleDetails extends javax.swing.JFrame {
     	articleDetailsView.applyView(this);
     }
     
-    //Listeners
-    protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
-    	String errors = "";
-    	if (!(articleDetailsView instanceof ArticleShowView)) {
-    		errors = checkFields();
-    	}
-    	if (errors.equals(""))
-    		articleDetailsView.btnSaveEdit(this);
-    	else
-    		JOptionPane.showMessageDialog(this, "The following fields have not been filled:\n" + errors + "\nThose fields are required.", "", JOptionPane.ERROR_MESSAGE);
-	}
-    
-	private String checkFields() {
+    private String checkFields() {
 		String errors = "";
 		if (txtEan.getText().equals(""))
 			errors += "EAN\n";
@@ -118,9 +115,25 @@ public class ArticleDetails extends javax.swing.JFrame {
 		
 		return errors;
 	}
-
+    
+    //Listeners
+    protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
+    	String errors = "";
+    	if (!(articleDetailsView instanceof ArticleShowView)) {
+    		errors = checkFields();
+    	}
+    	if (errors.equals(""))
+    		articleDetailsView.btnSaveEdit(this);
+    	else
+    		JOptionPane.showMessageDialog(this, "The following fields have not been filled:\n" + errors + "\nThose fields are required.", "", JOptionPane.ERROR_MESSAGE);
+	}
+    
 	protected void btnCancel_ActionPerformed(ActionEvent e) {
 		articleDetailsView.btnCancel(this);
+	}
+	
+	protected void ArticleDetails_FocusGained(FocusEvent e) {
+		loadCbbCategory();
 	}
     
     @PostConstruct
@@ -168,6 +181,15 @@ public class ArticleDetails extends javax.swing.JFrame {
         setTitle("Article Details");
         setMinimumSize(new java.awt.Dimension(405, 565));
 
+        addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) { }
+			
+			public void focusGained(FocusEvent e) {
+				ArticleDetails_FocusGained(e);
+			}
+		});
+        
         lblEan.setText("EAN");
 
         lblName.setText("Name");
@@ -436,6 +458,10 @@ public class ArticleDetails extends javax.swing.JFrame {
     }
     
 	public void loadCbbCategory() {
+		Object idx = null;
+		if (cbbCategory.getItemCount() > 0)
+			idx = cbbCategory.getSelectedItem();
+		
 		cbbCategory.removeAllItems();
 		categories = articleCategoryController.getAllCategories();
 		
@@ -443,6 +469,8 @@ public class ArticleDetails extends javax.swing.JFrame {
 		for (ArticleCategory articleCategory : categories) {
 			cbbCategory.addItem(articleCategory.getName());
 		}
+		
+		cbbCategory.setSelectedItem(idx);
 	}
 
 	public javax.swing.JButton btnCancel;

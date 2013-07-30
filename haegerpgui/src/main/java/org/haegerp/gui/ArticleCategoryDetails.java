@@ -39,6 +39,13 @@ public class ArticleCategoryDetails extends javax.swing.JFrame {
 	public ArticleDetails getArticleDetails() {
 		return articleDetails;
 	}
+	
+	@Autowired
+	private ArticleCategoryManagement articleCategoryManagement;
+	
+	public ArticleCategoryManagement getArticleCategoryManagement() {
+		return articleCategoryManagement;
+	}
 
 	@Autowired
 	private ArticleCategoryController articleCategoryController;

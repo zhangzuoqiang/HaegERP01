@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -156,6 +158,10 @@ public class ClientCategoryManagement extends JFrame {
 		}
 	}
 	
+	protected void ClientCategoryManagement_FocusGained(FocusEvent e) {
+		loadTable();
+	}
+	
 	@PostConstruct
 	public void setUp(){
 		pnlTblClientCategory = new JScrollPane();
@@ -172,6 +178,15 @@ public class ClientCategoryManagement extends JFrame {
         setTitle("Article Category Management");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
+        
+        addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) { }
+			
+			public void focusGained(FocusEvent e) {
+				ClientCategoryManagement_FocusGained(e);
+			}
+		});
         
         tblClientCategory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblClientCategory.addMouseListener(new MouseListener() {

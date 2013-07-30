@@ -27,6 +27,13 @@ public class ClientCategoryDetails extends javax.swing.JFrame {
 	private static final long serialVersionUID = 2949647041784163844L;
 	
 	@Autowired
+	private ClientCategoryManagement clientCategoryManagement;
+	
+	public ClientCategoryManagement getClientCategoryManagement() {
+		return clientCategoryManagement;
+	}
+
+	@Autowired
 	private ClientManagement clientManagement;
 	
 	public ClientManagement getClientManagement() {

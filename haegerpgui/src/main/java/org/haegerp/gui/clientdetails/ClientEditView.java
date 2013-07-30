@@ -74,6 +74,7 @@ public class ClientEditView implements ClientDetailsInterface {
 			clientDetailsMenu.setShowMode();
 			
 			clientDetailsMenu.getClientCategoryManagement().loadTable();
+			clientDetailsMenu.getClientManagement().loadTable();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(clientDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

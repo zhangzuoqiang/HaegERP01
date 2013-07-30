@@ -16,7 +16,7 @@
 		</property>
 		<set name="employees" inverse="true">
 			<key>
-				<column name="userGroup" not-null="true"></column>
+				<column name="idUserGroup" not-null="true"></column>
 			</key>
 			<one-to-many class="org.haegerp.entity.Employee"/>
 		</set>

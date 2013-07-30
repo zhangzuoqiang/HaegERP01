@@ -12,6 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.haegerp.controller.EmployeeController;
+import org.haegerp.entity.Employee;
+import org.haegerp.session.EmployeeSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +33,14 @@ public class Login extends JFrame {
 	
 	//Listeners
 	protected void btnLogin_ActionPerformed(ActionEvent e) {
-		if (employeeController.isLoginCorrect(txtUser.getText(), String.valueOf(txtPassword.getPassword()))){
+		
+		Employee employee = employeeController.isLoginCorrect(txtUser.getText(), String.valueOf(txtPassword.getPassword()));
+		
+		if (employee != null){
 			
-			//TODO Permissions!
+			EmployeeSession.setEmployee(employee);
+			
+			//TODO Login Permissions!
 			
 			this.setVisible(false);
 			mainMenu.setVisible(true);

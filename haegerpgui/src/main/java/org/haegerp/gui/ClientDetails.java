@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,6 +57,13 @@ public class ClientDetails extends javax.swing.JFrame {
 	public ClientCategoryManagement getClientCategoryManagement() {
 		return clientCategoryManagement;
 	}
+	
+	@Autowired
+	private ClientManagement clientManagement;
+
+	public ClientManagement getClientManagement() {
+		return clientManagement;
+	}
 
 	private ClientDetailsInterface clientDetailsView;
 	
@@ -91,18 +100,6 @@ public class ClientDetails extends javax.swing.JFrame {
     	clientDetailsView = new ClientShowView();
     	clientDetailsView.applyView(this);
     }
-    
-    //Listeners
-    protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
-    	String errors = "";
-    	if (!(clientDetailsView instanceof ClientShowView)) {
-    		errors = checkFields();
-    	}
-    	if (errors.equals(""))
-    		clientDetailsView.btnSaveEdit(this);
-    	else
-    		JOptionPane.showMessageDialog(this, errors, "", JOptionPane.ERROR_MESSAGE);
-	}
     
     private String checkFields() {
 		String errors = "";
@@ -157,8 +154,24 @@ public class ClientDetails extends javax.swing.JFrame {
 		return errors;
 	}
     
+    //Listeners
+    protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
+    	String errors = "";
+    	if (!(clientDetailsView instanceof ClientShowView)) {
+    		errors = checkFields();
+    	}
+    	if (errors.equals(""))
+    		clientDetailsView.btnSaveEdit(this);
+    	else
+    		JOptionPane.showMessageDialog(this, errors, "", JOptionPane.ERROR_MESSAGE);
+	}
+    
 	protected void btnCancel_ActionPerformed(ActionEvent e) {
 		clientDetailsView.btnCancel(this);
+	}
+	
+	protected void ClientDetails_DocusGained(FocusEvent e) {
+		loadCbbCategory();
 	}
     
     @PostConstruct
@@ -216,6 +229,15 @@ public class ClientDetails extends javax.swing.JFrame {
         setTitle("Client Details");
         setMinimumSize(new java.awt.Dimension(405, 565));
 
+        addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) { }
+			
+			public void focusGained(FocusEvent e) {
+				ClientDetails_DocusGained(e);
+			}
+		});
+        
         lblTaxID.setText("ID");
         lblName.setText("Name");
         lblCategory.setText("Category");
@@ -415,6 +437,10 @@ public class ClientDetails extends javax.swing.JFrame {
     }
     
 	public void loadCbbCategory() {
+		Object idx = null;
+		if (cbbCategory.getItemCount() > 0)
+			idx = cbbCategory.getSelectedItem();
+		
 		cbbCategory.removeAllItems();
 		categories = clientCategoryController.getAllCategories();
 		
@@ -422,6 +448,8 @@ public class ClientDetails extends javax.swing.JFrame {
 		for (ClientCategory clientCategory : categories) {
 			cbbCategory.addItem(clientCategory.getName());
 		}
+		
+		cbbCategory.setSelectedItem(idx);
 	}
 
 	public javax.swing.JButton btnCancel;

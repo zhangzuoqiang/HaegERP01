@@ -40,6 +40,13 @@ public class SupplierDetails extends javax.swing.JFrame {
 		return supplierController;
 	}
 
+	@Autowired
+	private SupplierManagement supplierManagement;
+	
+	public SupplierManagement getSupplierManagement() {
+		return supplierManagement;
+	}
+
 	private SupplierDetailsInterface supplierDetailsView;
 	
 	private Supplier supplier;
