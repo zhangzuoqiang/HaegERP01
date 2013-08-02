@@ -7,22 +7,22 @@
 /* **********************************************/
 
 INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (1, 'Articles Administration', SYSDATE, 1);
+VALUES (1, 'Articles', SYSDATE, 1);
 
 INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (2, 'Business Partners Administration', SYSDATE, 1);
+VALUES (2, 'Business Partners', SYSDATE, 1);
 
 INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (3, 'Human Resources Administration', SYSDATE, 1);
+VALUES (3, 'Human Resources', SYSDATE, 1);
 
 INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (4, 'Client Orders Administration', SYSDATE, 1);
+VALUES (4, 'Client Orders', SYSDATE, 1);
 
 INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (5, 'Suppliers Order Administration', SYSDATE, 1);
+VALUES (5, 'Supplier Orders', SYSDATE, 1);
 
 INSERT INTO permission (idPermission, moduleName, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
-VALUES (6, 'Company Administration', SYSDATE, 1);
+VALUES (6, 'Company', SYSDATE, 1);
 
 ALTER TABLE permission READ ONLY;
 
@@ -41,8 +41,8 @@ VALUES
 ('Administration', 1, SYSDATE, 1);
 
 INSERT INTO USERGROUP
-(NAME, IDUSERGROUP)
-VALUES ('Administration', 1);
+(NAME, IDUSERGROUP, LASTMODIFIEDDATE, IDEMPLOYEEMODIFY)
+VALUES ('Administration', 1, SYSDATE, 1);
 
 INSERT INTO USERGROUP_PERMISSION
 (IDUSERGROUP, IDPERMISSION)

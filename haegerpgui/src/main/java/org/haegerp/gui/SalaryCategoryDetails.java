@@ -27,20 +27,20 @@ import org.springframework.stereotype.Component;
 public class SalaryCategoryDetails extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 2949647041784163844L;
-	//TODO EmployeManagement & Details
-//	@Autowired
-//	private EmployeeManagement employeeManagement;
-//	
-//	public EmployeeManagement getEmployeeManagement() {
-//		return employeeManagement;
-//	}
-//
-//	@Autowired
-//	private EmployeeDetails employeeDetails;
-//	
-//	public EmployeeDetails getEmployeeDetails() {
-//		return employeeDetails;
-//	}
+	
+	@Autowired
+	private EmployeeManagement employeeManagement;
+	
+	public EmployeeManagement getEmployeeManagement() {
+		return employeeManagement;
+	}
+
+	@Autowired
+	private EmployeeDetails employeeDetails;
+	
+	public EmployeeDetails getEmployeeDetails() {
+		return employeeDetails;
+	}
 
 	@Autowired
 	private SalaryCategoryManagement salaryCategoryManagement;

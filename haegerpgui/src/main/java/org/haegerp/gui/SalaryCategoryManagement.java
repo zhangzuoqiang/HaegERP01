@@ -49,9 +49,9 @@ public class SalaryCategoryManagement extends JFrame {
 	
 	@Autowired
 	private SalaryCategoryDetails salaryCategoryDetails;
-	//TODO EmployeManagement & Details
-//	@Autowired
-//	private EmployeeManagement employeeManagement;
+	
+	@Autowired
+	private EmployeeManagement employeeManagement;
 	
 	public SalaryCategoryManagement() {
     }
@@ -130,10 +130,10 @@ public class SalaryCategoryManagement extends JFrame {
 			if (option == JOptionPane.YES_OPTION) {
 				salaryCategoryController.delete(salaryCategory);
 				loadTable();
-				//TODO EmployeManagement & Details
-//				employeeManagement.loadTable();
-//				employeeManagement.loadCbbCategory();
-//				employeeManagement.getEmployeeDetails().loadCbbCategory();
+				
+				employeeManagement.loadTable();
+				employeeManagement.loadCbbSalaryCategory();
+				employeeManagement.getEmployeeDetails().loadCbbSalaryCategory();
 			}
 		}
 	}

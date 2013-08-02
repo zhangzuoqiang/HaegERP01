@@ -115,9 +115,8 @@ public class ArticleCategoryDetails extends javax.swing.JFrame {
         lblDescription = new javax.swing.JLabel();
         
         txtCountArticles = new javax.swing.JFormattedTextField();
-        txtCountArticles.setDocument(new JTextFieldLimit(13));
         txtName = new javax.swing.JTextField();
-        txtName.setDocument(new JTextFieldLimit(80));
+        txtName.setDocument(new JTextFieldLimit(50));
         
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();

@@ -72,10 +72,10 @@ public class ArticleEditView implements ArticleDetailsInterface {
 			
 			articleDetailsMenu.setArticle(articleDetailsMenu.getArticleController().save(articleDetailsMenu.getArticle()));
 			
-			articleDetailsMenu.setShowMode();
-			
 			articleDetailsMenu.getArticleManagement().loadTable();
 			articleDetailsMenu.getArticleCategoryManagement().loadTable();
+			
+			articleDetailsMenu.setShowMode();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(articleDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

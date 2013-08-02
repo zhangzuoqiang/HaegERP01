@@ -22,6 +22,7 @@ import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -34,8 +35,6 @@ import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.swing.ListSelectionModel;
 
 @Component
 public class ArticleCategoryManagement extends JFrame {

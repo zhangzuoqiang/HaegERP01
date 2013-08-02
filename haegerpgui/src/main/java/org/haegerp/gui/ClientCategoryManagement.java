@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -24,6 +22,7 @@ import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -36,8 +35,6 @@ import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.swing.ListSelectionModel;
 
 @Component
 public class ClientCategoryManagement extends JFrame {
@@ -158,10 +155,6 @@ public class ClientCategoryManagement extends JFrame {
 		}
 	}
 	
-	protected void ClientCategoryManagement_FocusGained(FocusEvent e) {
-		loadTable();
-	}
-	
 	@PostConstruct
 	public void setUp(){
 		pnlTblClientCategory = new JScrollPane();
@@ -178,15 +171,6 @@ public class ClientCategoryManagement extends JFrame {
         setTitle("Article Category Management");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
-        
-        addFocusListener(new FocusListener() {
-			
-			public void focusLost(FocusEvent e) { }
-			
-			public void focusGained(FocusEvent e) {
-				ClientCategoryManagement_FocusGained(e);
-			}
-		});
         
         tblClientCategory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblClientCategory.addMouseListener(new MouseListener() {

@@ -2,6 +2,8 @@ package org.haegerp.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JButton;
@@ -14,6 +16,7 @@ import javax.swing.JTextField;
 import org.haegerp.controller.EmployeeController;
 import org.haegerp.entity.Employee;
 import org.haegerp.session.EmployeeSession;
+import org.haegerp.tools.MD5Digest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +37,8 @@ public class Login extends JFrame {
 	//Listeners
 	protected void btnLogin_ActionPerformed(ActionEvent e) {
 		
-		Employee employee = employeeController.isLoginCorrect(txtUser.getText(), String.valueOf(txtPassword.getPassword()));
+		String passwordMD5 = MD5Digest.toMD5(txtPassword.getPassword());
+		Employee employee = employeeController.isLoginCorrect(txtUser.getText(), passwordMD5);
 		
 		if (employee != null){
 			
@@ -65,9 +69,31 @@ public class Login extends JFrame {
         setResizable(false);
 
         lblUsername.setText("Username");
+        txtUser.addKeyListener(new KeyListener() {
+			
+			public void keyTyped(KeyEvent e) { }
+			
+			public void keyReleased(KeyEvent e) { }
+			
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyChar() == '\n')
+					btnLogin_ActionPerformed(null);
+			}
+		});
 
         lblPassword.setText("Password");
-
+        txtPassword.addKeyListener(new KeyListener() {
+			
+			public void keyTyped(KeyEvent e) { }
+			
+			public void keyReleased(KeyEvent e) { }
+			
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyChar() == '\n')
+					btnLogin_ActionPerformed(null);
+			}
+		});
+        
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Header.png")));
 
         btnLogin.setText("Login");

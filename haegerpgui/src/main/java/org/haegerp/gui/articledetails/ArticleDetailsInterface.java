@@ -4,6 +4,7 @@ import org.haegerp.gui.ArticleDetails;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface ArticleDetailsInterface {
 	
 	/**
@@ -11,6 +12,7 @@ public interface ArticleDetailsInterface {
 	 * 
 	 * @param articleDetailsMenu Das ArtikelDetailsmenü
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void applyView(ArticleDetails articleDetailsMenu);
 	
 	/**

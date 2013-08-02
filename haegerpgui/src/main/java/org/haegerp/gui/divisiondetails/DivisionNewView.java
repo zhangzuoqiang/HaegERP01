@@ -45,10 +45,10 @@ public class DivisionNewView implements DivisionDetailsInterface {
 			divisionDetailsMenu.setShowMode();
 			
 			divisionDetailsMenu.getDivisionManagement().loadTable();
-			//TODO EmployeManagement & Details
-//			divisionDetailsMenu.getEmployeeManagement().loadCbbCategory();
-//			divisionDetailsMenu.getEmployeeManagement().loadTable();
-//			divisionDetailsMenu.getEmployeeDetails().loadCbbCategory();
+			
+			divisionDetailsMenu.getEmployeeManagement().loadCbbDivision();
+			divisionDetailsMenu.getEmployeeManagement().loadTable();
+			divisionDetailsMenu.getEmployeeDetails().loadCbbDivision();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(divisionDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

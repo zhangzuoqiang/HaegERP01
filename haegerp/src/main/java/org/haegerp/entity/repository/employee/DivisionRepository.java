@@ -33,7 +33,7 @@ public interface DivisionRepository extends MyRepository<Division, Long> {
 	* @param textToFilter Text, dass der Benutzer einge
 	* @param enableAll Wenn TextToFilter keinen Text hat, dann muss diese Variable 0 sein, sonst ist 1.
 	* @param pageable PageRequest Klasse.
-	* @return Eine Seite mit den Artikelkategorien.
+	* @return Eine Seite mit den Divisionen.
 	*/
 	@Transactional(propagation=Propagation.REQUIRED, readOnly = true)
 	public Page<Division> findWithFilters(String textToFilter, int enableAll, Pageable pageable);

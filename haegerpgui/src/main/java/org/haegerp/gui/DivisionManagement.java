@@ -49,9 +49,9 @@ public class DivisionManagement extends JFrame {
 	
 	@Autowired
 	private DivisionDetails divisionDetails;
-	//TODO EmployeManagement & Details
-//	@Autowired
-//	private EmployeeManagement employeeManagement;
+	
+	@Autowired
+	private EmployeeManagement employeeManagement;
 	
 	public DivisionManagement() {
     }
@@ -125,15 +125,15 @@ public class DivisionManagement extends JFrame {
 			if (employeeNames.length() == 0)
 				option = JOptionPane.showConfirmDialog(this, "Delete: " + division.getName() + "\nAre you sure?", "", JOptionPane.YES_NO_OPTION);
 			else
-				JOptionPane.showMessageDialog(this, "This category still have employees associated:\n" + employeeNames, "", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "This Division still have employees associated:\n" + employeeNames, "", JOptionPane.WARNING_MESSAGE);
 			
 			if (option == JOptionPane.YES_OPTION) {
 				divisionController.delete(division);
 				loadTable();
-				//TODO EmployeManagement & Details
-//				employeeManagement.loadTable();
-//				employeeManagement.loadCbbCategory();
-//				employeeManagement.getArticleDetails().loadCbbCategory();
+				
+				employeeManagement.loadTable();
+				employeeManagement.loadCbbDivision();
+				employeeManagement.getEmployeeDetails().loadCbbDivision();
 			}
 		}
 	}

@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 import org.haegerp.controller.DivisionController;
 import org.haegerp.entity.Division;
-import org.haegerp.gui.articlecategorydetails.ArticleCategoryShowView;
 import org.haegerp.gui.divisiondetails.DivisionDetailsInterface;
 import org.haegerp.gui.divisiondetails.DivisionEditView;
 import org.haegerp.gui.divisiondetails.DivisionNewView;
@@ -27,19 +26,19 @@ public class DivisionDetails extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 2949647041784163844L;
 	
-//	@Autowired
-//	private EmployeeManagement employeeManagement;
-//	
-//	public EmployeeManagement getEmployeeManagement() {
-//		return employeeManagement;
-//	}
+	@Autowired
+	private EmployeeManagement employeeManagement;
 	
-//	@Autowired
-//	private EmployeeDetails employeeDetails;
-//
-//	public EmployeeDetails getEmployeeDetails() {
-//		return employeeDetails;
-//	}
+	public EmployeeManagement getEmployeeManagement() {
+		return employeeManagement;
+	}
+	
+	@Autowired
+	private EmployeeDetails employeeDetails;
+
+	public EmployeeDetails getEmployeeDetails() {
+		return employeeDetails;
+	}
 
 	@Autowired
 	private DivisionManagement divisionManagement;
@@ -88,7 +87,7 @@ public class DivisionDetails extends javax.swing.JFrame {
     //Listeners
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
     	String errors = "";
-    	if (!(divisionDetailsView instanceof ArticleCategoryShowView)) {
+    	if (!(divisionDetailsView instanceof DivisionShowView)) {
     		errors = checkFields();
     	}
     	if (errors.equals(""))
@@ -116,9 +115,8 @@ public class DivisionDetails extends javax.swing.JFrame {
         lblDescription = new javax.swing.JLabel();
         
         txtCountArticles = new javax.swing.JFormattedTextField();
-        txtCountArticles.setDocument(new JTextFieldLimit(13));
         txtName = new javax.swing.JTextField();
-        txtName.setDocument(new JTextFieldLimit(80));
+        txtName.setDocument(new JTextFieldLimit(50));
         
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();

@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import org.haegerp.controller.SupplierController;
 import org.haegerp.entity.Supplier;
-import org.haegerp.gui.clientdetails.ClientShowView;
 import org.haegerp.gui.supplierdetails.SupplierDetailsInterface;
 import org.haegerp.gui.supplierdetails.SupplierEditView;
 import org.haegerp.gui.supplierdetails.SupplierNewView;
@@ -30,7 +29,7 @@ public class SupplierDetails extends javax.swing.JFrame {
 	private static final long serialVersionUID = 2949647041784163844L;
 	
 	private static final String REGEX_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static final String REGEX_ZIPCODE = "^[A-Za-z]-[0-9]*5|[0-9]*5$";
+	private static final String REGEX_ZIPCODE = "^[A-Za-z]-[0-9]{5}|[0-9]{5}$";
 	private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
 	
 	@Autowired
@@ -80,7 +79,7 @@ public class SupplierDetails extends javax.swing.JFrame {
     //Listeners
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
     	String errors = "";
-    	if (!(supplierDetailsView instanceof ClientShowView)) {
+    	if (!(supplierDetailsView instanceof SupplierShowView)) {
     		errors = checkFields();
     	}
     	if (errors.equals(""))

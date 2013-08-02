@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;
@@ -131,10 +129,6 @@ public class ArticleDetails extends javax.swing.JFrame {
 	protected void btnCancel_ActionPerformed(ActionEvent e) {
 		articleDetailsView.btnCancel(this);
 	}
-	
-	protected void ArticleDetails_FocusGained(FocusEvent e) {
-		loadCbbCategory();
-	}
     
     @PostConstruct
     private void setUp(){
@@ -180,15 +174,6 @@ public class ArticleDetails extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Article Details");
         setMinimumSize(new java.awt.Dimension(405, 565));
-
-        addFocusListener(new FocusListener() {
-			
-			public void focusLost(FocusEvent e) { }
-			
-			public void focusGained(FocusEvent e) {
-				ArticleDetails_FocusGained(e);
-			}
-		});
         
         lblEan.setText("EAN");
 

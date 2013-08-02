@@ -52,10 +52,16 @@ public class MainMenu extends JFrame {
 	private SupplierManagement supplierManagement;
 	
 	@Autowired
+	private EmployeeManagement employeeManagement;
+	
+	@Autowired
 	private DivisionManagement divisionManagement;
 	
 	@Autowired
 	private SalaryCategoryManagement salaryCategoryManagement;
+	
+	@Autowired
+	private UserGroupManagement userGroupManagement;
 	
 	//Article
 	/**
@@ -163,7 +169,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesEmployeeSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO 03.) Open Employee Management
+		employeeManagement.setVisible(true);
 	}
 	
 	/**
@@ -193,7 +199,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnHumanResourcesUserGroupSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO 06.) Open UserGroup Management
+		userGroupManagement.setVisible(true);
 	}
 	
 	//Company

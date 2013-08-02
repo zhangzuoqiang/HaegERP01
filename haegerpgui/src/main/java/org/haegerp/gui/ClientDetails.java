@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +32,7 @@ public class ClientDetails extends javax.swing.JFrame {
 	private static final long serialVersionUID = 2949647041784163844L;
 	
 	private static final String REGEX_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static final String REGEX_ZIPCODE = "^[A-Za-z]-[0-9]*5|[0-9]*5$";
+	private static final String REGEX_ZIPCODE = "^[A-Za-z]-[0-9]{5}|[0-9]{5}$";
 	private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
 	
 	@Autowired
@@ -169,10 +167,6 @@ public class ClientDetails extends javax.swing.JFrame {
 	protected void btnCancel_ActionPerformed(ActionEvent e) {
 		clientDetailsView.btnCancel(this);
 	}
-	
-	protected void ClientDetails_DocusGained(FocusEvent e) {
-		loadCbbCategory();
-	}
     
     @PostConstruct
     private void setUp(){
@@ -229,15 +223,6 @@ public class ClientDetails extends javax.swing.JFrame {
         setTitle("Client Details");
         setMinimumSize(new java.awt.Dimension(405, 565));
 
-        addFocusListener(new FocusListener() {
-			
-			public void focusLost(FocusEvent e) { }
-			
-			public void focusGained(FocusEvent e) {
-				ClientDetails_DocusGained(e);
-			}
-		});
-        
         lblTaxID.setText("ID");
         lblName.setText("Name");
         lblCategory.setText("Category");

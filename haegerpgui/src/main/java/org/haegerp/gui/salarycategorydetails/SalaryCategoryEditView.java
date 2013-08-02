@@ -44,10 +44,10 @@ public class SalaryCategoryEditView implements SalaryCategoryDetailsInterface {
 			salaryCategoryDetailsMenu.setShowMode();
 			
 			salaryCategoryDetailsMenu.getSalaryCategoryManagement().loadTable();
-			//TODO EmployeManagement & Details
-//			salaryCategoryDetailsMenu.getEmployeeManagement().loadCbbCategory();
-//			salaryCategoryDetailsMenu.getEmployeeManagement().loadTable();
-//			salaryCategoryDetailsMenu.getEmployeeDetails().loadCbbCategory();
+			
+			salaryCategoryDetailsMenu.getEmployeeManagement().loadCbbSalaryCategory();
+			salaryCategoryDetailsMenu.getEmployeeManagement().loadTable();
+			salaryCategoryDetailsMenu.getEmployeeDetails().loadCbbSalaryCategory();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(salaryCategoryDetailsMenu, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

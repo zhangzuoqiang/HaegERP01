@@ -35,7 +35,7 @@ public interface SalaryCategoryRepository extends MyRepository<SalaryCategory, L
 	* @param textToFilter Text, dass der Benutzer einge
 	* @param enableAll Wenn TextToFilter keinen Text hat, dann muss diese Variable 0 sein, sonst ist 1.
 	* @param pageable PageRequest Klasse.
-	* @return Eine Seite mit den Artikelkategorien.
+	* @return Eine Seite mit den Gehaltkategorien.
 	*/
 	@Transactional(propagation=Propagation.REQUIRED, readOnly = true)
 	public Page<SalaryCategory> findWithFilters(String textToFilter, int enableAll, Pageable pageable);

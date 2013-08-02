@@ -44,6 +44,7 @@ public class ClientCategoryNewView implements ClientCategoryDetailsInterface {
 			
 			clientCategoryDetailsMenu.setShowMode();
 			
+			clientCategoryDetailsMenu.getClientCategoryManagement().loadTable();
 			clientCategoryDetailsMenu.getClientManagement().loadCbbCategory();
 			clientCategoryDetailsMenu.getClientDetails().loadCbbCategory();
 			clientCategoryDetailsMenu.getClientManagement().loadTable();
