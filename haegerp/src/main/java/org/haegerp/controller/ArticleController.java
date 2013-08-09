@@ -1,5 +1,7 @@
 package org.haegerp.controller;
 
+import java.util.List;
+
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
 import org.springframework.data.domain.Page;
@@ -89,8 +91,32 @@ public interface ArticleController {
 	public Object[][] loadTableRows(int size);
 	
 	/**
+	 * Wickelt den Inhalt der Tabelle ab
+	 * @return Objekt mit dem Inhalt von der Tabelle
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Object[][] loadAllTableRows();
+	
+	/**
+	 * Eine Liste wird erhalt
+	 * 
+	 * @return Liste mit den Artikeln
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public List<Article> loadAllArticles();
+	
+	/**
 	 * Diese Methode löscht alle Artikeln von einer Kategorie
 	 * @param articleCategory Artikelkategorie
 	 */
 	public void deleteAllArticleFromCategory(ArticleCategory articleCategory);
+	
+	/**
+	 * Holt einen Artikel
+	 * 
+	 * @param id ID des Artikel
+	 * @return Der Artikel
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Article getArticleById(long id);
 }

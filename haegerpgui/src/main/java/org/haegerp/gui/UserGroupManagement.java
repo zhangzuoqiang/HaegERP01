@@ -166,7 +166,7 @@ public class UserGroupManagement extends JFrame {
 			public void mouseReleased(MouseEvent e) { }
 			
 			public void mousePressed(MouseEvent e) {
-				if (e.getClickCount() > 1)
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1)
 					tblUserGroup_MouseDoubleClick(e);
 			}
 			

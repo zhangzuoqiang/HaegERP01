@@ -62,6 +62,12 @@ public class MainMenu extends JFrame {
 	
 	@Autowired
 	private UserGroupManagement userGroupManagement;
+
+	@Autowired
+	private CompanyDetails companyDetails;
+	
+	@Autowired
+	private SupplierOrderManagement supplierOrderManagement;
 	
 	//Article
 	/**
@@ -210,7 +216,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnCompanyMenu_ActionPerformed(ActionEvent e) {
-		// TODO 07.) Open Company Management
+		companyDetails.setVisible(true);
 	}
 	
 	//Supplier Orders
@@ -221,7 +227,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnSupplierOrdersMenu_ActionPerformed(ActionEvent e) {
-		// TODO 08.) Open SupplierOrder Management
+		supplierOrderManagement.setVisible(true);
 	}
 	
 	//Client Orders

@@ -7,16 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ClientCategoryDetailsInterface {
 	
 	/**
-	 * Das Interface wird auf dem ArtikelkategorieDetailsmenü angewendet
+	 * Das Interface wird auf dem Kundenkategoriedetailsmenü angewendet
 	 * 
-	 * @param articleDetailsMenu Das KundenKategorieDetailsMenü
+	 * @param clientCategoryDetailsMenu Das KundenKategoriedetailsMenü
 	 */
 	public void applyView(ClientCategoryDetails clientCategoryDetailsMenu);
 	
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param articleDetailsMenu Das KundenKategorieDetailsMenü
+	 * @param clientCategoryDetailsMenu Das KundenKategoriedetailsMenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(ClientCategoryDetails clientCategoryDetailsMenu);
@@ -24,7 +24,7 @@ public interface ClientCategoryDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param articleDetailsMenu Das KundenKategorieDetailsMenü
+	 * @param clientCategoryDetailsMenu Das KundenKategoriedetailsMenü
 	 */
 	public void btnCancel(ClientCategoryDetails clientCategoryDetailsMenu);
 }

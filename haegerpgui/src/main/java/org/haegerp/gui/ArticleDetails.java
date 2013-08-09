@@ -45,7 +45,7 @@ public class ArticleDetails extends javax.swing.JFrame {
 	public ArticleCategoryController getArticleCategoryController() {
 		return articleCategoryController;
 	}
-
+	
 	@Autowired
 	private ArticleCategoryManagement articleCategoryManagement;
 	

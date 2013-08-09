@@ -60,7 +60,7 @@ public class ClientControllerImpl implements ClientController {
 			rows[i][3] = client.getEmail();
 			rows[i][4] = client.getCity();
 			rows[i][5] = client.getCountry();
-			rows[i][6] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(client.getLastModifiedDate());
+			rows[i][6] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(client.getLastModifiedDate());
 			rows[i][7] = employeeRepository.findOne(client.getIdEmployeeModify()).getName();
 		}
         

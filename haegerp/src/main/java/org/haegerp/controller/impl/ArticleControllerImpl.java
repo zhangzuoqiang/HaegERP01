@@ -2,6 +2,7 @@ package org.haegerp.controller.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
+import java.util.List;
 
 import org.haegerp.controller.ArticleController;
 import org.haegerp.entity.Article;
@@ -110,7 +111,7 @@ public final class ArticleControllerImpl implements ArticleController {
 			rows[i][4] = article.getPriceGross() + " €";
 			rows[i][5] = article.getPriceSupplier() + " €";
 			rows[i][6] = article.getStock();
-			rows[i][7] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(article.getLastModifiedDate());
+			rows[i][7] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(article.getLastModifiedDate());
 			rows[i][8] = employeeRepository.findOne(article.getIdEmployeeModify()).getName();
 		}
         
@@ -212,5 +213,31 @@ public final class ArticleControllerImpl implements ArticleController {
 	public void deleteAllArticleFromCategory(ArticleCategory articleCategory) {
 		articleRepository.deleteInBatch(articleCategory.getArticles());
 		articleCategory.setArticles(new HashSet<Article>(0));
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Object[][] loadAllTableRows() {
+		List<Article> list = this.loadAllArticles();
+        Object[][] rows = new Object[list.size()][4];
+        for (int i = 0; i < list.size(); i++) {
+        	Article article = list.get(i);
+        	
+        	rows[i][0] = article.getIdArticle();
+        	rows[i][1] = article.getEan();
+        	rows[i][2] = article.getName();
+        	rows[i][3] = article.getArticleCategory().getName();
+		}
+        
+        return rows;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public List<Article> loadAllArticles() {
+		return articleRepository.findAll();
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Article getArticleById(long id) {
+		return articleRepository.findOne(id);
 	}
 }

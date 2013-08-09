@@ -1,6 +1,7 @@
 package org.haegerp.controller.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.haegerp.controller.SupplierController;
 import org.haegerp.entity.Supplier;
@@ -53,7 +54,7 @@ public class SupplierControllerImpl implements SupplierController {
 			rows[i][2] = supplier.getEmail();
 			rows[i][3] = supplier.getCity();
 			rows[i][4] = supplier.getCountry();
-			rows[i][5] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(supplier.getLastModifiedDate());
+			rows[i][5] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplier.getLastModifiedDate());
 			rows[i][6] = employeeRepository.findOne(supplier.getIdEmployeeModify()).getName();
 		}
         
@@ -146,6 +147,31 @@ public class SupplierControllerImpl implements SupplierController {
 
 	public void delete(Supplier supplier) {
 		supplierRepository.delete(supplier);
+	}
+
+	public List<Supplier> getAllSuppliers() {
+		return supplierRepository.findAll();
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Supplier getSupplierById(long idSupplier) {
+		return supplierRepository.findOne(idSupplier);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Object[][] loadAllTableRows() {
+		List<Supplier> list = supplierRepository.findAll();
+        Object[][] rows = new Object[list.size()][5];
+        for (int i = 0; i < list.size(); i++) {
+        	Supplier supplier = list.get(i);
+        	
+        	rows[i][0] = supplier.getIdBusinessPartner();
+        	rows[i][1] = supplier.getTaxId();
+        	rows[i][2] = supplier.getName();
+			rows[i][3] = supplier.getEmail();
+			rows[i][4] = supplier.getCity();
+		}
+        return rows;
 	}
 
 }

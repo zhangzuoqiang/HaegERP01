@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserGroupDetailsInterface {
 	
 	/**
-	 * Das Interface wird auf dem ArtikelkategorieDetailsmenü angewendet
+	 * Das Interface wird auf dem Benutzergruppedetailsmenü angewendet
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param userGroupDetailsMenu Das Benutzergruppedetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void applyView(UserGroupDetails userGroupDetailsMenu);
@@ -18,7 +18,7 @@ public interface UserGroupDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param userGroupDetailsMenu Das Benutzergruppedetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(UserGroupDetails userGroupDetailsMenu);
@@ -26,7 +26,7 @@ public interface UserGroupDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param userGroupDetailsMenu Das Benutzergruppedetailsmenü
 	 */
 	public void btnCancel(UserGroupDetails userGroupDetailsMenu);
 }

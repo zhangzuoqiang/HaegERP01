@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -57,6 +58,7 @@ public interface SupplierRepository extends MyRepository<Supplier, Long> {
 	 * @param pageable PageRequest Klasse.
 	 * @return Eine Seite mit den Lieferanten.
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	Page<Supplier> findWithFilters(int enableTaxID, String taxId,
 								int enableName, String name,
 								int enableEmail, String email,

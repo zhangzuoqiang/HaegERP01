@@ -106,7 +106,7 @@ public class UserGroupControllerImpl implements UserGroupController {
         	rows[i][0] = userGroup.getName();
         	rows[i][1] = userGroup.getEmployees().size();
         	rows[i][2] = userGroup.getDescription();
-        	rows[i][3] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(userGroup.getLastModifiedDate());
+        	rows[i][3] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(userGroup.getLastModifiedDate());
         	rows[i][4] = employeeRepository.findOne(userGroup.getIdEmployeeModify()).getName();
 		}
         

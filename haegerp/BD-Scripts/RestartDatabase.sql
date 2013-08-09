@@ -364,6 +364,7 @@ CREATE TABLE company (
 	city				VARCHAR2(30),
 	region				VARCHAR2(50),
 	country				VARCHAR2(30),
+	email				VARCHAR2(50),
 	phoneNumber			VARCHAR2(20),
 	faxNumber			VARCHAR2(20),
 	LastModifiedDate	DATE,

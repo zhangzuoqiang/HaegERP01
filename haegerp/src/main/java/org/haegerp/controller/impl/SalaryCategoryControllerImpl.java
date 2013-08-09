@@ -107,7 +107,7 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
         	rows[i][1] = salaryCategory.getSalaryTo();
         	rows[i][2] = salaryCategory.getEmployees().size();
         	rows[i][3] = salaryCategory.getDescription();
-        	rows[i][4] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(salaryCategory.getLastModifiedDate());
+        	rows[i][4] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(salaryCategory.getLastModifiedDate());
         	rows[i][5] = employeeRepository.findOne(salaryCategory.getIdEmployeeModify()).getName();
 		}
         

@@ -170,11 +170,17 @@ public class EmployeeControllerImpl implements EmployeeController {
         	rows[i][2] = employee.getDivision().getName();
 			rows[i][3] = employee.getUserGroup().getName();
 			rows[i][4] = employee.getSalaryCategory().getSalaryFrom() + " - " + employee.getSalaryCategory().getSalaryTo();
-			rows[i][5] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(employee.getLastModifiedDate());
+			rows[i][5] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(employee.getLastModifiedDate());
 			rows[i][6] = employeeRepository.findOne(employee.getIdEmployeeModify()).getName();
 		}
         
         return rows;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public String getEmployeeName(long id) {
+		Employee employee = employeeRepository.findOne(id);
+		return employee.getName();
 	}
 
 }

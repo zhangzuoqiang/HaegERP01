@@ -4,19 +4,21 @@ import org.haegerp.gui.ArticleCategoryDetails;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(propagation=Propagation.REQUIRED)
 public interface ArticleCategoryDetailsInterface {
 	
 	/**
-	 * Das Interface wird auf dem ArtikelkategorieDetailsmenü angewendet
+	 * Das Interface wird auf dem Artikelkategoriedetailsmenü angewendet
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param articleCategoryDetailsMenu Das Artikelkategoriedetailsmenü
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void applyView(ArticleCategoryDetails articleCategoryDetailsMenu);
 	
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param articleCategoryDetailsMenu Das Artikelkategoriedetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(ArticleCategoryDetails articleCategoryDetailsMenu);
@@ -24,7 +26,7 @@ public interface ArticleCategoryDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param articleCategoryDetailsMenu Das Artikelkategoriedetailsmenü
 	 */
 	public void btnCancel(ArticleCategoryDetails articleCategoryDetailsMenu);
 }

@@ -9,14 +9,14 @@ public interface ClientDetailsInterface {
 	/**
 	 * Das Interface wird auf dem KundenDetailsmenü angewendet
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param clientDetailsMenu Das KundenDetailsmenü
 	 */
 	public void applyView(ClientDetails clientDetailsMenu);
 	
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param articleDetailsMenu Das KundenDetailsmenü
+	 * @param clientDetailsMenu Das KundenDetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(ClientDetails clientDetailsMenu);
@@ -24,7 +24,7 @@ public interface ClientDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param articleDetailsMenu Das KundenDetailsmenü
+	 * @param clientDetailsMenu Das KundenDetailsmenü
 	 */
 	public void btnCancel(ClientDetails clientDetailsMenu);
 }

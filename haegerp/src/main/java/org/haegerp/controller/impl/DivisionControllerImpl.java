@@ -106,7 +106,7 @@ public class DivisionControllerImpl implements DivisionController {
         	rows[i][0] = division.getName();
         	rows[i][1] = division.getEmployees().size();
         	rows[i][2] = division.getDescription();
-        	rows[i][3] = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(division.getLastModifiedDate());
+        	rows[i][3] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(division.getLastModifiedDate());
         	rows[i][4] = employeeRepository.findOne(division.getIdEmployeeModify()).getName();
 		}
         

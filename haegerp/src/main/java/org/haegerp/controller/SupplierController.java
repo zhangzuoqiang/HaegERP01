@@ -1,5 +1,7 @@
 package org.haegerp.controller;
 
+import java.util.List;
+
 import org.haegerp.entity.Supplier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface SupplierController {
 
+	/**
+	 * Bekommt alle Lieferanten in einer Liste.
+	 * @return Liste mit den Lieferanten.
+	 */
+	public List<Supplier> getAllSuppliers();
+	
 	/**
 	 * Holt die Seite
 	 * @return Aktueller Staat der Seite
@@ -79,4 +87,19 @@ public interface SupplierController {
 	 * @param supplier Der Lieferant
 	 */
 	public void delete(Supplier supplier);
+	
+	/**
+	 * Holt den Lieferanten mit dem passenden ID
+	 * @param idSupplier ID des Lieferanten
+	 * @return Lieferant
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Supplier getSupplierById(long idSupplier);
+	
+	/**
+	 * Wickelt den Inhalt der Tabelle ab
+	 * @return Objekt mit dem Inhalt von der Tabelle
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Object[][] loadAllTableRows();
 }

@@ -7,16 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SupplierDetailsInterface {
 	
 	/**
-	 * Das Interface wird auf dem KundenDetailsmenü angewendet
+	 * Das Interface wird auf dem Lieferantdetailsmenü angewendet
 	 * 
-	 * @param articleDetailsMenu Das ArtikelDetailsmenü
+	 * @param supplierDetailsMenu Das Lieferantdetailsmenü
 	 */
 	public void applyView(SupplierDetails supplierDetailsMenu);
 	
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param articleDetailsMenu Das KundenDetailsmenü
+	 * @param supplierDetailsMenu Das Lieferantdetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(SupplierDetails supplierDetailsMenu);
@@ -24,7 +24,7 @@ public interface SupplierDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param articleDetailsMenu Das KundenDetailsmenü
+	 * @param supplierDetailsMenu Das Lieferantdetailsmenü
 	 */
 	public void btnCancel(SupplierDetails supplierDetailsMenu);
 }

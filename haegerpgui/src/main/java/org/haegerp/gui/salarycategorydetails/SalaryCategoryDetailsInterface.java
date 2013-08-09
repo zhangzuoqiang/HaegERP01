@@ -7,16 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SalaryCategoryDetailsInterface {
 	
 	/**
-	 * Das Interface wird auf dem ArtikelkategorieDetailsmenü angewendet
+	 * Das Interface wird auf dem Gehaltkategoriedetailsmenü angewendet
 	 * 
-	 * @param salaryCategoryDetailsMenu Das ArtikelDetailsmenü
+	 * @param salaryCategoryDetailsMenu Das Gehaltkategoriedetailsmenü
 	 */
 	public void applyView(SalaryCategoryDetails salaryCategoryDetailsMenu);
 	
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param salaryCategoryDetailsMenu Das ArtikelDetailsmenü
+	 * @param salaryCategoryDetailsMenu Das Gehaltkategoriedetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(SalaryCategoryDetails salaryCategoryDetailsMenu);
@@ -24,7 +24,7 @@ public interface SalaryCategoryDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param salaryCategoryDetailsMenu Das ArtikelDetailsmenü
+	 * @param salaryCategoryDetailsMenu Das Gehaltkategoriedetailsmenü
 	 */
 	public void btnCancel(SalaryCategoryDetails salaryCategoryDetailsMenu);
 }

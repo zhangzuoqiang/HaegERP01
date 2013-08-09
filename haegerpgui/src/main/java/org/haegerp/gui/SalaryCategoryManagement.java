@@ -171,7 +171,7 @@ public class SalaryCategoryManagement extends JFrame {
 			public void mouseReleased(MouseEvent e) { }
 			
 			public void mousePressed(MouseEvent e) {
-				if (e.getClickCount() > 1)
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1)
 					tblSalaryCategory_MouseDoubleClick(e);
 			}
 			

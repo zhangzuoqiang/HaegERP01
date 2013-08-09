@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface DivisionDetailsInterface {
 	
 	/**
-	 * Das Interface wird auf dem ArtikelkategorieDetailsmenü angewendet
+	 * Das Interface wird auf dem Divisiondetailsmenü angewendet
 	 * 
 	 * @param divisionDetailsMenu Das DivisionDetailsmenü
 	 */
@@ -16,7 +16,7 @@ public interface DivisionDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut.
 	 * 
-	 * @param articleDetailsMenu Das DivisionDetailsmenü
+	 * @param divisionDetailsMenu Das Divisiondetailsmenü
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void btnSaveEdit(DivisionDetails divisionDetailsMenu);
@@ -24,7 +24,7 @@ public interface DivisionDetailsInterface {
 	/**
 	 * Betrieb, dass die Taste tut
 	 * 
-	 * @param articleDetailsMenu Das DivisionDetailsmenü
+	 * @param divisionDetailsMenu Das Divisiondetailsmenü
 	 */
 	public void btnCancel(DivisionDetails divisionDetailsMenu);
 }

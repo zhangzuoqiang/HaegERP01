@@ -10,8 +10,10 @@ import org.haegerp.session.EmployeeSession;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(propagation=Propagation.REQUIRED)
 public class ArticleNewView implements ArticleDetailsInterface {
-
+	
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void applyView(ArticleDetails articleDetailsMenu) {
 		articleDetailsMenu.btnCancel.setEnabled(true);
 		articleDetailsMenu.btnCancel.setText("Cancel");

@@ -9,15 +9,15 @@
 			<generator class="increment" />
 		</id>
 		
-		<many-to-one name="supplierBill" class="org.haegerp.entity.SupplierBill"  fetch="select">
+		<many-to-one name="supplierBill" class="org.haegerp.entity.SupplierBill" fetch="select">
 			<column name="IDSUPPLIERBILL" not-null="false" />
 		</many-to-one>
 		
-		<many-to-one name="supplier" class="org.haegerp.entity.Supplier"  fetch="select">
+		<many-to-one name="supplier" class="org.haegerp.entity.Supplier" fetch="select">
 			<column name="IDSUPPLIER" not-null="true" />
 		</many-to-one>
 		
-		<many-to-one name="employee" class="org.haegerp.entity.Employee"  fetch="select">
+		<many-to-one name="employee" class="org.haegerp.entity.Employee" fetch="select">
 			<column name="IDEMPLOYEE" not-null="true" />
 		</many-to-one>
 		

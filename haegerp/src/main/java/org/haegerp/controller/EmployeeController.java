@@ -102,4 +102,12 @@ public interface EmployeeController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);
+	
+	/**
+	 * Holt den Namen vom Mitarbeiter
+	 * @param id ID des Mitarbeiter
+	 * @return Name des Mitarbeiter
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public String getEmployeeName(long id);
 }

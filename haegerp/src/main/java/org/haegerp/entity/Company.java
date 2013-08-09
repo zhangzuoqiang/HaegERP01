@@ -35,6 +35,8 @@ public class Company implements Serializable {
 	private String region;
 	//Die Unternehmen Land (Erforderlich)
 	private String country;
+	//Die Unternehmen Email
+	private String email;
 	//Die Unternehmen Telefonnummer
 	private String phoneNumber;
 	//Die Unternehmen Faxnummer
@@ -240,6 +242,25 @@ public class Company implements Serializable {
 		if (country != null && country.length() > 30)
 			throw new LengthOverflowException("Country");
 		this.country = country;
+	}
+
+	/**
+	 * 
+	 * @return Email - Die Unternehmen Email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * 
+	 * @param email Die Unternehmen Email
+	 * @throws LengthOverflowException 
+	 */
+	public void setEmail(String email) throws LengthOverflowException {
+		if (email != null && email.length() > 50)
+			throw new LengthOverflowException("Email");
+		this.email = email;
 	}
 
 	/**
