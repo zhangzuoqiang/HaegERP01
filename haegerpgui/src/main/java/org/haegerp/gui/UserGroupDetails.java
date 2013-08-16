@@ -190,7 +190,7 @@ public class UserGroupDetails extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(450, 470));
         setPreferredSize(new Dimension(450, 470));
 
-        lblCountEmployees.setText("N. Articles");
+        lblCountEmployees.setText("N. Employees");
 
         lblName.setText("Name");
 

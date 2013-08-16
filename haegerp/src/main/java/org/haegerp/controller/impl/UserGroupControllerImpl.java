@@ -114,7 +114,7 @@ public class UserGroupControllerImpl implements UserGroupController {
 	}
 
 	@Transactional(propagation=Propagation.REQUIRED)
-	public UserGroup findOne(long id) {
+	public UserGroup getUserGroupById(long id) {
 		return userGroupRepository.findOne(id);
 	}
 }

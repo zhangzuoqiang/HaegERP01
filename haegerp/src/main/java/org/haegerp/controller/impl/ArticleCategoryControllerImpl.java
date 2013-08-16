@@ -112,4 +112,9 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
         
         return rows;
 	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public ArticleCategory getArticleCategoryById(long id) {
+		return articleCategoryRepository.findOne(id);
+	}
 }

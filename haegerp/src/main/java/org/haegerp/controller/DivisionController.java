@@ -80,4 +80,12 @@ public interface DivisionController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);
+	
+	/**
+	 * Holt eine Division.
+	 * @param id Id der Division
+	 * @return Die Division
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Division getDivisionById(long id);
 }

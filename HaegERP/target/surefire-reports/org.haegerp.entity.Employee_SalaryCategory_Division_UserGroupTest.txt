@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.haegerp.entity.Employee_SalaryCategory_Division_UserGroupTest
+-------------------------------------------------------------------------------
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.35 sec

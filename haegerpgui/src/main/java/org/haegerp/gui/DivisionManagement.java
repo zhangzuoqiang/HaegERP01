@@ -161,7 +161,7 @@ public class DivisionManagement extends JFrame {
         pnlCenterNewL = new JPanel();
         lblSlider = new JLabel();
         
-        setTitle("Article Category Management");
+        setTitle("Division Management");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
         

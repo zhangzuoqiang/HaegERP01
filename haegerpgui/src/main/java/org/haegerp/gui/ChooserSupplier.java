@@ -53,7 +53,8 @@ public class ChooserSupplier extends JFrame {
         tblObjects = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+        setTitle("Supplier - Chooser");
+        
         lblSearch.setText("Search");
         
         tblObjects.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

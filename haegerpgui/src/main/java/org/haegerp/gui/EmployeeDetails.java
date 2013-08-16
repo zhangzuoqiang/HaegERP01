@@ -179,7 +179,7 @@ public class EmployeeDetails extends javax.swing.JFrame {
 				errors += "Password and the Password Confirmation are different\n";
 			Pattern pattern = Pattern.compile(REGEX_EMAIL);
 			Matcher matcher = pattern.matcher(txtEmail.getText());
-			if (!matcher.matches())
+			if (!matcher.matches() && !txtEmail.getText().equals(""))
 				errors += "E-Mail: client@domain.com\n";
 			pattern = Pattern.compile(REGEX_ZIPCODE);
 			matcher = pattern.matcher(txtZipCode.getText());

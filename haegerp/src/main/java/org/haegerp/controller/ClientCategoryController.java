@@ -78,4 +78,11 @@ public interface ClientCategoryController {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);
 	
+	/**
+	 * Holt eine Kundenkategorie.
+	 * @param id ID der Kategorie
+	 * @return Kategorie
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public ClientCategory getClientCategoryId(long id);
 }

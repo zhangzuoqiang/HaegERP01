@@ -35,7 +35,9 @@ public class ArticleEditView implements ArticleDetailsInterface {
 		
 		articleDetailsMenu.txtEan.setValue(articleDetailsMenu.getArticle().getEan());
 		articleDetailsMenu.txtName.setText(articleDetailsMenu.getArticle().getName());
-		articleDetailsMenu.cbbCategory.setSelectedItem(articleDetailsMenu.getArticle().getArticleCategory().getName());
+		articleDetailsMenu.cbbCategory.setSelectedItem(
+				articleDetailsMenu.getArticleCategoryController().getArticleCategoryById(articleDetailsMenu.getArticle().getArticleCategory().getIdArticleCategory()).getName()
+				);
 		articleDetailsMenu.txtColor.setText(articleDetailsMenu.getArticle().getColor());
 		articleDetailsMenu.txtPriceVat.setValue(articleDetailsMenu.getArticle().getPriceVat());
 		articleDetailsMenu.txtPriceGross.setValue(articleDetailsMenu.getArticle().getPriceGross());

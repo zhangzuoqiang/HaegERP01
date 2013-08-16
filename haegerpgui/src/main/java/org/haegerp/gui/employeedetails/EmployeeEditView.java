@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import org.haegerp.entity.Division;
+import org.haegerp.entity.SalaryCategory;
+import org.haegerp.entity.UserGroup;
 import org.haegerp.gui.EmployeeDetails;
 import org.haegerp.session.EmployeeSession;
 import org.haegerp.tools.MD5Digest;
@@ -36,9 +39,13 @@ public class EmployeeEditView implements EmployeeDetailsInterface {
 		employeeDetailsMenu.txtUsername.setEditable(true);
 		employeeDetailsMenu.txtZipCode.setEditable(true);
 		
-		employeeDetailsMenu.cbbDivision.setSelectedItem(employeeDetailsMenu.getEmployee().getDivision().getName());
-		employeeDetailsMenu.cbbUserGroup.setSelectedItem(employeeDetailsMenu.getEmployee().getUserGroup().getName());
-		employeeDetailsMenu.cbbSalaryCategory.setSelectedItem(employeeDetailsMenu.getEmployee().getSalaryCategory().getSalaryFrom() + " - " + employeeDetailsMenu.getEmployee().getSalaryCategory().getSalaryTo());
+		Division division = employeeDetailsMenu.getDivisionController().getDivisionById(employeeDetailsMenu.getEmployee().getDivision().getIdDivision());
+		UserGroup userGroup = employeeDetailsMenu.getUserGroupController().getUserGroupById(employeeDetailsMenu.getEmployee().getUserGroup().getIdUserGroup());
+		SalaryCategory salaryCategory = employeeDetailsMenu.getSalaryCategoryController().getSalaryCategoryById(employeeDetailsMenu.getEmployee().getSalaryCategory().getIdSalaryCategory());
+		
+		employeeDetailsMenu.cbbDivision.setSelectedItem(division.getName());
+		employeeDetailsMenu.cbbUserGroup.setSelectedItem(userGroup.getName());
+		employeeDetailsMenu.cbbSalaryCategory.setSelectedItem(salaryCategory.getSalaryFrom() + " - " + salaryCategory.getSalaryTo());
 		
 		employeeDetailsMenu.txtAddress.setText(employeeDetailsMenu.getEmployee().getAddress());
 		employeeDetailsMenu.txtCity.setText(employeeDetailsMenu.getEmployee().getCity());

@@ -113,4 +113,9 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
         return rows;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
+	public ClientCategory getClientCategoryId(long id) {
+		return clientCategoryRepository.findOne(id);
+	}
+
 }

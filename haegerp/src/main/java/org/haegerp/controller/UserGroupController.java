@@ -87,5 +87,5 @@ public interface UserGroupController {
 	 * @return Benutzergruppe
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
-	public UserGroup findOne(long id);
+	public UserGroup getUserGroupById(long id);
 }

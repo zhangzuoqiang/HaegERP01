@@ -93,4 +93,19 @@ public interface ClientController {
 	 * @param clientCategory Kundenkategorie
 	 */
 	public void deleteAllArticleFromCategory(ClientCategory clientCategory);
+	
+	/**
+	 * Holt den Kunden mit dem passenden ID
+	 * @param idClient ID des Kunden
+	 * @return Kunde
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Client getClientById(long idClient);
+	
+	/**
+	 * Wickelt den Inhalt der Tabelle ab
+	 * @return Objekt mit dem Inhalt von der Tabelle
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Object[][] loadAllTableRows();
 }

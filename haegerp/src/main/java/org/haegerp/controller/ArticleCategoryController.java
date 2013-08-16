@@ -80,4 +80,12 @@ public interface ArticleCategoryController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);
+	
+	/**
+	 * Holt eine Artikelkategorie.
+	 * @param id ID der Kategorie
+	 * @return Die Artikelkategorie.
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public ArticleCategory getArticleCategoryById(long id);
 }

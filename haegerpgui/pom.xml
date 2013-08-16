@@ -4,7 +4,7 @@
 
   <groupId>HaegERPGUI</groupId>
   <artifactId>org.haegerp.gui</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.9.1</version>
   <packaging>jar</packaging>
 
   <name>HaegERPGUI</name>
@@ -18,7 +18,7 @@
   	<dependency>
   		<groupId>HaegERP</groupId>
   		<artifactId>org.haegerp</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<version>1.0.1</version>
   	</dependency>
   </dependencies>
 </project>

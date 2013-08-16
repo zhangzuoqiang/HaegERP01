@@ -113,4 +113,9 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
         
         return rows;
 	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public SalaryCategory getSalaryCategoryById(long id) {
+		return salaryCategoryRepository.findOne(id);
+	}
 }

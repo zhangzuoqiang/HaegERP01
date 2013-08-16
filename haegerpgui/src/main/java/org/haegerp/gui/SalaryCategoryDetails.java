@@ -146,7 +146,7 @@ public class SalaryCategoryDetails extends javax.swing.JFrame {
         pnlRight = new javax.swing.JPanel();
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Article Category Details");
+        setTitle("Salary Category Details");
         setMinimumSize(new java.awt.Dimension(300, 350));
         setPreferredSize(new Dimension(300, 350));
 

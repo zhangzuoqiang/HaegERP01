@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import org.haegerp.controller.EmployeeController;
 import org.haegerp.entity.Employee;
+import org.haegerp.entity.Permission;
 import org.haegerp.session.EmployeeSession;
 import org.haegerp.tools.MD5Digest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,27 @@ public class Login extends JFrame {
 			
 			EmployeeSession.setEmployee(employee);
 			
-			//TODO Login Permissions!
+			mainMenu.btnArticlesMenu.setVisible(false);
+			mainMenu.btnPartnersMenu.setVisible(false);
+			mainMenu.btnHumanResourcesMenu.setVisible(false);
+			mainMenu.btnCompanyMenu.setVisible(false);
+			mainMenu.btnSupplierOrdersMenu.setVisible(false);
+			mainMenu.btnClientOrdersMenu.setVisible(false);
+			
+			for (Permission permission : employee.getUserGroup().getPermissions()) {
+				if (permission.getIdPermission() == 1L)
+					mainMenu.btnArticlesMenu.setVisible(true);
+				if (permission.getIdPermission() == 2L)
+					mainMenu.btnPartnersMenu.setVisible(true);
+				if (permission.getIdPermission() == 3L)
+					mainMenu.btnHumanResourcesMenu.setVisible(true);
+				if (permission.getIdPermission() == 4L)
+					mainMenu.btnCompanyMenu.setVisible(true);
+				if (permission.getIdPermission() == 5L)
+					mainMenu.btnSupplierOrdersMenu.setVisible(true);
+				if (permission.getIdPermission() == 6L)
+					mainMenu.btnClientOrdersMenu.setVisible(true);
+			}
 			
 			this.setVisible(false);
 			mainMenu.setVisible(true);

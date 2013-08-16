@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+    <title>HaegERP Web-Portal - Main Menu</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+</h:head>
+<h:body>
+    <f:view>
+        <div id="divPage">
+        <h:form acceptcharset="utf-8">
+            <h:panelGrid columns="1">
+                <p:dataTable var="article" value="#{articleBean.articles}">
+                    <p:column headerText="EAN">
+                        <h:outputText value="#{article.ean}" />
+                    </p:column>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{article.getName()}" />
+                    </p:column>
+                    <p:column headerText="Price Vat">
+                        <h:outputText value="#{article.getPriceVat()}" />
+                    </p:column>
+                    <p:column headerText="Price Gross">
+                        <h:outputText value="#{article.priceGross}" />
+                    </p:column>
+                    <p:column headerText="Price Supplier">
+                        <h:outputText value="#{article.priceSupplier}" />
+                    </p:column>
+                    <p:column headerText="Stock">
+                        <h:outputText value="#{article.stock}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:panelGrid>
+        </h:form>
+        </div>
+    </f:view>
+</h:body>
+</html>

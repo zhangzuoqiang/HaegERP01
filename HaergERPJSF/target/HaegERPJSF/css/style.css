@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+body{
+    margin: 50px 0;
+    padding: 0;
+    text-align: center;
+}
+
+#divPage{
+    background-color: #EEE;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: left;
+    width: 420px;
+}
+
+.button {
+    width: 135px;
+}
+
+.labels{
+    width: 60px;
+}
+
+.textBoxes{
+    width: 335px;
+}

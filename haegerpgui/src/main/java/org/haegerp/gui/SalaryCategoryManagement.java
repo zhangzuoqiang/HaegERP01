@@ -161,7 +161,7 @@ public class SalaryCategoryManagement extends JFrame {
         pnlCenterNewL = new JPanel();
         lblSlider = new JLabel();
         
-        setTitle("Article Category Management");
+        setTitle("Salary Category Management");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
         

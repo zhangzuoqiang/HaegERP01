@@ -80,4 +80,12 @@ public interface SalaryCategoryController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size);
+	
+	/**
+	 * Holt eine Gehaltskategorie
+	 * @param id ID der Gehaltskategorie
+	 * @return Die Gehaltskategorie
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public SalaryCategory getSalaryCategoryById(long id);
 }

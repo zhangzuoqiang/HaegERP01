@@ -2,6 +2,7 @@ package org.haegerp.controller.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
+import java.util.List;
 
 import org.haegerp.controller.ClientController;
 import org.haegerp.entity.Client;
@@ -180,6 +181,27 @@ public class ClientControllerImpl implements ClientController {
 	public void deleteAllArticleFromCategory(ClientCategory clientCategory) {
 		clientRepository.deleteInBatch(clientCategory.getClients());
 		clientCategory.setClients(new HashSet<Client>(0));
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Client getClientById(long idClient) {
+		return clientRepository.findOne(idClient);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Object[][] loadAllTableRows() {
+		List<Client> list = clientRepository.findAll();
+        Object[][] rows = new Object[list.size()][5];
+        for (int i = 0; i < list.size(); i++) {
+        	Client client = list.get(i);
+        	
+        	rows[i][0] = client.getIdBusinessPartner();
+        	rows[i][1] = client.getTaxId();
+        	rows[i][2] = client.getName();
+			rows[i][3] = client.getEmail();
+			rows[i][4] = client.getCity();
+		}
+        return rows;
 	}
 
 }

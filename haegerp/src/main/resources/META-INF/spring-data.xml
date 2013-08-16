@@ -65,7 +65,7 @@ xsi:schemaLocation="
 	
 	<!-- Declare a JPA entityManagerFactory -->
  	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:persistenceXmlLocation="./META-INF/persistence.xml"
+		p:persistenceXmlLocation="classpath:META-INF/persistence.xml"
 		p:persistenceUnitName="haegerp-persistence"
 		p:dataSource-ref="jpaDataSource"
 		p:jpaVendorAdapter-ref="hibernateVendor"/>

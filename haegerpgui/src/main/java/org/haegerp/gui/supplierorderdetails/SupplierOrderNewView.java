@@ -41,7 +41,8 @@ public class SupplierOrderNewView implements SupplierOrderDetailsInterface {
         				"ID",
         				"EAN",
         				"Name",
-        				"Supplier Price",
+        				"Price",
+        				"VAT",
         				"Quantity",
         				"Discount",
         				"Total"

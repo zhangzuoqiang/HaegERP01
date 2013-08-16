@@ -16,6 +16,7 @@ public interface EmployeeController {
 	 * @param password Kennwort als MD5
 	 * @return Der Mitarbeiter, der angemeldet hat. Null - Wenn die Anmeldung nicht richtig ist.
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	public Employee isLoginCorrect(String username, String password);
 	
 	/**

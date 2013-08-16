@@ -92,10 +92,11 @@ public class SupplierOrderManagement extends JFrame {
 		if (row != -1) {
 			SupplierOrder supplierOrder = supplierOrderController.getPage().getContent().get(row);
 			if (supplierOrder.getSendDate() != null)
-				JOptionPane.showMessageDialog(this, "This order has already been sent and can only be edited.", "Supplier Order Management", JOptionPane.YES_NO_OPTION);
+				JOptionPane.showMessageDialog(this, "This order has already been sent and can only be edited.", "Supplier Order Management", JOptionPane.ERROR_MESSAGE);
 			else {
 				int option = JOptionPane.showConfirmDialog(this, "Delete selected Order\nAre you sure?", "Supplier Order Management", JOptionPane.YES_NO_OPTION);
 				if (option == JOptionPane.YES_OPTION) {
+					supplierOrderDetails.getSupplierOrderDetailController().deleteAllArticles(supplierOrder.getIdSupplierOrder());
 					supplierOrderController.delete(supplierOrder);
 					loadTable();
 				}
@@ -128,7 +129,7 @@ public class SupplierOrderManagement extends JFrame {
         pnlCenterNewL = new JPanel();
         lblSlider = new JLabel();
         
-        setTitle("Supplier Management");
+        setTitle("Supplier Order Management");
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 415));
         

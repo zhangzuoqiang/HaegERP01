@@ -37,8 +37,10 @@ public class EmployeeControllerImpl implements EmployeeController {
 	private int disableSearchCategory = 1;
 	private int enableAll = 1;
 	
+	@Transactional(propagation=Propagation.REQUIRED)
 	public Employee isLoginCorrect(String username, String passwordMD5) {
         Employee employee = employeeRepository.login(username, passwordMD5);
+        employee.getUserGroup().getPermissions().size();
         return employee;
 	}
 	

@@ -63,7 +63,7 @@ public interface SupplierOrderController {
 	 * Eine neue Seite wird erhalt
 	 * 
 	 * @param size Grösse der Seite
-	 * @return Seite mit den Kunden
+	 * @return Seite mit den Lieferantbestellungen
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Page<SupplierOrder> loadPage(int size);

@@ -112,4 +112,9 @@ public class DivisionControllerImpl implements DivisionController {
         
         return rows;
 	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public Division getDivisionById(long id) {
+		return divisionRepository.findOne(id);
+	}
 }

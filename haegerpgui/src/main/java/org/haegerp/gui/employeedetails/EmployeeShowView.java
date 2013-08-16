@@ -1,5 +1,8 @@
 package org.haegerp.gui.employeedetails;
 
+import org.haegerp.entity.Division;
+import org.haegerp.entity.SalaryCategory;
+import org.haegerp.entity.UserGroup;
 import org.haegerp.gui.EmployeeDetails;
 
 public class EmployeeShowView implements EmployeeDetailsInterface {
@@ -10,13 +13,13 @@ public class EmployeeShowView implements EmployeeDetailsInterface {
 		employeeDetailsMenu.btnSaveEdit.setEnabled(true);
 		employeeDetailsMenu.btnSaveEdit.setText("Edit");
 		
-		employeeDetailsMenu.cbbDivision.setSelectedItem(employeeDetailsMenu.getEmployee().getDivision().getName());
-		employeeDetailsMenu.cbbUserGroup.setSelectedItem(employeeDetailsMenu.getEmployee().getUserGroup().getName());
-		employeeDetailsMenu.cbbSalaryCategory.setSelectedItem(employeeDetailsMenu.getEmployee().getSalaryCategory().getSalaryFrom() + " - " + employeeDetailsMenu.getEmployee().getSalaryCategory().getSalaryTo());
+		Division division = employeeDetailsMenu.getDivisionController().getDivisionById(employeeDetailsMenu.getEmployee().getDivision().getIdDivision());
+		UserGroup userGroup = employeeDetailsMenu.getUserGroupController().getUserGroupById(employeeDetailsMenu.getEmployee().getUserGroup().getIdUserGroup());
+		SalaryCategory salaryCategory = employeeDetailsMenu.getSalaryCategoryController().getSalaryCategoryById(employeeDetailsMenu.getEmployee().getSalaryCategory().getIdSalaryCategory());
 		
-		employeeDetailsMenu.cbbSalaryCategory.setEnabled(false);
-		employeeDetailsMenu.cbbUserGroup.setEnabled(false);
-		employeeDetailsMenu.cbbDivision.setEnabled(false);
+		employeeDetailsMenu.cbbDivision.setSelectedItem(division.getName());
+		employeeDetailsMenu.cbbUserGroup.setSelectedItem(userGroup.getName());
+		employeeDetailsMenu.cbbSalaryCategory.setSelectedItem(salaryCategory.getSalaryFrom() + " - " + salaryCategory.getSalaryTo());
 		
 		employeeDetailsMenu.txtAddress.setText(employeeDetailsMenu.getEmployee().getAddress());
 		employeeDetailsMenu.txtCity.setText(employeeDetailsMenu.getEmployee().getCity());
@@ -31,6 +34,10 @@ public class EmployeeShowView implements EmployeeDetailsInterface {
 		employeeDetailsMenu.txtRegion.setText(employeeDetailsMenu.getEmployee().getRegion());
 		employeeDetailsMenu.txtUsername.setText(employeeDetailsMenu.getEmployee().getUsername());
 		employeeDetailsMenu.txtZipCode.setText(employeeDetailsMenu.getEmployee().getZipCode());
+		
+		employeeDetailsMenu.cbbSalaryCategory.setEnabled(false);
+		employeeDetailsMenu.cbbUserGroup.setEnabled(false);
+		employeeDetailsMenu.cbbDivision.setEnabled(false);
 		
 		employeeDetailsMenu.txtAddress.setEditable(false);
 		employeeDetailsMenu.txtCity.setEditable(false);

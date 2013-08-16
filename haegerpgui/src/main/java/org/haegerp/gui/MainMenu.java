@@ -69,6 +69,9 @@ public class MainMenu extends JFrame {
 	@Autowired
 	private SupplierOrderManagement supplierOrderManagement;
 	
+	@Autowired
+	private ClientOfferManagement clientOfferManagement;
+	
 	//Article
 	/**
 	 * Menü der Artikel werden gezeigt oder ausgeblendet.
@@ -253,7 +256,7 @@ public class MainMenu extends JFrame {
 	 * 		Default Parameter
 	 */
 	public void btnClientOrdersSubMenu_ActionPerformed(ActionEvent e) {
-		// TODO 09.) Open Client Orders Management
+		clientOfferManagement.setVisible(true);
 	}
 	
 	/**

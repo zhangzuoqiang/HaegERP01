@@ -12,7 +12,9 @@ public class ClientShowView implements ClientDetailsInterface {
 		
 		clientDetailsMenu.txtTaxID.setValue(clientDetailsMenu.getClient().getTaxId());
 		clientDetailsMenu.txtName.setText(clientDetailsMenu.getClient().getName());
-		clientDetailsMenu.cbbCategory.setSelectedItem(clientDetailsMenu.getClient().getClientCategory().getName());
+		clientDetailsMenu.cbbCategory.setSelectedItem(
+				clientDetailsMenu.getClientCategoryController().getClientCategoryId(clientDetailsMenu.getClient().getClientCategory().getIdClientCategory())
+				);
 		clientDetailsMenu.txtAddress.setText(clientDetailsMenu.getClient().getAddress());
 		clientDetailsMenu.txtCity.setText(clientDetailsMenu.getClient().getCity());
 		clientDetailsMenu.txtRegion.setText(clientDetailsMenu.getClient().getRegion());

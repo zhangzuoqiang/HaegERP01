@@ -82,7 +82,7 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
 	}
 
 	@Autowired
-	private ChooserArticle chooserArticle;
+	private ChooserArticleSupplier chooserArticleSupplier;
 
 	@Autowired
 	private ChooserSupplier chooserSupplier;
@@ -112,7 +112,7 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
 	}
 
 	protected void btnAddArticle_ActionPerformed(ActionEvent e) {
-		chooserArticle.setVisible(true);
+		chooserArticleSupplier.setVisible(true);
 	}
 
 	public SupplierOrderDetails() {
@@ -646,7 +646,7 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
 	
 	@Override
 	public void dispose() {
-		chooserArticle.setVisible(false);
+		chooserArticleSupplier.setVisible(false);
 		chooserSupplier.setVisible(false);
 		super.dispose();
 	}
