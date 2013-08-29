@@ -35,14 +35,17 @@ public class DivisionControllerImpl implements DivisionController {
 		pageNumber = 0;
 	}
 
+        @Override
 	public List<Division> getAllDivisions() {
 		return divisionRepository.findAll();
 	}
 
+        @Override
 	public Page<Division> getPage() {
 		return page;
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -53,6 +56,7 @@ public class DivisionControllerImpl implements DivisionController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasPreviousPage()){
 			pageNumber--;
@@ -63,12 +67,14 @@ public class DivisionControllerImpl implements DivisionController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		if (value.length() > 0){
 			enableAll = 0;
@@ -79,16 +85,19 @@ public class DivisionControllerImpl implements DivisionController {
 		}
 	}
 
+        @Override
 	public void delete(Division division) {
 		divisionRepository.delete(division);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Division save(Division division) {
 		Division savedDivision = divisionRepository.save(division);
 		return savedDivision;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<Division> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
@@ -96,12 +105,13 @@ public class DivisionControllerImpl implements DivisionController {
 		return page;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size) {
-		Page<Division> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][5];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	Division division = page.getContent().get(i);
+		Page<Division> dPage = this.loadPage(size);
+        Object[][] rows = new Object[dPage.getContent().size()][5];
+        for (int i = 0; i < dPage.getContent().size(); i++) {
+        	Division division = dPage.getContent().get(i);
         	
         	rows[i][0] = division.getName();
         	rows[i][1] = division.getEmployees().size();
@@ -113,6 +123,7 @@ public class DivisionControllerImpl implements DivisionController {
         return rows;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Division getDivisionById(long id) {
 		return divisionRepository.findOne(id);

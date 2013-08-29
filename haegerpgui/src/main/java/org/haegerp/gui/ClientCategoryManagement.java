@@ -68,7 +68,7 @@ public class ClientCategoryManagement extends JFrame {
         	new DefaultTableModel(
         			clientCategoryController.loadTableRows(sldNumberResults.getValue()) ,
         			new String [] {
-        				"Name", "N. Clients", "Description", "Last Modified", "Modified By"
+        				"ID", "Name", "N. Clients", "Description", "Last Modified", "Modified By"
         			})
 	        {
 				private static final long serialVersionUID = 1L;
@@ -79,6 +79,7 @@ public class ClientCategoryManagement extends JFrame {
 		        }
 	        }
     	);
+                tblClientCategory.removeColumn(tblClientCategory.getColumn("ID"));
 		lblPage.setText("Page " + (clientCategoryController.getPage().getNumber() +1) + "/" + clientCategoryController.getPage().getTotalPages());
 	}
 	

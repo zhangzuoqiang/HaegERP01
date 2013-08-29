@@ -6,35 +6,52 @@
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 
-	<display-name>HaegERP-JSF</display-name>
-
-	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param>
+    <display-name>HaegERP-JSF</display-name>
 
 	<!-- Add Support for Spring -->
   <listener>
-	<listener-class>
-		org.springframework.web.context.ContextLoaderListener
-	</listener-class>
+    <listener-class>
+        org.springframework.web.context.ContextLoaderListener
+    </listener-class>
   </listener>
   <listener>
-	<listener-class>
-		org.springframework.web.context.request.RequestContextListener
-	</listener-class>
+    <listener-class>
+        org.springframework.web.context.request.RequestContextListener
+    </listener-class>
   </listener>
- 
+  <listener>
+    <listener-class>
+        org.haegerp.jsf.context.MyContextListener
+    </listener-class>
+  </listener>
+  
   <!-- Change to "Production" when you are ready to deploy -->
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
   </context-param>
  
+    <filter>
+        <filter-name>LoginPageFilter</filter-name>
+        <filter-class>
+            org.haegerp.jsf.filter.LoginPageFilter
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LoginPageFilter</filter-name>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>LoginPageFilter</filter-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </filter-mapping>
+ 
   <!-- Welcome page -->
-  <welcome-file-list>
-    <welcome-file>index.jsf</welcome-file>
-  </welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>login.jsf</welcome-file>
+    </welcome-file-list>
  
   <!-- JSF Mapping -->
   <servlet>

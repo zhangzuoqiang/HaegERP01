@@ -34,6 +34,7 @@ public class SupplierControllerImpl implements SupplierController {
 	private int pageNumber;
 	private Page<Supplier> page;
 	
+        @Override
 	public Page<Supplier> getPage() {
 		return page;
 	}
@@ -42,12 +43,13 @@ public class SupplierControllerImpl implements SupplierController {
 		pageNumber = 0;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Object[][] loadTableRows(int size) {
-		Page<Supplier> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][7];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	Supplier supplier = page.getContent().get(i);
+		Page<Supplier> sPage = this.loadPage(size);
+        Object[][] rows = new Object[sPage.getContent().size()][7];
+        for (int i = 0; i < sPage.getContent().size(); i++) {
+        	Supplier supplier = sPage.getContent().get(i);
         	
         	rows[i][0] = supplier.getTaxId();
         	rows[i][1] = supplier.getName();
@@ -61,6 +63,7 @@ public class SupplierControllerImpl implements SupplierController {
         return rows;
 	}
 
+        @Override
 	public void setSearch(String value, int field, int size) {
 		enableTaxID = enableName = enableEmail = enableCity = enableCountry = 0;
 		if (value.equals("")){
@@ -96,11 +99,12 @@ public class SupplierControllerImpl implements SupplierController {
 				enableAll = 0;
 				pageNumber = 0;
 			} catch(Exception ex) {
-				ex.printStackTrace();
+				ex.printStackTrace(System.err);
 			}
 		}
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -111,6 +115,7 @@ public class SupplierControllerImpl implements SupplierController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber--;
@@ -121,43 +126,50 @@ public class SupplierControllerImpl implements SupplierController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<Supplier> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = supplierRepository.findWithFilters(enableTaxID, taxId,
-													enableName, name,
-													enableEmail, email,
-													enableCity, city,
-													enableCountry, country,
-													enableAll, pageRequest);
+                                                                enableName, name,
+                                                                enableEmail, email,
+                                                                enableCity, city,
+                                                                enableCountry, country,
+                                                                enableAll, pageRequest);
 		return page;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Supplier save(Supplier supplier) {
 		Supplier savedSupplier = supplierRepository.save(supplier);
 		return savedSupplier;
 	}
 
+        @Override
 	public void delete(Supplier supplier) {
 		supplierRepository.delete(supplier);
 	}
 
+        @Override
 	public List<Supplier> getAllSuppliers() {
 		return supplierRepository.findAll();
 	}
 
+        @Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Supplier getSupplierById(long idSupplier) {
 		return supplierRepository.findOne(idSupplier);
 	}
 
+        @Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadAllTableRows() {
 		List<Supplier> list = supplierRepository.findAll();
@@ -168,8 +180,8 @@ public class SupplierControllerImpl implements SupplierController {
         	rows[i][0] = supplier.getIdBusinessPartner();
         	rows[i][1] = supplier.getTaxId();
         	rows[i][2] = supplier.getName();
-			rows[i][3] = supplier.getEmail();
-			rows[i][4] = supplier.getCity();
+                rows[i][3] = supplier.getEmail();
+                rows[i][4] = supplier.getCity();
 		}
         return rows;
 	}

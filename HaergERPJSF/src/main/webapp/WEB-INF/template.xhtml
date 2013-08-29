@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+<h:head>
+    <ui:insert name="header"></ui:insert>
+</h:head>
+<h:body>
+    <f:view>
+        <div id="divPage" align="center">
+            <h:form id="panel">
+                <p:menubar styleClass="menuBar">
+                    <p:menuitem value="Main Menu" url="mainMenu.xhtml" />
+                    <p:submenu label="Articles" rendered="#{templateBean.permissionArticle}">
+                        <p:menuitem value="Article" url="articleManagement.xhtml" />
+                        <p:menuitem value="Articles Category" url="articleCategoryManagement.xhtml" />
+                    </p:submenu>
+                    <p:submenu label="Business Partners" rendered="#{templateBean.permissionBusinessPartners}">
+                        <p:menuitem value="Clients" url="#" />
+                        <p:menuitem value="Clients Category" url="clientCategoryManagement.xhtml" />
+                        <p:menuitem value="Suppliers" url="#" />
+                    </p:submenu>
+                    <p:submenu label="Human Resources" rendered="#{templateBean.permissionHumanResources}">
+                        <p:menuitem value="Employee" url="#" />
+                        <p:menuitem value="Division" url="#" />
+                        <p:menuitem value="Salary Groups" url="#" />
+                        <p:menuitem value="User Groups" url="#" />
+                    </p:submenu>
+                    <p:menuitem value="Company" url="#" rendered="#{templateBean.permissionCompany}" />
+                    <p:menuitem value="Supplier Orders" url="#" rendered="#{templateBean.permissionSupplierOrders}" />
+                    <p:submenu label="Client Offers" rendered="#{templateBean.permissionClientOffers}">
+                        <p:menuitem value="Client Offers" url="#" />
+                        <p:menuitem value="Outstanding" url="#" />
+                    </p:submenu>
+                    <p:menuitem value="#{templateBean.login}" action="#{templateBean.loginAction()}" />
+                </p:menubar>
+        
+                <ui:insert name="body"></ui:insert>
+            </h:form>
+        </div>
+    </f:view>
+</h:body>
+</html>

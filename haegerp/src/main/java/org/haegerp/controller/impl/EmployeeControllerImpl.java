@@ -37,6 +37,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 	private int disableSearchCategory = 1;
 	private int enableAll = 1;
 	
+        @Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Employee isLoginCorrect(String username, String passwordMD5) {
         Employee employee = employeeRepository.login(username, passwordMD5);
@@ -44,10 +45,12 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employee;
 	}
 	
+        @Override
 	public Page<Employee> getPage() {
 		return page;
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -58,6 +61,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasPreviousPage()){
 			pageNumber--;
@@ -68,12 +72,14 @@ public class EmployeeControllerImpl implements EmployeeController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 	
+        @Override
 	public void setSalaryCategory(Long idSalaryCategory, int size) {
 		if (idSalaryCategory == -1){
 			disableSalaryCategory = 1;
@@ -90,6 +96,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 		}
 	}
 
+        @Override
 	public void setUserGroup(Long idUserGroup, int size) {
 		if (idUserGroup == -1){
 			disableUserGroup = 1;
@@ -106,6 +113,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 		}
 	}
 
+        @Override
 	public void setDivision(Long idDivision, int size) {
 		if (idDivision == -1){
 			disableDivision = 1;
@@ -122,6 +130,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 		}
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		if (value.equals("")){
 			enableSearch = 0;
@@ -137,48 +146,53 @@ public class EmployeeControllerImpl implements EmployeeController {
 		}
 	}
 
+        @Override
 	public void delete(Employee employee) {
 		employeeRepository.delete(employee);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Employee save(Employee employee) {
 		Employee savedEmployee = employeeRepository.save(employee);
 		return savedEmployee;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<Employee> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = employeeRepository.findWithFilters(disableSearchCategory, 
-													disableDivision, idDivision,
-													disableSalaryCategory, idSalaryCategory,
-													disableUserGroup, idUserGroup,
-													disableSearchFilters,
-													enableSearch, search,
-													enableAll, pageRequest);
+                                                                disableDivision, idDivision,
+                                                                disableSalaryCategory, idSalaryCategory,
+                                                                disableUserGroup, idUserGroup,
+                                                                disableSearchFilters,
+                                                                enableSearch, search,
+                                                                enableAll, pageRequest);
 		return page;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size) {
-		Page<Employee> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][7];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	Employee employee = page.getContent().get(i);
+		Page<Employee> ePage = this.loadPage(size);
+        Object[][] rows = new Object[ePage.getContent().size()][7];
+        for (int i = 0; i < ePage.getContent().size(); i++) {
+        	Employee employee = ePage.getContent().get(i);
         	
         	rows[i][0] = employee.getIdCard();
         	rows[i][1] = employee.getName();
         	rows[i][2] = employee.getDivision().getName();
-			rows[i][3] = employee.getUserGroup().getName();
-			rows[i][4] = employee.getSalaryCategory().getSalaryFrom() + " - " + employee.getSalaryCategory().getSalaryTo();
-			rows[i][5] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(employee.getLastModifiedDate());
-			rows[i][6] = employeeRepository.findOne(employee.getIdEmployeeModify()).getName();
+                rows[i][3] = employee.getUserGroup().getName();
+                rows[i][4] = employee.getSalaryCategory().getSalaryFrom() + " - " + employee.getSalaryCategory().getSalaryTo();
+                rows[i][5] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(employee.getLastModifiedDate());
+                rows[i][6] = employeeRepository.findOne(employee.getIdEmployeeModify()).getName();
 		}
         
         return rows;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String getEmployeeName(long id) {
 		Employee employee = employeeRepository.findOne(id);

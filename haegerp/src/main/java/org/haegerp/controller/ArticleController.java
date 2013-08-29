@@ -58,7 +58,7 @@ public interface ArticleController {
 	 * @param field Welches Feld, das der Benutzer suchen will
 	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
-	public void setSearch(String value, int field, int size);
+	public void setSearch(String value, int size);
 	
 	/**
 	 * Der Artikel wurde gelöscht

@@ -17,11 +17,13 @@ public class ArticleHistoryControllerImpl implements ArticleHistoryController {
 	private ArticleHistoryRepository articleHistoryRepository;
 	
 	@Transactional(propagation=Propagation.REQUIRED)
+        @Override
 	public Long getLastVersion(long idArticle) {
 		return articleHistoryRepository.findByIdArticle(idArticle);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public ArticleHistory getArticleHistoryById(ArticleHistoryPK articleHistoryPK) {
 		return articleHistoryRepository.findOne(articleHistoryPK);
 	}

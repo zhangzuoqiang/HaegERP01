@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.596" errors="0" skipped="0" tests="8" name="org.haegerp.entity.SupplierOrderTest">
+<testsuite failures="0" time="4.264" errors="0" skipped="0" tests="8" name="org.haegerp.entity.SupplierOrderTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_21\jre\bin"/>
@@ -60,12 +60,12 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.156" classname="org.haegerp.entity.SupplierOrderTest" name="test1InsertSupplierOrder"/>
-  <testcase time="0.022" classname="org.haegerp.entity.SupplierOrderTest" name="test2UpdateSupplierOrder"/>
-  <testcase time="0.042" classname="org.haegerp.entity.SupplierOrderTest" name="test3CreateSupplierBill"/>
-  <testcase time="0.072" classname="org.haegerp.entity.SupplierOrderTest" name="test4UpdateSupplierBill"/>
-  <testcase time="0.06" classname="org.haegerp.entity.SupplierOrderTest" name="test5DeleteSupplierBill"/>
-  <testcase time="0.174" classname="org.haegerp.entity.SupplierOrderTest" name="test6DeleteSupplierOrder"/>
+  <testcase time="3.854" classname="org.haegerp.entity.SupplierOrderTest" name="test1InsertSupplierOrder"/>
+  <testcase time="0.09" classname="org.haegerp.entity.SupplierOrderTest" name="test2UpdateSupplierOrder"/>
+  <testcase time="0.18" classname="org.haegerp.entity.SupplierOrderTest" name="test3CreateSupplierBill"/>
+  <testcase time="0.02" classname="org.haegerp.entity.SupplierOrderTest" name="test4UpdateSupplierBill"/>
+  <testcase time="0.03" classname="org.haegerp.entity.SupplierOrderTest" name="test5DeleteSupplierBill"/>
+  <testcase time="0.06" classname="org.haegerp.entity.SupplierOrderTest" name="test6DeleteSupplierOrder"/>
   <testcase time="0.01" classname="org.haegerp.entity.SupplierOrderTest" name="test7InsertSupplierOrderError"/>
-  <testcase time="0.058" classname="org.haegerp.entity.SupplierOrderTest" name="test8CreateSupplierBillError"/>
+  <testcase time="0.01" classname="org.haegerp.entity.SupplierOrderTest" name="test8CreateSupplierBillError"/>
 </testsuite>

@@ -39,6 +39,7 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 	private int pageNumber;
 	private Page<ClientOffer> page;
 	
+        @Override
 	public Page<ClientOffer> getPage() {
 		return page;
 	}
@@ -48,11 +49,12 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+        @Override
 	public Object[][] loadTableRows(int size) {
-		Page<ClientOffer> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][9];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	ClientOffer clientOffer = page.getContent().get(i);
+		Page<ClientOffer> coPage = this.loadPage(size);
+        Object[][] rows = new Object[coPage.getContent().size()][9];
+        for (int i = 0; i < coPage.getContent().size(); i++) {
+        	ClientOffer clientOffer = coPage.getContent().get(i);
         	
         	rows[i][0] = clientOffer.getClient().getName();
         	rows[i][1] = clientOffer.getEmployee().getName();
@@ -74,6 +76,7 @@ public class ClientOfferControllerImpl implements ClientOfferController {
         return rows;
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		enableSearch = 0;
 		if (value.equals("")){
@@ -86,6 +89,7 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 		}
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -96,6 +100,7 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber--;
@@ -106,26 +111,30 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<ClientOffer> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = clientOfferRepository.findWithFilters(enableSearch, search,
-													enableAll, pageRequest);
+                                                                    enableAll, pageRequest);
 		return page;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ClientOffer save(ClientOffer clientOffer) {
 		ClientOffer savedClientOffer = clientOfferRepository.save(clientOffer);
 		return savedClientOffer;
 	}
 	
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ClientOffer updateClientOffer(ClientOffer clientOffer) throws LengthOverflowException{
 		ClientOffer newClientOffer = clientOfferRepository.findOne(clientOffer.getIdClientOffer());
@@ -147,10 +156,12 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 		return newClientOffer;
 	}
 
+        @Override
 	public void delete(ClientOffer clientOffer) {
 		clientOfferRepository.delete(clientOffer);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ClientOffer newClientOffer(ClientOffer clientOffer) throws LengthOverflowException {
 		ClientOffer newClientOffer = new ClientOffer();
@@ -171,11 +182,13 @@ public class ClientOfferControllerImpl implements ClientOfferController {
 		return newClientOffer;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ClientBill getClientBillById(long idClientBill) {
 		return clientBillRepository.findOne(idClientBill);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ClientBill saveBill(ClientBill clientBill) {
 		return clientBillRepository.save(clientBill);

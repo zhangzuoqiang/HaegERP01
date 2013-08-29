@@ -15,10 +15,12 @@ public class CompanyControllerImpl implements CompanyController {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+        @Override
 	public Company getCompany() {
 		return companyRepository.findOne(1L);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Company save(Company company) {
 		Company savedCompany = companyRepository.save(company);

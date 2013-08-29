@@ -35,14 +35,17 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
 		pageNumber = 0;
 	}
 	
+        @Override
 	public List<ClientCategory> getAllCategories() {
 		return clientCategoryRepository.findAll();
 	}
 
+        @Override
 	public Page<ClientCategory> getPage() {
 		return page;
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -53,6 +56,7 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasPreviousPage()){
 			pageNumber--;
@@ -63,12 +67,14 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		if (value.length() > 0){
 			enableAll = 0;
@@ -79,17 +85,20 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
 		}
 	}
 
+        @Override
 	public void delete(ClientCategory clientCategory) {
 		clientCategoryRepository.delete(clientCategory);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public ClientCategory save(ClientCategory clientCategory) {
 		ClientCategory savedCategory = clientCategoryRepository.save(clientCategory);
 		return savedCategory;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Page<ClientCategory> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = clientCategoryRepository.findWithFilters(textToFilter, enableAll, pageRequest);
@@ -97,23 +106,26 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Object[][] loadTableRows(int size) {
-		Page<ClientCategory> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][5];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	ClientCategory clientCategory = page.getContent().get(i);
+		Page<ClientCategory> ccPage = this.loadPage(size);
+        Object[][] rows = new Object[ccPage.getContent().size()][6];
+        for (int i = 0; i < ccPage.getContent().size(); i++) {
+        	ClientCategory clientCategory = ccPage.getContent().get(i);
         	
-        	rows[i][0] = clientCategory.getName();
-        	rows[i][1] = clientCategory.getClients().size();
-        	rows[i][2] = clientCategory.getDescription();
-        	rows[i][3] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientCategory.getLastModifiedDate());
-        	rows[i][4] = employeeRepository.findOne(clientCategory.getIdEmployeeModify()).getName();
-		}
+                rows[i][0] = clientCategory.getIdClientCategory();
+        	rows[i][1] = clientCategory.getName();
+        	rows[i][2] = clientCategory.getClients().size();
+        	rows[i][3] = clientCategory.getDescription();
+        	rows[i][4] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientCategory.getLastModifiedDate());
+        	rows[i][5] = employeeRepository.findOne(clientCategory.getIdEmployeeModify()).getName();
+        }
         
         return rows;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public ClientCategory getClientCategoryId(long id) {
 		return clientCategoryRepository.findOne(id);
 	}

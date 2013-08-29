@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
         <action>
-            <actionName>CUSTOM-TomCat Deploy</actionName>
-            <displayName>TomCat Deploy</displayName>
+            <actionName>CUSTOM-Tomcat Deploy</actionName>
+            <displayName>Tomcat Deploy</displayName>
+            <goals>
+                <goal>tomcat7:deploy</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Tomcat Re-Deploy</actionName>
+            <displayName>Tomcat Re-Deploy</displayName>
             <goals>
                 <goal>tomcat7:redeploy</goal>
             </goals>

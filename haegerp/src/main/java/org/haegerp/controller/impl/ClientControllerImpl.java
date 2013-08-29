@@ -40,6 +40,7 @@ public class ClientControllerImpl implements ClientController {
 	private int pageNumber;
 	private Page<Client> page;
 	
+        @Override
 	public Page<Client> getPage() {
 		return page;
 	}
@@ -49,11 +50,12 @@ public class ClientControllerImpl implements ClientController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+        @Override
 	public Object[][] loadTableRows(int size) {
-		Page<Client> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][8];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	Client client = page.getContent().get(i);
+		Page<Client> cPage = this.loadPage(size);
+        Object[][] rows = new Object[cPage.getContent().size()][8];
+        for (int i = 0; i < cPage.getContent().size(); i++) {
+        	Client client = cPage.getContent().get(i);
         	
         	rows[i][0] = client.getTaxId();
         	rows[i][1] = client.getName();
@@ -68,6 +70,7 @@ public class ClientControllerImpl implements ClientController {
         return rows;
 	}
 
+        @Override
 	public void setSearch(String value, int field, int size) {
 		enableTaxID = enableName = enableEmail = enableCity = enableCountry = 0;
 		if (value.equals("")){
@@ -107,11 +110,12 @@ public class ClientControllerImpl implements ClientController {
 				enableAll = 0;
 				pageNumber = 0;
 			} catch(Exception ex) {
-				ex.printStackTrace();
+				ex.printStackTrace(System.err);
 			}
 		}
 	}
 
+        @Override
 	public void setCategory(long idClientCategory, int size) {
 		if (idClientCategory == -1){
 			enableCategory = 0;
@@ -127,6 +131,7 @@ public class ClientControllerImpl implements ClientController {
 		}
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -137,6 +142,7 @@ public class ClientControllerImpl implements ClientController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber--;
@@ -147,6 +153,7 @@ public class ClientControllerImpl implements ClientController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
@@ -154,6 +161,7 @@ public class ClientControllerImpl implements ClientController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Page<Client> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = clientRepository.findWithFilters(enableCategory, idClientCategory,
@@ -168,27 +176,32 @@ public class ClientControllerImpl implements ClientController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Client save(Client client) {
 		Client savedClient = clientRepository.save(client);
 		return savedClient;
 	}
 
+        @Override
 	public void delete(Client client) {
 		clientRepository.delete(client);
 	}
 	
 	@Transactional
+        @Override
 	public void deleteAllArticleFromCategory(ClientCategory clientCategory) {
 		clientRepository.deleteInBatch(clientCategory.getClients());
 		clientCategory.setClients(new HashSet<Client>(0));
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Client getClientById(long idClient) {
 		return clientRepository.findOne(idClient);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Object[][] loadAllTableRows() {
 		List<Client> list = clientRepository.findAll();
         Object[][] rows = new Object[list.size()][5];

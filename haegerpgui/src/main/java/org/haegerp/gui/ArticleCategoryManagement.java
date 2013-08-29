@@ -59,31 +59,32 @@ public class ArticleCategoryManagement extends JFrame {
 	public void loadTable(){
 		tblArticleCategory.setModel(
         	new DefaultTableModel(
-        			articleCategoryController.loadTableRows(sldNumberResults.getValue()) ,
-        			new String [] {
-        				"Name", "N. Articles", "Description", "Last Modified", "Modified By"
-        			})
-	        {
-				private static final long serialVersionUID = 1L;
+                    articleCategoryController.loadTableRows(sldNumberResults.getValue()) ,
+                    new String [] {
+                        "ID", "Name", "N. Articles", "Description", "Last Modified", "Modified By"
+                    })
+            {
+                private static final long serialVersionUID = 1L;
 	
-				@Override
-		        public boolean isCellEditable(int row, int column) {
-		        	return false;
-		        }
-	        }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            }
     	);
-		lblPage.setText("Page " + (articleCategoryController.getPage().getNumber() +1) + "/" + articleCategoryController.getPage().getTotalPages());
+            tblArticleCategory.removeColumn(tblArticleCategory.getColumn("ID"));
+            lblPage.setText("Page " + (articleCategoryController.getPage().getNumber() +1) + "/" + articleCategoryController.getPage().getTotalPages());
 	}
 	
 	//Listeners
 	protected void btnNext_ActionPerformed(ActionEvent e) {
-		articleCategoryController.getNextPage(sldNumberResults.getValue());
-		loadTable();
+            articleCategoryController.getNextPage(sldNumberResults.getValue());
+            loadTable();
 	}
 	
 	protected void btnPrevious_ActionPerformed(ActionEvent e) {
-		articleCategoryController.getPreviousPage(sldNumberResults.getValue());
-		loadTable();
+            articleCategoryController.getPreviousPage(sldNumberResults.getValue());
+            loadTable();
 	}
 	
 	protected void sldNumberResults_MouseReleased(MouseEvent e) {

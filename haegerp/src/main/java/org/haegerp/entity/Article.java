@@ -142,6 +142,10 @@ public class Article implements Serializable{
 	public float getPriceVat() {
 		return priceVat;
 	}
+        
+        public float getPriceVatPercent() {
+            return priceVat * 100;
+        }
 	
 	/**
 	 * 

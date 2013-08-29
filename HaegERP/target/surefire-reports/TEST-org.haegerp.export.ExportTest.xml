@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="1.93" errors="0" skipped="0" tests="2" name="org.haegerp.export.ExportTest">
+<testsuite failures="0" time="0.274" errors="0" skipped="0" tests="2" name="org.haegerp.export.ExportTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_21\jre\bin"/>
@@ -60,6 +60,6 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.817" classname="org.haegerp.export.ExportTest" name="test1ExportCSV"/>
-  <testcase time="1.112" classname="org.haegerp.export.ExportTest" name="test2ExportXML"/>
+  <testcase time="0.089" classname="org.haegerp.export.ExportTest" name="test1ExportCSV"/>
+  <testcase time="0.121" classname="org.haegerp.export.ExportTest" name="test2ExportXML"/>
 </testsuite>

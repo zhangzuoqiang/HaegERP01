@@ -35,7 +35,6 @@ import org.haegerp.controller.ArticleCategoryController;
 import org.haegerp.controller.ArticleController;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
-import org.haegerp.enums.ArticleColumns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -94,13 +93,8 @@ public class ArticleManagement extends JFrame {
 		loadTable();
 	}
 	
-	protected void cbbField_ActionListener(ActionEvent e) {
-		articleController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
-		loadTable();
-	}
-	
 	protected void txtSearch_KeyReleased(KeyEvent e) {
-		articleController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
+		articleController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
 		loadTable();
 	}
 	
@@ -326,18 +320,6 @@ public class ArticleManagement extends JFrame {
         lblSearch.setBounds(10, 61, 45, 14);
         pnlSearch.add(lblSearch);
         
-        cbbField = new JComboBox<String>();
-        cbbField.setBounds(275, 57, 200, 22);
-        pnlSearch.add(cbbField);
-        loadCbbField();
-        cbbField.setSelectedIndex(0);
-        cbbField.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				cbbField_ActionListener(e);
-			}
-		});
-        
         lblSlider.setBounds(487, 28, 26, 14);
         pnlSearch.add(lblSlider);
         getContentPane().setLayout(layout);
@@ -383,12 +365,6 @@ public class ArticleManagement extends JFrame {
         setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
 	}
 	
-	private void loadCbbField() {
-		for (int i = 2; i < 8; i++) {
-			cbbField.addItem(ArticleColumns.values()[i].name());
-		}
-	}
-	
 	public void loadCbbCategory(){
 		Object idx = null;
 		if (cbbCategory.getItemCount() > 0)
@@ -410,7 +386,7 @@ public class ArticleManagement extends JFrame {
         	new DefaultTableModel(
         			articleController.loadTableRows(sldNumberResults.getValue()) ,
         			new String [] {
-        				"EAN", "Name", "Category", "Price Vat", "Price Gross", "Price Supplier", "Stock", "Last Modified", "Modified By"
+        				"ID", "EAN", "Name", "Category", "Price Vat", "Price Gross", "Price Supplier", "Stock", "Last Modified", "Modified By"
         			})
 	        {
 				private static final long serialVersionUID = 1L;
@@ -421,10 +397,11 @@ public class ArticleManagement extends JFrame {
 		        }
 	        }
     	);
+                tblArticles.removeColumn(tblArticles.getColumn("ID"));
 		lblPage.setText("Page " + (articleController.getPage().getNumber() +1) + "/" + articleController.getPage().getTotalPages());
 	}
 	
-	private JButton btnDelete;
+    private JButton btnDelete;
     private JButton btnEdit;
     private JButton btnNew;
     private JButton btnNext;
@@ -437,12 +414,11 @@ public class ArticleManagement extends JFrame {
     
     private JPanel pnlSearch;
     private JTextField txtSearch;
-    private JComboBox<String> cbbField;
-	private JLabel lblCategory;
-	private JComboBox<String> cbbCategory;
-	private JLabel lblSearch;
-	
-	private JLabel lblSlider;
-	private JSlider sldNumberResults;
-	private JLabel lblPage;
+    private JLabel lblCategory;
+    private JComboBox<String> cbbCategory;
+    private JLabel lblSearch;
+
+    private JLabel lblSlider;
+    private JSlider sldNumberResults;
+    private JLabel lblPage;
 }

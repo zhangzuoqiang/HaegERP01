@@ -48,21 +48,23 @@ xsi:schemaLocation="
     	transaction-manager-ref="transactionManager" />
 	
 	<context:component-scan base-package="org.haegerp"/>
-	
-	<!-- Declare a datasource that has pooling capabilities-->	
-
-	<bean id="jpaDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close"
-		p:driverClass="oracle.jdbc.driver.OracleDriver"
-		p:jdbcUrl="jdbc:oracle:thin:@127.0.0.1:1521:HAEGERP"
-		p:user="haegerp_admin"
-		p:password="haegerOracleDatabaseERP"
-		p:acquireIncrement="5"
-		p:idleConnectionTestPeriod="60"
-		p:maxPoolSize="20"
-		p:maxStatements="50"
-		p:minPoolSize="1" />
-	
+        
+	<!-- Declare a datasource that has pooling capabilities -->
+	<bean id="jpaDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:HAEGERP" />
+                <property name="user" value="haegerp_admin" />
+                <property name="password" value="haegerOracleDatabaseERP" />
+                <property name="acquireIncrement" value="1" />
+                <property name="maxIdleTime" value="600" />
+		<property name="maxPoolSize" value="1" />
+		<property name="minPoolSize" value="0" />
+                <property name="initialPoolSize" value="0" />
+                <property name="numHelperThreads" value="1" />
+                <property name="unreturnedConnectionTimeout" value="600" />
+                <property name="debugUnreturnedConnectionStackTraces" value="true" />
+        </bean>
+        
 	<!-- Declare a JPA entityManagerFactory -->
  	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		p:persistenceXmlLocation="classpath:META-INF/persistence.xml"

@@ -35,14 +35,17 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 		pageNumber = 0;
 	}
 
+        @Override
 	public List<ArticleCategory> getAllCategories() {
 		return articleCategoryRepository.findAll();
 	}
 
+        @Override
 	public Page<ArticleCategory> getPage() {
 		return page;
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -53,6 +56,7 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasPreviousPage()){
 			pageNumber--;
@@ -63,12 +67,14 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		if (value.length() > 0){
 			enableAll = 0;
@@ -79,17 +85,20 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 		}
 	}
 
+        @Override
 	public void delete(ArticleCategory articleCategory) {
 		articleCategoryRepository.delete(articleCategory);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public ArticleCategory save(ArticleCategory articleCategory) {
 		ArticleCategory savedCategory = articleCategoryRepository.save(articleCategory);
 		return savedCategory;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Page<ArticleCategory> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = articleCategoryRepository.findWithFilters(textToFilter, enableAll, pageRequest);
@@ -97,23 +106,26 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Object[][] loadTableRows(int size) {
-		Page<ArticleCategory> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][5];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	ArticleCategory articleCategory = page.getContent().get(i);
-        	
-        	rows[i][0] = articleCategory.getName();
-        	rows[i][1] = articleCategory.getArticles().size();
-        	rows[i][2] = articleCategory.getDescription();
-        	rows[i][3] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(articleCategory.getLastModifiedDate());
-        	rows[i][4] = employeeRepository.findOne(articleCategory.getIdEmployeeModify()).getName();
-		}
+		Page<ArticleCategory> acPage = this.loadPage(size);
+        Object[][] rows = new Object[acPage.getContent().size()][6];
+        for (int i = 0; i < acPage.getContent().size(); i++) {
+            ArticleCategory articleCategory = acPage.getContent().get(i);
+
+            rows[i][0] = articleCategory.getIdArticleCategory();
+            rows[i][1] = articleCategory.getName();
+            rows[i][2] = articleCategory.getArticles().size();
+            rows[i][3] = articleCategory.getDescription();
+            rows[i][4] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(articleCategory.getLastModifiedDate());
+            rows[i][5] = employeeRepository.findOne(articleCategory.getIdEmployeeModify()).getName();
+        }
         
         return rows;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public ArticleCategory getArticleCategoryById(long id) {
 		return articleCategoryRepository.findOne(id);
 	}

@@ -35,14 +35,17 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 		pageNumber = 0;
 	}
 
+        @Override
 	public List<SalaryCategory> getAllCategories() {
 		return salaryCategoryRepository.findAll();
 	}
 
+        @Override
 	public Page<SalaryCategory> getPage() {
 		return page;
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -53,6 +56,7 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasPreviousPage()){
 			pageNumber--;
@@ -63,12 +67,14 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		if (value.length() > 0){
 			enableAll = 0;
@@ -79,16 +85,19 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 		}
 	}
 
+        @Override
 	public void delete(SalaryCategory salaryCategory) {
 		salaryCategoryRepository.delete(salaryCategory);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SalaryCategory save(SalaryCategory salaryCategory) {
 		SalaryCategory savedCategory = salaryCategoryRepository.save(salaryCategory);
 		return savedCategory;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<SalaryCategory> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
@@ -96,12 +105,13 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 		return page;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size) {
-		Page<SalaryCategory> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][6];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	SalaryCategory salaryCategory = page.getContent().get(i);
+		Page<SalaryCategory> scPage = this.loadPage(size);
+        Object[][] rows = new Object[scPage.getContent().size()][6];
+        for (int i = 0; i < scPage.getContent().size(); i++) {
+        	SalaryCategory salaryCategory = scPage.getContent().get(i);
         	
         	rows[i][0] = salaryCategory.getSalaryFrom();
         	rows[i][1] = salaryCategory.getSalaryTo();
@@ -114,6 +124,7 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
         return rows;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SalaryCategory getSalaryCategoryById(long id) {
 		return salaryCategoryRepository.findOne(id);

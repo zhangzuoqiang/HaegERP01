@@ -13,7 +13,6 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
 @NoRepositoryBean
-@SuppressWarnings("all")
 /**
  * Diese Klasse wird bei Spring bearbeitet.
  * 
@@ -26,6 +25,7 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 public class MyRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
 	extends JpaRepositoryFactoryBean<R, T, I>{
 
+        @Override
 	protected RepositoryFactorySupport createRepositoryFactory(EntityManager entityManager) {
 
 	    return new MyRepositoryFactory(entityManager);
@@ -41,11 +41,13 @@ public class MyRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends
 	      this.entityManager = entityManager;
 	    }
 
+            @Override
 	    protected Object getTargetRepository(RepositoryMetadata metadata) {
 
 	      return new MyRepositoryImpl<T, I>((Class<T>) metadata.getDomainType(), entityManager);
 	    }
 
+            @Override
 	    protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
 	      return MyRepository.class;
 	    }

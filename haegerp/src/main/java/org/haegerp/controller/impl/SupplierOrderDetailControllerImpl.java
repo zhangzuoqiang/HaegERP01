@@ -42,6 +42,7 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+        @Override
 	public Object[][] loadTableRows(long idSupplierOrder) {
 		List<SupplierOrderDetail> list = this.loadPage(idSupplierOrder);
         Object[][] rows = new Object[list.size()][7];
@@ -51,27 +52,30 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
         	rows[i][0] = supplierOrderDetail.getSupplierOrderDetailPK();
         	rows[i][1] = supplierOrderDetail.getSupplierOrderDetailPK().getArticleHistory().getEan();
         	rows[i][2] = supplierOrderDetail.getSupplierOrderDetailPK().getArticleHistory().getName();
-			rows[i][3] = supplierOrderDetail.getSupplierOrderDetailPK().getArticleHistory().getPriceSupplier() + " €";
-			rows[i][4] = supplierOrderDetail.getQuantity();
-			rows[i][5] = Math.floor(supplierOrderDetail.getDiscount() * 10000) / 100;
-			rows[i][6] = supplierOrderDetail.getTotalArticle() + " €";
+                rows[i][3] = supplierOrderDetail.getSupplierOrderDetailPK().getArticleHistory().getPriceSupplier() + " €";
+                rows[i][4] = supplierOrderDetail.getQuantity();
+                rows[i][5] = Math.floor(supplierOrderDetail.getDiscount() * 10000) / 100;
+                rows[i][6] = supplierOrderDetail.getTotalArticle() + " €";
 		}
         
         return rows;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public List<SupplierOrderDetail> loadPage(long idSupplierOrder) {
 		return supplierOrderDetailRepository.findAllByIdSupplierOrder(idSupplierOrder);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public SupplierOrderDetail save(SupplierOrderDetail supplierOrderDetail) {
 		SupplierOrderDetail savedSupplierOrderDetail = supplierOrderDetailRepository.save(supplierOrderDetail);
 		return savedSupplierOrderDetail;
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
+        @Override
 	public Set<SupplierOrderDetail> updateOrderArticle(JTable table, long idSupplierOrder) throws LengthOverflowException{
 		Set<SupplierOrderDetail> orderDetails = new HashSet<SupplierOrderDetail>(0);
 		float discount;
@@ -105,6 +109,7 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRED)
+        @Override
 	public void deleteAllArticles(long idSupplierOrder){
 		
 		Set<SupplierOrderDetail> entities = supplierOrderRepository.findOne(idSupplierOrder).getSupplierOrderDetail();
@@ -112,6 +117,7 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
 		supplierOrderDetailRepository.delete(entities);
 	}
 	
+        @Override
 	public void delete(SupplierOrderDetail supplierOrderDetail) {
 		supplierOrderDetailRepository.delete(supplierOrderDetail);
 	}

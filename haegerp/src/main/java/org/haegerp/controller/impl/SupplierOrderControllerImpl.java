@@ -39,6 +39,7 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 	private int pageNumber;
 	private Page<SupplierOrder> page;
 	
+        @Override
 	public Page<SupplierOrder> getPage() {
 		return page;
 	}
@@ -47,33 +48,35 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 		pageNumber = 0;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Object[][] loadTableRows(int size) {
-		Page<SupplierOrder> page = this.loadPage(size);
-        Object[][] rows = new Object[page.getContent().size()][9];
-        for (int i = 0; i < page.getContent().size(); i++) {
-        	SupplierOrder supplierOrder = page.getContent().get(i);
+		Page<SupplierOrder> soPage = this.loadPage(size);
+        Object[][] rows = new Object[soPage.getContent().size()][9];
+        for (int i = 0; i < soPage.getContent().size(); i++) {
+        	SupplierOrder supplierOrder = soPage.getContent().get(i);
         	
         	rows[i][0] = supplierOrder.getSupplier().getName();
         	rows[i][1] = supplierOrder.getEmployee().getName();
-			rows[i][2] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getOrderDate());
-			rows[i][3] = (supplierOrder.getSendDate() == null) ? "Order not sent" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSendDate());
-			rows[i][4] = supplierOrder.getTotal();
-			if (supplierOrder.getSupplierBill() == null)
-			{
-				rows[i][5] = "Bill not received";
-				rows[i][6] = "Bill not paid";
-			} else {
-				rows[i][5] = (supplierOrder.getSupplierBill().getReceivedDate() == null) ? "Bill not received" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSupplierBill().getReceivedDate());
-				rows[i][6] = (supplierOrder.getSupplierBill().getPaidDate() == null) ? "Bill not paid" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSupplierBill().getPaidDate());
-			}
-			rows[i][7] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getLastModifiedDate());
-			rows[i][8] = employeeRepository.findOne(supplierOrder.getIdEmployeeModify()).getName();
+                rows[i][2] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getOrderDate());
+                rows[i][3] = (supplierOrder.getSendDate() == null) ? "Order not sent" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSendDate());
+                rows[i][4] = supplierOrder.getTotal();
+                if (supplierOrder.getSupplierBill() == null)
+                {
+                    rows[i][5] = "Bill not received";
+                    rows[i][6] = "Bill not paid";
+                } else {
+                    rows[i][5] = (supplierOrder.getSupplierBill().getReceivedDate() == null) ? "Bill not received" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSupplierBill().getReceivedDate());
+                    rows[i][6] = (supplierOrder.getSupplierBill().getPaidDate() == null) ? "Bill not paid" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSupplierBill().getPaidDate());
+                }
+                rows[i][7] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getLastModifiedDate());
+                rows[i][8] = employeeRepository.findOne(supplierOrder.getIdEmployeeModify()).getName();
 		}
         
         return rows;
 	}
 
+        @Override
 	public void setSearch(String value, int size) {
 		enableSearch = 0;
 		if (value.equals("")){
@@ -86,6 +89,7 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 		}
 	}
 
+        @Override
 	public boolean getNextPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber++;
@@ -96,6 +100,7 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 			return false;
 	}
 
+        @Override
 	public boolean getPreviousPage(int size) {
 		if (page.hasNextPage()){
 			pageNumber--;
@@ -106,26 +111,30 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 			return false;
 	}
 
+        @Override
 	public boolean getFirstPage(int size) {
 		pageNumber = 0;
 		page = loadPage(size);
 		return true;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<SupplierOrder> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = supplierOrderRepository.findWithFilters(enableSearch, search,
-													enableAll, pageRequest);
+                                                                    enableAll, pageRequest);
 		return page;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SupplierOrder save(SupplierOrder supplierOrder) {
 		SupplierOrder savedSupplierOrder = supplierOrderRepository.save(supplierOrder);
 		return savedSupplierOrder;
 	}
 	
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SupplierOrder updateSupplierOrder(SupplierOrder supplierOrder) throws LengthOverflowException{
 		SupplierOrder newSupplierOrder = supplierOrderRepository.findOne(supplierOrder.getIdSupplierOrder());
@@ -146,10 +155,12 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 		return newSupplierOrder;
 	}
 
+        @Override
 	public void delete(SupplierOrder supplierOrder) {
 		supplierOrderRepository.delete(supplierOrder);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SupplierOrder newSupplierOrder(SupplierOrder supplierOrder) throws LengthOverflowException {
 		SupplierOrder newSupplierOrder = new SupplierOrder();
@@ -169,11 +180,13 @@ public class SupplierOrderControllerImpl implements SupplierOrderController {
 		return newSupplierOrder;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SupplierBill getSupplierBillById(long idSupplierBill) {
 		return supplierBillRepository.findOne(idSupplierBill);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public SupplierBill saveBill(SupplierBill supplierBill) {
 		return supplierBillRepository.save(supplierBill);

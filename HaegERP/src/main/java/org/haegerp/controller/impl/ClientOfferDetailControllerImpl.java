@@ -41,6 +41,7 @@ public class ClientOfferDetailControllerImpl implements ClientOfferDetailControl
 	public ClientOfferDetailControllerImpl() {
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Object[][] loadTableRows(long idClientOffer) {
 		List<ClientOfferDetail> list = this.loadPage(idClientOffer);
@@ -61,17 +62,20 @@ public class ClientOfferDetailControllerImpl implements ClientOfferDetailControl
         return rows;
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public List<ClientOfferDetail> loadPage(long idClientOffer) {
 		return clientOfferDetailRepository.findAllByIdClientOffer(idClientOffer);
 	}
 
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ClientOfferDetail save(ClientOfferDetail clientOfferDetail) {
 		ClientOfferDetail savedClientOfferDetail = clientOfferDetailRepository.save(clientOfferDetail);
 		return savedClientOfferDetail;
 	}
 	
+        @Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Set<ClientOfferDetail> updateOrderArticle(JTable table, long idClientOffer) throws LengthOverflowException{
 		Set<ClientOfferDetail> orderDetails = new HashSet<ClientOfferDetail>(0);
@@ -105,6 +109,7 @@ public class ClientOfferDetailControllerImpl implements ClientOfferDetailControl
 		return orderDetails;
 	}
 	
+        @Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void deleteAllArticles(long idClientOffer){
 		
@@ -113,6 +118,7 @@ public class ClientOfferDetailControllerImpl implements ClientOfferDetailControl
 		clientOfferDetailRepository.delete(entities);
 	}
 	
+        @Override
 	public void delete(ClientOfferDetail clientOfferDetail) {
 		clientOfferDetailRepository.delete(clientOfferDetail);
 	}
