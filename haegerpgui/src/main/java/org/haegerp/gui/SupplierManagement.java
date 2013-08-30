@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,7 +31,6 @@ import javax.swing.table.DefaultTableModel;
 
 import org.haegerp.controller.SupplierController;
 import org.haegerp.entity.Supplier;
-import org.haegerp.enums.ClientColumns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -67,12 +65,12 @@ public class SupplierManagement extends JFrame {
 	}
 	
 	protected void cbbField_ActionListener(ActionEvent e) {
-		supplierController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
+		supplierController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
 		loadTable();
 	}
 	
 	protected void txtSearch_KeyReleased(KeyEvent e) {
-		supplierController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
+		supplierController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
 		loadTable();
 	}
 	
@@ -280,18 +278,6 @@ public class SupplierManagement extends JFrame {
         lblSearch.setBounds(10, 61, 45, 14);
         pnlSearch.add(lblSearch);
         
-        cbbField = new JComboBox<String>();
-        cbbField.setBounds(275, 57, 200, 22);
-        pnlSearch.add(cbbField);
-        loadCbbField();
-        cbbField.setSelectedIndex(0);
-        cbbField.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				cbbField_ActionListener(e);
-			}
-		});
-        
         lblSlider.setBounds(222, 28, 26, 14);
         pnlSearch.add(lblSlider);
         getContentPane().setLayout(layout);
@@ -337,17 +323,12 @@ public class SupplierManagement extends JFrame {
         setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
 	}
 	
-	private void loadCbbField() {
-		for (int i = 2; i < 7; i++) {
-			cbbField.addItem(ClientColumns.values()[i].name());
-		}
-	}
-	
 	public void loadTable(){
 		tblSuppliers.setModel(
         	new DefaultTableModel(
         			supplierController.loadTableRows(sldNumberResults.getValue()) ,
         			new String [] {
+                                        "ID",
         				"TaxID",
         				"Name",
         				"E-Mail",
@@ -365,10 +346,11 @@ public class SupplierManagement extends JFrame {
 		        }
 	        }
     	);
+                tblSuppliers.removeColumn(tblSuppliers.getColumn("ID"));
 		lblPage.setText("Page " + (supplierController.getPage().getNumber() +1) + "/" + supplierController.getPage().getTotalPages());
 	}
 	
-	private JButton btnDelete;
+    private JButton btnDelete;
     private JButton btnEdit;
     private JButton btnNew;
     private JButton btnNext;
@@ -381,10 +363,9 @@ public class SupplierManagement extends JFrame {
     
     private JPanel pnlSearch;
     private JTextField txtSearch;
-    private JComboBox<String> cbbField;
-	private JLabel lblSearch;
-	
-	private JLabel lblSlider;
-	private JSlider sldNumberResults;
-	private JLabel lblPage;
+    private JLabel lblSearch;
+
+    private JLabel lblSlider;
+    private JSlider sldNumberResults;
+    private JLabel lblPage;
 }

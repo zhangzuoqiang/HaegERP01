@@ -23,13 +23,9 @@ public class SupplierControllerImpl implements SupplierController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	String taxId, name, email, city, country;
+	String search;
 	int enableAll = 1;
-	int enableTaxID = 0,
-			enableName = 0,
-			enableEmail = 0,
-			enableCity = 0,
-			enableCountry = 0;
+	int enableSearch = 0;
 	
 	private int pageNumber;
 	private Page<Supplier> page;
@@ -47,60 +43,32 @@ public class SupplierControllerImpl implements SupplierController {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public Object[][] loadTableRows(int size) {
 		Page<Supplier> sPage = this.loadPage(size);
-        Object[][] rows = new Object[sPage.getContent().size()][7];
+        Object[][] rows = new Object[sPage.getContent().size()][8];
         for (int i = 0; i < sPage.getContent().size(); i++) {
         	Supplier supplier = sPage.getContent().get(i);
         	
-        	rows[i][0] = supplier.getTaxId();
-        	rows[i][1] = supplier.getName();
-			rows[i][2] = supplier.getEmail();
-			rows[i][3] = supplier.getCity();
-			rows[i][4] = supplier.getCountry();
-			rows[i][5] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplier.getLastModifiedDate());
-			rows[i][6] = employeeRepository.findOne(supplier.getIdEmployeeModify()).getName();
+                rows[i][0] = supplier.getIdBusinessPartner();
+        	rows[i][1] = supplier.getTaxId();
+        	rows[i][2] = supplier.getName();
+                rows[i][3] = supplier.getEmail();
+                rows[i][4] = supplier.getCity();
+                rows[i][5] = supplier.getCountry();
+                rows[i][6] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplier.getLastModifiedDate());
+                rows[i][7] = employeeRepository.findOne(supplier.getIdEmployeeModify()).getName();
 		}
         
         return rows;
 	}
 
         @Override
-	public void setSearch(String value, int field, int size) {
-		enableTaxID = enableName = enableEmail = enableCity = enableCountry = 0;
+	public void setSearch(String value, int size) {
+		enableSearch = 0;
 		if (value.equals("")){
-			enableAll = 1;
+                    enableAll = 1;
 		} else {
-			try {
-				switch (field) {
-				case 0:
-					enableTaxID = 1;
-					taxId = value;
-					break;
-				
-				case 1:
-					enableName = 1;
-					name = value;
-					break;
-				
-				case 2:
-					enableEmail = 1;
-					email = value;
-					break;
-					
-				case 3:
-					enableCity = 1;
-					city = value;
-					break;
-					
-				case 4:
-					enableCountry = 1;
-					country = value;
-					break;
-				}
-				enableAll = 0;
-				pageNumber = 0;
-			} catch(Exception ex) {
-				ex.printStackTrace(System.err);
-			}
+                    search = value;
+                    enableAll = 0;
+                    pageNumber = 0;
 		}
 	}
 
@@ -137,11 +105,7 @@ public class SupplierControllerImpl implements SupplierController {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<Supplier> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
-		this.page = supplierRepository.findWithFilters(enableTaxID, taxId,
-                                                                enableName, name,
-                                                                enableEmail, email,
-                                                                enableCity, city,
-                                                                enableCountry, country,
+		this.page = supplierRepository.findWithFilters(enableSearch, search,
                                                                 enableAll, pageRequest);
 		return page;
 	}

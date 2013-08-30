@@ -88,7 +88,7 @@ public class CompanyTest extends TestCase {
 	        company = companyRepository.findOne(COMPANY_ID);
 	        
 	        assertEquals(company.getName(), Properties.getProperty("UPDATE_COMPANY_NAME"));
-	        assertEquals(company.getTaxId(), Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
+	        assertEquals((long)company.getTaxId(), (long)Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
 	        assertEquals(company.getOwner(), Properties.getProperty("UPDATE_COMPANY_OWNER"));
 	        assertEquals(company.getSector(), Properties.getProperty("UPDATE_COMPANY_SECTOR"));
 	        assertEquals(company.getAddress(), Properties.getProperty("UPDATE_COMPANY_ADDRESS"));
@@ -133,7 +133,7 @@ public class CompanyTest extends TestCase {
 	        company = companyRepository.findOne(COMPANY_ID);
 	        
 	        assertEquals(company.getName(), Properties.getProperty("UPDATE_COMPANY_NAME"));
-	        assertEquals(company.getTaxId(), Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
+	        assertEquals((long)company.getTaxId(), (long)Long.parseLong(Properties.getProperty("UPDATE_COMPANY_TAXID")));
 	        assertEquals(company.getOwner(), Properties.getProperty("UPDATE_COMPANY_OWNER"));
 	        assertEquals(company.getSector(), Properties.getProperty("UPDATE_COMPANY_SECTOR"));
 	        assertEquals(company.getAddress(), Properties.getProperty("UPDATE_COMPANY_ADDRESS"));

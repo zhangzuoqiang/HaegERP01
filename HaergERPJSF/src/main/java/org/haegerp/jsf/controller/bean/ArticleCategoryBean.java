@@ -25,7 +25,9 @@ public class ArticleCategoryBean implements Serializable{
     
     @Autowired
     private ArticleCategoryController articleCategoryController;
-
+    //Injected Manualy in ArticleBean.setUp().@PostContruct
+    private ArticleBean articleBean;
+    
     private ArticleCategory articleCategory;
     private long articleCategoryId;
 
@@ -109,7 +111,11 @@ public class ArticleCategoryBean implements Serializable{
         articleCategory.setIdEmployeeModify(idEmployee);
         articleCategory.setLastModifiedDate(new Date());
         
-        return articleCategoryController.save(articleCategory).getIdArticleCategory();
+        ArticleCategory newArticleCategory = articleCategoryController.save(articleCategory);
+        
+        articleBean.setUp();
+        
+        return newArticleCategory.getIdArticleCategory();
     }
     
     public void delete(){
@@ -119,6 +125,7 @@ public class ArticleCategoryBean implements Serializable{
         String msg;
         if (deleteArticleCategory != null){
             try {
+                //TODO: Delete children from category
                 articleCategoryController.delete(deleteArticleCategory);
                 severity = FacesMessage.SEVERITY_INFO;
                 msg = "Article's Category " + deleteArticleCategory.getName() + " was deleted.";
@@ -137,6 +144,7 @@ public class ArticleCategoryBean implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, fMessage);
         setUp();
         setUpSearch();
+        articleBean.setUp();
     }
     
     public void previousPage(){
@@ -235,5 +243,19 @@ public class ArticleCategoryBean implements Serializable{
      */
     public void setFormArticleCategory(FormArticleCategory formArticleCategory) {
         this.formArticleCategory = formArticleCategory;
+    }
+
+    /**
+     * @return the articleBean
+     */
+    public ArticleBean getArticleBean() {
+        return articleBean;
+    }
+
+    /**
+     * @param articleBean the articleBean to set
+     */
+    public void setArticleBean(ArticleBean articleBean) {
+        this.articleBean = articleBean;
     }
 }

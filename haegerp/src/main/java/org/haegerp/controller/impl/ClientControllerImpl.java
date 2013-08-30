@@ -25,17 +25,13 @@ public class ClientControllerImpl implements ClientController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	String taxId, name, email, city, country;
-	long idClientCategory;
+	String search;
+        private long idClientCategory;
 	int enableAll = 1;
 	int disableSearchCategory = 1,
-			disableSearchFilters = 1,
-			enableCategory = 0,
-			enableTaxID = 0,
-			enableName = 0,
-			enableEmail = 0,
-			enableCity = 0,
-			enableCountry = 0;
+            disableSearchFilters = 1,
+            enableCategory = 0,
+            enableSearch = 0;
 	
 	private int pageNumber;
 	private Page<Client> page;
@@ -53,82 +49,58 @@ public class ClientControllerImpl implements ClientController {
         @Override
 	public Object[][] loadTableRows(int size) {
 		Page<Client> cPage = this.loadPage(size);
-        Object[][] rows = new Object[cPage.getContent().size()][8];
+        Object[][] rows = new Object[cPage.getContent().size()][9];
         for (int i = 0; i < cPage.getContent().size(); i++) {
         	Client client = cPage.getContent().get(i);
         	
-        	rows[i][0] = client.getTaxId();
-        	rows[i][1] = client.getName();
-        	rows[i][2] = client.getClientCategory().getName();
-			rows[i][3] = client.getEmail();
-			rows[i][4] = client.getCity();
-			rows[i][5] = client.getCountry();
-			rows[i][6] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(client.getLastModifiedDate());
-			rows[i][7] = employeeRepository.findOne(client.getIdEmployeeModify()).getName();
+                rows[i][0] = client.getIdBusinessPartner();
+        	rows[i][1] = client.getTaxId();
+        	rows[i][2] = client.getName();
+        	rows[i][3] = client.getClientCategory().getName();
+                rows[i][4] = client.getEmail();
+                rows[i][5] = client.getCity();
+                rows[i][6] = client.getCountry();
+                rows[i][7] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(client.getLastModifiedDate());
+                rows[i][8] = employeeRepository.findOne(client.getIdEmployeeModify()).getName();
 		}
         
         return rows;
 	}
 
         @Override
-	public void setSearch(String value, int field, int size) {
-		enableTaxID = enableName = enableEmail = enableCity = enableCountry = 0;
+	public void setSearch(String value, int size){
+		enableSearch = 0;
 		if (value.equals("")){
-			disableSearchFilters = 1;
-			if (enableCategory == 0)
-				enableAll = 1;
+                    disableSearchFilters = 1;
+                    if (enableCategory == 0)
+                        enableAll = 1;
 		} else {
-			try {
-				switch (field) {
-				case 0:
-					enableTaxID = 1;
-					taxId = value;
-					break;
-				
-				case 1:
-					enableName = 1;
-					name = value;
-					break;
-				
-				case 2:
-					enableEmail = 1;
-					email = value;
-					break;
-					
-				case 3:
-					enableCity = 1;
-					city = value;
-					break;
-					
-				case 4:
-					enableCountry = 1;
-					country = value;
-					break;
-				}
-				
-				disableSearchFilters = 0;
-				enableAll = 0;
-				pageNumber = 0;
-			} catch(Exception ex) {
-				ex.printStackTrace(System.err);
-			}
+                    try {
+                        enableSearch = 1;
+                        search = value;
+                        disableSearchFilters = 0;
+                        enableAll = 0;
+                        pageNumber = 0;
+                    } catch(Exception ex) {
+                        ex.printStackTrace(System.err);
+                    }
 		}
 	}
 
         @Override
 	public void setCategory(long idClientCategory, int size) {
-		if (idClientCategory == -1){
-			enableCategory = 0;
-			if (enableTaxID + enableName + enableEmail + enableCity + enableCountry == 0)
-				enableAll = 1;
-			disableSearchCategory = 1;
-		} else {
-			this.idClientCategory = idClientCategory;
-			enableCategory = 1;
-			enableAll = 0;
-			disableSearchCategory = 0;
-			pageNumber = 0;
-		}
+            if (idClientCategory == -1){
+                enableCategory = 0;
+                if (enableSearch == 0)
+                    enableAll = 1;
+                disableSearchCategory = 1;
+            } else {
+                this.idClientCategory = idClientCategory;
+                enableCategory = 1;
+                enableAll = 0;
+                disableSearchCategory = 0;
+                pageNumber = 0;
+            }
 	}
 
         @Override
@@ -165,13 +137,9 @@ public class ClientControllerImpl implements ClientController {
 	public Page<Client> loadPage(int size) {
 		PageRequest pageRequest = new PageRequest(pageNumber, size);
 		this.page = clientRepository.findWithFilters(enableCategory, idClientCategory,
-													disableSearchCategory, disableSearchFilters,
-													enableTaxID, taxId,
-													enableName, name,
-													enableEmail, email,
-													enableCity, city,
-													enableCountry, country,
-													enableAll, pageRequest);
+                                                            disableSearchCategory, disableSearchFilters,
+                                                            enableSearch, search,
+                                                            enableAll, pageRequest);
 		return page;
 	}
 

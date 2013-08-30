@@ -24,8 +24,14 @@ public class CompanyShowView implements CompanyDetailsInterface {
 		companyDetailsMenu.txtEmail.setText(companyDetailsMenu.getCompany().getEmail());
 		companyDetailsMenu.txtPhoneNumber.setText(companyDetailsMenu.getCompany().getPhoneNumber());
 		companyDetailsMenu.txtFaxNumber.setText(companyDetailsMenu.getCompany().getFaxNumber());
-		companyDetailsMenu.txtLastModified.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(companyDetailsMenu.getCompany().getLastModifiedDate()));
-		companyDetailsMenu.txtLastModifiedUser.setText(companyDetailsMenu.getEmployeeController().getEmployeeName(companyDetailsMenu.getCompany().getIdEmployeeModify()));
+                if (companyDetailsMenu.getCompany().getLastModifiedDate() == null)
+                    companyDetailsMenu.txtLastModified.setText("");
+                else
+                    companyDetailsMenu.txtLastModified.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(companyDetailsMenu.getCompany().getLastModifiedDate()));
+                if (companyDetailsMenu.getCompany().getIdEmployeeModify() == null)
+                    companyDetailsMenu.txtLastModifiedUser.setText("");
+                else
+                    companyDetailsMenu.txtLastModifiedUser.setText(companyDetailsMenu.getEmployeeController().getEmployeeName(companyDetailsMenu.getCompany().getIdEmployeeModify()));
 		
 		companyDetailsMenu.txtTaxID.setEditable(false);
 		companyDetailsMenu.txtName.setEditable(false);

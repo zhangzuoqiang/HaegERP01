@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="12.548" errors="0" skipped="0" tests="8" name="org.haegerp.entity.Article_ArticleCategoryTest">
+<testsuite failures="0" time="14.87" errors="0" skipped="0" tests="8" name="org.haegerp.entity.Article_ArticleCategoryTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_21\jre\bin"/>
@@ -60,12 +60,12 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="11.934" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test1InsertArticleCategory"/>
-  <testcase time="0.02" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test2UpdateArticleCategory"/>
-  <testcase time="0.05" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test3InsertArticle"/>
-  <testcase time="0.04" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test4UpdateArticle"/>
-  <testcase time="0.09" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test5DeleteArticle"/>
-  <testcase time="0.03" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test6DeleteArticleCategory"/>
-  <testcase time="0" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test7InsertArticleCategoryError"/>
-  <testcase time="0" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test8InsertArticleError"/>
+  <testcase time="13.072" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test1InsertArticleCategory"/>
+  <testcase time="0.06" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test2UpdateArticleCategory"/>
+  <testcase time="0.695" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test3InsertArticle"/>
+  <testcase time="0.16" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test4UpdateArticle"/>
+  <testcase time="0.257" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test5DeleteArticle"/>
+  <testcase time="0.033" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test6DeleteArticleCategory"/>
+  <testcase time="0.002" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test7InsertArticleCategoryError"/>
+  <testcase time="0.01" classname="org.haegerp.entity.Article_ArticleCategoryTest" name="test8InsertArticleError"/>
 </testsuite>

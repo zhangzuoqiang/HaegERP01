@@ -30,6 +30,8 @@ public class ArticleBean implements Serializable{
     private ArticleController articleController;
     @Autowired
     private ArticleCategoryController articleCategoryController;
+    @Autowired
+    private ArticleCategoryBean articleCategoryBean;
 
     private Article article;
     private long articleId;
@@ -52,6 +54,9 @@ public class ArticleBean implements Serializable{
     
     @PostConstruct
     public void setUp(){
+        //Manual Dependency Injection
+        articleCategoryBean.setArticleBean(this);
+        
         articleObjects = articleController.loadTableRows(pageSize);
         article = new Article();
         categories = articleCategoryController.getAllCategories();
@@ -62,10 +67,6 @@ public class ArticleBean implements Serializable{
         articleController.setSearch(search, pageSize);
         articleController.setCategory((long)cbSearchValue, pageSize);
         articleObjects = articleController.loadTableRows(pageSize);
-    }
-    
-    public String getArticleCategoryName(long id){
-        return articleCategoryController.getArticleCategoryById(id).getName();
     }
     
     public String prepareView(long id, boolean disabled) {
@@ -138,7 +139,11 @@ public class ArticleBean implements Serializable{
         article.setIdEmployeeModify(idEmployee);
         article.setLastModifiedDate(new Date());
         
-        return articleController.save(article).getIdArticle();
+        Article newArticle = articleController.save(article);
+        
+        articleCategoryBean.setUp();
+        
+        return newArticle.getIdArticle();
     }
     
     public void delete(){
@@ -166,6 +171,7 @@ public class ArticleBean implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, fMessage);
         setUp();
         setUpSearch();
+        articleCategoryBean.setUp();
     }
     
     public void previousPage(){
@@ -299,5 +305,19 @@ public class ArticleBean implements Serializable{
      */
     public void setValidator(Validator validator) {
         this.validator = validator;
+    }
+
+    /**
+     * @return the articleCategoryBean
+     */
+    public ArticleCategoryBean getArticleCategoryBean() {
+        return articleCategoryBean;
+    }
+
+    /**
+     * @param articleCategoryBean the articleCategoryBean to set
+     */
+    public void setArticleCategoryBean(ArticleCategoryBean articleCategoryBean) {
+        this.articleCategoryBean = articleCategoryBean;
     }
 }

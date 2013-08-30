@@ -20,7 +20,7 @@ public class Company implements Serializable {
 	//Name der Unternehmen (Erforderlich)
 	private String name;
 	//Die Unternehmen Steuernummer (Erforderlich)
-	private long taxId;
+	private Long taxId;
 	//Die Unternehmen Adresse (Erforderlich)
 	private String address;
 	//Fürher der Unternehmen
@@ -92,7 +92,7 @@ public class Company implements Serializable {
 	 * 
 	 * @return taxId - Die Unternehmen Steuernummer (Erforderlich)
 	 */
-	public long getTaxId() {
+	public Long getTaxId() {
 		return taxId;
 	}
 
@@ -103,11 +103,11 @@ public class Company implements Serializable {
 	 */
 	public void setTaxId(Long taxId) throws LengthOverflowException {
 		if (taxId != null){
-			if (taxId < 0 || taxId > Long.MAX_VALUE)
-				throw new LengthOverflowException("TaxID");
-			this.taxId = taxId;
+                    if (taxId < 0 || taxId > Long.MAX_VALUE)
+                        throw new LengthOverflowException("TaxID");
+                    this.taxId = taxId;
 		} else {
-			this.taxId = 0;
+			this.taxId = null;
 		}
 	}
 

@@ -35,7 +35,6 @@ import org.haegerp.controller.ClientCategoryController;
 import org.haegerp.controller.ClientController;
 import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientCategory;
-import org.haegerp.enums.ClientColumns;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -86,13 +85,8 @@ public class ClientManagement extends JFrame {
 		loadTable();
 	}
 	
-	protected void cbbField_ActionListener(ActionEvent e) {
-		clientController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
-		loadTable();
-	}
-	
 	protected void txtSearch_KeyReleased(KeyEvent e) {
-		clientController.setSearch(txtSearch.getText(), cbbField.getSelectedIndex(), sldNumberResults.getValue());
+		clientController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
 		loadTable();
 	}
 	
@@ -318,18 +312,6 @@ public class ClientManagement extends JFrame {
         lblSearch.setBounds(10, 61, 45, 14);
         pnlSearch.add(lblSearch);
         
-        cbbField = new JComboBox<String>();
-        cbbField.setBounds(275, 57, 200, 22);
-        pnlSearch.add(cbbField);
-        loadCbbField();
-        cbbField.setSelectedIndex(0);
-        cbbField.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				cbbField_ActionListener(e);
-			}
-		});
-        
         lblSlider.setBounds(487, 28, 26, 14);
         pnlSearch.add(lblSlider);
         getContentPane().setLayout(layout);
@@ -375,12 +357,6 @@ public class ClientManagement extends JFrame {
         setLocation((dim.width-getWidth())/2, (dim.height-getHeight())/2);
 	}
 	
-	private void loadCbbField() {
-		for (int i = 2; i < 7; i++) {
-			cbbField.addItem(ClientColumns.values()[i].name());
-		}
-	}
-	
 	public void loadCbbCategory(){
 		Object idx = null;
 		if (cbbCategory.getItemCount() > 0)
@@ -397,33 +373,35 @@ public class ClientManagement extends JFrame {
 		cbbCategory.setSelectedItem(idx);
 	}
 	
-	public void loadTable(){
-		tblClients.setModel(
-        	new DefaultTableModel(
-        			clientController.loadTableRows(sldNumberResults.getValue()) ,
-        			new String [] {
-        				"TaxID",
-        				"Name",
-        				"Category",
-        				"E-Mail",
-        				"City",
-        				"Country",
-        				"Last Modified",
-        				"Modified By"
-        			})
-	        {
-				private static final long serialVersionUID = 1L;
+    public void loadTable(){
+            tblClients.setModel(
+            new DefaultTableModel(
+                            clientController.loadTableRows(sldNumberResults.getValue()) ,
+                            new String [] {
+                                "ID",
+                                "TaxID",
+                                "Name",
+                                "Category",
+                                "E-Mail",
+                                "City",
+                                "Country",
+                                "Last Modified",
+                                "Modified By"
+                            })
+            {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+            }
+    );
+        tblClients.removeColumn(tblClients.getColumn("ID"));
+        lblPage.setText("Page " + (clientController.getPage().getNumber() +1) + "/" + clientController.getPage().getTotalPages());
+    }
 	
-				@Override
-		        public boolean isCellEditable(int row, int column) {
-		        	return false;
-		        }
-	        }
-    	);
-		lblPage.setText("Page " + (clientController.getPage().getNumber() +1) + "/" + clientController.getPage().getTotalPages());
-	}
-	
-	private JButton btnDelete;
+    private JButton btnDelete;
     private JButton btnEdit;
     private JButton btnNew;
     private JButton btnNext;
@@ -436,12 +414,11 @@ public class ClientManagement extends JFrame {
     
     private JPanel pnlSearch;
     private JTextField txtSearch;
-    private JComboBox<String> cbbField;
-	private JLabel lblCategory;
-	private JComboBox<String> cbbCategory;
-	private JLabel lblSearch;
-	
-	private JLabel lblSlider;
-	private JSlider sldNumberResults;
-	private JLabel lblPage;
+    private JLabel lblCategory;
+    private JComboBox<String> cbbCategory;
+    private JLabel lblSearch;
+
+    private JLabel lblSlider;
+    private JSlider sldNumberResults;
+    private JLabel lblPage;
 }

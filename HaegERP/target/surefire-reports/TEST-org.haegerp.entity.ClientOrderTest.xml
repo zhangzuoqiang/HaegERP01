@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="2.448" errors="0" skipped="0" tests="12" name="org.haegerp.entity.ClientOrderTest">
+<testsuite failures="0" time="3.851" errors="0" skipped="0" tests="12" name="org.haegerp.entity.ClientOrderTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_21\jre\bin"/>
@@ -60,16 +60,16 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.834" classname="org.haegerp.entity.ClientOrderTest" name="test01InsertClientOffer"/>
-  <testcase time="0.072" classname="org.haegerp.entity.ClientOrderTest" name="test02UpdateClientOffer"/>
-  <testcase time="0.65" classname="org.haegerp.entity.ClientOrderTest" name="test03CreateClientBill"/>
-  <testcase time="0.622" classname="org.haegerp.entity.ClientOrderTest" name="test04CreateOutstandingBill"/>
-  <testcase time="0.05" classname="org.haegerp.entity.ClientOrderTest" name="test05UpdateOutstandingBill"/>
-  <testcase time="0.03" classname="org.haegerp.entity.ClientOrderTest" name="test06UpdateClientBill"/>
-  <testcase time="0.02" classname="org.haegerp.entity.ClientOrderTest" name="test07DeleteOutstandingBill"/>
-  <testcase time="0.03" classname="org.haegerp.entity.ClientOrderTest" name="test08DeleteClientBill"/>
-  <testcase time="0.11" classname="org.haegerp.entity.ClientOrderTest" name="test09DeleteClientOffer"/>
-  <testcase time="0.01" classname="org.haegerp.entity.ClientOrderTest" name="test10InsertClientOfferError"/>
-  <testcase time="0" classname="org.haegerp.entity.ClientOrderTest" name="test11CreateClientBillError"/>
-  <testcase time="0.01" classname="org.haegerp.entity.ClientOrderTest" name="test12CreateOutstandingBillError"/>
+  <testcase time="1.923" classname="org.haegerp.entity.ClientOrderTest" name="test01InsertClientOffer"/>
+  <testcase time="0.067" classname="org.haegerp.entity.ClientOrderTest" name="test02UpdateClientOffer"/>
+  <testcase time="0.59" classname="org.haegerp.entity.ClientOrderTest" name="test03CreateClientBill"/>
+  <testcase time="0.715" classname="org.haegerp.entity.ClientOrderTest" name="test04CreateOutstandingBill"/>
+  <testcase time="0.1" classname="org.haegerp.entity.ClientOrderTest" name="test05UpdateOutstandingBill"/>
+  <testcase time="0.062" classname="org.haegerp.entity.ClientOrderTest" name="test06UpdateClientBill"/>
+  <testcase time="0.088" classname="org.haegerp.entity.ClientOrderTest" name="test07DeleteOutstandingBill"/>
+  <testcase time="0.067" classname="org.haegerp.entity.ClientOrderTest" name="test08DeleteClientBill"/>
+  <testcase time="0.221" classname="org.haegerp.entity.ClientOrderTest" name="test09DeleteClientOffer"/>
+  <testcase time="0.005" classname="org.haegerp.entity.ClientOrderTest" name="test10InsertClientOfferError"/>
+  <testcase time="0.005" classname="org.haegerp.entity.ClientOrderTest" name="test11CreateClientBillError"/>
+  <testcase time="0.007" classname="org.haegerp.entity.ClientOrderTest" name="test12CreateOutstandingBillError"/>
 </testsuite>

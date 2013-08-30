@@ -14,7 +14,6 @@ import org.haegerp.controller.ClientCategoryController;
 
 import org.haegerp.entity.ClientCategory;
 import org.haegerp.jsf.controller.form.FormClientCategory;
-import org.haegerp.jsf.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,9 @@ public class ClientCategoryBean implements Serializable{
     
     @Autowired
     private ClientCategoryController clientCategoryController;
-
+    //Injected Manually at ClientBean.SetUp().@PostConstruct
+    private ClientBean clientBean;
+    
     private ClientCategory clientCategory;
     private long clientCategoryId;
 
@@ -110,7 +111,11 @@ public class ClientCategoryBean implements Serializable{
         clientCategory.setIdEmployeeModify(idEmployee);
         clientCategory.setLastModifiedDate(new Date());
         
-        return clientCategoryController.save(clientCategory).getIdClientCategory();
+        ClientCategory newClientCategory = clientCategoryController.save(clientCategory);
+        
+        clientBean.setUp();
+        
+        return newClientCategory.getIdClientCategory();
     }
     
     public void delete(){
@@ -120,6 +125,7 @@ public class ClientCategoryBean implements Serializable{
         String msg;
         if (deleteClientCategory != null){
             try {
+                //TODO: Delete children from category
                 clientCategoryController.delete(deleteClientCategory);
                 severity = FacesMessage.SEVERITY_INFO;
                 msg = "Client's Category " + deleteClientCategory.getName() + " was deleted.";
@@ -138,6 +144,7 @@ public class ClientCategoryBean implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, fMessage);
         setUp();
         setUpSearch();
+        clientBean.setUp();
     }
     
     public void previousPage(){
@@ -222,5 +229,19 @@ public class ClientCategoryBean implements Serializable{
      */
     public void setFormClientCategory(FormClientCategory formClientCategory) {
         this.formClientCategory = formClientCategory;
+    }
+
+    /**
+     * @return the clientBean
+     */
+    public ClientBean getClientBean() {
+        return clientBean;
+    }
+
+    /**
+     * @param clientBean the clientBean to set
+     */
+    public void setClientBean(ClientBean clientBean) {
+        this.clientBean = clientBean;
     }
 }

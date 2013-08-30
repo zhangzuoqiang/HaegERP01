@@ -41,10 +41,9 @@ public interface SupplierController {
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param text Wert, der der Benutzer geschrieben hat
-	 * @param selectedIndex Welches Feld, das der Benutzer suchen will
 	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
-	public void setSearch(String text, int selectedIndex, int size);
+	public void setSearch(String text, int size);
 
 	/**
 	 * Lädt die nächste Seite

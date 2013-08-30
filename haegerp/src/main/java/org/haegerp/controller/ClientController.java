@@ -34,10 +34,9 @@ public interface ClientController {
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param value Wert, der der Benutzer geschrieben hat
-	 * @param field Welches Feld, das der Benutzer suchen will
 	 * @param size Wie viele Linea will der Benutzer in der Seite
 	 */
-	public void setSearch(String text, int selectedIndex, int value);
+	public void setSearch(String value, int size);
 
 	/**
 	 * Diese Methode vorbereitet die Suche

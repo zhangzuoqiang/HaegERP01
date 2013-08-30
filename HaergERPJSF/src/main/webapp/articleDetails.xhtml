@@ -21,7 +21,6 @@
             <p:outputLabel styleClass="labels" value="EAN" for="txtEan" />
             <p:inputText styleClass="textBoxes" id="txtEan" disabled="#{articleBean.formArticle.disabled}"
                          value="#{articleBean.formArticle.txtEan}" title="EAN"
-                         validator="#{articleBean.validator.validateInteger('panel:txtEan', 15)}"
                          required="true" maxlength="15">
 
                 <f:validateRegex pattern="^\d{1,15}$" />
@@ -41,7 +40,6 @@
             <p:selectOneMenu panelStyle="width: 332px;" disabled="#{articleBean.formArticle.disabled}"
                              style="width: 342px;" styleClass="textBoxes" 
                              id="cbCategory" value="#{articleBean.formArticle.cbValue}"
-                             validator="#{articleBean.validator.validateComboBox('panel:cbCategory')}"
                              required="true">
                 <f:selectItem itemValue="-1" itemLabel="Choose One" />
                 <c:forEach items="#{articleBean.categories}" var="category">
