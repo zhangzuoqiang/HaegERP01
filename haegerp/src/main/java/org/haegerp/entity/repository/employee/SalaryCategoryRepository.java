@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Gehaltkaregorien bereitstellt.
- * 
+ * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die
+ * Gehaltkaregorien bereitstellt.
+ *
  * @author Wolf
  *
  */
@@ -19,24 +20,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface SalaryCategoryRepository extends MyRepository<SalaryCategory, Long> {
 
-	@Query(countQuery="SELECT COUNT (*) FROM SalaryCategory " +
-			"WHERE (TO_CHAR(SalaryFrom) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (TO_CHAR(SalaryTo) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (UPPER(Description) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (1 = ?2)",
-		value="FROM SalaryCategory " +
-				"WHERE (TO_CHAR(SalaryFrom) LIKE '%' || UPPER(?1) || '%') " +
-					"OR (TO_CHAR(SalaryTo) LIKE '%' || UPPER(?1) || '%') " +
-					"OR (UPPER(Description) LIKE '%' || UPPER(?1) || '%') " +
-					"OR (1 = ?2)")
-	/**
-	* Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
-	* 
-	* @param textToFilter Text, dass der Benutzer einge
-	* @param enableAll Wenn TextToFilter keinen Text hat, dann muss diese Variable 0 sein, sonst ist 1.
-	* @param pageable PageRequest Klasse.
-	* @return Eine Seite mit den Gehaltkategorien.
-	*/
-	@Transactional(propagation=Propagation.REQUIRED, readOnly = true)
-	public Page<SalaryCategory> findWithFilters(String textToFilter, int enableAll, Pageable pageable);
+    @Query(countQuery = "SELECT COUNT (*) FROM SalaryCategory "
+            + "WHERE (TO_CHAR(SalaryFrom) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (TO_CHAR(SalaryTo) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (UPPER(Description) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (1 = ?2)",
+            value = "FROM SalaryCategory "
+            + "WHERE (TO_CHAR(SalaryFrom) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (TO_CHAR(SalaryTo) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (UPPER(Description) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (1 = ?2)")
+    /**
+     * Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
+     *
+     * @param textToFilter Text, dass der Benutzer einge
+     * @param enableAll Wenn TextToFilter keinen Text hat, dann muss diese
+     * Variable 0 sein, sonst ist 1.
+     * @param pageable PageRequest Klasse.
+     * @return Eine Seite mit den Gehaltkategorien.
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<SalaryCategory> findWithFilters(String textToFilter, int enableAll, Pageable pageable);
 }

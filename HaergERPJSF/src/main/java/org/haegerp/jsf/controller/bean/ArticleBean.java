@@ -21,6 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+/**
+ * Bean für die Seiten "ArticleManagement" und "Details"
+ * 
+ * @author Fábio Codinha
+ */
 @ManagedBean
 @Controller
 @Scope(value = "session")
@@ -32,43 +37,67 @@ public class ArticleBean implements Serializable{
     private ArticleCategoryController articleCategoryController;
     @Autowired
     private ArticleCategoryBean articleCategoryBean;
-
-    private Article article;
-    private long articleId;
     
+    //Artikel, der in der Seite der Details zeigen wird
+    private Article article;
+    //Hilfsvariable für die Methode, die einen Artikel löschen.
+    private long articleId;
+    //Klasse, wo die Felder von dem Formular gespeichert werden
     private FormArticle formArticle;
     
+    //Liste, die die Artikelkategorien haben
     private List<ArticleCategory> categories;
+    //Object, dass der Inhalt von der Tabelle hat
     private Object[][] articleObjects;
     
+    //Variable, die die Ausgewählte ID enthalt
     private int cbSearchValue;
     
+    //Wie viel Artikel wurde in einer Seite gezeigt
     private int pageSize;
+    //Die Suche, die der Benutzer eingefügt hat
     private String search;
-
+    
+    //Löschen?
     private Validator validator = new Validator();
     
+    /**
+     * Defaultwert
+     */
     public ArticleBean() {
         pageSize = 10;
     }
     
+    /**
+     * Diese Methode lädt die Daten und bereitet das Formular vor
+     */
     @PostConstruct
     public void setUp(){
-        //Manual Dependency Injection
-        articleCategoryBean.setArticleBean(this);
-        
         articleObjects = articleController.loadTableRows(pageSize);
         article = new Article();
         categories = articleCategoryController.getAllCategories();
         formArticle = new FormArticle(false);
+        
+        //Manual Dependency Injection
+        articleCategoryBean.setArticleBean(this);
     }
-
+    
+    /**
+     * Wenn der Benutzer die Suche benutzen möchte, wird diese Methode gerufen
+     */
     public void setUpSearch(){
         articleController.setSearch(search, pageSize);
         articleController.setCategory((long)cbSearchValue, pageSize);
         articleObjects = articleController.loadTableRows(pageSize);
     }
     
+    /**
+     * Die Seite der Details wird vorbereitet.
+     * 
+     * @param id ID des Artikels
+     * @param disabled True - Der Artikel wird nur gezeigt; False - Der Artikel kann geändert werden.
+     * @return Wenn die ID gültig ist, dann die Seite der Details wird geladen
+     */
     public String prepareView(long id, boolean disabled) {
         article = articleController.getArticleById(id);
         categories = articleCategoryController.getAllCategories();
@@ -84,12 +113,20 @@ public class ArticleBean implements Serializable{
         }
     }
     
+    /**
+     * Die Seite der Details wird einen neuen Artikel zu erstellen vorbereitet
+     * @return Seite Details
+     */
     public String prepareNew(){
         article = new Article();
         formArticle = new FormArticle(false);
         return "articleDetails?faces-redirect=true";
     }
     
+    /**
+     * Dieser Betrieb wird gemacht, wenn der Benutzer im Knopf "Cancel" gedrückt hat
+     * @return Zu welcher Seite wird der Benutzer geführt
+     */
     public String btnCancel_ActionPerformed(){
         if (formArticle.isDisabled() || article.getIdArticle() == 0) {
             return "articleManagement?faces-redirect=true";
@@ -99,6 +136,10 @@ public class ArticleBean implements Serializable{
         }
     }
     
+    /**
+     * Wenn die Seite in Zeigen Modus ist, dann wird sie zur Anderung geändert. 
+     * Sonst versucht das System den Artikel in der Datenbank zu speichern
+     */
     public void btnEditSave_ActionPerformed(){
         if (formArticle.isDisabled()) {
             formArticle = new FormArticle(article, false);
@@ -115,6 +156,11 @@ public class ArticleBean implements Serializable{
         }
     }
     
+    /**
+     * Ein Artikel wird in der Datanbank gespeichern
+     * @return ID des Artikels
+     * @throws Exception Wenn etwas nicht Normal geht, wird eine Ausnahme geworfen.
+     */
     public long doSave() throws Exception{
         ArticleCategory articleCategory = articleCategoryController.getArticleCategoryById(formArticle.getCbValue());
         
@@ -125,11 +171,15 @@ public class ArticleBean implements Serializable{
         article.setPriceVat(Float.valueOf(formArticle.getTxtPriceVat())/100F);
         article.setPriceGross(Float.valueOf(formArticle.getTxtPriceGross()));
         article.setPriceSupplier(Float.valueOf(formArticle.getTxtPriceSupplier()));
-        article.setStock(Long.valueOf(formArticle.getTxtStock()));
+        if (!formArticle.getTxtStock().equals(""))
+            article.setStock(Long.valueOf(formArticle.getTxtStock()));
         article.setColor(formArticle.getTxtColor());
-        article.setSizeH(Float.valueOf(formArticle.getTxtSizeH()));
-        article.setSizeL(Float.valueOf(formArticle.getTxtSizeL()));
-        article.setSizeW(Float.valueOf(formArticle.getTxtSizeW()));
+        if (!formArticle.getTxtSizeH().equals(""))
+            article.setSizeH(Float.valueOf(formArticle.getTxtSizeH()));
+        if (!formArticle.getTxtSizeL().equals(""))
+            article.setSizeL(Float.valueOf(formArticle.getTxtSizeL()));
+        if (!formArticle.getTxtSizeW().equals(""))
+            article.setSizeW(Float.valueOf(formArticle.getTxtSizeW()));
         article.setDescription(formArticle.getTxtDescription());
         
         FacesContext context = FacesContext.getCurrentInstance();
@@ -146,6 +196,9 @@ public class ArticleBean implements Serializable{
         return newArticle.getIdArticle();
     }
     
+    /**
+     * Das System versuche einen Artikel zu löschen.
+     */
     public void delete(){
         Article deleteArticle = articleController.getArticleById(articleId);
         FacesMessage fMessage;
@@ -174,16 +227,26 @@ public class ArticleBean implements Serializable{
         articleCategoryBean.setUp();
     }
     
+    /**
+     * Die vorige Seite wird geladen
+     */
     public void previousPage(){
         if (articleController.getPreviousPage(pageSize))
             articleObjects = articleController.loadTableRows(pageSize);
     }
     
+    /**
+     * Die nächste Seite wird geladen
+     */
     public void nextPage(){
         if (articleController.getNextPage(pageSize))
             articleObjects = articleController.loadTableRows(pageSize);
     }
     
+    /**
+     * Die Nummer der aktuele Seite und der Seitentotal wird gezeigt
+     * @return Der Wert zu zeigen
+     */
     public String getPageNumber(){
         return (articleController.getPage().getNumber()+1) + " / " + articleController.getPage().getTotalPages();
     }

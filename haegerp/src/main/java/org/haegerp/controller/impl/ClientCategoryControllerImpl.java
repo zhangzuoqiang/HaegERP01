@@ -130,4 +130,10 @@ public class ClientCategoryControllerImpl implements ClientCategoryController {
 		return clientCategoryRepository.findOne(id);
 	}
 
+    @Override
+    public boolean isCategoryClientsEmpty(long idCategory) {
+        ClientCategory clientCategory = clientCategoryRepository.findOne(idCategory);
+        return clientCategory.getClients().isEmpty();
+    }
+
 }

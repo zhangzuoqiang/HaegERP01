@@ -23,15 +23,15 @@
                     <p:submenu label="Business Partners" rendered="#{templateBean.permissionBusinessPartners}">
                         <p:menuitem value="Clients" url="clientManagement.xhtml" />
                         <p:menuitem value="Clients Category" url="clientCategoryManagement.xhtml" />
-                        <p:menuitem value="Suppliers" url="#" />
+                        <p:menuitem value="Suppliers" url="supplierManagement.xhtml" />
                     </p:submenu>
                     <p:submenu label="Human Resources" rendered="#{templateBean.permissionHumanResources}">
-                        <p:menuitem value="Employee" url="#" />
-                        <p:menuitem value="Division" url="#" />
-                        <p:menuitem value="Salary Groups" url="#" />
-                        <p:menuitem value="User Groups" url="#" />
+                        <p:menuitem value="Employee" url="employeeManagement.xhtml" />
+                        <p:menuitem value="Division" url="divisionManagement.xhtml" />
+                        <p:menuitem value="Salary Category" url="salaryCategoryManagement.xhtml" />
+                        <p:menuitem value="User Groups" url="userGroupManagement.xhtml" />
                     </p:submenu>
-                    <p:menuitem value="Company" url="#" rendered="#{templateBean.permissionCompany}" />
+                    <p:menuitem value="Company" url="companyDetails.xhtml" rendered="#{templateBean.permissionCompany}" />
                     <p:menuitem value="Supplier Orders" url="#" rendered="#{templateBean.permissionSupplierOrders}" />
                     <p:submenu label="Client Offers" rendered="#{templateBean.permissionClientOffers}">
                         <p:menuitem value="Client Offers" url="#" />

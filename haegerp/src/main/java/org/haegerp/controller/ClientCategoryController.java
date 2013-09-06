@@ -85,4 +85,12 @@ public interface ClientCategoryController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ClientCategory getClientCategoryId(long id);
+        
+        /**
+         * Hat die Kundenkategorie keine Kunden?
+         * @param idCategory ID der Kundenkategorie.
+         * @return True - Wenn die Kategorie keinen Kunden hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isCategoryClientsEmpty(long idCategory);
 }

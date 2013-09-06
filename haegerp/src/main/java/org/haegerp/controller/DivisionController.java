@@ -88,4 +88,12 @@ public interface DivisionController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Division getDivisionById(long id);
+        
+        /**
+         * Hat die Division keine Mitarbeiter?
+         * @param idDivision ID der Division.
+         * @return True - Wenn die Division keinen Mitarbeiter hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isDivisionEmpty(long idDivision);
 }

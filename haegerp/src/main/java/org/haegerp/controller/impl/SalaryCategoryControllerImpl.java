@@ -109,16 +109,17 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size) {
 		Page<SalaryCategory> scPage = this.loadPage(size);
-        Object[][] rows = new Object[scPage.getContent().size()][6];
+        Object[][] rows = new Object[scPage.getContent().size()][7];
         for (int i = 0; i < scPage.getContent().size(); i++) {
         	SalaryCategory salaryCategory = scPage.getContent().get(i);
         	
-        	rows[i][0] = salaryCategory.getSalaryFrom();
-        	rows[i][1] = salaryCategory.getSalaryTo();
-        	rows[i][2] = salaryCategory.getEmployees().size();
-        	rows[i][3] = salaryCategory.getDescription();
-        	rows[i][4] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(salaryCategory.getLastModifiedDate());
-        	rows[i][5] = employeeRepository.findOne(salaryCategory.getIdEmployeeModify()).getName();
+                rows[i][0] = salaryCategory.getIdSalaryCategory();
+        	rows[i][1] = salaryCategory.getSalaryFrom();
+        	rows[i][2] = salaryCategory.getSalaryTo();
+        	rows[i][3] = salaryCategory.getEmployees().size();
+        	rows[i][4] = salaryCategory.getDescription();
+        	rows[i][5] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(salaryCategory.getLastModifiedDate());
+        	rows[i][6] = employeeRepository.findOne(salaryCategory.getIdEmployeeModify()).getName();
 		}
         
         return rows;
@@ -129,4 +130,10 @@ public class SalaryCategoryControllerImpl implements SalaryCategoryController {
 	public SalaryCategory getSalaryCategoryById(long id) {
 		return salaryCategoryRepository.findOne(id);
 	}
+
+    @Override
+    public boolean isSalaryCategoryEmpty(long idCategory) {
+        SalaryCategory salaryCategory = salaryCategoryRepository.findOne(idCategory);
+        return salaryCategory.getEmployees().isEmpty();
+    }
 }

@@ -109,15 +109,16 @@ public class UserGroupControllerImpl implements UserGroupController {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Object[][] loadTableRows(int size) {
 		Page<UserGroup> ugPage = this.loadPage(size);
-        Object[][] rows = new Object[ugPage.getContent().size()][5];
+        Object[][] rows = new Object[ugPage.getContent().size()][6];
         for (int i = 0; i < ugPage.getContent().size(); i++) {
             UserGroup userGroup = ugPage.getContent().get(i);
 
-            rows[i][0] = userGroup.getName();
-            rows[i][1] = userGroup.getEmployees().size();
-            rows[i][2] = userGroup.getDescription();
-            rows[i][3] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(userGroup.getLastModifiedDate());
-            rows[i][4] = employeeRepository.findOne(userGroup.getIdEmployeeModify()).getName();
+            rows[i][0] = userGroup.getIdUserGroup();
+            rows[i][1] = userGroup.getName();
+            rows[i][2] = userGroup.getEmployees().size();
+            rows[i][3] = userGroup.getDescription();
+            rows[i][4] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(userGroup.getLastModifiedDate());
+            rows[i][5] = employeeRepository.findOne(userGroup.getIdEmployeeModify()).getName();
         }
         
         return rows;
@@ -128,4 +129,10 @@ public class UserGroupControllerImpl implements UserGroupController {
 	public UserGroup getUserGroupById(long id) {
 		return userGroupRepository.findOne(id);
 	}
+
+    @Override
+    public boolean isUserGroupEmpty(long idUserGroup) {
+        UserGroup userGroup = userGroupRepository.findOne(idUserGroup);
+        return userGroup.getEmployees().isEmpty();
+    }
 }

@@ -88,4 +88,12 @@ public interface ArticleCategoryController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ArticleCategory getArticleCategoryById(long id);
+        
+        /**
+         * Hat die Artikelkategorie keine Artikeln?
+         * @param idCategory ID der Artikelkategorie.
+         * @return True - Wenn die Kategorie keinen Artikel hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isCategoryArticlesEmpty(long idCategory);
 }

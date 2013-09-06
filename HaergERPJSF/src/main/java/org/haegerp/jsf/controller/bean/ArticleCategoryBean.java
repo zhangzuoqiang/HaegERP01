@@ -2,7 +2,6 @@ package org.haegerp.jsf.controller.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -18,43 +17,67 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+/**
+ * Bean für die Seiten "ArticleCategoryManagement" und "Details"
+ * 
+ * @author Wolf
+ */
 @ManagedBean
 @Controller
 @Scope(value = "session")
-public class ArticleCategoryBean implements Serializable{
-    
+public class ArticleCategoryBean implements Serializable {
+
     @Autowired
     private ArticleCategoryController articleCategoryController;
-    //Injected Manualy in ArticleBean.setUp().@PostContruct
-    private ArticleBean articleBean;
     
+    //Injected Manualy in @PostConstruct ArticleBean.setUp()
+    private ArticleBean articleBean;
+    //Artikelkategorie, die in der Seite der Details zeigen wird
     private ArticleCategory articleCategory;
+    //Hilfsvariable für die Methode, die eine Artikelkategorie löschen
     private long articleCategoryId;
-
-    private List<ArticleCategory> articleCategories;
+    //Klasse, wo die Felder von dem Formular gespeichert werden
+    private FormArticleCategory formArticleCategory;
+    //Object, dass der Inhalt von der Tabelle hat
     private Object[][] articleCategoryObjects;
     
-    private FormArticleCategory formArticleCategory;
-    
+    //Wie viel Artikel wurde in einer Seite gezeigt
     private int pageSize;
+    //Die Suche, die der Benutzer eingefügt hat
     private String search;
-    
+
+    /**
+     * Defaultwert
+     */
     public ArticleCategoryBean() {
         pageSize = 10;
     }
-    
+
+    /**
+     * Diese Methode lädt die Daten und bereitet das Formular vor
+     */
     @PostConstruct
-    public void setUp(){
+    public void setUp() {
         setArticleCategoryObjects(articleCategoryController.loadTableRows(pageSize));
         articleCategory = new ArticleCategory();
         setFormArticleCategory(new FormArticleCategory(false));
     }
 
-    public void setUpSearch(){
+    /**
+     * Wenn der Benutzer die Suche benutzen möchte, wird diese Methode gerufen
+     */
+    public void setUpSearch() {
         articleCategoryController.setSearch(search, pageSize);
         setArticleCategoryObjects(articleCategoryController.loadTableRows(pageSize));
     }
-    
+
+    /**
+     * Die Seite der Details wir vorbereitet
+     * 
+     * @param id ID der Artikelkategorie
+     * @param disabled True - Die Artikelkategorie wird nur gezeigt; False - Die Artikelkategorie kann geändert werden.
+     * @return Wenn die ID gültig ist dann die Seite der Derails wird geladen
+     */
     public String prepareView(long id, boolean disabled) {
         articleCategory = articleCategoryController.getArticleCategoryById(id);
         if (articleCategory != null) {
@@ -69,14 +92,22 @@ public class ArticleCategoryBean implements Serializable{
         }
     }
     
-    public String prepareNew(){
+    /**
+     * Die Seite der Details wird eine neue Artikelkategorie zu erstellen vorbereitet
+     * @return Seite Details
+     */
+    public String prepareNew() {
         articleCategory = new ArticleCategory();
         setFormArticleCategory(new FormArticleCategory(false));
         return "articleCategoryDetails?faces-redirect=true";
     }
-    
-    public String btnCancel_ActionPerformed(){
-        if (getFormArticleCategory().isDisabled() || articleCategory.getIdArticleCategory()== 0) {
+
+    /**
+     * Dieser Betrieb wird gemacht, wenn der Benutzer im Knopf "Cancel" gedrückt hat
+     * @return Zu welcher Seite wird der Benutzer geführt
+     */
+    public String btnCancel_ActionPerformed() {
+        if (getFormArticleCategory().isDisabled() || articleCategory.getIdArticleCategory() == 0) {
             return "articleCategoryManagement?faces-redirect=true";
         } else {
             setFormArticleCategory(new FormArticleCategory(articleCategory, true));
@@ -84,7 +115,11 @@ public class ArticleCategoryBean implements Serializable{
         }
     }
     
-    public void btnEditSave_ActionPerformed(){
+    /**
+     * Wenn die Seite in Zeigen Modus ist, dann wird sie zur Anderung geändert. 
+     * Sonst versucht das System die Artikelkategorie in der Datenbank zu speichern
+     */
+    public void btnEditSave_ActionPerformed() {
         if (getFormArticleCategory().isDisabled()) {
             setFormArticleCategory(new FormArticleCategory(articleCategory, false));
         } else {
@@ -92,43 +127,56 @@ public class ArticleCategoryBean implements Serializable{
             try {
                 id = doSave();
                 setUpSearch();
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace(System.err);
             }
-            
+
             prepareView(id, true);
         }
     }
     
-    public long doSave() throws Exception{
+    /**
+     * Eine Artikelkategorie wird in der Datanbank gespeichern
+     * 
+     * @return ID der Artikelkategorie
+     * @throws Exception Wenn etwas nicht Normal geht, wird eine Ausnahme geworfen.
+     */
+    public long doSave() throws Exception {
         articleCategory.setName(getFormArticleCategory().getTxtName());
         articleCategory.setDescription(getFormArticleCategory().getTxtDescription());
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
-        Long idEmployee = (Long)session.getAttribute("idemployee");
-        
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Long idEmployee = (Long) session.getAttribute("idemployee");
+
         articleCategory.setIdEmployeeModify(idEmployee);
         articleCategory.setLastModifiedDate(new Date());
-        
+
         ArticleCategory newArticleCategory = articleCategoryController.save(articleCategory);
-        
-        articleBean.setUp();
-        
+
+        updateDependencies();
+
         return newArticleCategory.getIdArticleCategory();
     }
     
-    public void delete(){
-        ArticleCategory deleteArticleCategory = articleCategoryController.getArticleCategoryById(getArticleCategoryId());
+    /**
+     * Das System versuche eine Artikelkategorie zu löschen.
+     */
+    public void delete() {
+        ArticleCategory deleteArticleCategory = articleCategoryController.getArticleCategoryById(articleCategoryId);
         FacesMessage fMessage;
         FacesMessage.Severity severity;
         String msg;
-        if (deleteArticleCategory != null){
+        if (deleteArticleCategory != null) {
             try {
-                //TODO: Delete children from category
-                articleCategoryController.delete(deleteArticleCategory);
-                severity = FacesMessage.SEVERITY_INFO;
-                msg = "Article's Category " + deleteArticleCategory.getName() + " was deleted.";
+                if (articleCategoryController.isCategoryArticlesEmpty(articleCategoryId)) {
+                    articleCategoryController.delete(deleteArticleCategory);
+                    severity = FacesMessage.SEVERITY_INFO;
+                    msg = "Article's Category " + deleteArticleCategory.getName() + " was deleted.";
+                } else {
+                    severity = FacesMessage.SEVERITY_WARN;
+                    msg = "Article's Category " + deleteArticleCategory.getName() + " still has Articles";
+                }
             } catch (Exception e) {
                 Logger.getGlobal().log(Level.SEVERE, e.getMessage());
                 severity = FacesMessage.SEVERITY_FATAL;
@@ -138,29 +186,50 @@ public class ArticleCategoryBean implements Serializable{
             severity = FacesMessage.SEVERITY_ERROR;
             msg = "Article's Category was not found in the Database.";
         }
-        
+
         fMessage = new FacesMessage(severity, msg, null);
 
         FacesContext.getCurrentInstance().addMessage(null, fMessage);
         setUp();
         setUpSearch();
-        articleBean.setUp();
+        updateDependencies();
     }
-    
-    public void previousPage(){
-        if (articleCategoryController.getPreviousPage(getPageSize()))
+
+    /**
+     * Die vorige Seite wird geladen
+     */
+    public void previousPage() {
+        if (articleCategoryController.getPreviousPage(getPageSize())) {
             setArticleCategoryObjects(articleCategoryController.loadTableRows(pageSize));
+        }
     }
-    
-    public void nextPage(){
-        if (articleCategoryController.getNextPage(getPageSize()))
+
+    /**
+     * Die nächste Seite wird geladen
+     */
+    public void nextPage() {
+        if (articleCategoryController.getNextPage(getPageSize())) {
             setArticleCategoryObjects(articleCategoryController.loadTableRows(pageSize));
+        }
     }
-    
-    public String getPageNumber(){
-        return (articleCategoryController.getPage().getNumber()+1) + " / " + articleCategoryController.getPage().getTotalPages();
+
+    /**
+     * Die Nummer der aktuele Seite und der Seitentotal wird gezeigt
+     * @return Der Wert zu zeigen
+     */
+    public String getPageNumber() {
+        return (articleCategoryController.getPage().getNumber() + 1) + " / " + articleCategoryController.getPage().getTotalPages();
     }
-    
+
+    /**
+     * Wenn die Kategorien geändert wird und das Formular des Artikels schon geladen wurde, dann muss das System das ArtikelBean aktualisieren
+     */
+    public void updateDependencies() {
+        if (articleBean != null) {
+            articleBean.setUp();
+        }
+    }
+
     /**
      * @return the pageSize
      */
@@ -187,20 +256,6 @@ public class ArticleCategoryBean implements Serializable{
      */
     public void setSearch(String search) {
         this.search = search;
-    }
-
-    /**
-     * @return the articleCategories
-     */
-    public List<ArticleCategory> getArticleCategories() {
-        return articleCategories;
-    }
-
-    /**
-     * @param articleCategories the articleCategories to set
-     */
-    public void setArticleCategories(List<ArticleCategory> articleCategories) {
-        this.articleCategories = articleCategories;
     }
 
     /**

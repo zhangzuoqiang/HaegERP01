@@ -129,4 +129,10 @@ public class ArticleCategoryControllerImpl implements ArticleCategoryController 
 	public ArticleCategory getArticleCategoryById(long id) {
 		return articleCategoryRepository.findOne(id);
 	}
+
+    @Override
+    public boolean isCategoryArticlesEmpty(long idCategory) {
+        ArticleCategory articleCategory = articleCategoryRepository.findOne(idCategory);
+        return articleCategory.getArticles().isEmpty();
+    }
 }

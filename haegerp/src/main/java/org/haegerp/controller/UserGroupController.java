@@ -88,4 +88,12 @@ public interface UserGroupController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public UserGroup getUserGroupById(long id);
+        
+        /**
+         * Hat die Benutzergruppe keine Mitarbeiter?
+         * @param idUserGroup ID der Benutzergruppe.
+         * @return True - Wenn die Gruppe keinen Mitarbeiter hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isUserGroupEmpty(long idUserGroup);
 }

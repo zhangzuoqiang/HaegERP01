@@ -2,6 +2,8 @@ package org.haegerp.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.haegerp.exception.LengthOverflowException;
 
@@ -50,8 +52,12 @@ public class Employee implements Serializable {
 	//ID des Mitarbeiter, der erstellt hat order geändert
 	private Long idEmployeeModify;
 	//Datum von der letzten Änderung
-	private Date  lastModifiedDate;
-	
+	private Date lastModifiedDate;
+	//Bestellung, dass der Mitarbeiter erstellt hat.
+        private Set<SupplierOrder> supplierOrders = new HashSet<SupplierOrder>(0);
+        //Angeboten, dass der Mitarbeiter erstellt hat.
+        private Set<ClientOffer> clientOffers = new HashSet<ClientOffer>(0);
+        
 	/**
 	 * Konstruktor mit keinen Parametern
 	 * Ideal für einen neuen Mitarbeiter
@@ -408,5 +414,33 @@ public class Employee implements Serializable {
 			return false;
 		return true;
 	}
+
+    /**
+     * @return the supplierOrders
+     */
+    public Set<SupplierOrder> getSupplierOrders() {
+        return supplierOrders;
+    }
+
+    /**
+     * @param supplierOrders the supplierOrders to set
+     */
+    public void setSupplierOrders(Set<SupplierOrder> supplierOrders) {
+        this.supplierOrders = supplierOrders;
+    }
+
+    /**
+     * @return the clientOffers
+     */
+    public Set<ClientOffer> getClientOffers() {
+        return clientOffers;
+    }
+
+    /**
+     * @param clientOffers the clientOffers to set
+     */
+    public void setClientOffers(Set<ClientOffer> clientOffers) {
+        this.clientOffers = clientOffers;
+    }
 	
 }

@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PermissionControllerImpl implements PermissionController {
 
-	@Autowired
-	private PermissionRepository permissionRepository;
-	
-        @Override
-	public List<Permission> getAllPermissions() {
-		return permissionRepository.findAll();
-	}
+    @Autowired
+    private PermissionRepository permissionRepository;
 
+    @Override
+    public List<Permission> getAllPermissions() {
+        return permissionRepository.findAll();
+    }
 }

@@ -111,4 +111,28 @@ public interface EmployeeController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public String getEmployeeName(long id);
+        
+        /**
+	 * Holt den Mitarbeiter mit dem passenden ID
+	 * @param idEmployee ID des Mitarbeiter
+	 * @return Mitarbeiter
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Employee getEmployeeById(long idEmployee);
+        
+        /**
+         * Hat der Mitarbeiter keine Angebote?
+         * @param idEmployee ID des Mitarbeiter.
+         * @return True - Wenn der Mitarbeiter kein Angebot hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isEmployeeOffersEmpty(long idEmployee);
+        
+        /**
+         * Hat der Mitarbeiter keine Bestellungen?
+         * @param idEmployee ID des Lieferant.
+         * @return True - Wenn der Lieferant keine Bestellung hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isEmployeeOrdersEmpty(long idEmployee);
 }

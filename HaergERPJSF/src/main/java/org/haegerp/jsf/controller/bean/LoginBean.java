@@ -22,52 +22,63 @@ import org.springframework.stereotype.Controller;
 @ManagedBean
 @Controller
 @Scope(value = "session")
-public class LoginBean implements Serializable{
-    
+public class LoginBean implements Serializable {
+
     @Autowired
     private EmployeeController employeeController;
     @Autowired
     private UserGroupController userGroupController;
-    
     @Autowired
     private TemplateBean templateBean;
     
+    //Wert des Feldes
+    //Benutzer
     private String username;
+    //Kennwort
     private String password;
-    
+    //Kennwort als MD5
     private String passwordMD5;
-    
-    public String login(){
+
+    /**
+     * Wenn der Benutzer die richtige Anmeldung einfügt hat, dann ist er zum Hauptmenü zu führen
+     * 
+     * @return Seite, die der Benutzer geführt wird.
+     */
+    public String login() {
         passwordMD5 = MD5Digest.toMD5(getPassword());
-        
+
         Employee employee = employeeController.isLoginCorrect(getUsername(), passwordMD5);
-        
-        if (employee != null){
+
+        if (employee != null) {
             FacesContext context = FacesContext.getCurrentInstance();
-            HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
+            HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
             session.setAttribute("idemployee", employee.getIdEmployee());
             verifyPermissions(employee);
             return "mainMenu?faces-redirect=true";
         }
-        
+
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong Login", "Username and Password does not match");
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-        
+
         return "";
     }
 
+    /**
+     * Welche Erlaubnis hat der Benutzer
+     * @param employee Mitarbeiter
+     */
     private void verifyPermissions(Employee employee) {
         Set<Permission> permissions = userGroupController.getUserGroupById(employee.getUserGroup().getIdUserGroup()).getPermissions();
-        
+
         for (Permission permission : permissions) {
             long x = permission.getIdPermission();
-            
+
             if (x == 1) {
                 templateBean.setPermissionArticle(true);
             } else {
                 if (x == 2) {
                     templateBean.setPermissionBusinessPartners(true);
-               } else {
+                } else {
                     if (x == 3) {
                         templateBean.setPermissionHumanResources(true);
                     } else {
@@ -86,10 +97,10 @@ public class LoginBean implements Serializable{
                 }
             }
         }
-        
+
         templateBean.setLogin("Logout");
     }
-    
+
     /**
      * @return the username
      */

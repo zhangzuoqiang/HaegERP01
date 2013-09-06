@@ -20,6 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+/**
+ * Bean für die Seiten "ClientManagement" und "Details"
+ * 
+ * @author Fábio Codinha
+ */
 @ManagedBean
 @Controller
 @Scope(value = "session")
@@ -32,25 +37,39 @@ public class ClientBean implements Serializable{
     @Autowired
     private ClientCategoryBean clientCategoryBean;
     
+    //Kunde, der in der Seite der Details zeigen wird
     private Client client;
+    //Hilfsvariable für die Methode, die einen Kunden löschen.
     private long clientId;
-    
+    //Klasse, wo die Felder von dem Formular gespeichert werden
     private FormClient formClient;
     
+    //Liste, die die Kundenkategorien haben
     private List<ClientCategory> categories;
+    //Object, dass der Inhalt von der Tabelle hat
     private Object[][] clientObjects;
     
+    //Variable, die die Ausgewählte ID enthalt
     private int cbSearchValue;
     
+    //Wie viel Kunden wurde in einer Seite gezeigt
     private int pageSize;
+    //Die Suche, die der Benutzer eingefügt hat
     private String search;
-
+    
+    //Löschen?
     private Validator validator = new Validator();
     
+    /**
+     * Defaultwert
+     */
     public ClientBean() {
         pageSize = 10;
     }
     
+    /**
+     * Diese Methode lädt die Daten und bereitet das Formular vor
+     */
     @PostConstruct
     public void setUp(){
         //Manual Dependency Injection
@@ -62,12 +81,22 @@ public class ClientBean implements Serializable{
         formClient = new FormClient(false);
     }
 
+    /**
+     * Wenn der Benutzer die Suche benutzen möchte, wird diese Methode gerufen
+     */
     public void setUpSearch(){
         clientController.setSearch(search, pageSize);
         clientController.setCategory((long)cbSearchValue, pageSize);
         clientObjects = clientController.loadTableRows(pageSize);
     }
     
+    /**
+     * Die Seite der Details wird vorbereitet.
+     * 
+     * @param id ID des Kunden
+     * @param disabled True - Der Kunde wird nur gezeigt; False - Der Kunde kann geändert werden.
+     * @return Wenn die ID gültig ist, dann die Seite der Details wird geladen
+     */
     public String prepareView(long id, boolean disabled) {
         client = clientController.getClientById(id);
         categories = clientCategoryController.getAllCategories();
@@ -83,12 +112,20 @@ public class ClientBean implements Serializable{
         }
     }
     
+    /**
+     * Die Seite der Details wird einen neuen Kunden zu erstellen vorbereitet
+     * @return Seite Details
+     */
     public String prepareNew(){
         client = new Client();
         formClient = new FormClient(false);
         return "clientDetails?faces-redirect=true";
     }
     
+    /**
+     * Dieser Betrieb wird gemacht, wenn der Benutzer im Knopf "Cancel" gedrückt hat
+     * @return Zu welcher Seite wird der Benutzer geführt
+     */
     public String btnCancel_ActionPerformed(){
         if (formClient.isDisabled() || client.getIdBusinessPartner() == 0) {
             return "clientManagement?faces-redirect=true";
@@ -98,6 +135,10 @@ public class ClientBean implements Serializable{
         }
     }
     
+    /**
+     * Wenn die Seite in Zeigen Modus ist, dann wird sie zur Anderung geändert. 
+     * Sonst versucht das System den Kunden in der Datenbank zu speichern
+     */
     public void btnEditSave_ActionPerformed(){
         if (formClient.isDisabled()) {
             formClient = new FormClient(client, false);
@@ -114,6 +155,11 @@ public class ClientBean implements Serializable{
         }
     }
     
+    /**
+     * Ein Artikel wird in der Datanbank gespeichern
+     * @return ID des Kunden
+     * @throws Exception Wenn etwas nicht Normal geht, wird eine Ausnahme geworfen.
+     */
     public long doSave() throws Exception{
         ClientCategory clientCategory = clientCategoryController.getClientCategoryId(formClient.getCbClientCategory());
         
@@ -145,6 +191,9 @@ public class ClientBean implements Serializable{
         return newClient.getIdBusinessPartner();
     }
     
+    /**
+     * Das System versuche einen Kunden zu löschen.
+     */
     public void delete(){
         Client deleteClient = clientController.getClientById(clientId);
         FacesMessage fMessage;
@@ -152,9 +201,14 @@ public class ClientBean implements Serializable{
         String msg;
         if (deleteClient != null){
             try {
+                if (clientController.isClientOffersEmpty(clientId)) {
                 clientController.delete(deleteClient);
                 severity = FacesMessage.SEVERITY_INFO;
                 msg = "Client " + deleteClient.getName() + " was deleted.";
+                } else {
+                    severity = FacesMessage.SEVERITY_WARN;
+                    msg = "Client " + deleteClient.getName() + " has already offers inserted.";
+                }
             } catch (Exception e) {
                 Logger.getGlobal().log(Level.SEVERE, e.getMessage());
                 severity = FacesMessage.SEVERITY_FATAL;
@@ -173,16 +227,26 @@ public class ClientBean implements Serializable{
         clientCategoryBean.setUp();
     }
     
+    /**
+     * Die vorige Seite wird geladen
+     */
     public void previousPage(){
         if (clientController.getPreviousPage(pageSize))
             clientObjects = clientController.loadTableRows(pageSize);
     }
     
+    /**
+     * Die nächste Seite wird geladen
+     */
     public void nextPage(){
         if (clientController.getNextPage(pageSize))
             clientObjects = clientController.loadTableRows(pageSize);
     }
     
+    /**
+     * Die Nummer der aktuele Seite und der Seitentotal wird gezeigt
+     * @return Der Wert zu zeigen
+     */
     public String getPageNumber(){
         return (clientController.getPage().getNumber()+1) + " / " + clientController.getPage().getTotalPages();
     }

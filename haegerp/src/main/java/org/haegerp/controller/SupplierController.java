@@ -101,4 +101,12 @@ public interface SupplierController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadAllTableRows();
+        
+        /**
+         * Hat der Lieferant keine Bestellungen?
+         * @param idSupplier ID des Lieferant.
+         * @return True - Wenn der Lieferant keine Bestellung hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isSupplierOrdersEmpty(long idSupplier);
 }

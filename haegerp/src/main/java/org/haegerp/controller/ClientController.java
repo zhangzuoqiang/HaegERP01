@@ -103,8 +103,16 @@ public interface ClientController {
 	
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @return Objekt mit dem Inhalt von der Tabelle
+	 * @return Objekt mit dem Inhalt von der Tabelle.
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Object[][] loadAllTableRows();
+        
+        /**
+         * Hat der Kunde keine Angebote?
+         * @param idClient ID des Kunden.
+         * @return True - Wenn der Kunde kein Angebot hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isClientOffersEmpty(long idClient);
 }

@@ -88,4 +88,12 @@ public interface SalaryCategoryController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public SalaryCategory getSalaryCategoryById(long id);
+        
+        /**
+         * Hat die Gehaltkategorie keine Mitarbeiter?
+         * @param idCategory ID der Gehaltkategorie.
+         * @return True - Wenn die Kategorie keinen Mitarbeiter hat; False - Sonst.
+         */
+        @Transactional(propagation=Propagation.REQUIRED)
+        public boolean isSalaryCategoryEmpty(long idCategory);
 }

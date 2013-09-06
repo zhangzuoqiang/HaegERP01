@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Diese Klasse ist ein Filter und der Benutzer wird zur Loginseite führt, wenn er nicht angemeldet hat
+ * 
  * @author Wolf
  */
 public class LoginPageFilter implements Filter{

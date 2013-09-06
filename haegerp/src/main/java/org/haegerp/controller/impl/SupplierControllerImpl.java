@@ -150,4 +150,10 @@ public class SupplierControllerImpl implements SupplierController {
         return rows;
 	}
 
+    @Override
+    public boolean isSupplierOrdersEmpty(long idSupplier) {
+        Supplier supplier = supplierRepository.findOne(idSupplier);
+        return supplier.getOrders().isEmpty();
+    }
+
 }

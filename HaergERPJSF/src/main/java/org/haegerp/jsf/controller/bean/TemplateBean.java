@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 /**
- *
+ * Klasse, die die Erlaubnisse und das Modell führt
+ * 
  * @author Wolf
  */
 @ManagedBean
@@ -17,18 +18,28 @@ import org.springframework.stereotype.Controller;
 @Scope(value = "session")
 public class TemplateBean implements Serializable{
     
+    //Artikel Erlaubnis
     private boolean permissionArticle;
+    //Geschaftpartners Erlaubnis
     private boolean permissionBusinessPartners;
+    //Personalabteilung Erlaubnis
     private boolean permissionHumanResources;
+    //Firma Erlaubnis
     private boolean permissionCompany;
+    //Lieferantenbestellung Erlaubnis
     private boolean permissionSupplierOrders;
+    //Kundenangebot Erlaubnis
     private boolean permissionClientOffers;
     
+    //Login oder Logout
     private String login;
 
     public TemplateBean() {
     }
     
+    /**
+     * Die Methode macht eine Rückstellung zu den Erlaubnissen
+     */
     @PostConstruct
     public void resetPermissions(){
         login = "Login";
@@ -40,6 +51,11 @@ public class TemplateBean implements Serializable{
         permissionClientOffers = false;
     }
     
+    /**
+     * Session wird gepützt
+     * 
+     * @return Der Benutzer wird zu der Login Seite geführt
+     */
     public String loginAction(){
         if (!login.equals("Login")){
             FacesContext context = FacesContext.getCurrentInstance();
@@ -147,5 +163,4 @@ public class TemplateBean implements Serializable{
     public void setLogin(String login) {
         this.login = login;
     }
-    
 }

@@ -2,7 +2,6 @@ package org.haegerp.jsf.controller.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -18,43 +17,67 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+/**
+ * Bean für die Seiten "ClientCategoryManagement" und "Details"
+ * 
+ * @author Fábio Codinha
+ */
 @ManagedBean
 @Controller
 @Scope(value = "session")
-public class ClientCategoryBean implements Serializable{
-    
+public class ClientCategoryBean implements Serializable {
+
     @Autowired
     private ClientCategoryController clientCategoryController;
-    //Injected Manually at ClientBean.SetUp().@PostConstruct
+    //Injected Manually at @PostConstruct ClientBean.SetUp()
     private ClientBean clientBean;
-    
+    //Kundenkategorie, die in der Seite der Details zeigen wird
     private ClientCategory clientCategory;
+    //Hilfsvariable für die Methode, die eine Kundenkategorie löschen.
     private long clientCategoryId;
-
-    private List<ClientCategory> clientCategories;
-    private Object[][] clientCategoryObjects;
-    
+    //Klasse, wo die Felder von dem Formular gespeichert werden
     private FormClientCategory formClientCategory;
     
+    //Object, dass der Inhalt von der Tabelle hat
+    private Object[][] clientCategoryObjects;
+    
+    //Wie viel Kundenkategorie wurde in einer Seite gezeigt
     private int pageSize;
+    //Die Suche, die der Benutzer eingefügt hat
     private String search;
 
+    /**
+     * Defaultwert
+     */
     public ClientCategoryBean() {
         pageSize = 10;
     }
-    
+
+    /**
+     * Diese Methode lädt die Daten und bereitet das Formular vor
+     */
     @PostConstruct
-    public void setUp(){
+    public void setUp() {
         clientCategoryObjects = clientCategoryController.loadTableRows(pageSize);
         clientCategory = new ClientCategory();
         formClientCategory = new FormClientCategory(false);
     }
 
-    public void setUpSearch(){
+    /**
+     * Wenn der Benutzer die Suche benutzen möchte, wird diese Methode gerufen
+     */
+    public void setUpSearch() {
         clientCategoryController.setSearch(search, pageSize);
         clientCategoryObjects = clientCategoryController.loadTableRows(pageSize);
     }
-    
+
+    /**
+     * Die Seite der Details wird vorbereitet.
+     * 
+     * @param id ID der Kundenkategorie
+     * @param disabled True - Die Kundenkategorie wird nur gezeigt; False - Die Kundenkategorie kann geändert werden.
+     * @return Wenn die ID gültig ist, dann die Seite der Details wird geladen
+     */
     public String prepareView(long id, boolean disabled) {
         clientCategory = clientCategoryController.getClientCategoryId(id);
         if (clientCategory != null) {
@@ -68,23 +91,35 @@ public class ClientCategoryBean implements Serializable{
             return "";
         }
     }
-    
-    public String prepareNew(){
+
+    /**
+     * Die Seite der Details wird eine neue Kundenkategorie zu erstellen vorbereitet
+     * @return Seite Details
+     */
+    public String prepareNew() {
         clientCategory = new ClientCategory();
         formClientCategory = new FormClientCategory(false);
         return "clientCategoryDetails?faces-redirect=true";
     }
-    
-    public String btnCancel_ActionPerformed(){
-        if (formClientCategory.isDisabled() || clientCategory.getIdClientCategory()== 0) {
+
+    /**
+     * Dieser Betrieb wird gemacht, wenn der Benutzer im Knopf "Cancel" gedrückt hat
+     * @return Zu welcher Seite wird der Benutzer geführt
+     */
+    public String btnCancel_ActionPerformed() {
+        if (formClientCategory.isDisabled() || clientCategory.getIdClientCategory() == 0) {
             return "clientCategoryManagement?faces-redirect=true";
         } else {
             formClientCategory = new FormClientCategory(clientCategory, true);
             return "clientCategoryDetails?faces-redirect=true";
         }
     }
-    
-    public void btnEditSave_ActionPerformed(){
+
+    /**
+     * Wenn die Seite in Zeigen Modus ist, dann wird sie zur Anderung geändert. 
+     * Sonst versucht das System die Kundenkategorie in der Datenbank zu speichern
+     */
+    public void btnEditSave_ActionPerformed() {
         if (formClientCategory.isDisabled()) {
             formClientCategory = new FormClientCategory(clientCategory, false);
         } else {
@@ -92,43 +127,55 @@ public class ClientCategoryBean implements Serializable{
             try {
                 id = doSave();
                 setUpSearch();
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace(System.err);
             }
-            
+
             prepareView(id, true);
         }
     }
-    
-    public long doSave() throws Exception{
+
+    /**
+     * Eine Kundenkategorie wird in der Datanbank gespeichern
+     * @return ID der Artikelkategorie
+     * @throws Exception Wenn etwas nicht Normal geht, wird eine Ausnahme geworfen.
+     */
+    public long doSave() throws Exception {
         clientCategory.setName(formClientCategory.getTxtName());
         clientCategory.setDescription(formClientCategory.getTxtDescription());
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
-        Long idEmployee = (Long)session.getAttribute("idemployee");
-        
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        Long idEmployee = (Long) session.getAttribute("idemployee");
+
         clientCategory.setIdEmployeeModify(idEmployee);
         clientCategory.setLastModifiedDate(new Date());
-        
+
         ClientCategory newClientCategory = clientCategoryController.save(clientCategory);
-        
-        clientBean.setUp();
-        
+
+        updateDependencies();
+
         return newClientCategory.getIdClientCategory();
     }
-    
-    public void delete(){
+
+    /**
+     * Das System versuche eine Kundenkategorie zu löschen.
+     */
+    public void delete() {
         ClientCategory deleteClientCategory = clientCategoryController.getClientCategoryId(clientCategoryId);
         FacesMessage fMessage;
         FacesMessage.Severity severity;
         String msg;
-        if (deleteClientCategory != null){
+        if (deleteClientCategory != null) {
             try {
-                //TODO: Delete children from category
-                clientCategoryController.delete(deleteClientCategory);
-                severity = FacesMessage.SEVERITY_INFO;
-                msg = "Client's Category " + deleteClientCategory.getName() + " was deleted.";
+                if (clientCategoryController.isCategoryClientsEmpty(clientCategoryId)) {
+                    clientCategoryController.delete(deleteClientCategory);
+                    severity = FacesMessage.SEVERITY_INFO;
+                    msg = "Client's Category " + deleteClientCategory.getName() + " was deleted.";
+                } else {
+                    severity = FacesMessage.SEVERITY_WARN;
+                    msg = "Client's Category " + deleteClientCategory.getName() + " still has Clients";
+                }
             } catch (Exception e) {
                 Logger.getGlobal().log(Level.SEVERE, e.getMessage());
                 severity = FacesMessage.SEVERITY_FATAL;
@@ -138,27 +185,48 @@ public class ClientCategoryBean implements Serializable{
             severity = FacesMessage.SEVERITY_ERROR;
             msg = "Client's Category was not found in the Database.";
         }
-        
+
         fMessage = new FacesMessage(severity, msg, null);
 
         FacesContext.getCurrentInstance().addMessage(null, fMessage);
         setUp();
         setUpSearch();
-        clientBean.setUp();
+        updateDependencies();
     }
-    
-    public void previousPage(){
-        if (clientCategoryController.getPreviousPage(getPageSize()))
+
+    /**
+     * Die vorige Seite wird geladen
+     */
+    public void previousPage() {
+        if (clientCategoryController.getPreviousPage(getPageSize())) {
             clientCategoryObjects = clientCategoryController.loadTableRows(pageSize);
+        }
     }
-    
-    public void nextPage(){
-        if (clientCategoryController.getNextPage(getPageSize()))
+
+    /**
+     * Die nächste Seite wird geladen
+     */
+    public void nextPage() {
+        if (clientCategoryController.getNextPage(getPageSize())) {
             clientCategoryObjects = clientCategoryController.loadTableRows(pageSize);
+        }
     }
-    
-    public String getPageNumber(){
-        return (clientCategoryController.getPage().getNumber()+1) + " / " + clientCategoryController.getPage().getTotalPages();
+
+    /**
+     * Die Nummer der aktuele Seite und der Seitentotal wird gezeigt
+     * @return Der Wert zu zeigen
+     */
+    public String getPageNumber() {
+        return (clientCategoryController.getPage().getNumber() + 1) + " / " + clientCategoryController.getPage().getTotalPages();
+    }
+
+    /**
+     * Wenn die Kategorien geändert wird und das Formular des Kunden schon geladen wurde, dann muss das System das KundenBean aktualisieren
+     */
+    public void updateDependencies() {
+        if (clientBean != null) {
+            clientBean.setUp();
+        }
     }
     
     /**
