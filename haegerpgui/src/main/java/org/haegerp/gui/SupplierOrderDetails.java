@@ -207,7 +207,7 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
             int option = JOptionPane
                     .showConfirmDialog(
                     this,
-                    "Are you sure of marking the order as Billed?\nAfter the Order is marked as \"Billed\", the order cannot be changed anymore.",
+                    "Are you sure of marking the order as Paid?\nAfter the Order is marked as \"Paid\", the order cannot be changed anymore.",
                     "Close Order", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 Date date = new Date();

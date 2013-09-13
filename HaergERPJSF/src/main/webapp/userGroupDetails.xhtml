@@ -27,7 +27,8 @@
 
             <p:outputLabel styleClass="labels" value="Description" for="txtDescription" />
             <p:inputTextarea styleClass="textBoxes" disabled="#{userGroupBean.formUserGroup.disabled}"
-                             id="txtDescription" value="#{userGroupBean.formUserGroup.txtDescription}" title="Description"/>
+                             id="txtDescription" value="#{userGroupBean.formUserGroup.txtDescription}"
+                             title="Description" maxlength="255"/>
             <h:panelGroup></h:panelGroup>
 
             <p:outputLabel styleClass="labels" value="Permissions" for="plPermissions" />

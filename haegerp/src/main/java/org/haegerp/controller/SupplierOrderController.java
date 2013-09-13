@@ -115,4 +115,12 @@ public interface SupplierOrderController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public SupplierBill saveBill(SupplierBill supplierBill);
+        
+        /**
+	 * Holt den LieferantenBestellung mit dem passenden ID
+	 * @param idSupplierOrder ID des Lieferantenbestellung
+	 * @return Lieferantenbestellung
+	 */
+	@Transactional(propagation=Propagation.REQUIRED)
+	public SupplierOrder getSupplierOrderById(long idSupplierOrder);
 }

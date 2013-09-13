@@ -110,6 +110,7 @@ public class ChooserClient extends JFrame {
     }
 
     private void loadTable() {
+        //TODO: SEARCH METHOD
         model = new javax.swing.table.DefaultTableModel(
                 clientOfferDetails.getClientController().loadAllTableRows(),
                 new String[]{

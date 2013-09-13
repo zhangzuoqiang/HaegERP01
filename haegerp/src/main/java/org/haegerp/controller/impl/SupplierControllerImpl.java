@@ -135,8 +135,8 @@ public class SupplierControllerImpl implements SupplierController {
 
         @Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public Object[][] loadAllTableRows() {
-		List<Supplier> list = supplierRepository.findAll();
+	public Object[][] loadAllTableRows(int enableSearch, String search, int enableAll) {
+		List<Supplier> list = supplierRepository.findAllSuppliers(enableSearch, search, enableAll);
         Object[][] rows = new Object[list.size()][5];
         for (int i = 0; i < list.size(); i++) {
         	Supplier supplier = list.get(i);

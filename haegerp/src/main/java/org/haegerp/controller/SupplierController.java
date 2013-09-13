@@ -97,10 +97,14 @@ public interface SupplierController {
 	
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @return Objekt mit dem Inhalt von der Tabelle
-	 */
+         * 
+	 * @param enableSearch 1 - Wenn das Feld 'Search' etwas hat; 0 - Sonst
+         * @param search Suchen, die der Benutzer eingefügt hat
+         * @param enableAll 1 - Wenn das Feld 'enableSearch' 0 ist; 0 - Sonst
+         * @return Objekt mit dem Inhalt von der Tabelle
+         */
 	@Transactional(propagation=Propagation.REQUIRED)
-	public Object[][] loadAllTableRows();
+	public Object[][] loadAllTableRows(int enableSearch, String search, int enableAll);
         
         /**
          * Hat der Lieferant keine Bestellungen?

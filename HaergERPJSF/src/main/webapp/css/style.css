@@ -19,6 +19,10 @@ body{
     width: 135px;
 }
 
+.orderButton{
+    width: 100px;
+}
+
 .labels{
     width: 60px;
 }
@@ -41,6 +45,11 @@ body{
 .largeSizeColumn{
     min-width: 300px;
     max-width: 300px;
+}
+
+.dateSizeColumn{
+    min-width: 135px;
+    max-width: 135px;
 }
 
 .menuBar{

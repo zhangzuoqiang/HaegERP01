@@ -1,5 +1,9 @@
 package org.haegerp.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -57,6 +61,19 @@ public class ChooserSupplier extends JFrame {
         tblObjects.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         loadTable();
+        
+        txtSearch.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                loadTable();
+            }
+        });
 
         tblObjects.addMouseListener(new MouseListener() {
             public void mouseReleased(MouseEvent e) {
@@ -110,23 +127,30 @@ public class ChooserSupplier extends JFrame {
     }
 
     private void loadTable() {
+        Object[][] content;
+        if (txtSearch.getText().equals("")) {
+            content = supplierOrderDetails.getSupplierController().loadAllTableRows(0, "", 1);
+        } else {
+            content = supplierOrderDetails.getSupplierController().loadAllTableRows(1, txtSearch.getText(), 0);
+        }
+        
         model = new javax.swing.table.DefaultTableModel(
-                supplierOrderDetails.getSupplierController().loadAllTableRows(),
-                new String[]{
-            "ID",
-            "TaxID",
-            "Name",
-            "E-Mail",
-            "City"
-        }) {
-            private static final long serialVersionUID = 1L;
+                    content,
+                    new String[]{
+                "ID",
+                "TaxID",
+                "Name",
+                "E-Mail",
+                "City"
+            }) {
+                private static final long serialVersionUID = 1L;
 
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-        };
-
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            };
+        
         tblObjects.setModel(model);
 
         tblObjects.removeColumn(tblObjects.getColumn("ID"));

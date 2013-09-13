@@ -38,13 +38,13 @@ public class SupplierOrderNewView implements SupplierOrderDetailsInterface {
         supplierOrderDetailsMenu.model = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "ID",
-                    "EAN",
-                    "Name",
-                    "Price",
-                    "Quantity",
-                    "Discount",
-                    "Total"
+            "ID",
+            "EAN",
+            "Name",
+            "Price",
+            "Quantity",
+            "Discount",
+            "Total"
         }) {
             private static final long serialVersionUID = 1L;
             private static final String REGEX_INTEGER_NUMBER = "^[0-9]*$";

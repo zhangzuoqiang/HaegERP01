@@ -62,10 +62,25 @@ public interface SupplierOrderDetailController {
 	public Set<SupplierOrderDetail> updateOrderArticle(JTable table, long idSupplierOrder) throws LengthOverflowException;
 	
 	/**
-	 * löcht alle Artikeln von der Bestellung
+	 * löscht alle Artikeln von der Bestellung
 	 * 
 	 * @param entities Artikeln
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void deleteAllArticles(long idSupplierOrder);
+        
+        /**
+         * Diese Methode aktualisiert die Sammlung der Artikel.
+         * <br/>
+         * [0] - ArticleHistoryPK<br/>
+         * [1] - Quantity<br/>
+         * [2] - Discount
+         * 
+         * @param values Objekt mit den Informationen der Artikel
+         * @param idSupplierOrder Welche Lieferantenbestellung.
+         * @throws LengthOverflowException
+         * @return Sammlung
+         */
+        @Transactional(propagation = Propagation.REQUIRED)
+        public Set<SupplierOrderDetail> doUpdateOrderArticle(Object[][] values, long idSupplierOrder) throws LengthOverflowException ;
 }

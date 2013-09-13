@@ -26,7 +26,7 @@ public class ChooserArticleClient extends JFrame {
 
     public ChooserArticleClient() {
     }
-    
+
     public void showChooserArticleClient() {
         loadTable();
         this.setVisible(true);
@@ -77,8 +77,15 @@ public class ChooserArticleClient extends JFrame {
     }
 
     public void loadTable() {
+        Object[][] content;
+        if (txtSearch.getText().equals("")) {
+            content = clientOfferDetails.getArticleController().loadAllTableRows(0, "", 1);
+        } else {
+            content = clientOfferDetails.getArticleController().loadAllTableRows(1, txtSearch.getText(), 0);
+        }
+
         model = new javax.swing.table.DefaultTableModel(
-                clientOfferDetails.getArticleController().loadAllTableRows(),
+                content,
                 new String[]{
             "ID",
             "EAN",
@@ -92,7 +99,7 @@ public class ChooserArticleClient extends JFrame {
                 return false;
             }
         };
-        
+
         tblObjects.setModel(model);
 
         tblObjects.removeColumn(tblObjects.getColumn("ID"));

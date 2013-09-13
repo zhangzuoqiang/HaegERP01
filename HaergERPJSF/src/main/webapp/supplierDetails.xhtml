@@ -112,7 +112,8 @@
             
             <p:outputLabel styleClass="labels" value="Description" for="txtDescription" />
             <p:inputTextarea styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
-                             id="txtDescription" value="#{supplierBean.formSupplier.txtDescription}" title="Description"/>
+                             id="txtDescription" value="#{supplierBean.formSupplier.txtDescription}"
+                             title="Description" maxlength="255"/>
         </h:panelGrid>
         <h:panelGrid columns="3">
             <h:column>

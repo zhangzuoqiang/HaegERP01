@@ -74,6 +74,6 @@
 	</tr>
 	<tr>
 		<td><h5>Lieferantsbestellung </h5></td>
-		<td><h5> 20%</h5></td>
+		<td><h5> 100%</h5></td>
 	</tr>
 </table>
