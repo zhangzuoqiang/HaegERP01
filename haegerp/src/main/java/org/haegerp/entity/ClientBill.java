@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Wann der Mitarbeiter die Rechnung schickt, erstellt man eine neue Kunderechnung<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class ClientBill implements Serializable {

@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Die Gehaltgruppen, dass Mitarbeiter gehören.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class SalaryCategory implements Serializable {

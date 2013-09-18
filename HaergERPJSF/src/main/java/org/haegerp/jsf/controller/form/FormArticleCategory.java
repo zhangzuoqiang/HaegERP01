@@ -4,7 +4,7 @@ import org.haegerp.entity.ArticleCategory;
 
 /**
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormArticleCategory {
     //Name der Artikelkategorie (Erforderlich)
@@ -24,11 +24,23 @@ public class FormArticleCategory {
     public FormArticleCategory() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormArticleCategory(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param articleCategory Artikelkategorie
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormArticleCategory(ArticleCategory articleCategory, boolean disabled) {
         txtName = articleCategory.getName();
         txtDescription = articleCategory.getDescription();
@@ -36,6 +48,12 @@ public class FormArticleCategory {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

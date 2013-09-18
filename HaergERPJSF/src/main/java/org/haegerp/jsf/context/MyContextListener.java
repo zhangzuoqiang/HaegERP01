@@ -15,7 +15,7 @@ import org.haegerp.tools.C3P0Utility;
 /**
  * Diese Klasse wird als Listener angemeldet, um die Verbindungen des C3P0s zu schlieﬂen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class MyContextListener implements ServletContextListener {
 

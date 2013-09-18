@@ -9,7 +9,7 @@ import org.haegerp.gui.MainMenu;
 /**
  * Diese Klasse zeigt nur die Hauptoptionen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class MainMenuNormal implements MainMenuInterface {

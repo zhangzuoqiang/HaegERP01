@@ -10,31 +10,33 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Kundenkategorien bereitstellt
- * 
- * @author Wolf
+ * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die
+ * Kundenkategorien bereitstellt
+ *
+ * @author Fabio Codinha
  *
  */
 @Repository
 @Transactional
 public interface ClientCategoryRepository extends MyRepository<ClientCategory, Long> {
-	
-	@Query(countQuery="SELECT COUNT (*) FROM ClientCategory " +
-			"WHERE (UPPER(name) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (UPPER(description) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (1 = ?2)",
-	value="FROM ClientCategory " +
-			"WHERE (UPPER(name) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (UPPER(description) LIKE '%' || UPPER(?1) || '%') " +
-				"OR (1 = ?2)")
-/**
-* Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
-* 
+
+    @Query(countQuery = "SELECT COUNT (*) FROM ClientCategory "
+            + "WHERE (UPPER(name) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (UPPER(description) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (1 = ?2)",
+            value = "FROM ClientCategory "
+            + "WHERE (UPPER(name) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (UPPER(description) LIKE '%' || UPPER(?1) || '%') "
+            + "OR (1 = ?2)")
+    /**
+     * Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
+     *     
 * @param textToFilter Text, dass der Benutzer einge
-* @param enableAll Wenn TextToFilter keinen Text hat, dann muss diese Variable 0 sein, sonst ist 1.
-* @param pageable PageRequest Klasse.
-* @return Eine Seite mit den Kundenkategorien.
-*/
-@Transactional(propagation=Propagation.REQUIRED, readOnly = true)
-public Page<ClientCategory> findWithFilters(String textToFilter, int enableAll, Pageable pageable);
+     * @param enableAll Wenn TextToFilter keinen Text hat, dann muss diese
+     * Variable 0 sein, sonst ist 1.
+     * @param pageable PageRequest Klasse.
+     * @return Eine Seite mit den Kundenkategorien.
+     */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Page<ClientCategory> findWithFilters(String textToFilter, int enableAll, Pageable pageable);
 }

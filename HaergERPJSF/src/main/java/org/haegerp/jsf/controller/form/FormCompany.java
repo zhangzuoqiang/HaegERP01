@@ -3,7 +3,7 @@ package org.haegerp.jsf.controller.form;
 import org.haegerp.entity.Company;
 
 /**
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormCompany {
     //Name der Firma (Erforderlich)
@@ -39,11 +39,22 @@ public class FormCompany {
     public FormCompany() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormCompany(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param company Firma
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormCompany(Company company, boolean disabled) {
         txtTaxId = ((company.getTaxId() == null) ? "" : String.valueOf(company.getTaxId()));
         txtName = company.getName();
@@ -59,6 +70,12 @@ public class FormCompany {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

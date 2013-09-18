@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Die Linien von einer Bestellung haben ein Composite Primary Key.<br/>
  * Das heisst, dass eine ein Bestellung und eine Artikelversion haben muss.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class SupplierOrderDetailPK implements Serializable {

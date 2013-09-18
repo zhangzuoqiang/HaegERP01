@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Lieferantrechnungen bereitstellt.
- * 
- * @author Wolf
+ * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die
+ * Lieferantrechnungen bereitstellt.
+ *
+ * @author Fabio Codinha
  *
  */
 @Repository
 @Transactional
 public interface SupplierBillRepository extends MyRepository<SupplierBill, Long> {
-
 }

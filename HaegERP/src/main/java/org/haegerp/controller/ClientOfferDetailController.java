@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Diese Klasse besitzt die Geschäftslogik von dem Kunden.
+ * Diese Klasse besitzt die Geschäftslogik von den Artikeln des Kundenangebots.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
@@ -30,41 +30,29 @@ public interface ClientOfferDetailController {
 	public Object[][] loadTableRows(long idClientOffer);
 
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
-	 * @param idClientOffer ID des Angebot
+	 * @param idClientOffer ID des Kundenangebots
 	 * @return Seite mit den Kundenangebotdetails
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public List<ClientOfferDetail> loadPage(long idClientOffer);
-
+        
 	/**
-	 * Die Lieferantbestellung wurde gespeichert
-	 * @param clientOfferDetail Die Kundenangebotdetails
-	 */
-	@Transactional(propagation=Propagation.REQUIRED)
-	public ClientOfferDetail save(ClientOfferDetail clientOfferDetail);
-
-	/**
-	 * Der Liferant wurde gelöscht
-	 * @param clientOfferDetail Die Kundenangebotdetails
-	 */
-	public void delete(ClientOfferDetail clientOfferDetail);
-	
-	/**
-	 * Diese Methode aktualisiert einen Artikel der Bestellung.
-	 * @param table Tabelle mit den Artikeln der Lieferantsbestellung.
-	 * @param idClientOffer ID des Angebot
+	 * Diese Methode aktualisiert die ausgewählte Artikeln der Bestellung.
+         * 
+	 * @param table Tabelle mit den Artikeln der Kundenbestellung.
+	 * @param idClientOffer ID des Angebots
 	 * @return Colletion mit Lieferantbestellungdetails
-	 * @throws LengthOverflowException
+	 * @throws LengthOverflowException Wenn ein Wert Falsch ist.
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Set<ClientOfferDetail> updateOrderArticle(JTable table, long idClientOffer) throws LengthOverflowException;
 	
 	/**
-	 * Löcht alle Artikeln vom Angebot.
+	 * Löscht alle Artikeln vom Angebot.
 	 * 
-	 * @param idClientOffer ID des Angebot
+	 * @param idClientOffer ID des Angebots
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void deleteAllArticles(long idClientOffer);

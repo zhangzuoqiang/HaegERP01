@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Das Ziel von diese Klasse ist:
  * Für jedes Dokument kann man mehr als 1 Artikel exportiert werden.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  * @param <T>
  */

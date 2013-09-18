@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Wann der Lieferant die Rechnung schickt, erstellt man eine neue Liferantrechnung<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class SupplierBill implements Serializable {

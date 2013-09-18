@@ -35,44 +35,110 @@ import org.haegerp.entity.SupplierOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Dieses Formular wird Lieferantenbestellungen verwalten
+ *
+ * @author Fabio Codinha
+ */
 @Component
 public class SupplierOrderManagement extends JFrame {
 
-    private static final long serialVersionUID = 2464190735195227843L;
+    //Controller
     @Autowired
     private SupplierOrderController supplierOrderController;
+    //Formular
     @Autowired
     private SupplierOrderDetails supplierOrderDetails;
 
     public SupplierOrderManagement() {
     }
+    
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
+    public void loadTable() {
+        tblSupplierOrders.setModel(
+                new DefaultTableModel(
+                supplierOrderController.loadTableRows(sldNumberResults.getValue()),
+                new String[]{
+            "ID",
+            "Supplier Name",
+            "Employee Name",
+            "Order Date",
+            "Send Date",
+            "Total",
+            "Bill Received",
+            "Bill Paid",
+            "Last Modified",
+            "Modified By"
+        }) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        tblSupplierOrders.removeColumn(tblSupplierOrders.getColumn("ID"));
+        lblPage.setText("Page " + (supplierOrderController.getPage().getNumber() + 1) + "/" + supplierOrderController.getPage().getTotalPages());
+    }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         supplierOrderController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         supplierOrderController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Artikeln, die eine Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         supplierOrderController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         supplierOrderController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Eine neue Lieferantenbestellung wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         supplierOrderDetails.setNewMode();
         supplierOrderDetails.setVisible(true);
     }
 
+    /**
+     * Ein Lieferantbestellung, die in der Datenbank ist, wird beim Benutzer geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblSupplierOrders.getSelectedRow();
         if (row != -1) {
@@ -85,6 +151,11 @@ public class SupplierOrderManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Lieferantenbestellung wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblSupplierOrders.getSelectedRow();
         if (row != -1) {
@@ -102,6 +173,11 @@ public class SupplierOrderManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Lieferantenbestellung wird gezeigt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void tblSupplierOrders_MouseDoubleClick(MouseEvent e) {
         int row = tblSupplierOrders.getSelectedRow();
         if (row != -1) {
@@ -114,6 +190,9 @@ public class SupplierOrderManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     private void setUp() {
         pnlTblSupplierOrders = new JScrollPane();
@@ -329,32 +408,6 @@ public class SupplierOrderManagement extends JFrame {
         setLocation((dim.width - getWidth()) / 2, (dim.height - getHeight()) / 2);
     }
 
-    public void loadTable() {
-        tblSupplierOrders.setModel(
-                new DefaultTableModel(
-                supplierOrderController.loadTableRows(sldNumberResults.getValue()),
-                new String[]{
-            "ID",
-            "Supplier Name",
-            "Employee Name",
-            "Order Date",
-            "Send Date",
-            "Total",
-            "Bill Received",
-            "Bill Paid",
-            "Last Modified",
-            "Modified By"
-        }) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
-        tblSupplierOrders.removeColumn(tblSupplierOrders.getColumn("ID"));
-        lblPage.setText("Page " + (supplierOrderController.getPage().getNumber() + 1) + "/" + supplierOrderController.getPage().getTotalPages());
-    }
     private JButton btnDelete;
     private JButton btnEdit;
     private JButton btnNew;

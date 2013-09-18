@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * Das Web-Service wird publiziert
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 

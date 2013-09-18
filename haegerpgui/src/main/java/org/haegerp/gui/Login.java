@@ -22,18 +22,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+/**
+ * Dieses Formular wird die Anmeldung eines Benutzers verwalten
+ */
 public class Login extends JFrame {
 
+    //Formular
     @Autowired
     private MainMenu mainMenu;
+    //Controller
     @Autowired
     private EmployeeController employeeController;
-    private static final long serialVersionUID = -2223474247110028871L;
 
     public Login() {
     }
 
     //Listeners
+    /**
+     * Die Anmeldung wird gepruft und, wenn der Benutzer angemeldet hat, werden
+     * die Erlaubnis geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnLogin_ActionPerformed(ActionEvent e) {
 
         String passwordMD5 = MD5Digest.toMD5(txtPassword.getPassword());
@@ -78,6 +88,9 @@ public class Login extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         lblUsername = new javax.swing.JLabel();

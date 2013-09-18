@@ -37,13 +37,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+/**
+ * Dieses Formular wird Divisionen verwalten
+ *
+ * @author Fabio Codinha
+ */
 public class DivisionManagement extends JFrame {
 
     private static final long serialVersionUID = 4611390378854969459L;
+    //Controller
     @Autowired
     private EmployeeController employeeController;
     @Autowired
     private DivisionController divisionController;
+    //Formulare
     @Autowired
     private DivisionDetails divisionDetails;
     @Autowired
@@ -52,6 +59,9 @@ public class DivisionManagement extends JFrame {
     public DivisionManagement() {
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         tblDivision.setModel(
                 new DefaultTableModel(
@@ -71,31 +81,61 @@ public class DivisionManagement extends JFrame {
     }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         divisionController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         divisionController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Divisionen, die eine Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         divisionController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         divisionController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Eine neue Division wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         divisionDetails.setNewMode();
         divisionDetails.setVisible(true);
     }
 
+    /**
+     * Eine Division, die in der Datenbank ist, wird beim Benutzer geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblDivision.getSelectedRow();
         if (row != -1) {
@@ -106,6 +146,11 @@ public class DivisionManagement extends JFrame {
         }
     }
 
+    /**
+     * Ein Artikel wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblDivision.getSelectedRow();
         int option = 1;
@@ -134,7 +179,12 @@ public class DivisionManagement extends JFrame {
         }
     }
 
-    protected void tblArticleCategory_MouseDoubleClick(MouseEvent e) {
+    /**
+     * Eine Division wird gezeigt
+     *
+     * @param e
+     */
+    protected void tblDivision_MouseDoubleClick(MouseEvent e) {
         int row = tblDivision.getSelectedRow();
         if (row != -1) {
             Division division = divisionController.getPage().getContent().get(row);
@@ -144,6 +194,9 @@ public class DivisionManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnlTblDivision = new JScrollPane();
@@ -168,7 +221,7 @@ public class DivisionManagement extends JFrame {
 
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1) {
-                    tblArticleCategory_MouseDoubleClick(e);
+                    tblDivision_MouseDoubleClick(e);
                 }
             }
 

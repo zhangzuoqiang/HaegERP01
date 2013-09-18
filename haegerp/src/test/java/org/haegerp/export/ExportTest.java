@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Dieses Test Suite wird Exporte testen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -133,7 +133,7 @@ public class ExportTest extends TestCase {
     @Test
     public void test2ExportXML(){
         try {
-        	//CHECK_DESTROY = true;
+        	CHECK_DESTROY = true;
         	assertTrue(exportToXML.export(articleRepository.findAll(), Properties.getProperty("EXPORT_PATH")));
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();

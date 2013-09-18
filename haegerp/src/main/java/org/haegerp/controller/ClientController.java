@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Diese Klasse besitzt die Geschäftslogik von dem Kunden.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
@@ -19,13 +19,13 @@ public interface ClientController {
 
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<Client> getPage();
 
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kunden will der Benutzer in der Seite
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -34,39 +34,39 @@ public interface ClientController {
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param value Wert, der der Benutzer geschrieben hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kunden will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param cbbIndex Welche Kategorie, die der Benutzer gewählt hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kunden will der Benutzer in der Seite
 	 */
 	public void setCategory(long cbbIndex, int value);
 
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kunden will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kunden will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kunden will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
 	 * @param size Grösse der Seite
 	 * @return Seite mit den Kunden
@@ -75,14 +75,14 @@ public interface ClientController {
 	public Page<Client> loadPage(int size);
 
 	/**
-	 * Der Kunde wurde gespeichert
+	 * Der Kunde wird gespeichert
 	 * @param client Der Kunde
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Client save(Client client);
 
 	/**
-	 * Der Kunde wurde gelöscht
+	 * Der Kunde wird gelöscht
 	 * @param client Der Kunde
 	 */
 	public void delete(Client client);
@@ -103,10 +103,14 @@ public interface ClientController {
 	
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @return Objekt mit dem Inhalt von der Tabelle.
-	 */
+         * 
+	 * @param enableSearch 1 - Wenn das Feld 'Search' etwas hat; 0 - Sonst
+         * @param search Suchen, die der Benutzer eingefügt hat
+         * @param enableAll 1 - Wenn das Feld 'enableSearch' 0 ist; 0 - Sonst
+         * @return Objekt mit dem Inhalt von der Tabelle
+         */
 	@Transactional(propagation=Propagation.REQUIRED)
-	public Object[][] loadAllTableRows();
+	public Object[][] loadAllTableRows(int enableSearch, String search, int enableAll);
         
         /**
          * Hat der Kunde keine Angebote?

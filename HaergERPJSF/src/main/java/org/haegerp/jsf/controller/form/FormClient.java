@@ -3,7 +3,7 @@ package org.haegerp.jsf.controller.form;
 import org.haegerp.entity.Client;
 
 /**
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormClient {
     //Geschäftspartners Name (Erforderlich)
@@ -45,11 +45,22 @@ public class FormClient {
     public FormClient() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormClient(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param client Kunde
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormClient(Client client, boolean disabled) {
         txtTaxId = String.valueOf(client.getTaxId());
         txtName = client.getName();
@@ -68,6 +79,12 @@ public class FormClient {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

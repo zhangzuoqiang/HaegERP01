@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 /**
  * Exportation zur XML-Datei
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service

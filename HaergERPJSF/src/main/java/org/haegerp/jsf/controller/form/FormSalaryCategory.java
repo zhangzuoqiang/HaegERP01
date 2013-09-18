@@ -4,7 +4,7 @@ import org.haegerp.entity.SalaryCategory;
 
 /**
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormSalaryCategory {
     //Gehalt von X (Erforderlich)
@@ -26,11 +26,22 @@ public class FormSalaryCategory {
     public FormSalaryCategory() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormSalaryCategory(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param salaryCategory Gehaltkategorie
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormSalaryCategory(SalaryCategory salaryCategory, boolean disabled) {
         txtSalaryFrom = String.valueOf(salaryCategory.getSalaryFrom());
         txtSalaryTo = String.valueOf(salaryCategory.getSalaryTo());
@@ -39,6 +50,12 @@ public class FormSalaryCategory {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

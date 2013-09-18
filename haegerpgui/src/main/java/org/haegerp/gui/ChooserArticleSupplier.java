@@ -16,22 +16,39 @@ import org.haegerp.entity.SupplierOrderDetailPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * In diesem Formular kann der Benutzer den Artikel für eine Lieferantsbestellung auswählen
+ * 
+ * @author Fabio Codinha
+ */
 @Component
 public class ChooserArticleSupplier extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
+    //Formullar
     @Autowired
     private SupplierOrderDetails supplierOrderDetails;
+    
+    //Inhalt von der Tabelle
     private DefaultTableModel model;
 
     public ChooserArticleSupplier() {
     }
 
+    /**
+     * Das Formular wird vorbereitet und gezergt
+     */
     public void showChooserArticleSupplier() {
         loadTable();
         this.setVisible(true);
     }
 
+    /**
+     * Artikel, der der Benutzer ausgewählt hat
+     * 
+     * @param e MouseEvent Werte
+     */
     protected void tblObjects_MouseClick(MouseEvent e) {
 
         int idxRow = tblObjects.getSelectedRow();
@@ -79,6 +96,9 @@ public class ChooserArticleSupplier extends JFrame {
         tblObjects.removeColumn(tblObjects.getColumn("ID"));
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         Object[][] content;
         if (txtSearch.getText().equals("")) {
@@ -108,6 +128,9 @@ public class ChooserArticleSupplier extends JFrame {
         tblObjects.removeColumn(tblObjects.getColumn("ID"));
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         lblSearch = new javax.swing.JLabel();

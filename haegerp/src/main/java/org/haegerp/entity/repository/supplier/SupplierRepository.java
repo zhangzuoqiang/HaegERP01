@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die
  * Lieferanten bereitstellt.
  *
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Repository
@@ -22,26 +22,26 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SupplierRepository extends MyRepository<Supplier, Long> {
 
     @Query(countQuery = "SELECT COUNT(*) "
-                        + "FROM Supplier "
-                        + "WHERE "
-                        + "( "
-                            + "(1 = ?1 AND TO_CHAR(taxId) LIKE '%' || UPPER(?2) || '%') "
-                            + "OR (1 = ?1 AND (UPPER(name) LIKE '%' || UPPER(?2) || '%')) "
-                            + "OR (1 = ?1 AND (UPPER(email) LIKE '%' || UPPER(?2) || '%')) "
-                            + "OR (1 = ?1 AND (UPPER(city) LIKE '%' || UPPER(?2) || '%')) "
-                            + "OR (1 = ?1 AND (UPPER(country) LIKE '%' || UPPER(?2) || '%')) "
-                        + ") "
-                        + "OR (1 = ?3)",
+            + "FROM Supplier "
+            + "WHERE "
+            + "( "
+            + "(1 = ?1 AND TO_CHAR(taxId) LIKE '%' || UPPER(?2) || '%') "
+            + "OR (1 = ?1 AND (UPPER(name) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(email) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(city) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(country) LIKE '%' || UPPER(?2) || '%')) "
+            + ") "
+            + "OR (1 = ?3)",
             value = "FROM Supplier "
-                    + "WHERE "
-                    + "( "
-                        + "(1 = ?1 AND TO_CHAR(taxId) LIKE '%' || UPPER(?2) || '%') "
-                        + "OR (1 = ?1 AND (UPPER(name) LIKE '%' || UPPER(?2) || '%')) "
-                        + "OR (1 = ?1 AND (UPPER(email) LIKE '%' || UPPER(?2) || '%')) "
-                        + "OR (1 = ?1 AND (UPPER(city) LIKE '%' || UPPER(?2) || '%')) "
-                        + "OR (1 = ?1 AND (UPPER(country) LIKE '%' || UPPER(?2) || '%')) "
-                    + ") "
-                    + "OR (1 = ?3)")
+            + "WHERE "
+            + "( "
+            + "(1 = ?1 AND TO_CHAR(taxId) LIKE '%' || UPPER(?2) || '%') "
+            + "OR (1 = ?1 AND (UPPER(name) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(email) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(city) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(country) LIKE '%' || UPPER(?2) || '%')) "
+            + ") "
+            + "OR (1 = ?3)")
     /**
      * Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
      *
@@ -57,15 +57,15 @@ public interface SupplierRepository extends MyRepository<Supplier, Long> {
             int enableAll, Pageable pageable);
 
     @Query(value = "FROM Supplier "
-                    + "WHERE "
-                    + "( "
-                        + "(1 = ?1 AND TO_CHAR(taxId) LIKE '%' || UPPER(?2) || '%') "
-                        + "OR (1 = ?1 AND (UPPER(name) LIKE '%' || UPPER(?2) || '%')) "
-                        + "OR (1 = ?1 AND (UPPER(email) LIKE '%' || UPPER(?2) || '%')) "
-                        + "OR (1 = ?1 AND (UPPER(city) LIKE '%' || UPPER(?2) || '%')) "
-                        + "OR (1 = ?1 AND (UPPER(country) LIKE '%' || UPPER(?2) || '%')) "
-                    + ") "
-                    + "OR (1 = ?3)")
+            + "WHERE "
+            + "( "
+            + "(1 = ?1 AND TO_CHAR(taxId) LIKE '%' || UPPER(?2) || '%') "
+            + "OR (1 = ?1 AND (UPPER(name) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(email) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(city) LIKE '%' || UPPER(?2) || '%')) "
+            + "OR (1 = ?1 AND (UPPER(country) LIKE '%' || UPPER(?2) || '%')) "
+            + ") "
+            + "OR (1 = ?3)")
     /**
      * Diese Methode macht eine Rückfrage zur Datenbank mit den Filtern
      *

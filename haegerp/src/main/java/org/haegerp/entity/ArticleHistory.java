@@ -9,9 +9,9 @@ import org.haegerp.exception.LengthOverflowException;
 
 /**
  * ArticleHistory ist eine Versionierung von dem Artikel.<br/>
- * Wann ein Artikel geändert wird, dann die alte Version wird auch in heir speischern<br/>
+ * Wann ein Artikel geändert wird, dann die alte Version wird auch in heir speichern<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class ArticleHistory implements Serializable {

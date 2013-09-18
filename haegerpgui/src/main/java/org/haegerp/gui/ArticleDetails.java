@@ -25,12 +25,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 /**
+ * Dieses Formular wird die Details einer Artikeln kontrollieren
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class ArticleDetails extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 2949647041784163844L;
+    //Controller
     @Autowired
     private ArticleController articleController;
 
@@ -43,6 +45,7 @@ public class ArticleDetails extends javax.swing.JFrame {
     public ArticleCategoryController getArticleCategoryController() {
         return articleCategoryController;
     }
+    //Formulare
     @Autowired
     private ArticleCategoryManagement articleCategoryManagement;
 
@@ -59,12 +62,15 @@ public class ArticleDetails extends javax.swing.JFrame {
     private ChooserArticleClient chooserArticleClient;
     @Autowired
     private ChooserArticleSupplier chooserArticleSupplier;
+    //Verschiednen Stände von der Oberfläche
     private ArticleDetailsInterface articleDetailsView;
+    //Artikelkategorien
     private List<ArticleCategory> categories;
 
     public List<ArticleCategory> getCategories() {
         return categories;
     }
+    //Artikel, der gezeigt wird
     private Article article;
 
     public Article getArticle() {
@@ -78,21 +84,29 @@ public class ArticleDetails extends javax.swing.JFrame {
     public ArticleDetails() {
     }
 
+    //Wenn der Benutzer einen neuen Artikel erstellen möchte
     public void setNewMode() {
         articleDetailsView = new ArticleNewView();
         articleDetailsView.applyView(this);
     }
 
+    //Wenn der Benutzer einen Artikel ändern möchte
     public void setEditMode() {
         articleDetailsView = new ArticleEditView();
         articleDetailsView.applyView(this);
     }
 
+    //Wenn der Benutzer einen Artikel ansehen möchte
     public void setShowMode() {
         articleDetailsView = new ArticleShowView();
         articleDetailsView.applyView(this);
     }
 
+    /**
+     * Die Felder werden validiert
+     *
+     * @return Wenn das String leer ist, würde kein Fehler gefunden
+     */
     private String checkFields() {
         String errors = "";
         if (txtEan.getText().equals("")) {
@@ -118,6 +132,15 @@ public class ArticleDetails extends javax.swing.JFrame {
     }
 
     //Listeners
+    /**
+     * Wenn der Benutzer nur ansehen kann, wechselt der Knopf zur
+     * Änderungsmodus.<br/>
+     * Wenn der Benutzer die Felder ändern kann, wird der Artikel
+     * gespeichert.<br/>
+     * Diese Betrieb wird bei der Variable 'articleDetailsView' kontrolliert.
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
         String errors = "";
         if (!(articleDetailsView instanceof ArticleShowView)) {
@@ -130,10 +153,19 @@ public class ArticleDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Wenn der Benutzer nicht die Änderungen speichern möchte, wird der
+     * Artikel wieder zum Formular geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnCancel_ActionPerformed(ActionEvent e) {
         articleDetailsView.btnCancel(this);
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     private void setUp() {
         lblEan = new javax.swing.JLabel();
@@ -221,6 +253,7 @@ public class ArticleDetails extends javax.swing.JFrame {
         NumberFormatter percentEditFormatter = new NumberFormatter(percentEditFormat) {
             static final long serialVersionUID = 1L;
 
+            @Override
             public String valueToString(Object o)
                     throws ParseException {
                 Number number = (Number) o;
@@ -231,6 +264,7 @@ public class ArticleDetails extends javax.swing.JFrame {
                 return super.valueToString(number);
             }
 
+            @Override
             public Object stringToValue(String s)
                     throws ParseException {
                 Number number = (Number) super.stringToValue(s);

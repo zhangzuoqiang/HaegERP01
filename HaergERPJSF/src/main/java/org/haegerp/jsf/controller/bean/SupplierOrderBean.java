@@ -248,10 +248,10 @@ public class SupplierOrderBean implements Serializable {
                 if (deleteSupplierOrder.getSendDate() == null) {
                     supplierOrderController.delete(deleteSupplierOrder);
                     severity = FacesMessage.SEVERITY_INFO;
-                    msg = "Selected Order Supplier Order was deleted.";
+                    msg = "Selected Supplier Order was deleted.";
                 } else {
                     severity = FacesMessage.SEVERITY_WARN;
-                    msg = "The selected Supplier Order was already set.";
+                    msg = "The selected Supplier Order was already sent.";
                 }
             } catch (Exception e) {
                 Logger.getGlobal().log(Level.SEVERE, e.getMessage());
@@ -297,6 +297,9 @@ public class SupplierOrderBean implements Serializable {
         return (supplierOrderController.getPage().getNumber() + 1) + " / " + supplierOrderController.getPage().getTotalPages();
     }
 
+    /**
+     * Wenn der Benutzer den 'Suchen' Knopf druckt
+     */
     public void supplierChooserSearch() {
         if (formSupplierOrder.getTxtSearchSupplier().equals("")) {
             formSupplierOrder.setTblChooserSuppliers(supplierController.loadAllTableRows(0, "", 1));
@@ -305,11 +308,19 @@ public class SupplierOrderBean implements Serializable {
         }
     }
 
+    /**
+     * Wenn der Benutzer einen Lieferanten auswählt
+     *
+     * @param idSupplier ID des Lieferanten
+     */
     public void supplierChooserSelect(long idSupplier) {
         supplier = supplierController.getSupplierById(idSupplier);
         formSupplierOrder.setTxtSupplierName(supplier.getName());
     }
 
+    /**
+     * Wenn der Benutzer den 'Suchen' Knopf druckt
+     */
     public void articleChooserSearch() {
         if (formSupplierOrder.getTxtSearchArticle().equals("")) {
             formSupplierOrder.setTblChooserArticles(articleController.loadAllTableRows(0, "", 1));
@@ -318,6 +329,11 @@ public class SupplierOrderBean implements Serializable {
         }
     }
 
+    /**
+     * Wenn der Benutzer einen Artikel auswählt
+     *
+     * @param idArticle ID des Artikels
+     */
     public void articleChooserSelect(long idArticle) {
         Article article = articleController.getArticleById(idArticle);
 
@@ -376,6 +392,9 @@ public class SupplierOrderBean implements Serializable {
         return supplier != null;
     }
 
+    /**
+     * Als 'geschickt' markieren
+     */
     public void markAsSended() {
         if (!formSupplierOrder.isDisabledSendDate()) {
             Date date = new Date();
@@ -386,6 +405,9 @@ public class SupplierOrderBean implements Serializable {
         }
     }
 
+    /**
+     * Die Rechnung wird bekommen
+     */
     public void markAsBillReceived() {
         Date date = new Date();
         formSupplierOrder.setTxtBillReceived(new SimpleDateFormat("dd-MM-yyyy HH:mm")
@@ -403,6 +425,9 @@ public class SupplierOrderBean implements Serializable {
         btnEditSave_ActionPerformed();
     }
 
+    /**
+     * Die Rechnung wurde bezahlt
+     */
     public void markAsBillPaid() {
         Date date = new Date();
         formSupplierOrder.setTxtBillPaid(new SimpleDateFormat("dd-MM-yyyy HH:mm")
@@ -421,6 +446,11 @@ public class SupplierOrderBean implements Serializable {
         btnEditSave_ActionPerformed();
     }
     
+    /**
+     * Ein Artikel der bestellung wird gelöscht
+     *
+     * @param supplierOrderDetail ID des Artikels
+     */
     public void deleteArticle(SupplierOrderDetailPK supplierOrderDetail) {
         long deleteArticleId = supplierOrderDetail.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
         

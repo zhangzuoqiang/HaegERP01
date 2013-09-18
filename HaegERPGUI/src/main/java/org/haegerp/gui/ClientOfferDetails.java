@@ -34,12 +34,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 /**
+ * Dieses Formular wird die Details einer Kundenbestellung kontrollieren
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class ClientOfferDetails extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 2949647041784163844L;
+    //Controller
     @Autowired
     private ClientOfferController clientOfferController;
 
@@ -70,18 +72,24 @@ public class ClientOfferDetails extends javax.swing.JFrame {
     public ClientController getClientController() {
         return clientController;
     }
+    //Formulare
     @Autowired
     private ClientOfferManagement clientOfferManagement;
 
     public ClientOfferManagement getClientOfferManagement() {
         return clientOfferManagement;
     }
+    //Das ist, wo der Benutzer den Artikel auswählen kann
     @Autowired
     private ChooserArticleClient chooserArticleClient;
+    //Das ist, wo der Benutzer den Kunden auswählen kann
     @Autowired
     private ChooserClient chooserClient;
+    //Inhalt der Tabelle
     public DefaultTableModel model;
+    //Verschiednen Stände von der Oberfläche
     private ClientOfferDetailsInterface clientOfferDetailsView;
+    //Ausgewählt Kunde
     private Client client = null;
 
     public Client getClient() {
@@ -91,6 +99,7 @@ public class ClientOfferDetails extends javax.swing.JFrame {
     public void setClient(Client client) {
         this.client = client;
     }
+    //Kundenbestellung, die gezeigt wird
     private ClientOffer clientOffer;
 
     public ClientOffer getClientOffer() {
@@ -101,29 +110,50 @@ public class ClientOfferDetails extends javax.swing.JFrame {
         this.clientOffer = clientOffer;
     }
 
-    protected void btnAddArticle_ActionPerformed(ActionEvent e) {
-        chooserArticleClient.showChooserArticleClient();
-    }
-
     public ClientOfferDetails() {
     }
 
+    //Wenn der Benutzer eine neue Kundenbestellung erstellen möchte
     public void setNewMode() {
         clientOfferDetailsView = new ClientOfferNewView();
         clientOfferDetailsView.applyView(this);
     }
 
+    //Wenn der Benutzer eine Kundenbestellung ändern möchte
     public void setEditMode() {
         clientOfferDetailsView = new ClientOfferEditView();
         clientOfferDetailsView.applyView(this);
     }
 
+    //Wenn der Benutzer eine Kundenbestellung ansehen möchte
     public void setShowMode() {
         clientOfferDetailsView = new ClientOfferShowView();
         clientOfferDetailsView.applyView(this);
     }
 
+    /**
+     * Die Felder werden validiert
+     *
+     * @return Wenn das String leer ist, würde kein Fehler gefunden
+     */
+    private String checkFields() {
+        if (client == null) {
+            return "Please select a supplier to which the order will be sent.";
+        }
+        return "";
+    }
+
     // Listeners
+    /**
+     * Wenn der Benutzer nur ansehen kann, wechselt der Knopf zur
+     * Änderungsmodus.<br/>
+     * Wenn der Benutzer die Felder ändern kann, wird der Artikel
+     * gespeichert.<br/>
+     * Diese Betrieb wird bei der Variable 'clientOfferDetailsView'
+     * kontrolliert.
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
         String errors = "";
         if (!(clientOfferDetailsView instanceof SupplierOrderShowView)) {
@@ -137,23 +167,41 @@ public class ClientOfferDetails extends javax.swing.JFrame {
         }
     }
 
-    private String checkFields() {
-        if (client == null) {
-            return "Please select a supplier to which the order will be sent.";
-        }
-        return "";
-    }
-
+    /**
+     * Wenn der Benutzer nicht die Änderungen speichern möchte, wird die
+     * Kundenbestellung wieder zum Formular geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnCancel_ActionPerformed(ActionEvent e) {
         clientOfferDetailsView.btnCancel(this);
     }
 
+    /**
+     * Wenn der Benutzer einen Artikel zur Kundenbestellung einfügen möchte.
+     *
+     * @param e ActionEvent Werte
+     */
+    protected void btnAddArticle_ActionPerformed(ActionEvent e) {
+        chooserArticleClient.showChooserArticleClient();
+    }
+
+    /**
+     * Wenn der Benutzer einen Artikel von der Kundenbestellung löschten möchte
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDeleteArticle_ActionPerformed(ActionEvent e) {
         if (tblArticles.getSelectedRow() >= 0) {
             model.removeRow(tblArticles.getSelectedRow());
         }
     }
 
+    /**
+     * Ein Kunde wird beim Benutzer ausgewählt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtClient_MouseClicked(MouseEvent e) {
         if (!(clientOfferDetailsView instanceof SupplierOrderShowView)
                 && clientOffer.getSendDate() == null) {
@@ -161,6 +209,11 @@ public class ClientOfferDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Die Kundenbestellung wird als 'geschickt' markiert
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtSendDate_MouseClicked(MouseEvent e) {
         if (clientOfferDetailsView instanceof SupplierOrderEditView
                 && clientOffer.getSendDate() == null) {
@@ -179,6 +232,11 @@ public class ClientOfferDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Die Rechnung wird gemacht
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtBilled_MouseClicked(MouseEvent e) {
         if (clientOfferDetailsView instanceof SupplierOrderEditView
                 && clientOffer.getClientBill() == null
@@ -202,6 +260,11 @@ public class ClientOfferDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Die Rechnung wurde beim Kunden bezahlt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtBillPaid_MouseClicked(MouseEvent e) {
         if (clientOfferDetailsView instanceof SupplierOrderEditView
                 && clientOffer.getClientBill() != null
@@ -225,6 +288,9 @@ public class ClientOfferDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     private void setUp() {
         pnlInfo = new javax.swing.JPanel();

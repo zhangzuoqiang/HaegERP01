@@ -37,13 +37,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+/**
+ * Dieses Formular wird Gehaltkategorien verwalten
+ *
+ * @author Fabio Codinha
+ */
 public class SalaryCategoryManagement extends JFrame {
 
-    private static final long serialVersionUID = 4611390378854969459L;
+    //Controller
     @Autowired
     private EmployeeController employeeController;
     @Autowired
     private SalaryCategoryController salaryCategoryController;
+    //Formulare
     @Autowired
     private SalaryCategoryDetails salaryCategoryDetails;
     @Autowired
@@ -52,6 +58,9 @@ public class SalaryCategoryManagement extends JFrame {
     public SalaryCategoryManagement() {
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         tblSalaryCategory.setModel(
                 new DefaultTableModel(
@@ -71,31 +80,61 @@ public class SalaryCategoryManagement extends JFrame {
     }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         salaryCategoryController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         salaryCategoryController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Artikeln, die eine Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         salaryCategoryController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         salaryCategoryController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Ein neuer Artikel wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         salaryCategoryDetails.setNewMode();
         salaryCategoryDetails.setVisible(true);
     }
 
+    /**
+     * Ein Artikel, der in der Datenbank ist, wird beim Benutzer geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblSalaryCategory.getSelectedRow();
         if (row != -1) {
@@ -106,6 +145,11 @@ public class SalaryCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Ein Artikel wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblSalaryCategory.getSelectedRow();
         int option = 1;
@@ -134,6 +178,11 @@ public class SalaryCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Gehaltkategorie wird gezeigt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void tblSalaryCategory_MouseDoubleClick(MouseEvent e) {
         int row = tblSalaryCategory.getSelectedRow();
         if (row != -1) {
@@ -144,6 +193,9 @@ public class SalaryCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnlTblSalaryCategory = new JScrollPane();

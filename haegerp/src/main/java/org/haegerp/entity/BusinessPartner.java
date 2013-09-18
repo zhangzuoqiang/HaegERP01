@@ -9,7 +9,7 @@ import org.haegerp.exception.LengthOverflowException;
  * Der Geschäftspartner ist eine Abstract Klasse.<br/>
  * Er muss erbt werden.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public abstract class BusinessPartner implements Serializable {

@@ -11,7 +11,7 @@ import org.haegerp.ws.HaegerpWS;
 /**
  * Diese Klasse testet das Web-Service "HaegerpWS"
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class HaegerpClient {

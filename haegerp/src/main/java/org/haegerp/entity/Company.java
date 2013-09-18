@@ -8,7 +8,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Hier bearbeitet man über die Information, die zu der Firma gehört.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Company implements Serializable {

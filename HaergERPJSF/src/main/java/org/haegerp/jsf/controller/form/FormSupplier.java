@@ -3,7 +3,7 @@ package org.haegerp.jsf.controller.form;
 import org.haegerp.entity.Supplier;
 
 /**
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormSupplier {
     //Geschäftspartners Name (Erforderlich)
@@ -43,11 +43,22 @@ public class FormSupplier {
     public FormSupplier() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormSupplier(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param supplier Lieferant
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormSupplier(Supplier supplier, boolean disabled) {
         txtTaxId = String.valueOf(supplier.getTaxId());
         txtName = supplier.getName();
@@ -65,6 +76,12 @@ public class FormSupplier {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

@@ -21,76 +21,75 @@ public interface EmployeeController {
 	
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<Employee> getPage();
 	
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 	
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 	
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param idSalaryCategory Welche Gehaltkategorie, die der Benutzer gewählt hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 */
 	public void setSalaryCategory(Long idSalaryCategory, int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param idUserGroup Welche Benutzergruppe, die der Benutzer gewählt hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 */
 	public void setUserGroup(Long idUserGroup, int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param idDivision Welche division, die der Benutzer gewählt hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 */
 	public void setDivision(Long idDivision, int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param value Wert, der der Benutzer geschrieben hat
-	 * @param field Welches Feld, das der Benutzer suchen will
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 	
 	/**
-	 * Der Mitarbeiter wurde gelöscht
+	 * Der Mitarbeiter wird gelöscht
 	 * @param employee Der Mitarbeiter
 	 */
 	public void delete(Employee employee);
 	
 	/**
-	 * Der Mitarbeiter wurde gespeichert
+	 * Der Mitarbeiter wird gespeichert
 	 * @param employee Der Mitarbeiter
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Employee save(Employee employee);
 	
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Mitarbeiter will der Benutzer in der Seite
 	 * @return Seite mit den Mitarbeitern
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
@@ -129,9 +128,9 @@ public interface EmployeeController {
         public boolean isEmployeeOffersEmpty(long idEmployee);
         
         /**
-         * Hat der Mitarbeiter keine Bestellungen?
-         * @param idEmployee ID des Lieferant.
-         * @return True - Wenn der Lieferant keine Bestellung hat; False - Sonst.
+         * Hat der Mitarbeiter kein Angebot?
+         * @param idEmployee ID des Mitarbeiters.
+         * @return True - Wenn der Mitarbeiter keine Bestellung hat; False - Sonst.
          */
         @Transactional(propagation=Propagation.REQUIRED)
         public boolean isEmployeeOrdersEmpty(long idEmployee);

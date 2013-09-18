@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Die Kundenkategorie gruppiert die Kunden.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class ClientCategory implements Serializable {

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die
  * Gehaltkaregorien bereitstellt.
  *
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Repository

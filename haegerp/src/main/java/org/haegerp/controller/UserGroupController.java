@@ -13,69 +13,69 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserGroupController {
 	
 	/**
-	 * Bekommt alle Kategorien in einer Liste.
+	 * Bekommt alle Gruppen in einer Liste.
 	 * @return Liste mit den Kategorien
 	 */
 	public List<UserGroup> getAllGroups();
 	
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<UserGroup> getPage();
 	
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Benutzergruppen will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 	
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Benutzergruppen will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 	
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Benutzergruppe will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param value Wert, der der Benutzer geschrieben hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Benutzergruppen will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 	
 	/**
-	 * Die Artikelkategorie wurde gelöscht
+	 * Die Benutzergruppe wird gelöscht
 	 * @param articleCategory Die Artikelkategorie
 	 */
 	public void delete(UserGroup articleCategory);
 	
 	/**
-	 * Die Artikelkategorie wurde gespeichert
+	 * Die Benutzergruppe wird gespeichert
 	 * @param articleCategory Die Artikelkategorie
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public UserGroup save(UserGroup articleCategory);
 	
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
-	 * @param size Wie viele Linea will der Benutzer in der Seite
-	 * @return Seite mit den Artikelkategorien
+	 * @param size Wie viele Benutzergruppen will der Benutzer in der Seite
+	 * @return Seite mit den Benutzergruppen
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Page<UserGroup> loadPage(int size);
 	
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Benutzergruppen will der Benutzer in der Seite
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)

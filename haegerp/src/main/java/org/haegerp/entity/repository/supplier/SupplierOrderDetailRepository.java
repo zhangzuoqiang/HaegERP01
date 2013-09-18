@@ -10,17 +10,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Linien den Lieferantrechnungen bereitstellt.
- * 
- * @author Wolf
+ * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die
+ * Linien den Lieferantrechnungen bereitstellt.
+ *
+ * @author Fabio Codinha
  *
  */
 @Repository
 @Transactional
 public interface SupplierOrderDetailRepository extends MyRepository<SupplierOrderDetail, SupplierOrderDetailPK> {
 
-	@Query(value="FROM SupplierOrderDetail " +
-				"WHERE supplierOrderDetailPK.supplierOrder.idSupplierOrder = ?1")
-	public List<SupplierOrderDetail> findAllByIdSupplierOrder(long idSupplierOrder);
-
+    @Query(value = "FROM SupplierOrderDetail "
+            + "WHERE supplierOrderDetailPK.supplierOrder.idSupplierOrder = ?1")
+    public List<SupplierOrderDetail> findAllByIdSupplierOrder(long idSupplierOrder);
 }

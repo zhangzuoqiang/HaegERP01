@@ -1,39 +1,38 @@
 package org.haegerp.jsf.controller.form;
 
 import java.text.SimpleDateFormat;
-import org.haegerp.entity.SupplierOrder;
+import org.haegerp.entity.ClientOffer;
 
 /**
  *
  * @author Fabio Codinha
  */
-public class FormSupplierOrder {
-    //Lieferanten Name
-
-    private String txtSupplierName;
-    //Der Benutzer kann den Lieferanten nochmal wählen
-    private boolean disabledSupplier;
+public class FormClientOffer {
     //Kunden Name
+    private String txtClientName;
+    //Der Benutzer kann den Kunden nochmal wählen
+    private boolean disabledClient;
+    //Benutzer Name
     private String txtEmployeeName;
-    //Lieferantsbestellung: Datum der Bestellung (Erforderlich)
+    //Kundenangebot: Datum des Antegots (Erforderlich)
     private String txtOrderDate;
-    //Lieferantsbestellung: Wann ist die Bestellung geschickt
+    //Kundenangebot: Wann ist das Angebot geschickt
     private String txtSendDate;
-    //Der Benutzer kann die Bestellung auf geschickt ändern
+    //Der Benutzer kann das Angebot auf geschickt ändern
     private boolean disabledSendDate;
-    //Lieferantsbestellung: Datum der Rechnung
+    //Kundenangebot: Datum der Rechnung
     private String txtBillReceived;
     //Kann der Benutzer die Datum der Rechnung speichern?
     private boolean disableBillReceived;
-    //Lieferantsbestellung: Datum 
+    //Kundenangebot: Datum 
     private String txtBillPaid;
     //Kann der Benutzer die Datum der Rechnung Zahlung speichern?
     private boolean disableBillPaid;
-    //Lieferantsbestellung Summe
+    //Kundenangebot Summe
     private String txtTotal;
-    //Lieferantsbestellung Beschreibung
+    //Kundenangebot Beschreibung
     private String txtDescription;
-    //Artikel der Bestellung
+    //Artikel des Angebots
     private Object[][] tblArticles;
     //Kann der Benutzer die Artikel ändern?
     private boolean disableArticle;
@@ -43,16 +42,16 @@ public class FormSupplierOrder {
     //btnCancel
     private String btnCancel_Name;
     private boolean btnCancel_Ajax;
-    //Wählend der Artikeln
+    //Wählender der Artikeln
     //Die Artikel
     private Object[][] tblChooserArticles;
     private String txtSearchArticle;
-    //Wählender der Lieferanten
+    //Wählend der Kunden
     //Inhalt der Tabelle
-    private Object[][] tblChooserSuppliers;
-    private String txtSearchSupplier;
+    private Object[][] tblChooserClients;
+    private String txtSearchClient;
 
-    public FormSupplierOrder() {
+    public FormClientOffer() {
     }
 
     /**
@@ -60,17 +59,17 @@ public class FormSupplierOrder {
      *
      * @param disabled
      */
-    public FormSupplierOrder(boolean disabled) {
+    public FormClientOffer(boolean disabled) {
         this.disabled = disabled;
         if (!disabled) {
             disableArticle = false;
-            disabledSupplier = false;
+            disabledClient = false;
             disableBillPaid = true;
             disableBillReceived = true;
             disabledSendDate = true;
         } else {
             disableArticle = true;
-            disabledSupplier = true;
+            disabledClient = true;
             disableBillPaid = true;
             disableBillReceived = true;
             disabledSendDate = true;
@@ -78,44 +77,45 @@ public class FormSupplierOrder {
         configureButtons(disabled);
     }
 
+    
     /**
      * Bei Änderung oder Schau Modus
      *
-     * @param supplierOrder Lieferantenbestellung
+     * @param clientOffer Kundenangebot
      * @param disabled True - Schau Modus; False - Änderung Modus
      */
-    public FormSupplierOrder(SupplierOrder supplierOrder, boolean disabled) {
-        txtSupplierName = supplierOrder.getSupplier().getName();
-        txtEmployeeName = supplierOrder.getEmployee().getName();
-        if (supplierOrder.getOrderDate() != null) {
-            txtOrderDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getOrderDate());
+    public FormClientOffer(ClientOffer clientOffer, boolean disabled) {
+        txtClientName = clientOffer.getClient().getName();
+        txtEmployeeName = clientOffer.getEmployee().getName();
+        if (clientOffer.getOfferDate() != null) {
+            txtOrderDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getOfferDate());
         } else {
             txtOrderDate = "";
         }
 
-        if (supplierOrder.getSendDate() != null) {
-            txtSendDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSendDate());
-            disabledSupplier = true;
+        if (clientOffer.getSendDate() != null) {
+            txtSendDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getSendDate());
+            disabledClient = true;
             disabledSendDate = true;
         } else {
-            txtSendDate = "Order not sent";
-            disabledSupplier = false;
+            txtSendDate = "Offer not sent";
+            disabledClient = false;
             disabledSendDate = false;
         }
 
-        if (supplierOrder.getSupplierBill() != null) {
-            if (supplierOrder.getSupplierBill().getReceivedDate() != null) {
-                txtBillReceived = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSupplierBill().getReceivedDate());
+        if (clientOffer.getClientBill() != null) {
+            if (clientOffer.getClientBill().getBilledDate() != null) {
+                txtBillReceived = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getBilledDate());
                 disableBillReceived = true;
                 disableArticle = true;
             } else {
-                txtBillReceived = "Bill not Received";
+                txtBillReceived = "Not yet Billed";
                 disableBillReceived = false;
                 disableArticle = false;
             }
 
-            if (supplierOrder.getSupplierBill().getPaidDate() != null) {
-                txtBillPaid = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(supplierOrder.getSupplierBill().getPaidDate());
+            if (clientOffer.getClientBill().getPaidDate() != null) {
+                txtBillPaid = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getPaidDate());
                 disableBillPaid = true;
             } else {
                 txtBillPaid = "Bill not Paid";
@@ -128,13 +128,13 @@ public class FormSupplierOrder {
                 disableBillReceived = false;
             }
         }
-        txtTotal = String.valueOf(supplierOrder.getTotal());
+        txtTotal = String.valueOf(clientOffer.getTotal());
 
-        txtDescription = supplierOrder.getDescription();
+        txtDescription = clientOffer.getDescription();
         this.disabled = disabled;
         if (disabled) {
             disableArticle = true;
-            disabledSupplier = true;
+            disabledClient = true;
             disableBillPaid = true;
             disableBillReceived = true;
             disabledSendDate = true;
@@ -161,17 +161,45 @@ public class FormSupplierOrder {
     }
 
     /**
-     * @return the txtSupplierName
+     * @return the txtClientName
      */
-    public String getTxtSupplierName() {
-        return txtSupplierName;
+    public String getTxtClientName() {
+        return txtClientName;
     }
 
     /**
-     * @param txtSupplierName the txtSupplierName to set
+     * @param txtClientName the txtClientName to set
      */
-    public void setTxtSupplierName(String txtSupplierName) {
-        this.txtSupplierName = txtSupplierName;
+    public void setTxtClientName(String txtClientName) {
+        this.txtClientName = txtClientName;
+    }
+
+    /**
+     * @return the disabledClient
+     */
+    public boolean isDisabledClient() {
+        return disabledClient;
+    }
+
+    /**
+     * @param disabledClient the disabledClient to set
+     */
+    public void setDisabledClient(boolean disabledClient) {
+        this.disabledClient = disabledClient;
+    }
+
+    /**
+     * @return the txtEmployeeName
+     */
+    public String getTxtEmployeeName() {
+        return txtEmployeeName;
+    }
+
+    /**
+     * @param txtEmployeeName the txtEmployeeName to set
+     */
+    public void setTxtEmployeeName(String txtEmployeeName) {
+        this.txtEmployeeName = txtEmployeeName;
     }
 
     /**
@@ -203,6 +231,20 @@ public class FormSupplierOrder {
     }
 
     /**
+     * @return the disabledSendDate
+     */
+    public boolean isDisabledSendDate() {
+        return disabledSendDate;
+    }
+
+    /**
+     * @param disabledSendDate the disabledSendDate to set
+     */
+    public void setDisabledSendDate(boolean disabledSendDate) {
+        this.disabledSendDate = disabledSendDate;
+    }
+
+    /**
      * @return the txtBillReceived
      */
     public String getTxtBillReceived() {
@@ -217,6 +259,20 @@ public class FormSupplierOrder {
     }
 
     /**
+     * @return the disableBillReceived
+     */
+    public boolean isDisableBillReceived() {
+        return disableBillReceived;
+    }
+
+    /**
+     * @param disableBillReceived the disableBillReceived to set
+     */
+    public void setDisableBillReceived(boolean disableBillReceived) {
+        this.disableBillReceived = disableBillReceived;
+    }
+
+    /**
      * @return the txtBillPaid
      */
     public String getTxtBillPaid() {
@@ -228,6 +284,20 @@ public class FormSupplierOrder {
      */
     public void setTxtBillPaid(String txtBillPaid) {
         this.txtBillPaid = txtBillPaid;
+    }
+
+    /**
+     * @return the disableBillPaid
+     */
+    public boolean isDisableBillPaid() {
+        return disableBillPaid;
+    }
+
+    /**
+     * @param disableBillPaid the disableBillPaid to set
+     */
+    public void setDisableBillPaid(boolean disableBillPaid) {
+        this.disableBillPaid = disableBillPaid;
     }
 
     /**
@@ -256,6 +326,34 @@ public class FormSupplierOrder {
      */
     public void setTxtDescription(String txtDescription) {
         this.txtDescription = txtDescription;
+    }
+
+    /**
+     * @return the tblArticles
+     */
+    public Object[][] getTblArticles() {
+        return tblArticles;
+    }
+
+    /**
+     * @param tblArticles the tblArticles to set
+     */
+    public void setTblArticles(Object[][] tblArticles) {
+        this.tblArticles = tblArticles;
+    }
+
+    /**
+     * @return the disableArticle
+     */
+    public boolean isDisableArticle() {
+        return disableArticle;
+    }
+
+    /**
+     * @param disableArticle the disableArticle to set
+     */
+    public void setDisableArticle(boolean disableArticle) {
+        this.disableArticle = disableArticle;
     }
 
     /**
@@ -315,34 +413,6 @@ public class FormSupplierOrder {
     }
 
     /**
-     * @return the tblArticles
-     */
-    public Object[][] getTblArticles() {
-        return tblArticles;
-    }
-
-    /**
-     * @param tblArticles the tblArticles to set
-     */
-    public void setTblArticles(Object[][] tblArticles) {
-        this.tblArticles = tblArticles;
-    }
-
-    /**
-     * @return the txtEmployeeName
-     */
-    public String getTxtEmployeeName() {
-        return txtEmployeeName;
-    }
-
-    /**
-     * @param txtEmployeeName the txtEmployeeName to set
-     */
-    public void setTxtEmployeeName(String txtEmployeeName) {
-        this.txtEmployeeName = txtEmployeeName;
-    }
-
-    /**
      * @return the tblChooserArticles
      */
     public Object[][] getTblChooserArticles() {
@@ -371,100 +441,31 @@ public class FormSupplierOrder {
     }
 
     /**
-     * @return the tblChooserSuppliers
+     * @return the tblChooserClients
      */
-    public Object[][] getTblChooserSuppliers() {
-        return tblChooserSuppliers;
+    public Object[][] getTblChooserClients() {
+        return tblChooserClients;
     }
 
     /**
-     * @param tblChooserSuppliers the tblChooserSuppliers to set
+     * @param tblChooserClients the tblChooserClients to set
      */
-    public void setTblChooserSuppliers(Object[][] tblChooserSuppliers) {
-        this.tblChooserSuppliers = tblChooserSuppliers;
+    public void setTblChooserClients(Object[][] tblChooserClients) {
+        this.tblChooserClients = tblChooserClients;
     }
 
     /**
-     * @return the txtSearchSupplier
+     * @return the txtSearchClient
      */
-    public String getTxtSearchSupplier() {
-        return txtSearchSupplier;
+    public String getTxtSearchClient() {
+        return txtSearchClient;
     }
 
     /**
-     * @param txtSearchSupplier the txtSearchSupplier to set
+     * @param txtSearchClient the txtSearchClient to set
      */
-    public void setTxtSearchSupplier(String txtSearchSupplier) {
-        this.txtSearchSupplier = txtSearchSupplier;
+    public void setTxtSearchClient(String txtSearchClient) {
+        this.txtSearchClient = txtSearchClient;
     }
 
-    /**
-     * @return the disabledSupplier
-     */
-    public boolean isDisabledSupplier() {
-        return disabledSupplier;
-    }
-
-    /**
-     * @param disabledSupplier the disabledSupplier to set
-     */
-    public void setDisabledSupplier(boolean disabledSupplier) {
-        this.disabledSupplier = disabledSupplier;
-    }
-
-    /**
-     * @return the disabledSendDate
-     */
-    public boolean isDisabledSendDate() {
-        return disabledSendDate;
-    }
-
-    /**
-     * @param disabledSendDate the disabledSendDate to set
-     */
-    public void setDisabledSendDate(boolean disabledSendDate) {
-        this.disabledSendDate = disabledSendDate;
-    }
-
-    /**
-     * @return the disableBillReceived
-     */
-    public boolean isDisableBillReceived() {
-        return disableBillReceived;
-    }
-
-    /**
-     * @param disableBillReceived the disableBillReceived to set
-     */
-    public void setDisableBillReceived(boolean disableBillReceived) {
-        this.disableBillReceived = disableBillReceived;
-    }
-
-    /**
-     * @return the disableBillPaid
-     */
-    public boolean isDisableBillPaid() {
-        return disableBillPaid;
-    }
-
-    /**
-     * @param disableBillPaid the disableBillPaid to set
-     */
-    public void setDisableBillPaid(boolean disableBillPaid) {
-        this.disableBillPaid = disableBillPaid;
-    }
-
-    /**
-     * @return the disableArticle
-     */
-    public boolean isDisableArticle() {
-        return disableArticle;
-    }
-
-    /**
-     * @param disableArticle the disableArticle to set
-     */
-    public void setDisableArticle(boolean disableArticle) {
-        this.disableArticle = disableArticle;
-    }
 }

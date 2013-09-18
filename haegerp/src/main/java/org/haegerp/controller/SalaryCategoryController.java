@@ -20,45 +20,45 @@ public interface SalaryCategoryController {
 	
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<SalaryCategory> getPage();
 	
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Gehaltskategorien will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 	
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Gehaltskategorien will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 	
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Gehaltskategorien will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param value Wert, der der Benutzer geschrieben hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Gehaltskategorien will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 	
 	/**
-	 * Die Salarykategorie wurde gelöscht
+	 * Die Gehaltskategorie wird gelöscht
 	 * @param salaryCategory Die Salarykategorie
 	 */
 	public void delete(SalaryCategory salaryCategory);
 	
 	/**
-	 * Die Artikelkategorie wurde gespeichert
+	 * Die Gehaltskategorien wird gespeichert
 	 * @param salaryCategory Die Artikelkategorie
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
@@ -67,15 +67,16 @@ public interface SalaryCategoryController {
 	/**
 	 * Eine neue Seite wird erhalt
 	 * 
-	 * @param size Wie viele Linea will der Benutzer in der Seite
-	 * @return Seite mit den Artikelkategorien
+	 * @param size Wie viele Gehaltskategorien will der Benutzer in der Seite
+	 * @return Seite mit den Gehaltskategorien
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Page<SalaryCategory> loadPage(int size);
 	
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+         * 
+	 * @param size Wie viele Gehaltskategorien will der Benutzer in der Seite
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
@@ -83,6 +84,7 @@ public interface SalaryCategoryController {
 	
 	/**
 	 * Holt eine Gehaltskategorie
+         * 
 	 * @param id ID der Gehaltskategorie
 	 * @return Die Gehaltskategorie
 	 */
@@ -90,7 +92,8 @@ public interface SalaryCategoryController {
 	public SalaryCategory getSalaryCategoryById(long id);
         
         /**
-         * Hat die Gehaltkategorie keine Mitarbeiter?
+         * Hat die Gehaltskategorie keine Mitarbeiter?
+         * 
          * @param idCategory ID der Gehaltkategorie.
          * @return True - Wenn die Kategorie keinen Mitarbeiter hat; False - Sonst.
          */

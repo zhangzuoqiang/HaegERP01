@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Hier kann man nur die Benutzergruppe von der Mitarbeiter ändern.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class UserGroup implements Serializable {

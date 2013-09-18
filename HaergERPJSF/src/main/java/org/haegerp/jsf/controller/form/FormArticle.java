@@ -4,10 +4,11 @@ import org.haegerp.entity.Article;
 
 /**
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormArticle {
     //Artikels EAN (Erforderlich)
+
     private String txtEan;
     //Artikels Name (Erforderlich)
     private String txtName;
@@ -31,24 +32,32 @@ public class FormArticle {
     private String txtSizeW;
     //Artikels Beschreibung
     private String txtDescription;
-    
     private boolean disabled;
-    
     //btnEditSave
     private String btnEditSave_Name;
-    
     //btnCancel
     private String btnCancel_Name;
     private boolean btnCancel_Ajax;
-    
+
     public FormArticle() {
     }
-    
+
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormArticle(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
-    
+
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param article Artikel
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormArticle(Article article, boolean disabled) {
         txtEan = String.valueOf(article.getEan());
         txtName = article.getName();
@@ -65,7 +74,13 @@ public class FormArticle {
         this.disabled = disabled;
         configureButtons(disabled);
     }
-    
+
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

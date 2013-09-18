@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 /**
  * Klasse, die die Erlaubnisse und das Modell führt
  * 
- * @author Wolf
+ * @author Fabio Codinha
  */
 @ManagedBean
 @Controller

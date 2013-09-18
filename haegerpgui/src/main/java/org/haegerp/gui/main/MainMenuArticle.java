@@ -9,7 +9,7 @@ import org.haegerp.gui.MainMenu;
 /**
  * Diese Klasse zeigt die Artikeloptionen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class MainMenuArticle implements MainMenuInterface {

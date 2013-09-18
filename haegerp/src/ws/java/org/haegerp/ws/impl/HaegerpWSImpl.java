@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementierung von dem Web-Service
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @WebService(endpointInterface = "org.haegerp.ws.HaegerpWS")

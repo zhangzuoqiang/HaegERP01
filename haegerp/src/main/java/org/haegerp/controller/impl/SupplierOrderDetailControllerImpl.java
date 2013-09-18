@@ -128,9 +128,4 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
 
         supplierOrderDetailRepository.delete(entities);
     }
-
-    @Override
-    public void delete(SupplierOrderDetail supplierOrderDetail) {
-        supplierOrderDetailRepository.delete(supplierOrderDetail);
-    }
 }

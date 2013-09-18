@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Diese Entität bearbeitet alle Logs, was die Mitarbeiter in dem System machen.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Log implements Serializable {

@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Diese Klasse besitzt die Geschäftslogik von dem Kunden.
+ * Diese Klasse besitzt die Geschäftslogik von dem Kundenangebot.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
@@ -20,13 +20,13 @@ public interface ClientOfferController {
 
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<ClientOffer> getPage();
 
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele KundenAngeboten will der Benutzer in der Seite
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -35,32 +35,32 @@ public interface ClientOfferController {
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param text Wert, der der Benutzer geschrieben hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele KundenAngeboten will der Benutzer in der Seite
 	 */
 	public void setSearch(String text, int size);
 
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele KundenAngeboten will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele KundenAngeboten will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele KundenAngeboten will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
 	 * @param size Grösse der Seite
 	 * @return Seite mit den Kundenangeboten
@@ -69,20 +69,20 @@ public interface ClientOfferController {
 	public Page<ClientOffer> loadPage(int size);
 
 	/**
-	 * Die Lieferantenbestellung wurde gespeichert
-	 * @param clientOffer Die Lieferantbestellung
+	 * Das Kundenangeboten wird gespeichert
+	 * @param clientOffer Das Kundenangebot
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ClientOffer save(ClientOffer clientOffer);
 
 	/**
-	 * Das Kundenangebot wurde gelöscht
+	 * Das Kundenangebot wird gelöscht
 	 * @param clientOffer Das Kundenangebot
 	 */
 	public void delete(ClientOffer clientOffer);
 	
 	/**
-	 * Die Lieferantenbestellung wird aktualisiert
+	 * Das Kundenangebot wird aktualisiert
 	 * 
 	 * @param clientOffer Das Kundenangebot
 	 * @return Das Kundenangebot danach die Aktualisierung
@@ -94,7 +94,7 @@ public interface ClientOfferController {
 	/**
 	 * Das Kundenangebot wird erstellt
 	 * 
-	 * @param clientOrder
+	 * @param clientOrder Das Kundenangebot
 	 * @return Das Kundenangebot danach die erstellung
 	 * @throws LengthOverflowException Wenn ein Wert falsh ist
 	 */
@@ -102,7 +102,7 @@ public interface ClientOfferController {
 	public ClientOffer newClientOffer(ClientOffer clientOffer) throws LengthOverflowException;
 	
 	/**
-	 * Holt die Rechnung des Angebot
+	 * Holt die Rechnung des Angebots
 	 * @param idSupplierBill Id der Rechnung
 	 * @return Rechnung
 	 */
@@ -110,7 +110,7 @@ public interface ClientOfferController {
 	public ClientBill getClientBillById(long idClientBill);
 	
 	/**
-	 * Rechnung des Kundenangebot wurde gespeichert
+	 * Rechnung des Kundenangebots wird gespeichert
 	 * @param clientBill Die Rechnung
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)

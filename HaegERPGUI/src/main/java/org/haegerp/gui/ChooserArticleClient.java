@@ -16,22 +16,39 @@ import org.haegerp.entity.ClientOfferDetailPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * In diesem Formular kann den Benutzer der Artikel für ein Kundenangebot auswählen
+ * 
+ * @author Fabio Codinha
+ */
 @Component
 public class ChooserArticleClient extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
+    //Formular
     @Autowired
     private ClientOfferDetails clientOfferDetails;
+    
+    //Inhalt von der Tabelle
     private DefaultTableModel model;
 
     public ChooserArticleClient() {
     }
 
+    /**
+     * Das Formular wird vorbereitet und gezeigt
+     */
     public void showChooserArticleClient() {
         loadTable();
         this.setVisible(true);
     }
 
+    /**
+     * Artikel, den der Benutzer ausgewählt hat
+     * 
+     * @param e MouseEvent Werte
+     */
     protected void tblObjects_MouseClick(MouseEvent e) {
 
         int idxRow = tblObjects.getSelectedRow();
@@ -76,6 +93,9 @@ public class ChooserArticleClient extends JFrame {
         }
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         Object[][] content;
         if (txtSearch.getText().equals("")) {
@@ -105,6 +125,9 @@ public class ChooserArticleClient extends JFrame {
         tblObjects.removeColumn(tblObjects.getColumn("ID"));
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         lblSearch = new javax.swing.JLabel();

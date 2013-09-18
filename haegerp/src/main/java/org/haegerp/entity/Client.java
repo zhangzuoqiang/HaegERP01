@@ -10,7 +10,7 @@ import java.util.Set;
  * Er muss zu einer Kundenkategorie gehören.<br/>
  * Mit ihm kann man neue Kundenbestellungen.<br/>
  *
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Client extends BusinessPartner implements Serializable {

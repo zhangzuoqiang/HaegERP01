@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Dieses Interface wird bei Spring bearbeitet und SCRUB Operationen für die Kundenrechnungen bereitstellt
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Repository

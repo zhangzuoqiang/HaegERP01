@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Diese Klasse besitzt die Geschäftslogik von dem Kunden.
+ * Diese Klasse besitzt die Geschäftslogik von der Lieferantenbestelung.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
@@ -20,13 +20,13 @@ public interface SupplierOrderController {
 
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<SupplierOrder> getPage();
 
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Lieferantenbestelungen will der Benutzer in der Seite
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -35,32 +35,32 @@ public interface SupplierOrderController {
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param text Wert, der der Benutzer geschrieben hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Lieferantenbestelungen will der Benutzer in der Seite
 	 */
 	public void setSearch(String text, int size);
 
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Lieferantenbestelungen will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Lieferantenbestelungen will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Lieferantenbestelungen will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
 	 * @param size Grösse der Seite
 	 * @return Seite mit den Lieferantbestellungen
@@ -69,14 +69,14 @@ public interface SupplierOrderController {
 	public Page<SupplierOrder> loadPage(int size);
 
 	/**
-	 * Die Lieferantenbestellung wurde gespeichert
-	 * @param supplier Die Lieferantbestellung
+	 * Die Lieferantenbestellung wird gespeichert
+	 * @param supplierOrder Die Lieferantbestellung
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public SupplierOrder save(SupplierOrder supplierOrder);
 
 	/**
-	 * Die Lieferantenbestellung wurde gelöscht
+	 * Die Lieferantenbestellung wird gelöscht
 	 * @param supplierOrder Die Lieferantbestellung
 	 */
 	public void delete(SupplierOrder supplierOrder);
@@ -94,7 +94,7 @@ public interface SupplierOrderController {
 	/**
 	 * Die Lieferantenbestellung wird erstellt
 	 * 
-	 * @param supplierOrder
+	 * @param supplierOrder Die Lieferantenbestellung
 	 * @return Die Lieferantenbestellung danach die erstellung
 	 * @throws LengthOverflowException Wenn ein Wert falsh ist
 	 */
@@ -103,6 +103,7 @@ public interface SupplierOrderController {
 	
 	/**
 	 * Holt die Rechnung der Bestellung
+         * 
 	 * @param idSupplierBill Id der Rechnung
 	 * @return Rechnung
 	 */
@@ -110,16 +111,16 @@ public interface SupplierOrderController {
 	public SupplierBill getSupplierBillById(long idSupplierBill);
 	
 	/**
-	 * Rechnung der Lieferantenbestellung wurde gespeichert
-	 * @param supplier Die Rechnung
+	 * Rechnung der Lieferantenbestellung wird gespeichert
+	 * @param supplierBill Die Rechnung
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public SupplierBill saveBill(SupplierBill supplierBill);
         
         /**
 	 * Holt den LieferantenBestellung mit dem passenden ID
-	 * @param idSupplierOrder ID des Lieferantenbestellung
-	 * @return Lieferantenbestellung
+	 * @param idSupplierOrder ID der Lieferantenbestellung
+	 * @return Die Lieferantenbestellung
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public SupplierOrder getSupplierOrderById(long idSupplierOrder);

@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Diese Klasse besitzt die Geschäftslogik von dem Kunden.
+ * Diese Klasse besitzt die Geschäftslogik von den Lieferantenbestellungdetails.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
@@ -23,7 +23,7 @@ public interface SupplierOrderDetailController {
 
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param idSupplierOrder ID der Lieferantenbestellung
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -39,32 +39,26 @@ public interface SupplierOrderDetailController {
 	public List<SupplierOrderDetail> loadPage(long idSupplierOrder);
 
 	/**
-	 * Die Lieferantbestellung wurde gespeichert
-	 * @param supplier Die Lieferantbestellungdetails
+	 * Die Lieferantbestellung wird gespeichert
+	 * @param supplierOrderDetail Die Lieferantbestellungdetails
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public SupplierOrderDetail save(SupplierOrderDetail supplierOrderDetail);
-
-	/**
-	 * Der Liferant wurde gelöscht
-	 * @param supplier Die Lieferantbestellungdetails
-	 */
-	public void delete(SupplierOrderDetail supplierOrderDetail);
 	
 	/**
 	 * Diese Methode aktualisiert einen Artikel der Bestellung.
 	 * @param table Tabelle mit den Artikeln der Lieferantsbestellung.
 	 * @param idSupplierOrder ID der Bestellung
 	 * @return Colletion mit Lieferantbestellungdetails
-	 * @throws LengthOverflowException
+	 * @throws LengthOverflowException Wenn ein Wert Falsch ist
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Set<SupplierOrderDetail> updateOrderArticle(JTable table, long idSupplierOrder) throws LengthOverflowException;
 	
 	/**
-	 * löscht alle Artikeln von der Bestellung
+	 * Löscht alle Artikeln von der Bestellung
 	 * 
-	 * @param entities Artikeln
+	 * @param idSupplierOrder ID der Lieferantsbestellung
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void deleteAllArticles(long idSupplierOrder);
@@ -78,7 +72,7 @@ public interface SupplierOrderDetailController {
          * 
          * @param values Objekt mit den Informationen der Artikel
          * @param idSupplierOrder Welche Lieferantenbestellung.
-         * @throws LengthOverflowException
+         * @throws LengthOverflowException Wenn ein Wert Falsch ist
          * @return Sammlung
          */
         @Transactional(propagation = Propagation.REQUIRED)

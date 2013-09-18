@@ -3,7 +3,7 @@ package org.haegerp.jsf.controller.form;
 import org.haegerp.entity.Employee;
 
 /**
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormEmployee {
     //Name vom Mitarbeiter (Erforderlich)
@@ -39,10 +39,9 @@ public class FormEmployee {
     private String txtPassword;
     //Kenntwort Bestätigung (Erforderlich)
     private String txtConfirmPassword;
-    
     private boolean disabled;
+    //Muss der Benutzer ein kennwort einfügen?
     private boolean required;
-            
     //btnEditSave
     private String btnEditSave_Name;
     //btnCancel
@@ -52,12 +51,25 @@ public class FormEmployee {
     public FormEmployee() {
     }
 
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     * @param required Muss der Benutzer ein kennwort einfügen?
+     */
     public FormEmployee(boolean disabled, boolean required) {
         this.disabled = disabled;
         this.required = required;
         configureButtons(disabled);
     }
-
+    
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param employee Mitarbeiter
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     * @param required Muss der Benutzer ein kennwort einfügen?
+     */
     public FormEmployee(Employee employee, boolean disabled, boolean required) {
         txtIdCard = String.valueOf(employee.getIdCard());
         txtName = employee.getName();
@@ -78,6 +90,12 @@ public class FormEmployee {
         configureButtons(disabled);
     }
 
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

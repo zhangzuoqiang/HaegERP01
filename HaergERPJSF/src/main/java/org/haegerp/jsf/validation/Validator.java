@@ -10,8 +10,9 @@ import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 
 /**
- *
- * @author Wolf
+ * Diese Klasse wird nicht benutzt
+ * 
+ * @author Fabio Codinha
  */
 public class Validator {
 

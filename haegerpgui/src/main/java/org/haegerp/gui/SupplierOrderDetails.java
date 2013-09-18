@@ -32,12 +32,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 /**
+ * Dieses Formular wird die Details einer Lieferantbestellung kontrollieren
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class SupplierOrderDetails extends javax.swing.JFrame {
 
-    private static final long serialVersionUID = 2949647041784163844L;
+    //Controller
     @Autowired
     private SupplierOrderController supplierOrderController;
 
@@ -68,18 +69,24 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
     public SupplierController getSupplierController() {
         return supplierController;
     }
+    //Formular
     @Autowired
     private SupplierOrderManagement supplierOrderManagement;
 
     public SupplierOrderManagement getSupplierOrderManagement() {
         return supplierOrderManagement;
     }
+    //Das ist, wo der Benutzer den Artikel auswählen kann
     @Autowired
     private ChooserArticleSupplier chooserArticleSupplier;
+    //Das ist, wo der Benutzer den Lieferanten auswählen kann
     @Autowired
     private ChooserSupplier chooserSupplier;
+    //Inhalt der Tabelle
     public DefaultTableModel model;
+    //Verschiednen Stände von der Oberfläche
     private SupplierOrderDetailsInterface supplierOrderDetailsView;
+    //Lieferant
     private Supplier supplier = null;
 
     public Supplier getSupplier() {
@@ -89,6 +96,7 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
+    //Lieferantbestellung, die gezeigt wird
     private SupplierOrder supplierOrder;
 
     public SupplierOrder getSupplierOrder() {
@@ -99,29 +107,50 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
         this.supplierOrder = supplierOrder;
     }
 
-    protected void btnAddArticle_ActionPerformed(ActionEvent e) {
-        chooserArticleSupplier.showChooserArticleSupplier();
-    }
-
     public SupplierOrderDetails() {
     }
 
+    //Wenn der Benutzer eine neue Lieferantbestellung erstellen möchte
     public void setNewMode() {
         supplierOrderDetailsView = new SupplierOrderNewView();
         supplierOrderDetailsView.applyView(this);
     }
 
+    //Wenn der Benutzer eine Lieferantbestellung ändern möchte
     public void setEditMode() {
         supplierOrderDetailsView = new SupplierOrderEditView();
         supplierOrderDetailsView.applyView(this);
     }
 
+    //Wenn der Benutzer eine Lieferantbestellung ansehen möchte
     public void setShowMode() {
         supplierOrderDetailsView = new SupplierOrderShowView();
         supplierOrderDetailsView.applyView(this);
     }
 
+    /**
+     * Die Felder werden validiert
+     *
+     * @return Wenn das String leer ist, würde kein Fehler gefunden
+     */
+    private String checkFields() {
+        if (supplier == null) {
+            return "Please select a supplier to which the order will be sent.";
+        }
+        return "";
+    }
+
     // Listeners
+    /**
+     * Wenn der Benutzer nur ansehen kann, wechselt der Knopf zur
+     * Änderungsmodus.<br/>
+     * Wenn der Benutzer die Felder ändern kann, wird die Lieferantbestellung
+     * gespeichert.<br/>
+     * Diese Betrieb wird bei der Variable 'supplierOrderDetailsView'
+     * kontrolliert.
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnSaveEdit_ActionPerformed(ActionEvent e) {
         String errors = "";
         if (!(supplierOrderDetailsView instanceof SupplierOrderShowView)) {
@@ -135,23 +164,43 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
         }
     }
 
-    private String checkFields() {
-        if (supplier == null) {
-            return "Please select a supplier to which the order will be sent.";
-        }
-        return "";
-    }
-
+    /**
+     * Wenn der Benutzer nicht die Änderungen speichern möchte, wird der Artikel
+     * wieder zum Formular geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnCancel_ActionPerformed(ActionEvent e) {
         supplierOrderDetailsView.btnCancel(this);
     }
 
+    /**
+     * Wenn der Benutzer einen Artikel zur Lieferantenbestellung einfügen
+     * möchte.
+     *
+     * @param e ActionEvent Werte
+     */
+    protected void btnAddArticle_ActionPerformed(ActionEvent e) {
+        chooserArticleSupplier.showChooserArticleSupplier();
+    }
+
+    /**
+     * Wenn der Benutzer einen Artikel von der Lieferantenbestellung löschten
+     * möchte
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDeleteArticle_ActionPerformed(ActionEvent e) {
         if (tblArticles.getSelectedRow() >= 0) {
             model.removeRow(tblArticles.getSelectedRow());
         }
     }
 
+    /**
+     * Ein Lieferant wird beim Benutzer ausgewählt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtSupplier_MouseClicked(MouseEvent e) {
         if (!(supplierOrderDetailsView instanceof SupplierOrderShowView)
                 && supplierOrder.getSendDate() == null) {
@@ -159,6 +208,11 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Die Lieferantenbestellung wird als 'geschickt' markiert
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtSendDate_MouseClicked(MouseEvent e) {
         if (supplierOrderDetailsView instanceof SupplierOrderEditView
                 && supplierOrder.getSendDate() == null) {
@@ -177,6 +231,11 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Die Rechnung wird erhaltet
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtBillReceived_MouseClicked(MouseEvent e) {
         if (supplierOrderDetailsView instanceof SupplierOrderEditView
                 && supplierOrder.getSupplierBill() == null
@@ -200,6 +259,11 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Die Rechnung wurde bei der Firma bezahlt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void txtBillPaid_MouseClicked(MouseEvent e) {
         if (supplierOrderDetailsView instanceof SupplierOrderEditView
                 && supplierOrder.getSupplierBill() != null
@@ -223,6 +287,9 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     private void setUp() {
         pnlInfo = new javax.swing.JPanel();

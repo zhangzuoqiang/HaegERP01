@@ -5,7 +5,7 @@ import org.haegerp.entity.Employee;
 /**
  * Diese Klasse speichert, was das System braucht.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class EmployeeSession {

@@ -9,7 +9,7 @@ import org.haegerp.gui.MainMenu;
 /**
  * Diese Klasse zeigt die Personalabteilungsoptionen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class MainMenuHumanResources implements MainMenuInterface {

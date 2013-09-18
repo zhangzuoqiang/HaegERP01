@@ -1,5 +1,7 @@
 package org.haegerp.gui;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -12,22 +14,39 @@ import org.haegerp.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * In diesem Formular kann der Benutzer den Kunden für ein Kundenangebot auswählen
+ * 
+ * @author Fabio Codinha
+ */
 @Component
 public class ChooserClient extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
+    //Formular
     @Autowired
     private ClientOfferDetails clientOfferDetails;
+    
+    //Inhalt von der Tabelle
     private DefaultTableModel model;
 
     public ChooserClient() {
     }
 
+    /**
+     * Das Formular wird vorbereitet und gezeigt
+     */
     public void showChooserClient() {
         loadTable();
         this.setVisible(true);
     }
 
+    /**
+     * Kunde, den der Benutzer ausgewählt hat
+     * 
+     * @param e MouseEvent Werte
+     */
     protected void tblObjects_MouseClick(MouseEvent e) {
 
         int idxRow = tblObjects.getSelectedRow();
@@ -41,7 +60,43 @@ public class ChooserClient extends JFrame {
             this.setVisible(false);
         }
     }
+    
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
+    private void loadTable() {
+        Object[][] content;
+        if (txtSearch.getText().equals("")) {
+            content = clientOfferDetails.getClientController().loadAllTableRows(0, "", 1);
+        } else {
+            content = clientOfferDetails.getClientController().loadAllTableRows(1, txtSearch.getText(), 0);
+        }
 
+        model = new javax.swing.table.DefaultTableModel(
+                content,
+                new String[]{
+            "ID",
+            "TaxID",
+            "Name",
+            "E-Mail",
+            "City"
+        }) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };
+
+        tblObjects.setModel(model);
+
+        tblObjects.removeColumn(tblObjects.getColumn("ID"));
+    }
+
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         lblSearch = new javax.swing.JLabel();
@@ -57,6 +112,19 @@ public class ChooserClient extends JFrame {
         tblObjects.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         loadTable();
+        
+        txtSearch.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                loadTable();
+            }
+        });
 
         tblObjects.addMouseListener(new MouseListener() {
             public void mouseReleased(MouseEvent e) {
@@ -109,29 +177,6 @@ public class ChooserClient extends JFrame {
 
     }
 
-    private void loadTable() {
-        //TODO: SEARCH METHOD
-        model = new javax.swing.table.DefaultTableModel(
-                clientOfferDetails.getClientController().loadAllTableRows(),
-                new String[]{
-            "ID",
-            "TaxID",
-            "Name",
-            "E-Mail",
-            "City"
-        }) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-        };
-
-        tblObjects.setModel(model);
-
-        tblObjects.removeColumn(tblObjects.getColumn("ID"));
-    }
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblSearch;
     private javax.swing.JTable tblObjects;

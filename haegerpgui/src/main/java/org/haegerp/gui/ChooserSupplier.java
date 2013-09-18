@@ -1,7 +1,5 @@
 package org.haegerp.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -16,22 +14,38 @@ import org.haegerp.entity.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * In diesem Formular kann den Benutzer den Lieferanten für eine Lieferantsbestellung auswählen
+ * 
+ * @author Fabio Codinha
+ */
 @Component
 public class ChooserSupplier extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    //Formular
     @Autowired
     private SupplierOrderDetails supplierOrderDetails;
+    
+    //Inhalt von der Tabelle
     private DefaultTableModel model;
 
     public ChooserSupplier() {
     }
 
+    /**
+     * Das Formular wird vorbereitet und gezeigt
+     */
     public void showChooserSupplier() {
         loadTable();
         this.setVisible(true);
     }
 
+    /**
+     * Lieferant, den der Benutzer ausgewählt hat
+     * 
+     * @param e MouseEvent Werte
+     */
     protected void tblObjects_MouseClick(MouseEvent e) {
 
         int idxRow = tblObjects.getSelectedRow();
@@ -45,7 +59,43 @@ public class ChooserSupplier extends JFrame {
             this.setVisible(false);
         }
     }
+    
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
+    private void loadTable() {
+        Object[][] content;
+        if (txtSearch.getText().equals("")) {
+            content = supplierOrderDetails.getSupplierController().loadAllTableRows(0, "", 1);
+        } else {
+            content = supplierOrderDetails.getSupplierController().loadAllTableRows(1, txtSearch.getText(), 0);
+        }
+        
+        model = new javax.swing.table.DefaultTableModel(
+                    content,
+                    new String[]{
+                "ID",
+                "TaxID",
+                "Name",
+                "E-Mail",
+                "City"
+            }) {
+                private static final long serialVersionUID = 1L;
 
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            };
+        
+        tblObjects.setModel(model);
+
+        tblObjects.removeColumn(tblObjects.getColumn("ID"));
+    }
+
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         lblSearch = new javax.swing.JLabel();
@@ -125,36 +175,7 @@ public class ChooserSupplier extends JFrame {
         pack();
 
     }
-
-    private void loadTable() {
-        Object[][] content;
-        if (txtSearch.getText().equals("")) {
-            content = supplierOrderDetails.getSupplierController().loadAllTableRows(0, "", 1);
-        } else {
-            content = supplierOrderDetails.getSupplierController().loadAllTableRows(1, txtSearch.getText(), 0);
-        }
-        
-        model = new javax.swing.table.DefaultTableModel(
-                    content,
-                    new String[]{
-                "ID",
-                "TaxID",
-                "Name",
-                "E-Mail",
-                "City"
-            }) {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return false;
-                }
-            };
-        
-        tblObjects.setModel(model);
-
-        tblObjects.removeColumn(tblObjects.getColumn("ID"));
-    }
+    
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblSearch;
     private javax.swing.JTable tblObjects;

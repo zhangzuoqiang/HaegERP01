@@ -9,7 +9,7 @@ import org.haegerp.gui.MainMenu;
 /**
  * Diese Klasse zeigt die Geschäftspartnersoptionen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class MainMenuPartners implements MainMenuInterface {

@@ -30,7 +30,7 @@ import junit.framework.TestCase;
 /**
  * Dieses Test Suite wird Mitarbeiter, Gehaltkategorie, Division und Benutzergruppe testen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

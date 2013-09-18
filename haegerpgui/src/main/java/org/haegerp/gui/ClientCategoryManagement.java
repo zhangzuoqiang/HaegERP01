@@ -36,14 +36,21 @@ import org.haegerp.entity.ClientCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Dieses Formular wird Artikeln verwalten
+ *
+ * @author Fabio Codinha
+ */
 @Component
 public class ClientCategoryManagement extends JFrame {
 
     private static final long serialVersionUID = 4611390378854969459L;
+    //Controller
     @Autowired
     private ClientController clientController;
     @Autowired
     private ClientCategoryController clientCategoryController;
+    //Formulare
     @Autowired
     private ClientCategoryDetails clientCategoryDetails;
     @Autowired
@@ -58,6 +65,9 @@ public class ClientCategoryManagement extends JFrame {
     public ClientCategoryManagement() {
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         tblClientCategory.setModel(
                 new DefaultTableModel(
@@ -77,31 +87,63 @@ public class ClientCategoryManagement extends JFrame {
     }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         clientCategoryController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         clientCategoryController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Kundenkategorie, die eine
+     * Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         clientCategoryController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         clientCategoryController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Eine neue Kundenkategorie wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         clientCategoryDetails.setNewMode();
         clientCategoryDetails.setVisible(true);
     }
 
+    /**
+     * Eine Kundenkategorie, die in der Datenbank ist, wird beim Benutzer
+     * geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblClientCategory.getSelectedRow();
         if (row != -1) {
@@ -112,6 +154,11 @@ public class ClientCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Kundenkategorie wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblClientCategory.getSelectedRow();
         int option;
@@ -138,6 +185,11 @@ public class ClientCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Kundenkategorie wird gezeigt
+     *
+     * @param e
+     */
     protected void tblArticleCategory_MouseDoubleClick(MouseEvent e) {
         int row = tblClientCategory.getSelectedRow();
         if (row != -1) {
@@ -148,6 +200,9 @@ public class ClientCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnlTblClientCategory = new JScrollPane();

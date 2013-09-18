@@ -17,54 +17,54 @@ public interface ClientCategoryController {
 	
 	/**
 	 * Holt die Seite
-	 * @return Aktueller Staat der Seite
+	 * @return Aktueller Stand der Seite
 	 */
 	public Page<ClientCategory> getPage();
 	
 	/**
 	 * Lädt die nächste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kundenkategorien will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getNextPage(int size);
 	
 	/**
 	 * Lädt die vorherige Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kundenkategorien will der Benutzer in der Seite
 	 * @return True - Es gibt die nächste Seite; False - Sonst
 	 */
 	public boolean getPreviousPage(int size);
 	
 	/**
 	 * Diese Methode gibt die erste Seite
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kundenkategorien will der Benutzer in der Seite
 	 */
 	public boolean getFirstPage(int size);
 	
 	/**
 	 * Diese Methode vorbereitet die Suche
 	 * @param value Wert, der der Benutzer geschrieben hat
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kundenkategorien will der Benutzer in der Seite
 	 */
 	public void setSearch(String value, int size);
 	
 	/**
-	 * Die Kundenkategorie wurde gelöscht
+	 * Die Kundenkategorie wird gelöscht
 	 * @param clientCategory Die Kundenkategorie
 	 */
 	public void delete(ClientCategory clientCategory);
 	
 	/**
-	 * Die Kundenkategorie wurde gespeichert
+	 * Die Kundenkategorie wird gespeichert
 	 * @param clientCategory Die Kundenkategorie
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ClientCategory save(ClientCategory clientCategory);
 	
 	/**
-	 * Eine neue Seite wird erhalt
+	 * Eine neue Seite wird geholt
 	 * 
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kundenkategorien will der Benutzer in der Seite
 	 * @return Seite mit den Kundenkategorien
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
@@ -72,7 +72,7 @@ public interface ClientCategoryController {
 	
 	/**
 	 * Wickelt den Inhalt der Tabelle ab
-	 * @param size Wie viele Linea will der Benutzer in der Seite
+	 * @param size Wie viele Kundenkategorien will der Benutzer in der Seite
 	 * @return Objekt mit dem Inhalt von der Tabelle
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)

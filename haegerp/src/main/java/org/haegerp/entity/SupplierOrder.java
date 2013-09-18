@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Wann Artikel gebraucht werden, dann muss man erste eine Bestellung erstellen<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class SupplierOrder implements Serializable {

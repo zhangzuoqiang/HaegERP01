@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Die Mitarbeiter sind die Benutzer von dem System, sie ertellen neue Kunden, Bestellungen, usw.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Employee implements Serializable {

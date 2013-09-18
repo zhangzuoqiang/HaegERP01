@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Die ID von der Artikelhistorie ist Kompost, und für jede Kompost ID muss man eine Klasse erstellen.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class ArticleHistoryPK implements Serializable {

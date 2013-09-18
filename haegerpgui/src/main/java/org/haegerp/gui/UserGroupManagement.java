@@ -35,12 +35,18 @@ import org.haegerp.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Dieses Formular wird Benutzergruppe verwalten
+ *
+ * @author Fabio Codinha
+ */
 @Component
 public class UserGroupManagement extends JFrame {
 
-    private static final long serialVersionUID = 4611390378854969459L;
+    //Controller
     @Autowired
     private UserGroupController userGroupController;
+    //Formulare
     @Autowired
     private UserGroupDetails userGroupDetails;
     @Autowired
@@ -49,6 +55,9 @@ public class UserGroupManagement extends JFrame {
     public UserGroupManagement() {
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         tblUserGroup.setModel(
                 new DefaultTableModel(
@@ -68,31 +77,63 @@ public class UserGroupManagement extends JFrame {
     }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         userGroupController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         userGroupController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Benutzergruppen, die eine
+     * Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         userGroupController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         userGroupController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Eine neue Benutzergruppe wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         userGroupDetails.setNewMode();
         userGroupDetails.setVisible(true);
     }
 
+    /**
+     * Eine Benutzergruppe, der in der Datenbank ist, wird beim Benutzer
+     * geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblUserGroup.getSelectedRow();
         if (row != -1) {
@@ -103,6 +144,11 @@ public class UserGroupManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Benutzergruppe wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblUserGroup.getSelectedRow();
         int option = 1;
@@ -130,6 +176,11 @@ public class UserGroupManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Benutzergruppe wird gezeigt
+     *
+     * @param e MouseEvent Werte
+     */
     protected void tblUserGroup_MouseDoubleClick(MouseEvent e) {
         int row = tblUserGroup.getSelectedRow();
         if (row != -1) {
@@ -140,6 +191,9 @@ public class UserGroupManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnlTblUserGroup = new JScrollPane();

@@ -35,7 +35,7 @@ import junit.framework.TestCase;
 /**
  * Dieses Test Suite wird Artikel und Artikelkategorie testen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

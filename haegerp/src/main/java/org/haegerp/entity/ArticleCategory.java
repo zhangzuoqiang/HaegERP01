@@ -14,7 +14,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Die Artikelkategorie gruppiert die Artikel.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class ArticleCategory implements Serializable{

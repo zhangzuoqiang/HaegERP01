@@ -10,11 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Wolf
+ * Diese Klasse versucht, die Pools von C3P0 zu schließen
+ * 
+ * @author Fabio Codinha
  */
 public class C3P0Utility {
     
+    /**
+     * Die Pools werden geschlossen
+     */
     public void closeConnections(){
         for(Object o : C3P0Registry.getPooledDataSources()) {
             try {

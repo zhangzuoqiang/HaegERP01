@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 /**
  * Dieses Test Suite wird Lieferantgeschäftspartner testen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -36,14 +36,21 @@ import org.haegerp.entity.ArticleCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Dieses Formular wird Artikelkategorien verwalten
+ * 
+ * @author Fabio Codinha
+ */
 @Component
 public class ArticleCategoryManagement extends JFrame {
 
     private static final long serialVersionUID = 4611390378854969459L;
+    //Controller
     @Autowired
     private ArticleController articleController;
     @Autowired
     private ArticleCategoryController articleCategoryController;
+    //Formulare
     @Autowired
     private ArticleCategoryDetails articleCategoryDetails;
     @Autowired
@@ -52,6 +59,9 @@ public class ArticleCategoryManagement extends JFrame {
     public ArticleCategoryManagement() {
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
     public void loadTable() {
         tblArticleCategory.setModel(
                 new DefaultTableModel(
@@ -71,31 +81,62 @@ public class ArticleCategoryManagement extends JFrame {
     }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         articleCategoryController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         articleCategoryController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Artikelkategorien, die eine
+     * Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         articleCategoryController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         articleCategoryController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Eine neue Kategorie wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         articleCategoryDetails.setNewMode();
         articleCategoryDetails.setVisible(true);
     }
 
+    /**
+     * Eine Kategorie, die in der Datenbank ist, wird beim Benutzer geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblArticleCategory.getSelectedRow();
         if (row != -1) {
@@ -106,6 +147,11 @@ public class ArticleCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Kategorie wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblArticleCategory.getSelectedRow();
         int option;
@@ -134,6 +180,11 @@ public class ArticleCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Eine Kategorie wird gezeigt
+     *
+     * @param e
+     */
     protected void tblArticleCategory_MouseDoubleClick(MouseEvent e) {
         int row = tblArticleCategory.getSelectedRow();
         if (row != -1) {
@@ -144,6 +195,9 @@ public class ArticleCategoryManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnlTblArticleCategory = new JScrollPane();

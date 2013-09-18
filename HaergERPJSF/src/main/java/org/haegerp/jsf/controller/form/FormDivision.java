@@ -4,7 +4,7 @@ import org.haegerp.entity.Division;
 
 /**
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormDivision {
     //Name der Division (Erforderlich)
@@ -24,11 +24,22 @@ public class FormDivision {
     public FormDivision() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormDivision(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param division Division
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormDivision(Division division, boolean disabled) {
         txtName = division.getName();
         txtDescription = division.getDescription();
@@ -36,6 +47,12 @@ public class FormDivision {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

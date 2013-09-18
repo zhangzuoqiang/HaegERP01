@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Wann man eine Änderung in die Datenbank macht, dann muss die Änderung aufgezeichnet werden
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Repository

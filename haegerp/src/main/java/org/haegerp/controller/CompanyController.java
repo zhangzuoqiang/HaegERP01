@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Diese Klasse besitzt die Geschäftslogik von dem Kunden.
+ * Diese Klasse besitzt die Geschäftslogik von der Firma.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
@@ -16,14 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CompanyController {
 
 	/**
-	 * Die Angaben zur Firma werden geholt
+	 * Die Details der Firma werden geholt
 	 * @return Die Angaben zur Firma
 	 */
 	public Company getCompany();
 	
 	/**
-	 * Die Angaben zur Firma werden gespeichert
-	 * @param company Der Lieferant
+	 * Die Details der Firma werden gespeichert
+	 * @param company Die Firma
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Company save(Company company);

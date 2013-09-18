@@ -16,7 +16,7 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 /**
  * Diese Klasse wird bei Spring bearbeitet.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  * @param <R> - Repository
  * @param <T> - Entity

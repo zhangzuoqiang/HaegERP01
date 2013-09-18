@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Der Erlaubnis, dass Benuztergruppen haben können.<br/>
  *
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Permission implements Serializable {

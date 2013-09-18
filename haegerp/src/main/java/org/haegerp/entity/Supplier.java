@@ -9,7 +9,7 @@ import java.util.Set;
  * Der Lieferant ist ein Geschäftspartner.<br/>
  * Zu ihnen kann man die Artikel kaufen.<br/>
  *
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Supplier extends BusinessPartner implements Serializable {

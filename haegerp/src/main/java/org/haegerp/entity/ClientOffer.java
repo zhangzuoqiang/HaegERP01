@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Wann ein Kunde Artikel kaufen möchte, dann muss man ein Bestellung machen und schickt sie zu dem Kunde.
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class ClientOffer implements Serializable {

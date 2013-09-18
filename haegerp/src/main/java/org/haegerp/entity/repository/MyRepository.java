@@ -8,7 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 /**
  * Dieses Interface gibt das Verhalten zu alle Repositories, dass man hier implementiert
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  * @param <T> - Entität
  * @param <ID> - ID (Typ vom Primary Key)

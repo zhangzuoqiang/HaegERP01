@@ -4,7 +4,7 @@ import org.haegerp.entity.ClientCategory;
 
 /**
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormClientCategory {
     //Name der Kundenkategorie (Erforderlich)
@@ -24,11 +24,22 @@ public class FormClientCategory {
     public FormClientCategory() {
     }
     
+    /**
+     * Erstellung Modus
+     *
+     * @param disabled
+     */
     public FormClientCategory(boolean disabled) {
         this.disabled = disabled;
         configureButtons(disabled);
     }
     
+    /**
+     * Bei Änderung oder Schau Modus
+     *
+     * @param clientCategory Kundenkategorie
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     */
     public FormClientCategory(ClientCategory clientCategory, boolean disabled) {
         txtName = clientCategory.getName();
         txtDescription = clientCategory.getDescription();
@@ -36,6 +47,12 @@ public class FormClientCategory {
         configureButtons(disabled);
     }
     
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

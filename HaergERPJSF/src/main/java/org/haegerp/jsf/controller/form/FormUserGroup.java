@@ -8,60 +8,74 @@ import org.primefaces.model.DualListModel;
 
 /**
  *
- * @author Wolf
+ * @author Fabio Codinha
  */
 public class FormUserGroup {
     //Name der Benutzergruppe (Erforderlich)
+
     private String txtName;
     //Beschreibung der Benutzergruppe
     private String txtDescription;
-    
     //PickList Source
     private List<Permission> source = new ArrayList<Permission>();
     //PickList Destination
     private List<Permission> destination = new ArrayList<Permission>();
     //PickList DualList
     private DualListModel<Permission> permissions;
-    
     private boolean disabled;
-    
     //btnEditSave
     private String btnEditSave_Name;
-    
     //btnCancel
     private String btnCancel_Name;
     private boolean btnCancel_Ajax;
-    
+
     public FormUserGroup() {
     }
-    
+
+    /**
+     * Erstellung Modus
+     * @param disabled
+     * @param allPermissions Alle Erlaubnise
+     */
     public FormUserGroup(boolean disabled, List<Permission> allPermissions) {
         this.source = allPermissions;
         this.destination = new ArrayList<Permission>();
         this.permissions = new DualListModel<Permission>(this.source, this.destination);
-        
+
         this.disabled = disabled;
         configureButtons(disabled);
     }
-    
+
+    /**
+     * Bei Änderung oder Schau Modus
+     * @param userGroup Benutzergruppe
+     * @param disabled True - Schau Modus; False - Änderung Modus
+     * @param allPermissions Alle Erlaubnise
+     */
     public FormUserGroup(UserGroup userGroup, boolean disabled, List<Permission> allPermissions) {
         txtName = userGroup.getName();
         txtDescription = userGroup.getDescription();
-        
+
         this.source = allPermissions;
         this.destination = new ArrayList<Permission>();
-        
+
         for (Permission permission : userGroup.getPermissions()) {
             this.source.remove(permission);
             this.destination.add(permission);
         }
-        
+
         this.permissions = new DualListModel<Permission>(this.source, this.destination);
-        
+
         this.disabled = disabled;
         configureButtons(disabled);
     }
-    
+
+    /**
+     * Die Knöpfe wird vorbereitet
+     *
+     * @param disabled True - Schau Modus; False - Änderung oder Erstellung
+     * Modus
+     */
     private void configureButtons(boolean disabled) {
         if (disabled) {
             btnEditSave_Name = "Edit";

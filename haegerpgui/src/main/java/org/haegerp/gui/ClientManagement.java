@@ -38,39 +38,96 @@ import org.haegerp.entity.ClientCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Dieses Formular wird Kunden verwalten
+ *
+ * @author Fabio Codinha
+ */
 @Component
 public class ClientManagement extends JFrame {
 
     private static final long serialVersionUID = 2464190735195227843L;
+    //Controller
     @Autowired
     private ClientController clientController;
     @Autowired
     private ClientCategoryController clientCategoryController;
+    //Formulare
     @Autowired
     private ClientDetails clientDetails;
     @Autowired
     private ClientCategoryManagement clientCategoryManagement;
+    //Kundenkategorien
     private List<ClientCategory> categories;
 
     public ClientManagement() {
     }
 
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
+    public void loadTable() {
+        tblClients.setModel(
+                new DefaultTableModel(
+                clientController.loadTableRows(sldNumberResults.getValue()),
+                new String[]{
+            "ID",
+            "TaxID",
+            "Name",
+            "Category",
+            "E-Mail",
+            "City",
+            "Country",
+            "Last Modified",
+            "Modified By"
+        }) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        tblClients.removeColumn(tblClients.getColumn("ID"));
+        lblPage.setText("Page " + (clientController.getPage().getNumber() + 1) + "/" + clientController.getPage().getTotalPages());
+    }
+
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         clientController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         clientController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer des Kunden, die eine Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         clientController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Wenn der Benutzer eine Kategorie wählt, wird die Tabeller wieder geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void cbbCategory_ActionPerformed(ActionEvent e) {
         int cbbIndex = cbbCategory.getSelectedIndex() - 1;
         if (cbbIndex < 0) {
@@ -81,16 +138,31 @@ public class ClientManagement extends JFrame {
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         clientController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Ein neuer Kunde wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         clientDetails.setNewMode();
         clientDetails.setVisible(true);
     }
 
+    /**
+     * Ein Kunde, der in der Datenbank ist, wird beim Benutzer geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblClients.getSelectedRow();
         if (row != -1) {
@@ -101,6 +173,11 @@ public class ClientManagement extends JFrame {
         }
     }
 
+    /**
+     * Ein Kunde wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblClients.getSelectedRow();
         if (row != -1) {
@@ -118,6 +195,11 @@ public class ClientManagement extends JFrame {
         }
     }
 
+    /**
+     * Ein Kunde wird gezeigt
+     *
+     * @param e
+     */
     protected void tblClients_MouseDoubleClick(MouseEvent e) {
         int row = tblClients.getSelectedRow();
         if (row != -1) {
@@ -128,6 +210,9 @@ public class ClientManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnltblClients = new JScrollPane();
@@ -374,32 +459,6 @@ public class ClientManagement extends JFrame {
         }
 
         cbbCategory.setSelectedItem(idx);
-    }
-
-    public void loadTable() {
-        tblClients.setModel(
-                new DefaultTableModel(
-                clientController.loadTableRows(sldNumberResults.getValue()),
-                new String[]{
-            "ID",
-            "TaxID",
-            "Name",
-            "Category",
-            "E-Mail",
-            "City",
-            "Country",
-            "Last Modified",
-            "Modified By"
-        }) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
-        tblClients.removeColumn(tblClients.getColumn("ID"));
-        lblPage.setText("Page " + (clientController.getPage().getNumber() + 1) + "/" + clientController.getPage().getTotalPages());
     }
     private JButton btnDelete;
     private JButton btnEdit;

@@ -14,7 +14,7 @@ import org.haegerp.exception.LengthOverflowException;
  * Man kann ihn in einer Lieferantbestellung kaufen oder in einer Kundenbestellung verkaufen.<br/>
  * Ein Artikel muss zu einer Artikelkategorie gehören.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @XmlRootElement

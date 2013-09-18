@@ -10,7 +10,7 @@ import org.haegerp.exception.LengthOverflowException;
 /**
  * Die Division gruppiert die Mitarbeiter.<br/>
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class Division implements Serializable {

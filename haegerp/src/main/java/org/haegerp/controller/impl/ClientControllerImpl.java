@@ -167,10 +167,10 @@ public class ClientControllerImpl implements ClientController {
         return clientRepository.findOne(idClient);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public Object[][] loadAllTableRows() {
-        List<Client> list = clientRepository.findAll();
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Object[][] loadAllTableRows(int enableSearch, String search, int enableAll) {
+        List<Client> list = clientRepository.findAllClients(enableSearch, search, enableAll);
         Object[][] rows = new Object[list.size()][5];
         for (int i = 0; i < list.size(); i++) {
             Client client = list.get(i);

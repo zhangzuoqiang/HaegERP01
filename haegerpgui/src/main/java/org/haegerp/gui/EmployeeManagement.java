@@ -43,9 +43,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+/**
+ * Dieses Formular wird Mitarbeiter verwalten
+ *
+ * @author Fabio Codinha
+ */
 public class EmployeeManagement extends JFrame {
 
     private static final long serialVersionUID = 2464190735195227843L;
+    //Controller
     @Autowired
     private EmployeeController employeeController;
     @Autowired
@@ -54,6 +60,7 @@ public class EmployeeManagement extends JFrame {
     private UserGroupController userGroupController;
     @Autowired
     private DivisionController divisionController;
+    //Formular
     @Autowired
     private EmployeeDetails employeeDetails;
 
@@ -66,41 +73,85 @@ public class EmployeeManagement extends JFrame {
     public SalaryCategoryManagement getSalaryCategoryManagement() {
         return salaryCategoryManagement;
     }
-    private List<SalaryCategory> salaryCategories;
     @Autowired
     private UserGroupManagement userGroupManagement;
 
     public UserGroupManagement getUserGroupManagement() {
         return userGroupManagement;
     }
-    private List<UserGroup> userGroups;
     @Autowired
     private DivisionManagement divisionManagement;
 
     public DivisionManagement getDivisionManagement() {
         return divisionManagement;
     }
+    //Gehaltkategorie
+    private List<SalaryCategory> salaryCategories;
+    //Benutzergruppe
+    private List<UserGroup> userGroups;
+    //Divisionen
     private List<Division> divisions;
 
     public EmployeeManagement() {
     }
+    
+    /**
+     * Die Tabelle wird ausgefüllt
+     */
+    public void loadTable() {
+        tblEmployees.setModel(
+                new DefaultTableModel(
+                employeeController.loadTableRows(sldNumberResults.getValue()),
+                new String[]{
+            "ID", "ID Card", "Name", "Division", "UserGroup", "Salary Category", "Last Modified", "Modified By"
+        }) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        tblEmployees.removeColumn(tblEmployees.getColumn("ID"));
+        lblPage.setText("Page " + (employeeController.getPage().getNumber() + 1) + "/" + employeeController.getPage().getTotalPages());
+    }
 
     //Listeners
+    /**
+     * Die nächste Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNext_ActionPerformed(ActionEvent e) {
         employeeController.getNextPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Die vorherige Seite wird gezeigt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnPrevious_ActionPerformed(ActionEvent e) {
         employeeController.getPreviousPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Dieses Listener kontrolliert die Nummer der Artikeln, die eine Seite hat
+     *
+     * @param e MouseEvent Werte
+     */
     protected void sldNumberResults_MouseReleased(MouseEvent e) {
         employeeController.getFirstPage(sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Wenn der Benutzer eine Gehaltkategorie wählt, wird die Tabelle wieder geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void cbbSalaryCategory_ActionPerformed(ActionEvent e) {
         int cbbIndex = cbbSalaryCategory.getSelectedIndex() - 1;
         if (cbbIndex < 0) {
@@ -111,6 +162,11 @@ public class EmployeeManagement extends JFrame {
         loadTable();
     }
 
+    /**
+     * Wenn der Benutzer eine Benutzergruppe wählt, wird die Tabelle wieder geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void cbbUserGroup_ActionListener(ActionEvent e) {
         int cbbIndex = cbbUserGroup.getSelectedIndex() - 1;
         if (cbbIndex < 0) {
@@ -121,6 +177,11 @@ public class EmployeeManagement extends JFrame {
         loadTable();
     }
 
+    /**
+     * Wenn der Benutzer eine Division wählt, wird die Tabelle wieder geladen
+     *
+     * @param e ActionEvent Werte
+     */
     protected void cbbDivision_ActionPerformed(ActionEvent e) {
         int cbbIndex = cbbDivision.getSelectedIndex() - 1;
         if (cbbIndex < 0) {
@@ -131,16 +192,31 @@ public class EmployeeManagement extends JFrame {
         loadTable();
     }
 
+    /**
+     * Diese Methode sucht in der Datenbank, was der Benutzer eingefügt hat
+     *
+     * @param e KeyEvent Werte
+     */
     protected void txtSearch_KeyReleased(KeyEvent e) {
         employeeController.setSearch(txtSearch.getText(), sldNumberResults.getValue());
         loadTable();
     }
 
+    /**
+     * Ein neuer Mitarbeiter wird erstellt
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnNew_ActionListener(ActionEvent e) {
         employeeDetails.setNewMode();
         employeeDetails.setVisible(true);
     }
 
+    /**
+     * Ein Mitarbeiter, der in der Datenbank ist, wird beim Benutzer geändert
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnEdit_ActionPerformed(ActionEvent e) {
         int row = tblEmployees.getSelectedRow();
         if (row != -1) {
@@ -151,6 +227,11 @@ public class EmployeeManagement extends JFrame {
         }
     }
 
+    /**
+     * Ein Mitarbeiter wird gelöscht
+     *
+     * @param e ActionEvent Werte
+     */
     protected void btnDelete_ActionListener(ActionEvent e) {
         int row = tblEmployees.getSelectedRow();
         if (row != -1) {
@@ -166,6 +247,11 @@ public class EmployeeManagement extends JFrame {
         }
     }
 
+    /**
+     * Ein Mitarbeiter wird gezeigt
+     *
+     * @param e
+     */
     protected void tblEmployees_MouseDoubleClick(MouseEvent e) {
         int row = tblEmployees.getSelectedRow();
         if (row != -1) {
@@ -176,6 +262,9 @@ public class EmployeeManagement extends JFrame {
         }
     }
 
+    /**
+     * Das Formular wird vorbereitet
+     */
     @PostConstruct
     public void setUp() {
         pnlTblEmployees = new JScrollPane();
@@ -488,23 +577,6 @@ public class EmployeeManagement extends JFrame {
         cbbUserGroup.setSelectedItem(idx);
     }
 
-    public void loadTable() {
-        tblEmployees.setModel(
-                new DefaultTableModel(
-                employeeController.loadTableRows(sldNumberResults.getValue()),
-                new String[]{
-            "ID", "ID Card", "Name", "Division", "UserGroup", "Salary Category", "Last Modified", "Modified By"
-        }) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
-        tblEmployees.removeColumn(tblEmployees.getColumn("ID"));
-        lblPage.setText("Page " + (employeeController.getPage().getNumber() + 1) + "/" + employeeController.getPage().getTotalPages());
-    }
     private JButton btnDelete;
     private JButton btnEdit;
     private JButton btnNew;

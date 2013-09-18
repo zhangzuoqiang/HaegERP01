@@ -13,12 +13,13 @@ import org.springframework.stereotype.Service;
 /**
  * Exportation zur CSV-Datei
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 @Service
 public class ExportCSV implements Export {
 
+        @Override
 	public boolean export(List<Article> articles, String path) throws Exception{
 		if (articles.isEmpty())
 			return false;

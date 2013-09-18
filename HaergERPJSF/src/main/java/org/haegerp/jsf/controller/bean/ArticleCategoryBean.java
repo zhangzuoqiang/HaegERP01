@@ -20,7 +20,7 @@ import org.springframework.stereotype.Controller;
 /**
  * Bean für die Seiten "ArticleCategoryManagement" und "Details"
  * 
- * @author Wolf
+ * @author Fabio Codinha
  */
 @ManagedBean
 @Controller

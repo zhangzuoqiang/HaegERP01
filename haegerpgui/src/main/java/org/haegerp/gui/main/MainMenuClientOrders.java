@@ -9,7 +9,7 @@ import org.haegerp.gui.MainMenu;
 /**
  * Diese Klasse zeigt die Kundenbestellungenoptionen
  * 
- * @author Wolf
+ * @author Fabio Codinha
  *
  */
 public class MainMenuClientOrders implements MainMenuInterface {
