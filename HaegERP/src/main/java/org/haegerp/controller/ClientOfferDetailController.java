@@ -39,21 +39,25 @@ public interface ClientOfferDetailController {
 	public List<ClientOfferDetail> loadPage(long idClientOffer);
         
 	/**
-	 * Diese Methode aktualisiert die ausgewählte Artikeln der Bestellung.
-         * 
-	 * @param table Tabelle mit den Artikeln der Kundenbestellung.
-	 * @param idClientOffer ID des Angebots
-	 * @return Colletion mit Lieferantbestellungdetails
-	 * @throws LengthOverflowException Wenn ein Wert Falsch ist.
-	 */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public Set<ClientOfferDetail> updateOrderArticle(JTable table, long idClientOffer) throws LengthOverflowException;
-	
-	/**
 	 * Löscht alle Artikeln vom Angebot.
 	 * 
 	 * @param idClientOffer ID des Angebots
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void deleteAllArticles(long idClientOffer);
+        
+        /**
+         * Diese Methode aktualisiert die Sammlung der Artikel.
+         * <br/>
+         * [0] - ArticleHistoryPK<br/>
+         * [1] - Quantity<br/>
+         * [2] - Discount
+         * 
+         * @param values Objekt mit den Informationen der Artikel
+         * @param idSupplierOrder Welche Kundenbestellung.
+         * @throws LengthOverflowException Wenn ein Wert Falsch ist
+         * @return Sammlung
+         */
+        @Transactional(propagation = Propagation.REQUIRED)
+        public Set<ClientOfferDetail> doUpdateOfferArticle(Object[][] values, long idClientOffer) throws LengthOverflowException ;
 }

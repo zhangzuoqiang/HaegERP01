@@ -67,44 +67,47 @@ public class ClientOfferDetailControllerImpl implements ClientOfferDetailControl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Set<ClientOfferDetail> updateOrderArticle(JTable table, long idClientOffer) throws LengthOverflowException {
-        Set<ClientOfferDetail> orderDetails = new HashSet<ClientOfferDetail>(0);
-        float discount;
-        int quantity;
-        for (int x = 0; x < table.getRowCount(); x++) {
-            ClientOfferDetailPK id = (ClientOfferDetailPK) table.getModel().getValueAt(x, 0);
-            discount = Float.parseFloat(String.valueOf(table.getValueAt(x, 5)));
-            quantity = Integer.parseInt(String.valueOf(table.getValueAt(x, 4)));
+    public void deleteAllArticles(long idClientOffer) {
+
+        Set<ClientOfferDetail> entities = clientOfferRepository.findOne(idClientOffer).getClientOfferDetail();
+
+        clientOfferDetailRepository.delete(entities);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Set<ClientOfferDetail> doUpdateOfferArticle(Object[][] values, long idClientOffer) throws LengthOverflowException {
+        /**
+         * [X][0] - ArticleHistoryPK
+         * [X][1] - Quantity
+         * [X][2] - Discount
+         */
+        Set<ClientOfferDetail> offerDetails = new HashSet<ClientOfferDetail>(0);
+        for (int x = 0; x < values.length; x++) {
+            ClientOfferDetailPK id = (ClientOfferDetailPK) values[x][0];
+            Long quantity = Long.valueOf(String.valueOf(values[x][1]));
+            Float discount = Float.valueOf(String.valueOf(values[x][2]));
+
 
             long idArticle = id.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
 
             Article article = articleRepository.findOne(idArticle);
             ArticleHistoryPK articleHistoryPK = new ArticleHistoryPK(articleHistoryRepository.findByIdArticle(idArticle), article);
             ArticleHistory articleHistory = articleHistoryRepository.findOne(articleHistoryPK);
-            ClientOffer clientOffer = clientOfferRepository.findOne(idClientOffer);
+            ClientOffer supplierOrder = clientOfferRepository.findOne(idClientOffer);
 
-            ClientOfferDetail clientOfferDetail = clientOfferDetailRepository.findOne(new ClientOfferDetailPK(clientOffer, articleHistory));
+            ClientOfferDetail clientOfferDetail = clientOfferDetailRepository.findOne(new ClientOfferDetailPK(supplierOrder, articleHistory));
 
             if (clientOfferDetail == null) {
                 clientOfferDetail = new ClientOfferDetail();
-                clientOfferDetail.setClientOfferDetailPK(new ClientOfferDetailPK(clientOffer, articleHistory));
+                clientOfferDetail.setClientOfferDetailPK(new ClientOfferDetailPK(supplierOrder, articleHistory));
             }
 
             clientOfferDetail.setDiscount(discount / 100);
             clientOfferDetail.setQuantity(quantity);
             clientOfferDetailRepository.save(clientOfferDetail);
-            orderDetails.add(clientOfferDetail);
+            offerDetails.add(clientOfferDetail);
         }
-
-        return orderDetails;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteAllArticles(long idClientOffer) {
-
-        Set<ClientOfferDetail> entities = clientOfferRepository.findOne(idClientOffer).getClientOfferDetail();
-
-        clientOfferDetailRepository.delete(entities);
+        return offerDetails;
     }
 }

@@ -115,4 +115,12 @@ public interface ClientOfferController {
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ClientBill saveBill(ClientBill clientBill);
+        
+        /**
+         * Holt das Kundenangebot von der Datenbank
+         * @param idClientOffer ID des Kundenangebots
+         * @return Kundenangebot
+         */
+        @Transactional(propagation = Propagation.REQUIRED)
+        public ClientOffer getClientOfferById(long idClientOffer);
 }

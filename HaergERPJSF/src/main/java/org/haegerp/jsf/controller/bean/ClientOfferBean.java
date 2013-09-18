@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 /**
- * Bean für die Seiten "ClientOfferManagement" und "Details" (Noch Nicht Fertig)
+ * Bean für die Seiten "ClientOfferManagement" und "Details"
  *
  * @author Fábio Codinha
  */
@@ -107,8 +107,7 @@ public class ClientOfferBean implements Serializable {
      * @return Wenn die ID gültig ist, dann die Seite der Details wird geladen
      */
     public String prepareView(long id, boolean disabled) {
-        //TODO: Controller muss ein Angebot von der Datenbank holen
-        //clientOffer = clientOfferController.getClientOfferById(id);
+        clientOffer = clientOfferController.getClientOfferById(id);
         if (clientOffer != null) {
             //Lazy Initialization
             //Kunde
@@ -221,8 +220,7 @@ public class ClientOfferBean implements Serializable {
                     values[i][2] = formClientOffer.getTblArticles()[i][5];
                 }
                 clientOfferDetailController.deleteAllArticles(clientOffer.getIdClientOffer());
-                //TODO: Wie Lieferantenbestellung
-                //clientOffer.setClientOfferDetail(clientOfferDetailController.doUpdateOfferArticle(values, clientOffer.getIdClientOffer()));
+                clientOffer.setClientOfferDetail(clientOfferDetailController.doUpdateOfferArticle(values, clientOffer.getIdClientOffer()));
             }
 
             clientOffer.setIdEmployeeModify(idEmployee);
@@ -240,9 +238,7 @@ public class ClientOfferBean implements Serializable {
      * Das System versucht ein Kundenangebot zu löschen.
      */
     public void delete() {
-        //TODO: Controller muss ein Angebot von der Datenbank holen
-        //ClientOffer deleteClientOffer = clientOfferController.getClientOfferById(clientOrderId);
-        ClientOffer deleteClientOffer = null;
+        ClientOffer deleteClientOffer = clientOfferController.getClientOfferById(clientOrderId);
         FacesMessage fMessage;
         FacesMessage.Severity severity;
         String msg;

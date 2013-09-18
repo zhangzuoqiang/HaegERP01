@@ -46,16 +46,6 @@ public interface SupplierOrderDetailController {
 	public SupplierOrderDetail save(SupplierOrderDetail supplierOrderDetail);
 	
 	/**
-	 * Diese Methode aktualisiert einen Artikel der Bestellung.
-	 * @param table Tabelle mit den Artikeln der Lieferantsbestellung.
-	 * @param idSupplierOrder ID der Bestellung
-	 * @return Colletion mit Lieferantbestellungdetails
-	 * @throws LengthOverflowException Wenn ein Wert Falsch ist
-	 */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public Set<SupplierOrderDetail> updateOrderArticle(JTable table, long idSupplierOrder) throws LengthOverflowException;
-	
-	/**
 	 * Löscht alle Artikeln von der Bestellung
 	 * 
 	 * @param idSupplierOrder ID der Lieferantsbestellung

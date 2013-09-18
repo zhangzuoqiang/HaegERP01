@@ -45,7 +45,7 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
         Object[][] rows = new Object[list.size()][7];
         for (int i = 0; i < list.size(); i++) {
             SupplierOrderDetail supplierOrderDetail = list.get(i);
-            
+
             rows[i][0] = supplierOrderDetail.getSupplierOrderDetailPK();
             rows[i][1] = supplierOrderDetail.getSupplierOrderDetailPK().getArticleHistory().getEan();
             rows[i][2] = supplierOrderDetail.getSupplierOrderDetailPK().getArticleHistory().getName();
@@ -71,19 +71,6 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
         return savedSupplierOrderDetail;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Override
-    public Set<SupplierOrderDetail> updateOrderArticle(JTable table, long idSupplierOrder) throws LengthOverflowException {
-        Object[][] values = new Object[table.getRowCount()][3];
-        for (int x = 0; x < table.getRowCount(); x++) {
-            values[x][0] = table.getModel().getValueAt(x, 0);
-            values[x][1] = table.getValueAt(x, 3);
-            values[x][2] = table.getValueAt(x, 4);
-        }
-
-        return doUpdateOrderArticle(values, idSupplierOrder);
-    }
-
     @Override
     public Set<SupplierOrderDetail> doUpdateOrderArticle(Object[][] values, long idSupplierOrder) throws LengthOverflowException {
         /**
@@ -96,8 +83,8 @@ public class SupplierOrderDetailControllerImpl implements SupplierOrderDetailCon
             SupplierOrderDetailPK id = (SupplierOrderDetailPK) values[x][0];
             Long quantity = Long.valueOf(String.valueOf(values[x][1]));
             Float discount = Float.valueOf(String.valueOf(values[x][2]));
-        
-        
+
+
             long idArticle = id.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
 
             Article article = articleRepository.findOne(idArticle);

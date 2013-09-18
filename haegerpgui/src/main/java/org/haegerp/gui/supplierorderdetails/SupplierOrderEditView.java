@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.haegerp.entity.SupplierBill;
@@ -140,7 +141,7 @@ public class SupplierOrderEditView implements SupplierOrderDetailsInterface {
 
             supplierOrderDetailsMenu.getSupplierOrderDetailController().deleteAllArticles(supplierOrderDetailsMenu.getSupplierOrder().getIdSupplierOrder());
 
-            Set<SupplierOrderDetail> supplierOrderArticles = supplierOrderDetailsMenu.getSupplierOrderDetailController().updateOrderArticle(supplierOrderDetailsMenu.tblArticles, supplierOrderDetailsMenu.getSupplierOrder().getIdSupplierOrder());
+            Set<SupplierOrderDetail> supplierOrderArticles = supplierOrderDetailsMenu.getSupplierOrderDetailController().doUpdateOrderArticle(extractObject(supplierOrderDetailsMenu.tblArticles), supplierOrderDetailsMenu.getSupplierOrder().getIdSupplierOrder());
 
             supplierOrderDetailsMenu.getSupplierOrder().setSupplierOrderDetail(supplierOrderArticles);
 
@@ -162,5 +163,16 @@ public class SupplierOrderEditView implements SupplierOrderDetailsInterface {
 
     public void btnCancel(SupplierOrderDetails supplierOrderDetailsMenu) {
         supplierOrderDetailsMenu.setShowMode();
+    }
+
+    private Object[][] extractObject(JTable table) {
+        Object[][] values = new Object[table.getRowCount()][3];
+        for (int x = 0; x < table.getRowCount(); x++) {
+            values[x][0] = table.getModel().getValueAt(x, 0);
+            values[x][1] = table.getValueAt(x, 3);
+            values[x][2] = table.getValueAt(x, 4);
+        }
+        
+        return values;
     }
 }

@@ -1,7 +1,0 @@
-IdArticle,IdArticleCategory,EAN,Name,PriceVAT,PriceGross,PriceSupplier,Stock,Color,SizeH,SizeL,SizeW,Description,LastModifiedDate,IDEmployeeModify
-2,1,123456789,LOL,0.015,1.0,0.69,0,null,0.0,0.0,0.0,null
-1,1,0,Outstanding Surcharge,0.17,20.0,0.0,0,null,0.0,0.0,0.0,null
-3,2,1234567890123,Kartoffel,0.195,1500.0,1200.0,500,Braun,2.1,1.6,1.9,Frisch
-4,2,1234567890123,Kartoffel,0.195,1500.0,1200.0,500,Braun,2.1,1.6,1.9,Frisch
-5,2,1234567890123,Kartoffel,0.195,1500.0,1200.0,500,Braun,2.1,1.6,1.9,Frisch
-6,2,1234567890123,Kartoffel,0.195,1500.0,1200.0,500,Braun,2.1,1.6,1.9,Frisch
