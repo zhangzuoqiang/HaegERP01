@@ -24,7 +24,6 @@ import org.haegerp.entity.ClientBill;
 import org.haegerp.entity.ClientOffer;
 import org.haegerp.entity.ClientOfferDetailPK;
 import org.haegerp.entity.Employee;
-import org.haegerp.entity.SupplierOrderDetailPK;
 import org.haegerp.jsf.controller.form.FormClientOffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -61,7 +60,7 @@ public class ClientOfferBean implements Serializable {
     //Mitarbeiter, der das Angebot erstellt hat
     private Employee employee;
     //Hilfsvariable für die Methode, die eine Kundenbestellung löschen.
-    private long clientOrderId;
+    private long clientOfferId;
     //Klasse, wo die Felder von dem Formular gespeichert werden
     private FormClientOffer formClientOffer;
     //Object, dass der Inhalt von der Tabelle hat
@@ -156,7 +155,7 @@ public class ClientOfferBean implements Serializable {
      */
     public String btnCancel_ActionPerformed() {
         if (formClientOffer.isDisabled() || clientOffer.getIdClientOffer() == 0) {
-            return "clientOrderManagement?faces-redirect=true";
+            return "clientOfferManagement?faces-redirect=true";
         } else {
             formClientOffer = new FormClientOffer(clientOffer, true);
             formClientOffer.setTblArticles(clientOfferDetailController.loadTableRows(clientOffer.getIdClientOffer()));
@@ -216,8 +215,8 @@ public class ClientOfferBean implements Serializable {
 
                 for (int i = 0; i < formClientOffer.getTblArticles().length; i++) {
                     values[i][0] = formClientOffer.getTblArticles()[i][0];
-                    values[i][1] = formClientOffer.getTblArticles()[i][4];
-                    values[i][2] = formClientOffer.getTblArticles()[i][5];
+                    values[i][1] = formClientOffer.getTblArticles()[i][5];
+                    values[i][2] = formClientOffer.getTblArticles()[i][6];
                 }
                 clientOfferDetailController.deleteAllArticles(clientOffer.getIdClientOffer());
                 clientOffer.setClientOfferDetail(clientOfferDetailController.doUpdateOfferArticle(values, clientOffer.getIdClientOffer()));
@@ -238,13 +237,14 @@ public class ClientOfferBean implements Serializable {
      * Das System versucht ein Kundenangebot zu löschen.
      */
     public void delete() {
-        ClientOffer deleteClientOffer = clientOfferController.getClientOfferById(clientOrderId);
+        ClientOffer deleteClientOffer = clientOfferController.getClientOfferById(clientOfferId);
         FacesMessage fMessage;
         FacesMessage.Severity severity;
         String msg;
         if (deleteClientOffer != null) {
             try {
                 if (deleteClientOffer.getSendDate() == null) {
+                    clientOfferDetailController.deleteAllArticles(deleteClientOffer.getIdClientOffer());
                     clientOfferController.delete(deleteClientOffer);
                     severity = FacesMessage.SEVERITY_INFO;
                     msg = "Selected Client Offer was deleted.";
@@ -342,32 +342,41 @@ public class ClientOfferBean implements Serializable {
         ArticleHistory articleHistory = articleHistoryController.getArticleHistoryById(articleHistoryPK);
 
         ClientOfferDetailPK detailPK = new ClientOfferDetailPK(clientOffer, articleHistory);
+        int x = 1;
+        int i = 0;
+        Object[][] newModel;
 
-        for (int i = 0; i < formClientOffer.getTblArticles().length; i++) {
-            SupplierOrderDetailPK supplierOrderDetailPK = (SupplierOrderDetailPK) formClientOffer.getTblArticles()[i][0];
+        if (formClientOffer.getTblArticles() != null) {
+            for (int j = 0; j < formClientOffer.getTblArticles().length; j++) {
+                ClientOfferDetailPK clientOfferDetailPK = (ClientOfferDetailPK) formClientOffer.getTblArticles()[j][0];
 
-            if (supplierOrderDetailPK.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle() == idArticle
-                    && supplierOrderDetailPK.getArticleHistory().getArticleHistoryPK().getIdArticleHistory() == idArticleHistory) {
-                long quantity = Long.parseLong(String.valueOf(formClientOffer.getTblArticles()[i][4]));
-                formClientOffer.getTblArticles()[i][4] = quantity + 1;
-                return;
+                if (clientOfferDetailPK.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle() == idArticle
+                        && clientOfferDetailPK.getArticleHistory().getArticleHistoryPK().getIdArticleHistory() == idArticleHistory) {
+                    long quantity = Long.parseLong(String.valueOf(formClientOffer.getTblArticles()[j][5]));
+                    formClientOffer.getTblArticles()[j][5] = quantity + 1;
+                    return;
+                }
             }
+            x = formClientOffer.getTblArticles().length + 1;
+            newModel = new Object[x][8];
+
+            for (i = 0; i < formClientOffer.getTblArticles().length; i++) {
+                newModel[i] = formClientOffer.getTblArticles()[i];
+            }
+        } else {
+            newModel = new Object[x][8];
         }
 
-        Object[][] newModel = new Object[formClientOffer.getTblArticles().length + 1][7];
-        int i;
-        for (i = 0; i < formClientOffer.getTblArticles().length; i++) {
-            newModel[i] = formClientOffer.getTblArticles()[i];
-        }
 
         Object[] row = {
             detailPK,
             articleHistory.getEan(),
             articleHistory.getName(),
-            articleHistory.getPriceSupplier() + " €",
+            articleHistory.getPriceGross() + " €",
+            (Math.floor(articleHistory.getPriceVat() * 10000) / 100) + " %",
             "1",
             "0",
-            articleHistory.getPriceSupplier() + " €"
+            (articleHistory.getPriceGross() * (1 + articleHistory.getPriceVat())) + " €"
         };
 
         newModel[i] = row;
@@ -409,7 +418,7 @@ public class ClientOfferBean implements Serializable {
      */
     public void markAsBilled() {
         Date date = new Date();
-        formClientOffer.setTxtBillReceived(new SimpleDateFormat("dd-MM-yyyy HH:mm")
+        formClientOffer.setTxtBilled(new SimpleDateFormat("dd-MM-yyyy HH:mm")
                 .format(date));
         ClientBill newClientBill = new ClientBill();
         newClientBill.setBilledDate(date);
@@ -448,7 +457,7 @@ public class ClientOfferBean implements Serializable {
     /**
      * Ein Artikel des Angebots wird gelöscht
      *
-     * @param supplierOrderDetail ID des Artikels
+     * @param clientOfferDetail ID des Artikels
      */
     public void deleteArticle(ClientOfferDetailPK clientOfferDetail) {
         long deleteArticleId = clientOfferDetail.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
@@ -457,7 +466,7 @@ public class ClientOfferBean implements Serializable {
         Object[][] newTblArticles = new Object[oldTblArticles.length - 1][7];
         int x = 0;
         for (int i = 0; i < oldTblArticles.length; i++) {
-            long actualArticleId = ((SupplierOrderDetailPK) oldTblArticles[i][0]).getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
+            long actualArticleId = ((ClientOfferDetailPK) oldTblArticles[i][0]).getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
             if (actualArticleId != deleteArticleId) {
                 newTblArticles[x] = oldTblArticles[i];
                 x++;
@@ -465,5 +474,75 @@ public class ClientOfferBean implements Serializable {
         }
 
         formClientOffer.setTblArticles(newTblArticles);
+    }
+
+    /**
+     * @return the clientOfferObjects
+     */
+    public Object[][] getClientOfferObjects() {
+        return clientOfferObjects;
+    }
+
+    /**
+     * @param clientOfferObjects the clientOfferObjects to set
+     */
+    public void setClientOfferObjects(Object[][] clientOfferObjects) {
+        this.clientOfferObjects = clientOfferObjects;
+    }
+
+    /**
+     * @return the search
+     */
+    public String getSearch() {
+        return search;
+    }
+
+    /**
+     * @param search the search to set
+     */
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    /**
+     * @return the pageSize
+     */
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    /**
+     * @param pageSize the pageSize to set
+     */
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    /**
+     * @return the clientOfferId
+     */
+    public long getClientOfferId() {
+        return clientOfferId;
+    }
+
+    /**
+     * @param clientOfferId the clientOfferId to set
+     */
+    public void setClientOfferId(long clientOfferId) {
+        this.clientOfferId = clientOfferId;
+    }
+
+    /**
+     * @return the formClientOffer
+     */
+    public FormClientOffer getFormClientOffer() {
+        return formClientOffer;
+    }
+
+    /**
+     * @param formClientOffer the formClientOffer to set
+     */
+    public void setFormClientOffer(FormClientOffer formClientOffer) {
+        this.formClientOffer = formClientOffer;
     }
 }

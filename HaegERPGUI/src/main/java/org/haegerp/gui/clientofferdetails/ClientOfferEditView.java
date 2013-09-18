@@ -168,8 +168,8 @@ public class ClientOfferEditView implements ClientOfferDetailsInterface {
         Object[][] values = new Object[table.getRowCount()][3];
         for (int x = 0; x < table.getRowCount(); x++) {
             values[x][0] = table.getModel().getValueAt(x, 0);
-            values[x][1] = table.getValueAt(x, 3);
-            values[x][2] = table.getValueAt(x, 4);
+            values[x][1] = table.getValueAt(x, 4);
+            values[x][2] = table.getValueAt(x, 5);
         }
         
         return values;

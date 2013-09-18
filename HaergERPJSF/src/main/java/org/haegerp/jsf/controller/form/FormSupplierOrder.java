@@ -126,6 +126,10 @@ public class FormSupplierOrder {
             txtBillPaid = "Bill not Paid";
             if (disabledSendDate) {
                 disableBillReceived = false;
+                disableBillPaid = true;
+            } else {
+                disableBillReceived = true;
+                disableBillPaid = true;
             }
         }
         txtTotal = String.valueOf(supplierOrder.getTotal());

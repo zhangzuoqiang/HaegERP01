@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.JTable;
-
 import org.haegerp.controller.ClientOfferDetailController;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleHistory;

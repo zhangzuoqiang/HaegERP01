@@ -220,7 +220,7 @@ public class SupplierOrderBean implements Serializable {
                     values[i][2] = formSupplierOrder.getTblArticles()[i][5];
                 }
                 supplierOrderDetailController.deleteAllArticles(supplierOrder.getIdSupplierOrder());
-                
+
                 supplierOrder.setSupplierOrderDetail(supplierOrderDetailController.doUpdateOrderArticle(values, supplierOrder.getIdSupplierOrder()));
             }
 
@@ -246,6 +246,7 @@ public class SupplierOrderBean implements Serializable {
         if (deleteSupplierOrder != null) {
             try {
                 if (deleteSupplierOrder.getSendDate() == null) {
+                    supplierOrderDetailController.deleteAllArticles(deleteSupplierOrder.getIdSupplierOrder());
                     supplierOrderController.delete(deleteSupplierOrder);
                     severity = FacesMessage.SEVERITY_INFO;
                     msg = "Selected Supplier Order was deleted.";
@@ -343,23 +344,30 @@ public class SupplierOrderBean implements Serializable {
         ArticleHistory articleHistory = articleHistoryController.getArticleHistoryById(articleHistoryPK);
 
         SupplierOrderDetailPK detailPK = new SupplierOrderDetailPK(supplierOrder, articleHistory);
+        int x = 1;
+        int i = 0;
+        Object[][] newModel;
 
-        for (int i = 0; i < formSupplierOrder.getTblArticles().length; i++) {
-            SupplierOrderDetailPK supplierOrderDetailPK = (SupplierOrderDetailPK) formSupplierOrder.getTblArticles()[i][0];
+        if (formSupplierOrder.getTblArticles() != null) {
+            for (int j = 0; j < formSupplierOrder.getTblArticles().length; j++) {
+                SupplierOrderDetailPK supplierOrderDetailPK = (SupplierOrderDetailPK) formSupplierOrder.getTblArticles()[j][0];
 
-            if (supplierOrderDetailPK.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle() == idArticle
-                    && supplierOrderDetailPK.getArticleHistory().getArticleHistoryPK().getIdArticleHistory() == idArticleHistory) {
-                long quantity = Long.parseLong(String.valueOf(formSupplierOrder.getTblArticles()[i][4]));
-                formSupplierOrder.getTblArticles()[i][4] = quantity + 1;
-                return;
+                if (supplierOrderDetailPK.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle() == idArticle
+                        && supplierOrderDetailPK.getArticleHistory().getArticleHistoryPK().getIdArticleHistory() == idArticleHistory) {
+                    long quantity = Long.parseLong(String.valueOf(formSupplierOrder.getTblArticles()[j][4]));
+                    formSupplierOrder.getTblArticles()[j][4] = quantity + 1;
+                    return;
+                }
             }
+            x = formSupplierOrder.getTblArticles().length + 1;
+            newModel = new Object[x][7];
+            for (i = 0; i < formSupplierOrder.getTblArticles().length; i++) {
+                newModel[i] = formSupplierOrder.getTblArticles()[i];
+            }
+        } else {
+            newModel = new Object[x][7];
         }
 
-        Object[][] newModel = new Object[formSupplierOrder.getTblArticles().length + 1][7];
-        int i;
-        for (i = 0; i < formSupplierOrder.getTblArticles().length; i++) {
-            newModel[i] = formSupplierOrder.getTblArticles()[i];
-        }
 
         Object[] row = {
             detailPK,
@@ -434,7 +442,7 @@ public class SupplierOrderBean implements Serializable {
                 .format(date));
         SupplierBill editSupplierBill = supplierOrderController.getSupplierBillById(supplierOrder.getSupplierBill().getIdSupplierBill());
         editSupplierBill.setPaidDate(date);
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         Long idEmployee = (Long) session.getAttribute("idemployee");
@@ -445,7 +453,7 @@ public class SupplierOrderBean implements Serializable {
         supplierOrder.setSupplierBill(supplierBill);
         btnEditSave_ActionPerformed();
     }
-    
+
     /**
      * Ein Artikel der bestellung wird gelöscht
      *
@@ -453,18 +461,18 @@ public class SupplierOrderBean implements Serializable {
      */
     public void deleteArticle(SupplierOrderDetailPK supplierOrderDetail) {
         long deleteArticleId = supplierOrderDetail.getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
-        
+
         Object[][] oldTblArticles = formSupplierOrder.getTblArticles();
         Object[][] newTblArticles = new Object[oldTblArticles.length - 1][7];
         int x = 0;
         for (int i = 0; i < oldTblArticles.length; i++) {
-            long actualArticleId = ((SupplierOrderDetailPK)oldTblArticles[i][0]).getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
-            if (actualArticleId != deleteArticleId){
+            long actualArticleId = ((SupplierOrderDetailPK) oldTblArticles[i][0]).getArticleHistory().getArticleHistoryPK().getArticle().getIdArticle();
+            if (actualArticleId != deleteArticleId) {
                 newTblArticles[x] = oldTblArticles[i];
                 x++;
             }
         }
-        
+
         formSupplierOrder.setTblArticles(newTblArticles);
     }
 

@@ -21,9 +21,9 @@ public class FormClientOffer {
     //Der Benutzer kann das Angebot auf geschickt ändern
     private boolean disabledSendDate;
     //Kundenangebot: Datum der Rechnung
-    private String txtBillReceived;
+    private String txtBilled;
     //Kann der Benutzer die Datum der Rechnung speichern?
-    private boolean disableBillReceived;
+    private boolean disableBilled;
     //Kundenangebot: Datum 
     private String txtBillPaid;
     //Kann der Benutzer die Datum der Rechnung Zahlung speichern?
@@ -65,13 +65,13 @@ public class FormClientOffer {
             disableArticle = false;
             disabledClient = false;
             disableBillPaid = true;
-            disableBillReceived = true;
+            disableBilled = true;
             disabledSendDate = true;
         } else {
             disableArticle = true;
             disabledClient = true;
             disableBillPaid = true;
-            disableBillReceived = true;
+            disableBilled = true;
             disabledSendDate = true;
         }
         configureButtons(disabled);
@@ -105,12 +105,12 @@ public class FormClientOffer {
 
         if (clientOffer.getClientBill() != null) {
             if (clientOffer.getClientBill().getBilledDate() != null) {
-                txtBillReceived = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getBilledDate());
-                disableBillReceived = true;
+                txtBilled = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getBilledDate());
+                disableBilled = true;
                 disableArticle = true;
             } else {
-                txtBillReceived = "Not yet Billed";
-                disableBillReceived = false;
+                txtBilled = "Not yet Billed";
+                disableBilled = false;
                 disableArticle = false;
             }
 
@@ -122,10 +122,14 @@ public class FormClientOffer {
                 disableBillPaid = false;
             }
         } else {
-            txtBillReceived = "Bill not Received";
+            txtBilled = "Not yet Billed";
             txtBillPaid = "Bill not Paid";
             if (disabledSendDate) {
-                disableBillReceived = false;
+                disableBilled = false;
+                disableBillPaid = true;
+            } else {
+                disableBilled = true;
+                disableBillPaid = true;
             }
         }
         txtTotal = String.valueOf(clientOffer.getTotal());
@@ -136,7 +140,7 @@ public class FormClientOffer {
             disableArticle = true;
             disabledClient = true;
             disableBillPaid = true;
-            disableBillReceived = true;
+            disableBilled = true;
             disabledSendDate = true;
         }
         configureButtons(disabled);
@@ -242,34 +246,6 @@ public class FormClientOffer {
      */
     public void setDisabledSendDate(boolean disabledSendDate) {
         this.disabledSendDate = disabledSendDate;
-    }
-
-    /**
-     * @return the txtBillReceived
-     */
-    public String getTxtBillReceived() {
-        return txtBillReceived;
-    }
-
-    /**
-     * @param txtBillReceived the txtBillReceived to set
-     */
-    public void setTxtBillReceived(String txtBillReceived) {
-        this.txtBillReceived = txtBillReceived;
-    }
-
-    /**
-     * @return the disableBillReceived
-     */
-    public boolean isDisableBillReceived() {
-        return disableBillReceived;
-    }
-
-    /**
-     * @param disableBillReceived the disableBillReceived to set
-     */
-    public void setDisableBillReceived(boolean disableBillReceived) {
-        this.disableBillReceived = disableBillReceived;
     }
 
     /**
@@ -466,6 +442,34 @@ public class FormClientOffer {
      */
     public void setTxtSearchClient(String txtSearchClient) {
         this.txtSearchClient = txtSearchClient;
+    }
+
+    /**
+     * @return the txtBilled
+     */
+    public String getTxtBilled() {
+        return txtBilled;
+    }
+
+    /**
+     * @param txtBilled the txtBilled to set
+     */
+    public void setTxtBilled(String txtBilled) {
+        this.txtBilled = txtBilled;
+    }
+
+    /**
+     * @return the disableBilled
+     */
+    public boolean isDisableBilled() {
+        return disableBilled;
+    }
+
+    /**
+     * @param disableBilled the disableBilled to set
+     */
+    public void setDisableBilled(boolean disableBilled) {
+        this.disableBilled = disableBilled;
     }
 
 }

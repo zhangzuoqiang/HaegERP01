@@ -47,24 +47,25 @@ public class ClientOfferControllerImpl implements ClientOfferController {
     @Override
     public Object[][] loadTableRows(int size) {
         Page<ClientOffer> coPage = this.loadPage(size);
-        Object[][] rows = new Object[coPage.getContent().size()][9];
+        Object[][] rows = new Object[coPage.getContent().size()][10];
         for (int i = 0; i < coPage.getContent().size(); i++) {
             ClientOffer clientOffer = coPage.getContent().get(i);
 
-            rows[i][0] = clientOffer.getClient().getName();
-            rows[i][1] = clientOffer.getEmployee().getName();
-            rows[i][2] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getOfferDate());
-            rows[i][3] = (clientOffer.getSendDate() == null) ? "Order not sent" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getSendDate());
-            rows[i][4] = clientOffer.getTotal();
+            rows[i][0] = clientOffer.getIdClientOffer();
+            rows[i][1] = clientOffer.getClient().getName();
+            rows[i][2] = clientOffer.getEmployee().getName();
+            rows[i][3] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getOfferDate());
+            rows[i][4] = (clientOffer.getSendDate() == null) ? "Order not sent" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getSendDate());
+            rows[i][5] = clientOffer.getTotal();
             if (clientOffer.getClientBill() == null) {
-                rows[i][5] = "Bill not processed";
-                rows[i][6] = "Bill not paid";
+                rows[i][6] = "Bill not processed";
+                rows[i][7] = "Bill not paid";
             } else {
-                rows[i][5] = (clientOffer.getClientBill().getBilledDate() == null) ? "Bill not processed" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getBilledDate());
-                rows[i][6] = (clientOffer.getClientBill().getPaidDate() == null) ? "Bill not paid" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getPaidDate());
+                rows[i][6] = (clientOffer.getClientBill().getBilledDate() == null) ? "Bill not processed" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getBilledDate());
+                rows[i][7] = (clientOffer.getClientBill().getPaidDate() == null) ? "Bill not paid" : new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getClientBill().getPaidDate());
             }
-            rows[i][7] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getLastModifiedDate());
-            rows[i][8] = employeeRepository.findOne(clientOffer.getIdEmployeeModify()).getName();
+            rows[i][8] = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(clientOffer.getLastModifiedDate());
+            rows[i][9] = employeeRepository.findOne(clientOffer.getIdEmployeeModify()).getName();
         }
 
         return rows;

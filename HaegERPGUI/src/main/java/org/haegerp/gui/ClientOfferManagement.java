@@ -62,6 +62,7 @@ public class ClientOfferManagement extends JFrame {
                 new DefaultTableModel(
                 clientOfferController.loadTableRows(sldNumberResults.getValue()),
                 new String[]{
+            "ID",
             "Client Name",
             "Employee Name",
             "Offer Date",
@@ -79,6 +80,7 @@ public class ClientOfferManagement extends JFrame {
                 return false;
             }
         });
+        tblClientOffers.removeColumn(tblClientOffers.getColumn("ID"));
         lblPage.setText("Page " + (clientOfferController.getPage().getNumber() + 1) + "/" + clientOfferController.getPage().getTotalPages());
     }
 
@@ -104,7 +106,8 @@ public class ClientOfferManagement extends JFrame {
     }
 
     /**
-     * Dieses Listener kontrolliert die Nummer der Kundenbestellungen, die eine Seite hat
+     * Dieses Listener kontrolliert die Nummer der Kundenbestellungen, die eine
+     * Seite hat
      *
      * @param e MouseEvent Werte
      */
@@ -134,7 +137,8 @@ public class ClientOfferManagement extends JFrame {
     }
 
     /**
-     * Eine Kundenbestellung, die in der Datenbank ist, wird beim Benutzer geändert
+     * Eine Kundenbestellung, die in der Datenbank ist, wird beim Benutzer
+     * geändert
      *
      * @param e ActionEvent Werte
      */
