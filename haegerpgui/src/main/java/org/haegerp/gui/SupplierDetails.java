@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.SupplierController;
+import org.haegerp.service.SupplierService;
 import org.haegerp.entity.Supplier;
 import org.haegerp.gui.supplierdetails.SupplierDetailsInterface;
 import org.haegerp.gui.supplierdetails.SupplierEditView;
@@ -32,9 +32,9 @@ public class SupplierDetails extends javax.swing.JFrame {
     private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
     //Controller
     @Autowired
-    private SupplierController supplierController;
+    private SupplierService supplierController;
 
-    public SupplierController getSupplierController() {
+    public SupplierService getSupplierController() {
         return supplierController;
     }
     //Formular

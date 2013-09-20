@@ -9,7 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.SupplierController;
+import org.haegerp.service.SupplierService;
 import org.haegerp.entity.Supplier;
 import org.haegerp.jsf.controller.form.FormSupplier;
 import org.haegerp.jsf.validation.Validator;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Controller;
 public class SupplierBean implements Serializable{
     
     @Autowired
-    private SupplierController supplierController;
+    private SupplierService supplierController;
     
     //Lieferant, der in der Seite der Details zeigen wird
     private Supplier supplier;
@@ -230,7 +230,7 @@ public class SupplierBean implements Serializable{
     /**
      * @return the supplierController
      */
-    public SupplierController getSupplierController() {
+    public SupplierService getSupplierController() {
         return supplierController;
     }
 

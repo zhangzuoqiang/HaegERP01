@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.DivisionController;
-import org.haegerp.controller.EmployeeController;
-import org.haegerp.controller.SalaryCategoryController;
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.DivisionService;
+import org.haegerp.service.EmployeeService;
+import org.haegerp.service.SalaryCategoryService;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Division;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.SalaryCategory;
@@ -40,27 +40,27 @@ public class EmployeeDetails extends javax.swing.JFrame {
     private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
     //Controller
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
 
-    public EmployeeController getEmployeeController() {
+    public EmployeeService getEmployeeController() {
         return employeeController;
     }
     @Autowired
-    private SalaryCategoryController salaryCategoryController;
+    private SalaryCategoryService salaryCategoryController;
 
-    public SalaryCategoryController getSalaryCategoryController() {
+    public SalaryCategoryService getSalaryCategoryController() {
         return salaryCategoryController;
     }
     @Autowired
-    private DivisionController divisionController;
+    private DivisionService divisionController;
 
-    public DivisionController getDivisionController() {
+    public DivisionService getDivisionController() {
         return divisionController;
     }
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
 
-    public UserGroupController getUserGroupController() {
+    public UserGroupService getUserGroupController() {
         return userGroupController;
     }
     //Formulare

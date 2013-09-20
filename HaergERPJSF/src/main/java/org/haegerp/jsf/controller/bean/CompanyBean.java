@@ -7,7 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.CompanyController;
+import org.haegerp.service.CompanyService;
 import org.haegerp.entity.Company;
 import org.haegerp.jsf.controller.form.FormCompany;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Controller;
 public class CompanyBean implements Serializable{
     
     @Autowired
-    private CompanyController companyController;
+    private CompanyService companyController;
     
     //Firma, die die Details zeigen wird
     private Company company;

@@ -10,9 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.ArticleCategoryController;
-
-import org.haegerp.controller.ArticleController;
+import org.haegerp.service.ArticleCategoryService;
+import org.haegerp.service.ArticleService;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
 import org.haegerp.jsf.controller.form.FormArticle;
@@ -32,9 +31,9 @@ import org.springframework.stereotype.Controller;
 public class ArticleBean implements Serializable{
     
     @Autowired
-    private ArticleController articleController;
+    private ArticleService articleController;
     @Autowired
-    private ArticleCategoryController articleCategoryController;
+    private ArticleCategoryService articleCategoryController;
     @Autowired
     private ArticleCategoryBean articleCategoryBean;
     
@@ -254,7 +253,7 @@ public class ArticleBean implements Serializable{
     /**
      * @return the articleController
      */
-    public ArticleController getArticleController() {
+    public ArticleService getArticleController() {
         return articleController;
     }
 

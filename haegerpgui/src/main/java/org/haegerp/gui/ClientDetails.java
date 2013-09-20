@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.ClientCategoryController;
-import org.haegerp.controller.ClientController;
+import org.haegerp.service.ClientCategoryService;
+import org.haegerp.service.ClientService;
 import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientCategory;
 import org.haegerp.gui.clientdetails.ClientDetailsInterface;
@@ -36,15 +36,15 @@ public class ClientDetails extends javax.swing.JFrame {
     private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
     //Controller
     @Autowired
-    private ClientController clientController;
+    private ClientService clientController;
 
-    public ClientController getClientController() {
+    public ClientService getClientController() {
         return clientController;
     }
     @Autowired
-    private ClientCategoryController clientCategoryController;
+    private ClientCategoryService clientCategoryController;
 
-    public ClientCategoryController getClientCategoryController() {
+    public ClientCategoryService getClientCategoryController() {
         return clientCategoryController;
     }
     //Formulare

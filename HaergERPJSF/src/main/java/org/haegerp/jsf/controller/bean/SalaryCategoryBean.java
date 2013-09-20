@@ -9,7 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.SalaryCategoryController;
+import org.haegerp.service.SalaryCategoryService;
 
 import org.haegerp.entity.SalaryCategory;
 import org.haegerp.jsf.controller.form.FormSalaryCategory;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Controller;
 public class SalaryCategoryBean implements Serializable {
 
     @Autowired
-    private SalaryCategoryController salaryCategoryController;
+    private SalaryCategoryService salaryCategoryController;
     //Injected Manually at ClientBean.SetUp().@PostConstruct
     private EmployeeBean employeeBean;
     //Gehaltkategorie, die in der Seite der Details zeigen wird
@@ -236,7 +236,7 @@ public class SalaryCategoryBean implements Serializable {
     /**
      * @return the salaryCategoryController
      */
-    public SalaryCategoryController getSalaryCategoryController() {
+    public SalaryCategoryService getSalaryCategoryController() {
         return salaryCategoryController;
     }
 

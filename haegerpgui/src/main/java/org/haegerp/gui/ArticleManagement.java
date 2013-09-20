@@ -31,8 +31,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.ArticleCategoryController;
-import org.haegerp.controller.ArticleController;
+import org.haegerp.service.ArticleCategoryService;
+import org.haegerp.service.ArticleService;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +49,9 @@ public class ArticleManagement extends JFrame {
     private static final long serialVersionUID = 2464190735195227843L;
     //Controller
     @Autowired
-    private ArticleController articleController;
+    private ArticleService articleController;
     @Autowired
-    private ArticleCategoryController articleCategoryController;
+    private ArticleCategoryService articleCategoryController;
     //Formulare
     @Autowired
     private ArticleDetails articleDetails;

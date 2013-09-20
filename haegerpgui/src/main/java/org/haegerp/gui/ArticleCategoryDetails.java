@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.ArticleCategoryController;
+import org.haegerp.service.ArticleCategoryService;
 import org.haegerp.entity.ArticleCategory;
 import org.haegerp.gui.articlecategorydetails.ArticleCategoryDetailsInterface;
 import org.haegerp.gui.articlecategorydetails.ArticleCategoryEditView;
@@ -47,9 +47,9 @@ public class ArticleCategoryDetails extends javax.swing.JFrame {
     }
     //Controller
     @Autowired
-    private ArticleCategoryController articleCategoryController;
+    private ArticleCategoryService articleCategoryController;
 
-    public ArticleCategoryController getArticleCategoryController() {
+    public ArticleCategoryService getArticleCategoryController() {
         return articleCategoryController;
     }
     //Verschiednen Stände von der Oberfläche

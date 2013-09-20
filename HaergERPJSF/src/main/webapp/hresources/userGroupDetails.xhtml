@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="header">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <title>HaegERP - User Group Details</title>
+    </ui:define>
+
+    <ui:define name="body">
+        <h:panelGrid columns="3">
+            <p:outputLabel styleClass="labels" value="Name" for="txtName" />
+            <p:inputText styleClass="textBoxes" id="txtName" disabled="#{userGroupBean.formUserGroup.disabled}"
+                         value="#{userGroupBean.formUserGroup.txtName}" title="Name"
+                         required="true" maxlength="80">    
+                <p:ajax update="msgName" event="change" />
+            </p:inputText>
+            <p:message for="txtName" id="msgName" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Description" for="txtDescription" />
+            <p:inputTextarea styleClass="textBoxes" disabled="#{userGroupBean.formUserGroup.disabled}"
+                             id="txtDescription" value="#{userGroupBean.formUserGroup.txtDescription}"
+                             title="Description" maxlength="255"/>
+            <h:panelGroup></h:panelGroup>
+
+            <p:outputLabel styleClass="labels" value="Permissions" for="plPermissions" />
+            <p:pickList id="plPermissions" styleClass="textBoxes" value="#{userGroupBean.formUserGroup.permissions}"
+                        var="permission" itemValue="#{permission}" converter="permissionConverter"
+                        itemLabel="#{permission.moduleName}" disabled="#{userGroupBean.formUserGroup.disabled}">
+                <f:facet name="sourceCaption">Revoked</f:facet>
+                <f:facet name="targetCaption">Granted</f:facet>
+            </p:pickList>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <h:column>
+                <p:commandButton styleClass="button" ajax="true"
+                                 update="panel" id="btnEditSave"
+                                 action="#{userGroupBean.btnEditSave_ActionPerformed()}"
+                                 value="#{userGroupBean.formUserGroup.btnEditSave_Name}" />
+            </h:column>
+            <h:column></h:column>
+            <h:column>
+                <p:commandButton  styleClass="button" ajax="#{userGroupBean.formUserGroup.btnCancel_Ajax}"
+                                  update="panel" id="btnCancel" immediate="true"
+                                  action="#{userGroupBean.btnCancel_ActionPerformed()}"
+                                  value="#{userGroupBean.formUserGroup.btnCancel_Name}" />
+            </h:column>
+        </h:panelGrid>
+        <h:panelGroup>
+            <p:growl sticky="true"/>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

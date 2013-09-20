@@ -9,7 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.ClientCategoryController;
+import org.haegerp.service.ClientCategoryService;
 
 import org.haegerp.entity.ClientCategory;
 import org.haegerp.jsf.controller.form.FormClientCategory;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Controller;
 public class ClientCategoryBean implements Serializable {
 
     @Autowired
-    private ClientCategoryController clientCategoryController;
+    private ClientCategoryService clientCategoryController;
     //Injected Manually at @PostConstruct ClientBean.SetUp()
     private ClientBean clientBean;
     //Kundenkategorie, die in der Seite der Details zeigen wird

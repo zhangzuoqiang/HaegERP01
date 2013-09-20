@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.DivisionController;
+import org.haegerp.service.DivisionService;
 import org.haegerp.entity.Division;
 import org.haegerp.gui.divisiondetails.DivisionDetailsInterface;
 import org.haegerp.gui.divisiondetails.DivisionEditView;
@@ -47,9 +47,9 @@ public class DivisionDetails extends javax.swing.JFrame {
     }
     //Controller
     @Autowired
-    private DivisionController divisionController;
+    private DivisionService divisionController;
 
-    public DivisionController getDivisionController() {
+    public DivisionService getDivisionController() {
         return divisionController;
     }
     //Verschiednen Stände von der Oberfläche

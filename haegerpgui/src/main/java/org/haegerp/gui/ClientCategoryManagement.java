@@ -29,8 +29,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.ClientCategoryController;
-import org.haegerp.controller.ClientController;
+import org.haegerp.service.ClientCategoryService;
+import org.haegerp.service.ClientService;
 import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +47,9 @@ public class ClientCategoryManagement extends JFrame {
     private static final long serialVersionUID = 4611390378854969459L;
     //Controller
     @Autowired
-    private ClientController clientController;
+    private ClientService clientController;
     @Autowired
-    private ClientCategoryController clientCategoryController;
+    private ClientCategoryService clientCategoryController;
     //Formulare
     @Autowired
     private ClientCategoryDetails clientCategoryDetails;

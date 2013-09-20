@@ -31,10 +31,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.DivisionController;
-import org.haegerp.controller.EmployeeController;
-import org.haegerp.controller.SalaryCategoryController;
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.DivisionService;
+import org.haegerp.service.EmployeeService;
+import org.haegerp.service.SalaryCategoryService;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Division;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.SalaryCategory;
@@ -53,13 +53,13 @@ public class EmployeeManagement extends JFrame {
     private static final long serialVersionUID = 2464190735195227843L;
     //Controller
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private SalaryCategoryController salaryCategoryController;
+    private SalaryCategoryService salaryCategoryController;
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
     @Autowired
-    private DivisionController divisionController;
+    private DivisionService divisionController;
     //Formular
     @Autowired
     private EmployeeDetails employeeDetails;

@@ -15,26 +15,26 @@
         <div id="divPage" align="center">
             <h:form id="panel">
                 <p:menubar styleClass="menuBar">
-                    <p:menuitem value="Main Menu" url="mainMenu.xhtml" />
+                    <p:menuitem value="Main Menu" url="/mainMenu.xhtml" />
                     <p:submenu label="Articles" rendered="#{templateBean.permissionArticle}">
-                        <p:menuitem value="Article" url="articleManagement.xhtml" />
-                        <p:menuitem value="Articles Category" url="articleCategoryManagement.xhtml" />
+                        <p:menuitem value="Article" url="/article/articleManagement.xhtml" />
+                        <p:menuitem value="Articles Category" url="/article/articleCategoryManagement.xhtml" />
                     </p:submenu>
                     <p:submenu label="Business Partners" rendered="#{templateBean.permissionBusinessPartners}">
-                        <p:menuitem value="Clients" url="clientManagement.xhtml" />
-                        <p:menuitem value="Clients Category" url="clientCategoryManagement.xhtml" />
-                        <p:menuitem value="Suppliers" url="supplierManagement.xhtml" />
+                        <p:menuitem value="Clients" url="/bpartner/clientManagement.xhtml" />
+                        <p:menuitem value="Clients Category" url="/bpartner/clientCategoryManagement.xhtml" />
+                        <p:menuitem value="Suppliers" url="/bpartner/supplierManagement.xhtml" />
                     </p:submenu>
                     <p:submenu label="Human Resources" rendered="#{templateBean.permissionHumanResources}">
-                        <p:menuitem value="Employee" url="employeeManagement.xhtml" />
-                        <p:menuitem value="Division" url="divisionManagement.xhtml" />
-                        <p:menuitem value="Salary Category" url="salaryCategoryManagement.xhtml" />
-                        <p:menuitem value="User Groups" url="userGroupManagement.xhtml" />
+                        <p:menuitem value="Employee" url="/hresources/employeeManagement.xhtml" />
+                        <p:menuitem value="Division" url="/hresources/divisionManagement.xhtml" />
+                        <p:menuitem value="Salary Category" url="/hresources/salaryCategoryManagement.xhtml" />
+                        <p:menuitem value="User Groups" url="/hresources/userGroupManagement.xhtml" />
                     </p:submenu>
-                    <p:menuitem value="Company" url="companyDetails.xhtml" rendered="#{templateBean.permissionCompany}" />
-                    <p:menuitem value="Supplier Orders" url="supplierOrderManagement.xhtml" rendered="#{templateBean.permissionSupplierOrders}" />
+                    <p:menuitem value="Company" url="/companyDetails.xhtml" rendered="#{templateBean.permissionCompany}" />
+                    <p:menuitem value="Supplier Orders" url="/sorder/supplierOrderManagement.xhtml" rendered="#{templateBean.permissionSupplierOrders}" />
                     <p:submenu label="Client Offers" rendered="#{templateBean.permissionClientOffers}">
-                        <p:menuitem value="Client Offers" url="clientOfferManagement.xhtml" />
+                        <p:menuitem value="Client Offers" url="/coffer/clientOfferManagement.xhtml" />
                         <p:menuitem value="Outstanding" url="#" />
                     </p:submenu>
                     <p:menuitem value="#{templateBean.login}" action="#{templateBean.loginAction()}" />

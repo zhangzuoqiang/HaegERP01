@@ -10,12 +10,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.ArticleController;
-import org.haegerp.controller.ArticleHistoryController;
-import org.haegerp.controller.EmployeeController;
-import org.haegerp.controller.SupplierController;
-import org.haegerp.controller.SupplierOrderController;
-import org.haegerp.controller.SupplierOrderDetailController;
+import org.haegerp.service.ArticleService;
+import org.haegerp.service.ArticleHistoryService;
+import org.haegerp.service.EmployeeService;
+import org.haegerp.service.SupplierService;
+import org.haegerp.service.SupplierOrderService;
+import org.haegerp.service.SupplierOrderDetailService;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleHistory;
 import org.haegerp.entity.ArticleHistoryPK;
@@ -40,17 +40,17 @@ import org.springframework.stereotype.Controller;
 public class SupplierOrderBean implements Serializable {
 
     @Autowired
-    private SupplierOrderController supplierOrderController;
+    private SupplierOrderService supplierOrderController;
     @Autowired
-    private SupplierOrderDetailController supplierOrderDetailController;
+    private SupplierOrderDetailService supplierOrderDetailController;
     @Autowired
-    private ArticleController articleController;
+    private ArticleService articleController;
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private SupplierController supplierController;
+    private SupplierService supplierController;
     @Autowired
-    private ArticleHistoryController articleHistoryController;
+    private ArticleHistoryService articleHistoryController;
     //Lieferantenbestellung, der in der Seite der Details zeigen wird
     private SupplierOrder supplierOrder;
     //Lieferant der Bestellung

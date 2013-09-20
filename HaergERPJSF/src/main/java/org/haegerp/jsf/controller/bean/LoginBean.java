@@ -10,8 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.EmployeeController;
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.EmployeeService;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.Permission;
 import org.haegerp.tools.MD5Digest;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Controller;
 public class LoginBean implements Serializable {
 
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
     @Autowired
     private TemplateBean templateBean;
     
@@ -54,6 +54,37 @@ public class LoginBean implements Serializable {
             HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
             session.setAttribute("idemployee", employee.getIdEmployee());
             verifyPermissions(employee);
+            
+            if (templateBean.isPermissionArticle())
+                session.setAttribute("pArticle", 1);
+            else
+                session.setAttribute("pArticle", 0);
+            
+            if (templateBean.isPermissionBusinessPartners())
+                session.setAttribute("pBusinessPart", 1);
+            else
+                session.setAttribute("pBusinessPart", 0);
+            
+            if (templateBean.isPermissionHumanResources())
+                session.setAttribute("pHumanResources", 1);
+            else
+                session.setAttribute("pHumanResources", 0);
+            
+            if (templateBean.isPermissionCompany())
+                session.setAttribute("pCompany", 1);
+            else
+                session.setAttribute("pCompany", 0);
+            
+            if (templateBean.isPermissionSupplierOrders())
+                session.setAttribute("pSupplierOrders", 1);
+            else
+                session.setAttribute("pSupplierOrders", 0);
+            
+            if (templateBean.isPermissionClientOffers())
+                session.setAttribute("pClientOffers", 1);
+            else
+                session.setAttribute("pClientOffers", 0);
+            
             return "mainMenu?faces-redirect=true";
         }
 

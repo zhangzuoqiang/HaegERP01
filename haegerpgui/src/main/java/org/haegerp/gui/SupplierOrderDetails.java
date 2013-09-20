@@ -14,11 +14,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.ArticleController;
-import org.haegerp.controller.ArticleHistoryController;
-import org.haegerp.controller.SupplierController;
-import org.haegerp.controller.SupplierOrderController;
-import org.haegerp.controller.SupplierOrderDetailController;
+import org.haegerp.service.ArticleService;
+import org.haegerp.service.ArticleHistoryService;
+import org.haegerp.service.SupplierService;
+import org.haegerp.service.SupplierOrderService;
+import org.haegerp.service.SupplierOrderDetailService;
 import org.haegerp.entity.Supplier;
 import org.haegerp.entity.SupplierBill;
 import org.haegerp.entity.SupplierOrder;
@@ -40,33 +40,33 @@ public class SupplierOrderDetails extends javax.swing.JFrame {
 
     //Controller
     @Autowired
-    private SupplierOrderController supplierOrderController;
+    private SupplierOrderService supplierOrderController;
 
-    public SupplierOrderController getSupplierOrderController() {
+    public SupplierOrderService getSupplierOrderController() {
         return supplierOrderController;
     }
     @Autowired
-    private SupplierOrderDetailController supplierOrderDetailController;
+    private SupplierOrderDetailService supplierOrderDetailController;
 
-    public SupplierOrderDetailController getSupplierOrderDetailController() {
+    public SupplierOrderDetailService getSupplierOrderDetailController() {
         return supplierOrderDetailController;
     }
     @Autowired
-    private ArticleController articleController;
+    private ArticleService articleController;
 
-    public ArticleController getArticleController() {
+    public ArticleService getArticleController() {
         return articleController;
     }
     @Autowired
-    private ArticleHistoryController articleHistoryController;
+    private ArticleHistoryService articleHistoryController;
 
-    public ArticleHistoryController getArticleHistoryController() {
+    public ArticleHistoryService getArticleHistoryController() {
         return articleHistoryController;
     }
     @Autowired
-    private SupplierController supplierController;
+    private SupplierService supplierController;
 
-    public SupplierController getSupplierController() {
+    public SupplierService getSupplierController() {
         return supplierController;
     }
     //Formular

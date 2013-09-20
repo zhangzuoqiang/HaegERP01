@@ -10,8 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.ClientCategoryController;
-import org.haegerp.controller.ClientController;
+import org.haegerp.service.ClientCategoryService;
+import org.haegerp.service.ClientService;
 import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientCategory;
 import org.haegerp.jsf.controller.form.FormClient;
@@ -31,9 +31,9 @@ import org.springframework.stereotype.Controller;
 public class ClientBean implements Serializable{
     
     @Autowired
-    private ClientController clientController;
+    private ClientService clientController;
     @Autowired
-    private ClientCategoryController clientCategoryController;
+    private ClientCategoryService clientCategoryController;
     @Autowired
     private ClientCategoryBean clientCategoryBean;
     
@@ -254,14 +254,14 @@ public class ClientBean implements Serializable{
     /**
      * @return the clientController
      */
-    public ClientController getClientController() {
+    public ClientService getClientController() {
         return clientController;
     }
 
     /**
      * @return the clientCategoryController
      */
-    public ClientCategoryController getClientCategoryController() {
+    public ClientCategoryService getClientCategoryController() {
         return clientCategoryController;
     }
 

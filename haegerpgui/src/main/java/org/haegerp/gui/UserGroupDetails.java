@@ -11,8 +11,8 @@ import javax.annotation.PostConstruct;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.PermissionController;
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.PermissionService;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Permission;
 import org.haegerp.entity.UserGroup;
 import org.haegerp.gui.usergroupdetails.UserGroupDetailsInterface;
@@ -51,13 +51,13 @@ public class UserGroupDetails extends javax.swing.JFrame {
     }
     //Controller
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
 
-    public UserGroupController getUserGroupController() {
+    public UserGroupService getUserGroupController() {
         return userGroupController;
     }
     @Autowired
-    private PermissionController permissionController;
+    private PermissionService permissionController;
     //Verschiednen Stände von der Oberfläche
     private UserGroupDetailsInterface userGroupDetailsView;
     //Benutzer, der gezeigt wird

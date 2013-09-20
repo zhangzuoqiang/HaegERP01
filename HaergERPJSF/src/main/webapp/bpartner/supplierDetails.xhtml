@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="header">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <title>HaegERP - Supplier Details</title>
+    </ui:define>
+    
+    <ui:define name="body">
+        <h:panelGrid columns="3">
+            <p:outputLabel styleClass="labels" value="Name" for="txtName" />
+            <p:inputText styleClass="textBoxes" id="txtName" disabled="#{supplierBean.formSupplier.disabled}"
+                         value="#{supplierBean.formSupplier.txtName}" title="Name"
+                         required="true" maxlength="80">
+                <p:ajax update="msgName" event="change" />
+            </p:inputText>
+            <p:message for="txtName" id="msgName" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="TaxID" for="txtTaxId" />
+            <p:inputText styleClass="textBoxes" id="txtTaxId" disabled="#{supplierBean.formSupplier.disabled}"
+                         value="#{supplierBean.formSupplier.txtTaxId}" title="Tax ID"
+                         required="true" maxlength="100">
+                <p:ajax update="msgTaxId" event="change" />
+            </p:inputText>
+            <p:message for="txtTaxId" id="msgTaxId" display="icon" />
+            
+            <p:outputLabel styleClass="labels" value="Address" for="txtAddress" />
+            <p:inputText styleClass="textBoxes" id="txtAddress" disabled="#{supplierBean.formSupplier.disabled}"
+                         value="#{supplierBean.formSupplier.txtAddress}" title="Adress"
+                         required="true" maxlength="100">
+                <p:ajax update="msgAddress" event="change" />
+            </p:inputText>
+            <p:message for="txtAddress" id="msgAddress" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="ZipCode" for="txtZipCode" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtZipCode" value="#{supplierBean.formSupplier.txtZipCode}"
+                         required="true" title="ZipCode" maxlength="7">
+                <f:validateRegex pattern="^[A-Za-z]-[0-9]{5}|[0-9]{5}$" />
+                <p:ajax update="msgZipCode" event="change" />
+            </p:inputText>
+            <p:message for="txtZipCode" id="msgZipCode" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="City" for="txtCity" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtCity" value="#{supplierBean.formSupplier.txtCity}"
+                         required="true" title="City" maxlength="50">
+                <p:ajax update="msgCity" event="change" />
+            </p:inputText>
+            <p:message for="txtCity" id="msgCity" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Region" for="txtRegion" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtRegion" value="#{supplierBean.formSupplier.txtRegion}"
+                         title="Region" maxlength="50">
+                <p:ajax update="msgRegion" event="change" />
+            </p:inputText>
+            <p:message for="txtRegion" id="msgRegion" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Country" for="txtCountry" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtCountry" value="#{supplierBean.formSupplier.txtCountry}" title="Country"
+                         required="true" maxlength="50">
+                <p:ajax update="msgCountry" event="change" />
+            </p:inputText>
+            <p:message for="txtCountry" id="msgCountry" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="E-Mail" for="txtEmail" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtEmail" value="#{supplierBean.formSupplier.txtEmail}" title="E-Mail"
+                         required="true">
+                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                <p:ajax update="msgEmail" event="change" />
+            </p:inputText>
+            <p:message for="txtEmail" id="msgEmail" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Phone Number" for="txtPhoneNumber" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtPhoneNumber" value="#{supplierBean.formSupplier.txtPhoneNumber}"
+                         title="Length">
+                <f:validateRegex pattern="^\+[0-9]*|[0-9]*$" />
+                <p:ajax update="msgPhoneNumber" event="change" />
+            </p:inputText>
+            <p:message for="txtPhoneNumber" id="msgPhoneNumber" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Mobile Number" for="txtMobileNumber" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtMobileNumber" value="#{supplierBean.formSupplier.txtMobileNumber}"
+                         title="Length">
+                <f:validateRegex pattern="^\+[0-9]*|[0-9]*$" />
+                <p:ajax update="msgMobileNumber" event="change" />
+            </p:inputText>
+            <p:message for="txtMobileNumber" id="msgMobileNumber" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Fax Number" for="txtFaxNumber" />
+            <p:inputText styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                         id="txtFaxNumber" value="#{supplierBean.formSupplier.txtFaxNumber}"
+                         title="Length">
+                <f:validateRegex pattern="^\+[0-9]*|[0-9]*$" />
+                <p:ajax update="msgFaxNumber" event="change" />
+            </p:inputText>
+            <p:message for="txtFaxNumber" id="msgFaxNumber" display="icon" />
+            
+            <p:outputLabel styleClass="labels" value="Description" for="txtDescription" />
+            <p:inputTextarea styleClass="textBoxes" disabled="#{supplierBean.formSupplier.disabled}"
+                             id="txtDescription" value="#{supplierBean.formSupplier.txtDescription}"
+                             title="Description" maxlength="255"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <h:column>
+                <p:commandButton styleClass="button" ajax="true"
+                                 update="panel" id="btnEditSave"
+                                 action="#{supplierBean.btnEditSave_ActionPerformed()}"
+                                 value="#{supplierBean.formSupplier.btnEditSave_Name}" />
+            </h:column>
+            <h:column></h:column>
+            <h:column>
+                <p:commandButton  styleClass="button" ajax="#{supplierBean.formSupplier.btnCancel_Ajax}"
+                                  update="panel" id="btnCancel" immediate="true"
+                                  action="#{supplierBean.btnCancel_ActionPerformed()}"
+                                  value="#{supplierBean.formSupplier.btnCancel_Name}" />
+            </h:column>
+        </h:panelGrid>
+        <h:panelGroup>
+            <p:growl sticky="true"/>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

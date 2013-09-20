@@ -14,11 +14,11 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.ArticleController;
-import org.haegerp.controller.ArticleHistoryController;
-import org.haegerp.controller.ClientController;
-import org.haegerp.controller.ClientOfferController;
-import org.haegerp.controller.ClientOfferDetailController;
+import org.haegerp.service.ArticleService;
+import org.haegerp.service.ArticleHistoryService;
+import org.haegerp.service.ClientService;
+import org.haegerp.service.ClientOfferService;
+import org.haegerp.service.ClientOfferDetailService;
 import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientBill;
 import org.haegerp.entity.ClientOffer;
@@ -43,33 +43,33 @@ public class ClientOfferDetails extends javax.swing.JFrame {
     private static final long serialVersionUID = 2949647041784163844L;
     //Controller
     @Autowired
-    private ClientOfferController clientOfferController;
+    private ClientOfferService clientOfferController;
 
-    public ClientOfferController getClientOfferController() {
+    public ClientOfferService getClientOfferController() {
         return clientOfferController;
     }
     @Autowired
-    private ClientOfferDetailController clientOfferDetailController;
+    private ClientOfferDetailService clientOfferDetailController;
 
-    public ClientOfferDetailController getClientOfferDetailController() {
+    public ClientOfferDetailService getClientOfferDetailController() {
         return clientOfferDetailController;
     }
     @Autowired
-    private ArticleController articleController;
+    private ArticleService articleController;
 
-    public ArticleController getArticleController() {
+    public ArticleService getArticleController() {
         return articleController;
     }
     @Autowired
-    private ArticleHistoryController articleHistoryController;
+    private ArticleHistoryService articleHistoryController;
 
-    public ArticleHistoryController getArticleHistoryController() {
+    public ArticleHistoryService getArticleHistoryController() {
         return articleHistoryController;
     }
     @Autowired
-    private ClientController clientController;
+    private ClientService clientController;
 
-    public ClientController getClientController() {
+    public ClientService getClientController() {
         return clientController;
     }
     //Formulare

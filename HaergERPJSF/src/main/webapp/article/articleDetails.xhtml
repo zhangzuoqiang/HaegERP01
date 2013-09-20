@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="header">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <title>HaegERP - Article Details</title>
+    </ui:define>
+    
+    <ui:define name="body">
+        <h:panelGrid columns="3">
+
+            <p:outputLabel styleClass="labels" value="EAN" for="txtEan" />
+            <p:inputText styleClass="textBoxes" id="txtEan" disabled="#{articleBean.formArticle.disabled}"
+                         value="#{articleBean.formArticle.txtEan}" title="EAN"
+                         required="true" maxlength="15">
+
+                <f:validateRegex pattern="^\d{1,15}$" />
+                <p:ajax update="msgEan" event="change" />
+            </p:inputText>
+            <p:message for="txtEan" id="msgEan" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Name" for="txtName" />
+            <p:inputText styleClass="textBoxes" id="txtName" disabled="#{articleBean.formArticle.disabled}"
+                         value="#{articleBean.formArticle.txtName}" title="Name"
+                         required="true" maxlength="80">
+                <p:ajax update="msgName" event="change" />
+            </p:inputText>
+            <p:message for="txtName" id="msgName" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Category" for="cbCategory" />
+            <p:selectOneMenu panelStyle="width: 437px;" disabled="#{articleBean.formArticle.disabled}"
+                             style="width: 447px;" styleClass="textBoxes" 
+                             id="cbCategory" value="#{articleBean.formArticle.cbValue}"
+                             required="true">
+                <f:selectItem itemValue="-1" itemLabel="Choose One" />
+                <c:forEach items="#{articleBean.categories}" var="category">
+                    <f:selectItem itemValue="#{category.idArticleCategory}" itemLabel="#{category.name}" />
+                </c:forEach>
+                <f:validateDoubleRange minimum="0" />
+                <p:ajax update="msgCategory" />
+            </p:selectOneMenu>
+            <p:message for="cbCategory" id="msgCategory" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Price Vat" for="txtPriceVat" />
+            <p:inputText styleClass="textBoxes" id="txtPriceVat" disabled="#{articleBean.formArticle.disabled}"
+                         value="#{articleBean.formArticle.txtPriceVat}" title="PriceVat"
+                         required="true" maxlength="5">
+                <f:validateRegex pattern="^\d{1,2}\,\d{1,2}|\d{1,2}\.\d{1,2}|\d{1,3}$" />
+                <f:validateDoubleRange maximum="100" minimum="0" />
+                <p:ajax update="msgPriceVat" event="change" />
+            </p:inputText>
+            <p:message for="txtPriceVat" id="msgPriceVat" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Price Gross" for="txtPriceGross" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtPriceGross" value="#{articleBean.formArticle.txtPriceGross}"
+                         required="true" title="PriceGross" maxlength="20">
+                <f:validateRegex pattern="^\d{1,17}\,\d{1,2}|\d{1,17}\.\d{1,2}|\d{1,17}$" />
+                <p:ajax update="msgPriceGross" event="change" />
+            </p:inputText>
+            <p:message for="txtPriceGross" id="msgPriceGross" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Price Supplier" for="txtPriceSupplier" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtPriceSupplier" value="#{articleBean.formArticle.txtPriceSupplier}"
+                         required="true" title="PriceSupplier" maxlength="20">
+                <f:validateRegex pattern="^\d{1,17}\,\d{1,2}|\d{1,17}\.\d{1,2}|\d{1,17}$" />
+                <p:ajax update="msgPriceSupplier" event="change" />
+            </p:inputText>
+            <p:message for="txtPriceSupplier" id="msgPriceSupplier" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Stock" for="txtStock" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtStock" value="#{articleBean.formArticle.txtStock}"
+                         title="Stock" maxlength="20">
+                <f:validateRegex pattern="^\d{1,15}$" />
+                <p:ajax update="msgStock" event="change" />
+            </p:inputText>
+            <p:message for="txtStock" id="msgStock" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Color" for="txtColor" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtColor" value="#{articleBean.formArticle.txtColor}" title="Color">
+                <p:ajax update="msgColor" event="change" />
+            </p:inputText>
+            <p:message for="txtColor" id="msgColor" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Height" for="txtSizeH" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtSizeH" value="#{articleBean.formArticle.txtSizeH}" title="Height">
+                <f:validateRegex pattern="^\d{1,16}\,\d{1,3}|\d{1,16}\.\d{1,2}|\d{1,16}$" />
+                <p:ajax update="msgSizeH" event="change" />
+            </p:inputText>
+            <p:message for="txtSizeH" id="msgSizeH" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Length" for="txtSizeL" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtSizeL" value="#{articleBean.formArticle.txtSizeL}" title="Length">
+                <f:validateRegex pattern="^\d{1,16}\,\d{1,3}|\d{1,16}\.\d{1,2}|\d{1,16}$" />
+                <p:ajax update="msgSizeL" event="change" />
+            </p:inputText>
+            <p:message for="txtSizeL" id="msgSizeL" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Width" for="txtSizeW" />
+            <p:inputText styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                         id="txtSizeW" value="#{articleBean.formArticle.txtSizeW}" title="Width">
+                <f:validateRegex pattern="^\d{1,16}\,\d{1,3}|\d{1,16}\.\d{1,2}|\d{1,16}$" />
+                <p:ajax update="msgSizeW" event="change" />
+            </p:inputText>
+            <p:message for="txtSizeW" id="msgSizeW" display="icon" />
+
+            <p:outputLabel styleClass="labels" value="Description" for="txtDescription" />
+            <p:inputTextarea styleClass="textBoxes" disabled="#{articleBean.formArticle.disabled}"
+                             id="txtDescription" value="#{articleBean.formArticle.txtDescription}"
+                             title="Description" maxlength="255"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <h:column>
+                <p:commandButton styleClass="button" ajax="true"
+                                 update="panel" id="btnEditSave"
+                                 action="#{articleBean.btnEditSave_ActionPerformed()}"
+                                 value="#{articleBean.formArticle.btnEditSave_Name}" />
+            </h:column>
+            <h:column></h:column>
+            <h:column>
+                <p:commandButton  styleClass="button" ajax="#{articleBean.formArticle.btnCancel_Ajax}"
+                                  update="panel" id="btnCancel" immediate="true"
+                                  action="#{articleBean.btnCancel_ActionPerformed()}"
+                                  value="#{articleBean.formArticle.btnCancel_Name}" />
+            </h:column>
+        </h:panelGrid>
+        <h:panelGroup>
+            <p:growl sticky="true"/>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

@@ -29,7 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class UserGroupManagement extends JFrame {
 
     //Controller
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
     //Formulare
     @Autowired
     private UserGroupDetails userGroupDetails;

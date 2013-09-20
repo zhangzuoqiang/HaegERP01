@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="header">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <title>HaegERP - Salary's Category Details</title>
+    </ui:define>
+    
+    <ui:define name="body">
+        <h:panelGrid columns="3">
+            <p:outputLabel styleClass="labels" value="Salary From" for="txtSalaryFrom" />
+            <p:inputText styleClass="textBoxes" id="txtSalaryFrom" disabled="#{salaryCategoryBean.formSalaryCategory.disabled}"
+                         value="#{salaryCategoryBean.formSalaryCategory.txtSalaryFrom}" title="Salary From"
+                         required="true" maxlength="17">
+                <f:validateRegex pattern="^\d{1,17}\.\d{1,2}|\d{1,17}$" />
+                <p:ajax update="msgSalaryFrom" event="change" />
+            </p:inputText>
+            <p:message for="txtSalaryFrom" id="msgSalaryFrom" display="icon"/>
+            
+            <p:outputLabel styleClass="labels" value="Salary To" for="txtSalaryTo" />
+            <p:inputText styleClass="textBoxes" id="txtSalaryTo" disabled="#{salaryCategoryBean.formSalaryCategory.disabled}"
+                         value="#{salaryCategoryBean.formSalaryCategory.txtSalaryTo}" title="Salary To"
+                         required="true" maxlength="17">
+                <f:validateRegex pattern="^\d{1,17}\.\d{1,2}|\d{1,17}$" />
+                <f:validateDoubleRange minimum="#{salaryCategoryBean.formSalaryCategory.txtSalaryFrom}" />
+                <p:ajax update="msgSalaryTo" event="change" />
+            </p:inputText>
+            <p:message for="txtSalaryTo" id="msgSalaryTo" display="icon"/>
+
+            <p:outputLabel styleClass="labels" value="Description" for="txtDescription" />
+            <p:inputTextarea styleClass="textBoxes" disabled="#{salaryCategoryBean.formSalaryCategory.disabled}"
+                             id="txtDescription" value="#{salaryCategoryBean.formSalaryCategory.txtDescription}"
+                             title="Description" maxlength="255"/>
+            <h:panelGroup></h:panelGroup>
+            
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            <h:column>
+                <p:commandButton styleClass="button" ajax="true"
+                                 update="panel" id="btnEditSave"
+                                 action="#{salaryCategoryBean.btnEditSave_ActionPerformed()}"
+                                 value="#{salaryCategoryBean.formSalaryCategory.btnEditSave_Name}" />
+            </h:column>
+            <h:column></h:column>
+            <h:column>
+                <p:commandButton  styleClass="button" ajax="#{salaryCategoryBean.formSalaryCategory.btnCancel_Ajax}"
+                                  update="panel" id="btnCancel" immediate="true"
+                                  action="#{salaryCategoryBean.btnCancel_ActionPerformed()}"
+                                  value="#{salaryCategoryBean.formSalaryCategory.btnCancel_Name}" />
+            </h:column>
+        </h:panelGrid>
+        <h:panelGroup>
+            <p:growl sticky="true"/>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

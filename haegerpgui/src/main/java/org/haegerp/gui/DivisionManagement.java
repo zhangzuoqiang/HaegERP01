@@ -29,8 +29,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.DivisionController;
-import org.haegerp.controller.EmployeeController;
+import org.haegerp.service.DivisionService;
+import org.haegerp.service.EmployeeService;
 import org.haegerp.entity.Division;
 import org.haegerp.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +47,9 @@ public class DivisionManagement extends JFrame {
     private static final long serialVersionUID = 4611390378854969459L;
     //Controller
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private DivisionController divisionController;
+    private DivisionService divisionController;
     //Formulare
     @Autowired
     private DivisionDetails divisionDetails;

@@ -29,8 +29,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.EmployeeController;
-import org.haegerp.controller.SalaryCategoryController;
+import org.haegerp.service.EmployeeService;
+import org.haegerp.service.SalaryCategoryService;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.SalaryCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +46,9 @@ public class SalaryCategoryManagement extends JFrame {
 
     //Controller
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private SalaryCategoryController salaryCategoryController;
+    private SalaryCategoryService salaryCategoryController;
     //Formulare
     @Autowired
     private SalaryCategoryDetails salaryCategoryDetails;

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        template="/WEB-INF/template.xhtml">
+
+    <ui:define name="header">
+        <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <title>HaegERP - Client Offer Management</title>
+    </ui:define>
+    
+    <ui:define name="body">
+        <h:panelGrid columns="1" >
+            <p:fieldset legend="Search Options" toggleable="true" toggleSpeed="500">
+                <h:panelGrid columns="3" cellspacing="10">
+                    <h:outputLabel id="lblSearch" value="Search:" />
+                    <p:inputText id="txtSearch" label="lblSearch" value="#{clientOfferBean.search}" />
+                    <h:panelGroup></h:panelGroup>
+                    <h:outputLabel id="lblSlider" value="No. Items:" />
+                    <h:outputLabel id="txtSlider" value="#{clientOfferBean.pageSize}" />
+                    <h:panelGroup></h:panelGroup>
+                    <h:inputHidden id="valSlider" value="#{clientOfferBean.pageSize}"/>
+                    <p:slider for="valSlider" display="txtSlider"
+                              minValue="10" maxValue="100" step="5"/>
+                    <p:commandButton id="btnSearch" action="#{clientOfferBean.setUpSearch()}"
+                                 styleClass="button" ajax="true"  value="Search" update="panel" />
+                </h:panelGrid>
+
+            </p:fieldset>
+            <p:dataTable var="clientOffer" value="#{clientOfferBean.clientOfferObjects}">
+                <p:column headerText="Client" styleClass="mediumSizeColumn">
+                    <h:outputText value="#{clientOffer[1]}"
+                                  title="#{clientOffer[1]}"/>
+                </p:column>
+                <p:column headerText="Employee" styleClass="mediumSizeColumn">
+                    <h:outputText title="#{clientOffer[2]}"
+                                  value="#{clientOffer[2]}">
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Offer Date" styleClass="dateSizeColumn">
+                    <h:outputText value="#{clientOffer[3]}"
+                                  title="#{clientOffer[3]}"/>
+                </p:column>
+                <p:column headerText="Send Date" styleClass="dateSizeColumn">
+                    <h:outputText value="#{clientOffer[4]}"
+                                  title="#{clientOffer[4]}"/>
+                </p:column>
+                <p:column headerText="Total" styleClass="smallSizeColumn">
+                    <h:outputText value="#{clientOffer[5]} €"
+                                  title="#{clientOffer[5]} €"/>
+                </p:column>
+                <p:column headerText="Billed" styleClass="dateSizeColumn">
+                    <h:outputText value="#{clientOffer[6]}"
+                                  title="#{clientOffer[6]}"/>
+                </p:column>
+                <p:column headerText="Paid Date" styleClass="dateSizeColumn">
+                    <h:outputText value="#{clientOffer[7]}"
+                                  title="#{clientOffer[7]}"/>
+                </p:column>
+                <p:column headerText="View">
+                    <h:commandLink  action="#{clientOfferBean.prepareView(clientOffer[0], true)}"
+                             title="View"
+                             value="View">
+                    </h:commandLink>
+                </p:column>
+                <p:column headerText="Edit">
+                    <p:commandLink id="btnEdit" action="#{clientOfferBean.prepareView(clientOffer[0], false)}" ajax="false" value="Edit" />
+                </p:column>
+                <p:column headerText="Delete">
+                    <p:commandLink id="btnDelete" oncomplete="confirmDialog.show()" value="Delete">
+                        <f:setPropertyActionListener value="#{clientOffer[0]}" target="#{clientOfferBean.clientOfferId}" />
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+        </h:panelGrid>
+        <h:outputLabel value="Page: #{clientOfferBean.getPageNumber()}" />
+        <h:panelGrid columns="3" cellspacing="10">
+            <p:commandButton id="btnPrevious" action="#{clientOfferBean.previousPage()}"
+                             styleClass="button" ajax="true"  value="Previous" update="panel" />
+            <p:commandButton id="btnNew" action="#{clientOfferBean.prepareNew()}"
+                             styleClass="button"  value="New" update="panel" />
+            <p:commandButton id="btnNext" action="#{clientOfferBean.nextPage()}"
+                             styleClass="button" ajax="true"  value="Next" update="panel" />
+        </h:panelGrid>
+        <p:confirmDialog widgetVar="confirmDialog" id="confirmDialog" header="Delete" message="Are you sure?"
+                 width="400" closable="false" severity="alert">
+            <h:panelGroup layout="block" style="text-align: right">
+                <p:commandButton value="Yes" action="#{clientOfferBean.delete()}" oncomplete="confirmDialog.hide();" update="panel" />
+                <p:commandButton value="No" oncomplete="confirmDialog.hide();" />
+            </h:panelGroup>
+        </p:confirmDialog>
+        <h:panelGroup>
+            <p:growl sticky="true" />
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

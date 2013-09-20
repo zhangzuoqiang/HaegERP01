@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 import javax.swing.text.NumberFormatter;
 
-import org.haegerp.controller.SalaryCategoryController;
+import org.haegerp.service.SalaryCategoryService;
 import org.haegerp.entity.SalaryCategory;
 import org.haegerp.gui.salarycategorydetails.SalaryCategoryDetailsInterface;
 import org.haegerp.gui.salarycategorydetails.SalaryCategoryEditView;
@@ -48,9 +48,9 @@ public class SalaryCategoryDetails extends javax.swing.JFrame {
     }
     //Controller
     @Autowired
-    private SalaryCategoryController salaryCategoryController;
+    private SalaryCategoryService salaryCategoryController;
 
-    public SalaryCategoryController getSalaryCategoryController() {
+    public SalaryCategoryService getSalaryCategoryController() {
         return salaryCategoryController;
     }
     //Verschiednen Stände von der Oberfläche

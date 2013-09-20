@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.ClientCategoryController;
+import org.haegerp.service.ClientCategoryService;
 import org.haegerp.entity.ClientCategory;
 import org.haegerp.gui.clientcategorydetails.ClientCategoryDetailsInterface;
 import org.haegerp.gui.clientcategorydetails.ClientCategoryEditView;
@@ -47,9 +47,9 @@ public class ClientCategoryDetails extends javax.swing.JFrame {
     }
     //Controller
     @Autowired
-    private ClientCategoryController clientCategoryController;
+    private ClientCategoryService clientCategoryController;
 
-    public ClientCategoryController getClientCategoryController() {
+    public ClientCategoryService getClientCategoryController() {
         return clientCategoryController;
     }
     //Verschiednen Stände von der Oberfläche

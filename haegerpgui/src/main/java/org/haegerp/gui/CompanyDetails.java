@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 
-import org.haegerp.controller.CompanyController;
-import org.haegerp.controller.EmployeeController;
+import org.haegerp.service.CompanyService;
+import org.haegerp.service.EmployeeService;
 import org.haegerp.entity.Company;
 import org.haegerp.gui.companydetails.CompanyDetailsInterface;
 import org.haegerp.gui.companydetails.CompanyEditView;
@@ -33,15 +33,15 @@ public class CompanyDetails extends javax.swing.JFrame {
     private static final String REGEX_PHONE = "^\\+[0-9]*|[0-9]*$";
     //Controller
     @Autowired
-    private CompanyController companyController;
+    private CompanyService companyController;
 
-    public CompanyController getCompanyController() {
+    public CompanyService getCompanyController() {
         return companyController;
     }
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
 
-    public EmployeeController getEmployeeController() {
+    public EmployeeService getEmployeeController() {
         return employeeController;
     }
     //Verschiednen Stände von der Oberfläche

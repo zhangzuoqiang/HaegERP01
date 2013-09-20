@@ -10,8 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.PermissionController;
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.PermissionService;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Permission;
 
 import org.haegerp.entity.UserGroup;
@@ -31,9 +31,9 @@ import org.springframework.stereotype.Controller;
 public class UserGroupBean implements Serializable {
 
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
     @Autowired
-    private PermissionController permissionController;
+    private PermissionService permissionController;
     //Injected Manually at @PostConstruct EmployeeBean.SetUp()
     private EmployeeBean employeeBean;
     //Benutzergruppe, die in der Seite der Details zeigen wird

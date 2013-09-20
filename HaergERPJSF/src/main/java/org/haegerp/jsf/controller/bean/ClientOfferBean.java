@@ -10,12 +10,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.ArticleController;
-import org.haegerp.controller.ArticleHistoryController;
-import org.haegerp.controller.ClientController;
-import org.haegerp.controller.ClientOfferController;
-import org.haegerp.controller.ClientOfferDetailController;
-import org.haegerp.controller.EmployeeController;
+import org.haegerp.service.ArticleService;
+import org.haegerp.service.ArticleHistoryService;
+import org.haegerp.service.ClientService;
+import org.haegerp.service.ClientOfferService;
+import org.haegerp.service.ClientOfferDetailService;
+import org.haegerp.service.EmployeeService;
 import org.haegerp.entity.Article;
 import org.haegerp.entity.ArticleHistory;
 import org.haegerp.entity.ArticleHistoryPK;
@@ -40,17 +40,17 @@ import org.springframework.stereotype.Controller;
 public class ClientOfferBean implements Serializable {
 
     @Autowired
-    private ClientOfferController clientOfferController;
+    private ClientOfferService clientOfferController;
     @Autowired
-    private ClientOfferDetailController clientOfferDetailController;
+    private ClientOfferDetailService clientOfferDetailController;
     @Autowired
-    private ArticleController articleController;
+    private ArticleService articleController;
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private ClientController clientController;
+    private ClientService clientController;
     @Autowired
-    private ArticleHistoryController articleHistoryController;
+    private ArticleHistoryService articleHistoryController;
     //Kundenangebot, das in der Seite der Details zeigen wird
     private ClientOffer clientOffer;
     //Kunde der Bestellung

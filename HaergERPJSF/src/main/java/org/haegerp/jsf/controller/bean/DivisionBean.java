@@ -9,7 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.DivisionController;
+import org.haegerp.service.DivisionService;
 
 import org.haegerp.entity.Division;
 import org.haegerp.jsf.controller.form.FormDivision;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Controller;
 public class DivisionBean implements Serializable {
 
     @Autowired
-    private DivisionController divisionController;
+    private DivisionService divisionController;
     //Injected Manually at ClientBean.SetUp().@PostConstruct
     private EmployeeBean employeeBean;
     //Division, die in der Seite der Details zeigen wird

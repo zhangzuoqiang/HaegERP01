@@ -12,10 +12,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
-import org.haegerp.controller.DivisionController;
-import org.haegerp.controller.EmployeeController;
-import org.haegerp.controller.SalaryCategoryController;
-import org.haegerp.controller.UserGroupController;
+import org.haegerp.service.DivisionService;
+import org.haegerp.service.EmployeeService;
+import org.haegerp.service.SalaryCategoryService;
+import org.haegerp.service.UserGroupService;
 import org.haegerp.entity.Division;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.SalaryCategory;
@@ -38,13 +38,13 @@ import org.springframework.stereotype.Controller;
 public class EmployeeBean implements Serializable {
 
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
     @Autowired
-    private SalaryCategoryController salaryCategoryController;
+    private SalaryCategoryService salaryCategoryController;
     @Autowired
-    private DivisionController divisionController;
+    private DivisionService divisionController;
     @Autowired
-    private UserGroupController userGroupController;
+    private UserGroupService userGroupController;
     @Autowired
     private SalaryCategoryBean salaryCategoryBean;
     @Autowired

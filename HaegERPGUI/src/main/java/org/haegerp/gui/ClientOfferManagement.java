@@ -29,7 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.ClientOfferController;
+import org.haegerp.service.ClientOfferService;
 import org.haegerp.entity.Client;
 import org.haegerp.entity.ClientOffer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class ClientOfferManagement extends JFrame {
     private static final long serialVersionUID = 2464190735195227843L;
     //Controller
     @Autowired
-    private ClientOfferController clientOfferController;
+    private ClientOfferService clientOfferController;
     //Formular
     @Autowired
     private ClientOfferDetails clientOfferDetails;

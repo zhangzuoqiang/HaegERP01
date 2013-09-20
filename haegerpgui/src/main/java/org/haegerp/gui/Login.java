@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import org.haegerp.controller.EmployeeController;
+import org.haegerp.service.EmployeeService;
 import org.haegerp.entity.Employee;
 import org.haegerp.entity.Permission;
 import org.haegerp.session.EmployeeSession;
@@ -32,7 +32,7 @@ public class Login extends JFrame {
     private MainMenu mainMenu;
     //Controller
     @Autowired
-    private EmployeeController employeeController;
+    private EmployeeService employeeController;
 
     public Login() {
     }

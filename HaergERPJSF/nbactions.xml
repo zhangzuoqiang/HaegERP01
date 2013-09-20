@@ -5,6 +5,7 @@
             <displayName>Tomcat Deploy</displayName>
             <goals>
                 <goal>tomcat7:deploy</goal>
+                <goal>-Dmaven.test.skip=true</goal>
             </goals>
         </action>
         <action>

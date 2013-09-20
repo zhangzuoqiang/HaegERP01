@@ -29,7 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.haegerp.controller.SupplierOrderController;
+import org.haegerp.service.SupplierOrderService;
 import org.haegerp.entity.Supplier;
 import org.haegerp.entity.SupplierOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class SupplierOrderManagement extends JFrame {
 
     //Controller
     @Autowired
-    private SupplierOrderController supplierOrderController;
+    private SupplierOrderService supplierOrderController;
     //Formular
     @Autowired
     private SupplierOrderDetails supplierOrderDetails;
